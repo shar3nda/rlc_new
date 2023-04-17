@@ -22,10 +22,11 @@
       <excludeFolder url="file://$MODULE_DIR$/frontend/.yarn/unplugged/core-js-npm-3.29.1-baa30db121/node_modules/core-js/full/instance" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/.yarn/unplugged/core-js-npm-3.29.1-baa30db121/node_modules/core-js/stable/instance" />
       <excludeFolder url="file://$MODULE_DIR$/frontend/.yarn/unplugged/node-gyp-npm-9.3.1-43540bab9c/node_modules/node-gyp/lib" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/.vscode" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Poetry (rlc_new) (3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

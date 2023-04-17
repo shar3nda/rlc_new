@@ -2,33 +2,26 @@
 {% load static %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ document.title }}</h5>
-                        <p class="card-text" id="document-annot-text">{{ document.body }}</p>
-                        <p class="card-text"><small class="text-muted">{{ document.created_on }}</small></p>
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Annotate this post</h5>
-                        <p class="card-text">Use RecogitoJS to add annotations to this blog post:</p>
-
-                        <div id="recogito"></div>
-                        <script src="{% static 'js/recogito.min.js' %}"></script>
-                        <script>
-                            let document_id = {{ document.id }};
-                            let user_id = {{ user.id }};
-                        </script>
-                        <script src="{% static 'js/annotator.js' %}"></script>
-                    </div>
-                </div>
-            </div>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ document.title }}</h5>
+            {% for sentence in sentences %}
+              <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
+                   data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" class="sentence">
+                {{ sentence.text }}
+              </div>
+              <div id="recogito-{{ sentence.id }}" class="recogito"></div>
+            {% endfor %}
+            <p class="card-text"><small class="text-muted">{{ document.created_on }}</small></p>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', initRecogito);
+  </script>
 {% endblock %}

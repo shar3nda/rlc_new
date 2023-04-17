@@ -1,6 +1,12 @@
+import nltk
+import subprocess
+import platform
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+os = platform.system()
+MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
 
 
 class Document(models.Model):
@@ -26,13 +32,13 @@ class Document(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     # The text of the document
     body = models.TextField(help_text=_("Paste the text here."), verbose_name=_("text"))
-    STATUS = (
+    STATUS_CHOICES = (
         (0, _("New")),
         (1, _("Annotated")),
         (2, _("Checked")),
     )
     # The status of the document (new, annotated, checked)
-    status = models.IntegerField(choices=STATUS, default=0)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
     def save(self, **kwargs):
         """
@@ -41,7 +47,6 @@ class Document(models.Model):
         """
         super().save(**kwargs)
         # get sentences using nltk
-        import nltk
 
         sentences = nltk.sent_tokenize(self.body, language="russian")
         for i, sentence in enumerate(sentences):
@@ -59,10 +64,42 @@ class Sentence(models.Model):
     A sentence is a part of a document.
     """
 
-    # TODO настроить работу с текстом как со списком предложений
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     text = models.TextField()
     number = models.IntegerField()
+
+    # def save(
+    #     self, force_insert=False, force_update=False, using=None, update_fields=None
+    # ):
+    #     """
+    #     This method overrides the default save method of the model.
+    #     It is used to create Token objects for each token in the sentence.
+    #     """
+    #     super().save(force_insert, force_update, using, update_fields)
+    #     # get tokens using mystem
+    #     args = (
+    #         MYSTEM_PATH,
+    #         "-cisd",
+    #         "--format",
+    #         "json",
+    #         "--eng-gr",
+    #     )
+    #     process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    #     tokens = process.communicate(input=self.text.encode("utf-8"))[0].decode("utf-8")
+    #     tokens = tokens.split("\n")
+    #     tokens = [token for token in tokens if token]
+    #     search_text = self.text
+    #     for i, token in enumerate(tokens):
+    #         lpos = search_text.find(token)
+    #         rpos = lpos + len(token)
+    #         Token.objects.create(
+    #             token=token,
+    #             document=self.document,
+    #             sentence=self,
+    #             start=lpos,
+    #             end=rpos,
+    #         )
+    #         search_text = search_text[rpos:]
 
     def __str__(self):
         return self.text
@@ -73,18 +110,14 @@ class Annotation(models.Model):
     An annotation is a piece of text that is annotated by a user.
     """
 
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    exact_selector = models.TextField()
-    start_selector = models.IntegerField()
-    end_selector = models.IntegerField()
-    value = models.TextField()
-    recogito_id = models.TextField()
-    json = models.TextField()
+    document = models.ForeignKey(Document, on_delete=models.PROTECT)
+    sentence = models.ForeignKey(Sentence, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    guid = models.CharField(max_length=64, unique=True, editable=False, db_index=True)
+    json = models.JSONField()
 
     def __str__(self):
-        return self.value
+        return str(self.json)
 
 
 class Token(models.Model):
@@ -110,3 +143,26 @@ class Token(models.Model):
     class Meta:
         verbose_name = _("token")
         verbose_name_plural = _("tokens")
+
+
+class Morphology(models.Model):
+    """Хранит информацию о морфологических разборах.
+
+    Поля разбора:
+    token - номер токена, к которому относится разбор
+    lemma - начальная форма слова
+    lex - часть речи
+    gram - все прочие грамматические характеристики
+    """
+
+    token = models.ForeignKey(Token, on_delete=models.PROTECT)
+    lemma = models.CharField(max_length=200, db_index=True)
+    part_of_speech = models.CharField(max_length=200, db_index=True)
+    grammemes = models.CharField(max_length=200, db_index=True)
+
+    def __str__(self):
+        return self.lemma + " " + self.part_of_speech + " " + self.grammemes
+
+    class Meta:
+        verbose_name = _("analysis")
+        verbose_name_plural = _("analyses")
