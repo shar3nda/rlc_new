@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from corpus import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.homepage, name="homepage"),
-    path("documents/", views.documents, name="documents"),
-    path("annotate/<int:id>/", views.annotate, name="annotate"),
+    path("", include("content.urls")),
+    path("corpus/", include("corpus.urls")),
     path("api/", include("api.urls")),
 ]

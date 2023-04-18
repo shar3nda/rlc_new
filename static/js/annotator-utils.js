@@ -95,18 +95,16 @@ function initRecogito() {
       selectors: [{type: 'TextQuoteSelector'}],
       locale: 'ru',
       widgets: [
-        {
-          // TODO implement a correction widget https://annotorious.github.io/guides/editor-widgets/
-          widget: 'COMMENT'
-        },
+        'COMMENT',
         {
           widget: 'TAG',
           vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
-        }]
-
+        },
+      ],
     });
     r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
     r.on('createAnnotation', async (annotation, overrideId) => {
+      // TODO проверять, что аннотации не залезают друг на друга
       // Посылаем POST-запрос на сервер для сохранения аннотации
       await createAnnotation(
         sentence.dataset.documentId,

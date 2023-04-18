@@ -16,15 +16,11 @@ def documents(request):
 
 
 # Представление для аннотирования документа
-def annotate(request, id):
-    doc = Document.objects.get(id=id)
+def annotate(request, sentence_id):
+    doc = Document.objects.get(id=sentence_id)
     context = {
         "document": doc,
         "sentences": Sentence.objects.filter(document=doc),
     }
     return render(request, "annotate.html", context)
 
-
-# Представление для главной страницы
-def homepage(request):
-    return render(request, "homepage.html")

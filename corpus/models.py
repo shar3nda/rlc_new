@@ -101,6 +101,59 @@ class Sentence(models.Model):
     #         )
     #         search_text = search_text[rpos:]
 
+    @property
+    def correction(self):
+        """
+        This method returns the corrected text of the sentence.
+        """
+        annotations = Annotation.objects.filter(sentence=self)
+        if not annotations:
+            return self.text
+
+        corrections = []
+        for annotation in annotations:
+            # TODO: implement multiple corrections
+            replacement = [
+                correction
+                for correction in annotation.json["body"]
+                if correction["purpose"] == "commenting"
+            ]
+            if not replacement:
+                continue
+            replacement = replacement[0]["value"]
+            selectors = annotation.json["target"]["selector"]
+            text_position_selector = [
+                selector
+                for selector in selectors
+                if selector["type"] == "TextPositionSelector"
+            ][0]
+            text_quote_selector = [
+                selector
+                for selector in selectors
+                if selector["type"] == "TextQuoteSelector"
+            ][0]
+
+            corrections.append(
+                {
+                    "start": text_position_selector["start"] - 1,
+                    "end": text_position_selector["end"] - 1,
+                    "exact": text_quote_selector["exact"],
+                    "replacement": replacement,
+                }
+            )
+
+        corrections = sorted(corrections, key=lambda x: x["start"], reverse=True)
+        corrected_text = self.text
+
+        for correction in corrections:
+            corrected_text = (
+                corrected_text[: correction["start"]]
+                + correction["replacement"]
+                + corrected_text[correction["end"] :]
+            )
+
+        return corrected_text
+
     def __str__(self):
         return self.text
 

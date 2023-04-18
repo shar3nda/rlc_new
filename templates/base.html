@@ -1,38 +1,72 @@
-<!DOCTYPE html>
 {% load static %}
-{% load i18n %}
-<html lang="{{ LANGUAGE_CODE }}">
+<!DOCTYPE html>
+<html lang="{{ language_code }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}My Site{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/comment_widget.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="{% static 'js/recogito.min.js' %}"></script>
   <script src="{% static 'js/annotator-utils.js' %}"></script>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">My Site</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top custom-nav-padding" data-bs-theme="light">
+    <a class="navbar-brand" href="#">Site Title</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
+          <a class="nav-link" href="#">Main</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'documents' %}">Documents</a>
+          <a class="nav-link" href="#">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Help</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Statistics</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Language Switcher</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="toggleTheme">Light/Dark Mode</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Admin Panel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Annotate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Profile</a>
         </li>
       </ul>
     </div>
-  </div>
-</nav>
-{% block content %}
-{% endblock %}
-<script src="{% static 'css/bootstrap.min.css' %}"></script>
+  </nav>
+</head>
+<body class="custom-body-padding">
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+
+<script>
+  const toggleTheme = document.getElementById('toggleTheme');
+  toggleTheme.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+  });
+</script>
 </body>
 </html>

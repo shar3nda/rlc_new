@@ -9,9 +9,16 @@
           <div class="card-body">
             <h5 class="card-title">{{ document.title }}</h5>
             {% for sentence in sentences %}
-              <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
-                   data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" class="sentence">
-                {{ sentence.text }}
+              <div class="card mb-2" style="max-width: 100%;">
+                <div class="card-body">
+                  <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
+                       data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" class="sentence">
+                    {{ sentence.text }}
+                  </div>
+                  <div id="correction-{{ correction.id }}" class="correction">
+                    {{ sentence.correction }}
+                  </div>
+                </div>
               </div>
               <div id="recogito-{{ sentence.id }}" class="recogito"></div>
             {% endfor %}
