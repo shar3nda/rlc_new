@@ -14,7 +14,7 @@
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
 </head>
-<body class="custom-body-padding" data-bs-theme="dark">
+<body data-bs-theme="light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-nav-padding">
   <a class="navbar-brand" href="#">Site Title</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -25,7 +25,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Main</a>
+        <a class="nav-link" href="{% url 'homepage' %}">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Search</a>
@@ -42,13 +42,10 @@
     </ul>
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Language Switcher</a>
+        <a class="nav-link" href="{% url 'admin:index' %}">Admin Panel</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Admin Panel</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Annotate</a>
+        <a class="nav-link" href="{% url 'documents' %}">Annotate</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Profile</a>

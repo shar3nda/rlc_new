@@ -214,7 +214,17 @@ class Document(models.Model):
     # The status of the document (new, annotated, checked)
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
-    author = models.ForeignKey(Author, db_index=True, on_delete=models.PROTECT)
+    author = models.ForeignKey(
+        Author,
+        blank=True,
+        null=True,
+        verbose_name=_("author"),
+        help_text=_(
+            "This is the corpus user who uploads the text to the corpus."
+            "Please, make sure that this field displays your login."
+        ),
+        on_delete=models.PROTECT,
+    )
 
     source = models.TextField(
         help_text=_(

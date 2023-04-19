@@ -4,5 +4,5 @@ from corpus import views
 
 urlpatterns = [
     path("documents/", views.documents, name="documents"),
-    path("annotate/<int:id>/", views.annotate, name="annotate"),
+    path("annotate/<int:document_id>/", views.annotate, name="annotate"),
 ]

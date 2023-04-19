@@ -16,8 +16,8 @@ def documents(request):
 
 
 # Представление для аннотирования документа
-def annotate(request, sentence_id):
-    doc = Document.objects.get(id=sentence_id)
+def annotate(request, document_id):
+    doc = Document.objects.get(id=document_id)
     context = {
         "document": doc,
         "sentences": Sentence.objects.filter(document=doc),
