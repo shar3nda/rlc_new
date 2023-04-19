@@ -11,15 +11,10 @@
   padding: 0;
 }
 
-body.dark-mode {
-  background-color: #333;
-  color: #fff;
-}
-
 .custom-nav-padding {
   padding: 0.5rem;
 }
 
 .custom-body-padding {
- padding-top: 4rem;
+ padding-top: 40px;
 }

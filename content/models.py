@@ -10,7 +10,7 @@ class Article(models.Model):
         User, db_index=True, blank=True, null=True, on_delete=models.PROTECT
     )
     date = models.DateField(
-        help_text=_("Please use the calendar view to choose date."),
+        help_text="Выберите",
         verbose_name=_("date"),
     )
     created = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -64,4 +64,3 @@ class Section(models.Model):
 
     def __unicode__(self):
         return self.header_rus
-
