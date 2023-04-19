@@ -23,4 +23,3 @@ def annotate(request, sentence_id):
         "sentences": Sentence.objects.filter(document=doc),
     }
     return render(request, "annotate.html", context)
-

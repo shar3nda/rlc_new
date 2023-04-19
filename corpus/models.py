@@ -219,3 +219,127 @@ class Morphology(models.Model):
     class Meta:
         verbose_name = _("analysis")
         verbose_name_plural = _("analyses")
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=255)
+    gender = models.CharField(
+        max_length=10, choices=[("M", "Мужской"), ("F", "Женский"), ("O", "Неизвестно")]
+    )
+    program = models.CharField(max_length=255)
+    language_background = models.CharField(
+        max_length=10, choices=[("H", "Эритажный"), ("F", "Иностранный")]
+    )
+    NativeChoices = (
+        ("eng", "English"),
+        ("nor", "Norwegian"),
+        ("kor", "Korean"),
+        ("ita", "Italian"),
+        ("fr", "French"),
+        ("ger", "German"),
+        ("ser", "Serbian"),
+        ("jap", "Japanese"),
+        ("chi", "Chinese"),
+        ("kaz", "Kazakh"),
+        ("dut", "Dutch"),
+        ("swe", "Swedish"),
+        ("fin", "Finnish"),
+        ("est", "Estonian"),
+        ("por", "Portuguese"),
+        ("dag", "Dagestanian"),
+        ("taj", "Tajik"),
+        ("far", "Farsi"),
+        ("ind", "Indonesian"),
+        ("mon", "Mongolian"),
+        ("ben", "Bengali"),
+        ("heb", "Hebrew"),
+        ("tur", "Turkish"),
+        ("uzb", "Uzbek"),
+        ("hin", "Hindi"),
+        ("ara", "Arabic"),
+        ("vie", "Vietnamese"),
+        ("bul", "Bulgarian"),
+        ("mac", "Macedonian"),
+        ("cro", "Croatian"),
+        ("tha", "Thai"),
+        ("lao", "Lao"),
+        ("spa", "Spanish"),
+        ("pas", "Pashto"),
+        ("dar", "Dari"),
+        ("alb", "Albanian"),
+        ("sho", "Shona"),
+        ("sho", "Czech"),
+        ("turkmen", "Turkmen"),
+        ("slo", "Slovene"),
+        ("abk", "Abkhaz"),
+        ("aze", "Azerbaijani"),
+        ("svk", "Slovak"),
+        ("hun", "Hungarian"),
+        ("rom", "Romanian"),
+        ("nep", "Nepali"),
+        ("geo", "Georgian"),
+        ("amh", "Amharic"),
+        ("khm", "Khmer"),
+        ("kur", "Kurdish"),
+        ("urd", "Urdu"),
+        ("arm", "Armenian"),
+        ("gre", "Greek"),
+    )
+    dominant_language = models.CharField(
+        max_length=10,
+        null=True,
+        blank=False,
+        choices=NativeChoices,
+        db_index=True,
+        verbose_name=_("dominant language"),
+        help_text=_("Author's dominant language"),
+    )
+    LevelChoices = (
+        (
+            "Beginner",
+            (
+                ("NH", _("Novice High")),
+                ("NL", _("Novice Low")),
+                ("NM", _("Novice Middle")),
+                ("A1", _("A1")),
+                ("A2", _("A2")),
+            ),
+        ),
+        (
+            "Intermediate",
+            (
+                ("IH", _("Intermediate High")),
+                ("IL", _("Intermediate Low")),
+                ("IM", _("Intermediate Middle")),
+                ("B1", _("B1")),
+                ("B2", _("B2")),
+            ),
+        ),
+        (
+            "Advanced",
+            (
+                ("AH", _("Advanced High")),
+                ("AL", _("Advanced Low")),
+                ("AM", _("Advanced Middle")),
+                ("C1", _("C1")),
+                ("C2", _("C2")),
+            ),
+        ),
+        ("Other", _("Other")),
+    )
+    scale = models.CharField(
+        max_length=10,
+        null=True,
+        blank=False,
+        choices=LevelChoices,
+        db_index=True,
+        help_text=_(
+            "Enter the language level of the author. Both CEFR and ACTFL scales are"
+            "available.</br>Please, use the option 'Other' if neither CEFR nor ACTFL"
+            " scales are applicable."
+        ),
+        verbose_name=_("scale"),
+    )
+
+    def __str__(self):
+        return self.name
