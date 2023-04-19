@@ -8,57 +8,6 @@ from django.utils.translation import gettext_lazy as _
 os = platform.system()
 MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
 
-
-class Document(models.Model):
-    """
-    A document is a text that can be annotated.
-    """
-
-    # The title of the document
-    title = models.CharField(max_length=200, unique=True)
-    # The owner of the document (FK to User)
-    user = models.ForeignKey(
-        User,
-        blank=True,
-        null=True,
-        verbose_name=_("owner"),
-        help_text=_(
-            "This is the corpus user who uploads the text to the corpus."
-            "Please, make sure that this field displays your login."
-        ),
-        on_delete=models.PROTECT,
-    )
-    # The date when the document was created
-    created_on = models.DateTimeField(auto_now_add=True)
-    # The text of the document
-    body = models.TextField(help_text=_("Paste the text here."), verbose_name=_("text"))
-    STATUS_CHOICES = (
-        (0, _("New")),
-        (1, _("Annotated")),
-        (2, _("Checked")),
-    )
-    # The status of the document (new, annotated, checked)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
-
-    def save(self, **kwargs):
-        """
-        This method overrides the default save method of the model.
-        It is used to create Sentence objects for each sentence in the document.
-        """
-        super().save(**kwargs)
-        # get sentences using nltk
-
-        sentences = nltk.sent_tokenize(self.body, language="russian")
-        for i, sentence in enumerate(sentences):
-            Sentence.objects.create(document=self, text=sentence, number=i)
-
-    class Meta:
-        ordering = ["-created_on"]
-
-    def __str__(self):
-        return self.title
-
-
 class Sentence(models.Model):
     """
     A sentence is a part of a document.
@@ -343,3 +292,113 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Document(models.Model):
+    """
+    A document is a text that can be annotated.
+    """
+
+    # The title of the document
+    title = models.CharField(max_length=200, unique=True)
+    # The owner of the document (FK to User)
+    user = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        verbose_name=_("owner"),
+        help_text=_(
+            "This is the corpus user who uploads the text to the corpus."
+            "Please, make sure that this field displays your login."
+        ),
+        on_delete=models.PROTECT,
+    )
+    # The date when the document was created
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    # Дата написания текста
+    date = models.IntegerField(
+        null=True,
+        blank=True,
+        help_text=_("When the text was written, e.g. 2014."),
+        verbose_name=_("date"),
+    )
+    # жанр текста
+    GenreChoices = (
+        ("answers", _("Answers to questions")),
+        ("nonacademic", _("Non–academic essay")),
+        ("academic", _("Academic essay")),
+        ("blog", _("Blog")),
+        ("letter", _("Letter")),
+        ("story", _("Story")),
+        ("paraphrase", _("Paraphrase")),
+        ("definition", _("Definition")),
+        ("bio", _("Biography")),
+        ("description", _("Description")),
+        ("summary", _("Summary")),
+        ("other", _("Other")),
+    )
+    genre = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        db_index=True,
+        verbose_name=_("genre"),
+        choices=GenreChoices,
+    )
+
+    # название подкорпуса
+    SubcorpusChoices = (
+        ("HSE", "HSE"),
+        ("UNICE", "UNICE"),
+        ("RULEC", "RULEC"),
+        ("FIN", "FIN"),
+        ("BERLIN", "BERLIN"),
+        ("TOKYO", "TOKYO"),
+        ("SFEDU", "SFEDU"),
+    )
+    subcorpus = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name=_("Подкорпус"),
+        choices=SubcorpusChoices,
+    )
+
+    # The text of the document
+    body = models.TextField(help_text=_("Paste the text here."), verbose_name=_("text"))
+    STATUS_CHOICES = (
+        (0, _("New")),
+        (1, _("Annotated")),
+        (2, _("Checked")),
+    )
+    # The status of the document (new, annotated, checked)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+
+    author = models.ForeignKey(Author, db_index=True, on_delete=models.PROTECT)
+
+    source = models.TextField(
+        help_text=_(
+            "Name, surname and affiliation (institute, university or"
+            "language school) of a person who provided the text"
+        ),
+        verbose_name=_("Source"),
+    )
+
+    def save(self, **kwargs):
+        """
+        This method overrides the default save method of the model.
+        It is used to create Sentence objects for each sentence in the document.
+        """
+        super().save(**kwargs)
+        # get sentences using nltk
+
+        sentences = nltk.sent_tokenize(self.body, language="russian")
+        for i, sentence in enumerate(sentences):
+            Sentence.objects.create(document=self, text=sentence, number=i)
+
+    class Meta:
+        ordering = ["-created_on"]
+
+    def __str__(self):
+        return self.title
