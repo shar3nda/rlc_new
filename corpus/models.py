@@ -11,14 +11,14 @@ MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    gender = models.CharField(
-        max_length=10, choices=[("M", "Мужской"), ("F", "Женский"), ("O", "Неизвестно")]
-    )
+    GenderChoices = (("M", "Мужской"), ("F", "Женский"), ("O", "Неизвестно"))
+    gender = models.CharField(max_length=10, choices=GenderChoices)
     program = models.CharField(max_length=255)
+    LanguageBackgroundChoices = (("H", "Эритажный"), ("F", "Иностранный"))
     language_background = models.CharField(
-        max_length=10, choices=[("H", "Эритажный"), ("F", "Иностранный")]
+        max_length=10, choices=LanguageBackgroundChoices
     )
-    NativeChoices = (
+    DominantLanguageChoices = (
         ("eng", "English"),
         ("nor", "Norwegian"),
         ("kor", "Korean"),
@@ -77,12 +77,12 @@ class Author(models.Model):
         max_length=10,
         null=True,
         blank=False,
-        choices=NativeChoices,
+        choices=DominantLanguageChoices,
         db_index=True,
         verbose_name=_("dominant language"),
         help_text=_("Author's dominant language"),
     )
-    LevelChoices = (
+    LanguageLevelChoices = (
         (
             "Beginner",
             (
@@ -115,11 +115,11 @@ class Author(models.Model):
         ),
         ("Other", _("Other")),
     )
-    scale = models.CharField(
+    language_level = models.CharField(
         max_length=10,
         null=True,
         blank=False,
-        choices=LevelChoices,
+        choices=LanguageLevelChoices,
         db_index=True,
         help_text=_(
             "Enter the language level of the author. Both CEFR and ACTFL scales are"
@@ -206,13 +206,13 @@ class Document(models.Model):
 
     # The text of the document
     body = models.TextField(help_text=_("Paste the text here."), verbose_name=_("text"))
-    STATUS_CHOICES = (
+    StatusChoices = (
         (0, _("New")),
         (1, _("Annotated")),
         (2, _("Checked")),
     )
     # The status of the document (new, annotated, checked)
-    status = models.IntegerField(choices=STATUS_CHOICES, default=0)
+    status = models.IntegerField(choices=StatusChoices, default=0)
 
     author = models.ForeignKey(
         Author,
@@ -243,6 +243,10 @@ class Document(models.Model):
         # get sentences using nltk
 
         sentences = nltk.sent_tokenize(self.body, language="russian")
+        # delete existing sentences
+
+        Sentence.objects.filter(document=self).delete()
+
         for i, sentence in enumerate(sentences):
             Sentence.objects.create(document=self, text=sentence, number=i)
 
