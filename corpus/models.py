@@ -1,6 +1,6 @@
-import nltk
-import subprocess
 import platform
+
+import nltk
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -159,23 +159,21 @@ class Document(models.Model):
     date = models.IntegerField(
         null=True,
         blank=True,
-        help_text=_("When the text was written, e.g. 2014."),
-        verbose_name=_("date"),
     )
     # жанр текста
     GenreChoices = (
-        ("answers", _("Answers to questions")),
-        ("nonacademic", _("Non–academic essay")),
-        ("academic", _("Academic essay")),
-        ("blog", _("Blog")),
-        ("letter", _("Letter")),
-        ("story", _("Story")),
-        ("paraphrase", _("Paraphrase")),
-        ("definition", _("Definition")),
-        ("bio", _("Biography")),
-        ("description", _("Description")),
-        ("summary", _("Summary")),
-        ("other", _("Other")),
+        ("answers", "Ответы на вопросы"),
+        ("nonacademic", "Неакадемическое эссе"),
+        ("academic", "Академическое эссе"),
+        ("blog", "Блог"),
+        ("letter", "Письмо"),
+        ("story", "История"),
+        ("paraphrase", "Пересказ"),
+        ("definition", "Определение"),
+        ("bio", "Биография"),
+        ("description", "Описание"),
+        ("summary", "Краткое изложение"),
+        ("other", "Другое"),
     )
     genre = models.CharField(
         max_length=100,
@@ -200,16 +198,15 @@ class Document(models.Model):
         max_length=100,
         null=True,
         blank=True,
-        verbose_name=_("Подкорпус"),
         choices=SubcorpusChoices,
     )
 
     # The text of the document
-    body = models.TextField(help_text=_("Paste the text here."), verbose_name=_("text"))
+    body = models.TextField()
     StatusChoices = (
-        (0, _("New")),
-        (1, _("Annotated")),
-        (2, _("Checked")),
+        (0, "Новый"),
+        (1, "Аннотированный"),
+        (2, "Проверенный"),
     )
     # The status of the document (new, annotated, checked)
     status = models.IntegerField(choices=StatusChoices, default=0)
@@ -218,21 +215,10 @@ class Document(models.Model):
         Author,
         blank=True,
         null=True,
-        verbose_name=_("author"),
-        help_text=_(
-            "This is the corpus user who uploads the text to the corpus."
-            "Please, make sure that this field displays your login."
-        ),
         on_delete=models.PROTECT,
     )
 
-    source = models.TextField(
-        help_text=_(
-            "Name, surname and affiliation (institute, university or"
-            "language school) of a person who provided the text"
-        ),
-        verbose_name=_("Source"),
-    )
+    source = models.CharField(max_length=1000)
 
     def save(self, **kwargs):
         """
@@ -265,39 +251,6 @@ class Sentence(models.Model):
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     text = models.TextField()
     number = models.IntegerField()
-
-    # def save(
-    #     self, force_insert=False, force_update=False, using=None, update_fields=None
-    # ):
-    #     """
-    #     This method overrides the default save method of the model.
-    #     It is used to create Token objects for each token in the sentence.
-    #     """
-    #     super().save(force_insert, force_update, using, update_fields)
-    #     # get tokens using mystem
-    #     args = (
-    #         MYSTEM_PATH,
-    #         "-cisd",
-    #         "--format",
-    #         "json",
-    #         "--eng-gr",
-    #     )
-    #     process = subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    #     tokens = process.communicate(input=self.text.encode("utf-8"))[0].decode("utf-8")
-    #     tokens = tokens.split("\n")
-    #     tokens = [token for token in tokens if token]
-    #     search_text = self.text
-    #     for i, token in enumerate(tokens):
-    #         lpos = search_text.find(token)
-    #         rpos = lpos + len(token)
-    #         Token.objects.create(
-    #             token=token,
-    #             document=self.document,
-    #             sentence=self,
-    #             start=lpos,
-    #             end=rpos,
-    #         )
-    #         search_text = search_text[rpos:]
 
     @property
     def correction(self):
