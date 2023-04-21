@@ -14,3 +14,7 @@
 .custom-nav-padding {
   padding: 0.5rem;
 }
+
+.logo {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
