@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title%}{{ document.title }}{% endblock %}
 
 {% block content %}
   <div class="container mt-5">
@@ -10,7 +11,7 @@
             <h5 class="card-title">{{ document.title }}</h5>
             {% for sentence in sentences %}
               <div class="card mb-2" style="max-width: 100%;">
-                <div class="card-body">
+                <div class="card-body" id="sentence-card-{{ sentence.id }}">
                   <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
                        data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" class="sentence">
                     {{ sentence.text }}

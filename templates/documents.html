@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Документы{% endblock %}
 {% block content %}
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8">
+        <a href="{% url 'add_document' %}" class="btn btn-primary">
+          <i class="fa fa-plus"></i>
+          Создать документ
+        </a>
         {% for document in documents %}
           <div class="card mb-3">
             <div class="card-body">
