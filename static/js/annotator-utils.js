@@ -14,10 +14,10 @@ function getCookie(name) {
   return cookieValue;
 }
 
-async function createAnnotation(documentId, sentenceId, userId, guid, body) {
+async function createAnnotation(documentId, sentenceId, userId, guid, alt, body) {
   const url = '/api/annotations/create/';
   const data = {
-    document: documentId, sentence: sentenceId, user: userId, guid: guid, body
+    document: documentId, sentence: sentenceId, user: userId, guid: guid, alt: alt, body,
   };
   const response = await fetch(url, {
     method: 'POST',
@@ -35,7 +35,7 @@ async function createAnnotation(documentId, sentenceId, userId, guid, body) {
   }
 }
 
-async function updateAnnotation(documentId, sentenceId, userId, guid, body) {
+async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body) {
   const url = '/api/annotations/update/';
   const data = {
     document: documentId, sentence: sentenceId, user: userId, guid: guid, body
@@ -102,7 +102,12 @@ function initRecogito() {
         },
       ],
     });
-    r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
+    if (sentence.dataset.alt === 'true') {
+      r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
+    } else {
+      r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
+    }
+
     r.on('createAnnotation', async (annotation, overrideId) => {
       // TODO проверять, что аннотации не залезают друг на друга
       // Посылаем POST-запрос на сервер для сохранения аннотации
@@ -111,6 +116,7 @@ function initRecogito() {
         sentence.dataset.sentenceId,
         sentence.dataset.userId,
         annotation.id,
+        sentence.dataset.alt,
         annotation
       );
       console.log('Stored annotation:', annotation);
@@ -122,6 +128,7 @@ function initRecogito() {
         sentence.dataset.sentenceId,
         sentence.dataset.userId,
         annotation.id,
+        sentence.dataset.alt,
         annotation
       );
       console.log('Stored annotation:', annotation);

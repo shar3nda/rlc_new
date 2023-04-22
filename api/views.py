@@ -22,7 +22,16 @@ def get_documents(request):
 
 def get_sentence_annotations(request, sentence_id):
     if request.method == "GET":
-        sentence_annotations = Annotation.objects.filter(sentence=sentence_id)
+        sentence_annotations = Annotation.objects.filter(
+            sentence=sentence_id, alt=False
+        )
+        data = [annotation.json for annotation in sentence_annotations]
+        return JsonResponse(data, safe=False)
+
+
+def get_alt_sentence_annotations(request, sentence_id):
+    if request.method == "GET":
+        sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
         data = [annotation.json for annotation in sentence_annotations]
         return JsonResponse(data, safe=False)
 
@@ -35,6 +44,7 @@ def create_annotation(request):
             document=Document.objects.get(id=data["document"]),
             user=User.objects.get(id=data["user"]),
             guid=data["guid"],
+            alt=True if data["alt"] == "true" else False,
             json=data["body"],
         )
         return JsonResponse({"id": annotation.id})

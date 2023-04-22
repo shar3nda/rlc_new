@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title%}{{ document.title }}{% endblock %}
+{% block title %}{{ document.title }}{% endblock %}
 
 {% block content %}
   <div class="container mt-5">
@@ -10,15 +10,31 @@
           <div class="card-body">
             <h5 class="card-title">{{ document.title }}</h5>
             {% for sentence in sentences %}
-              <div class="card mb-2" style="max-width: 100%;">
+              <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
                 <div class="card-body" id="sentence-card-{{ sentence.id }}">
-                  <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
-                       data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" class="sentence">
-                    {{ sentence.text }}
-                  </div>
-                  <div id="correction-{{ correction.id }}" class="correction">
-                    {{ sentence.correction }}
-                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                      <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
+                           data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" data-alt="false"
+                           class="sentence">
+                        {{ sentence.text }}
+                      </div>
+                      <div id="correction-{{ correction.id }}" data-alt="false" class="correction">
+                        {{ sentence.correction }}
+                      </div>
+                    </li>
+                    <li class="list-group-item second-entry" style="display:none;">
+                      <div id="alt-sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
+                           data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" data-alt="true"
+                           class="sentence">
+                        {{ sentence.text }}
+                      </div>
+                      <div id="alt-correction-{{ correction.id }}" data-alt="true" class="correction">
+                        {{ sentence.alt_correction }}
+                      </div>
+                    </li>
+                  </ul>
+                  <button class="btn btn-primary toggle-entry mt-2" data-target-card="{{ sentence.id }}">Toggle</button>
                 </div>
               </div>
               <div id="recogito-{{ sentence.id }}" class="recogito"></div>
@@ -30,6 +46,14 @@
     </div>
   </div>
   <script>
+    $(".toggle-entry").click(function () {
+      var targetCardId = $(this).data("target-card");
+      var targetCard = $('div[data-card-id="' + targetCardId + '"]');
+
+      $(".second-entry").not(targetCard.find(".second-entry")).slideUp("slow");
+
+      targetCard.find(".second-entry").slideToggle(300);
+    });
     document.addEventListener('DOMContentLoaded', initRecogito);
   </script>
 {% endblock %}

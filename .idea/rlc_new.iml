@@ -27,6 +27,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Poetry (rlc_new) (3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="9e3f54553a" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />

@@ -246,12 +246,11 @@ class Sentence(models.Model):
     text = models.TextField()
     number = models.IntegerField()
 
-    @property
-    def correction(self):
+    def get_correction(self, alt=False):
         """
         This method returns the corrected text of the sentence.
         """
-        annotations = Annotation.objects.filter(sentence=self)
+        annotations = Annotation.objects.filter(sentence=self, alt=alt)
         if not annotations:
             return self.text
 
@@ -299,6 +298,14 @@ class Sentence(models.Model):
 
         return corrected_text
 
+    @property
+    def correction(self):
+        return self.get_correction()
+
+    @property
+    def alt_correction(self):
+        return self.get_correction(alt=True)
+
     def __str__(self):
         return self.text
 
@@ -313,6 +320,7 @@ class Annotation(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     guid = models.CharField(max_length=64, unique=True, editable=False, db_index=True)
     json = models.JSONField()
+    alt = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.json)
