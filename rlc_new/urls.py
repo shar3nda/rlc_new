@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from corpus.views import SignUpView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("content.urls")),
     path("corpus/", include("corpus.urls")),
     path("api/", include("api.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("register/", SignUpView.as_view(), name="register"),
 ]

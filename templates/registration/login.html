@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h5>Вход</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" action="{% url 'login' %}">
+              {% csrf_token %}
+              <div class="form-group mb-2">
+                <label for="username">Логин</label>
+                <input type="text" name="username" class="form-control" id="username" placeholder="Ваш логин..."
+                       required>
+              </div>
+              <div class="form-group mb-4">
+                <label for="password">Пароль</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Ваш пароль..."
+                       required>
+              </div>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <a href="{% url 'register' %}" class="btn btn-secondary">Создать аккаунт</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

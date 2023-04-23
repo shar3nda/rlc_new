@@ -1,6 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
+from django.views import generic
 
 from .forms import DocumentForm
 from .models import Document, Sentence, Author
@@ -15,6 +19,7 @@ def documents(request):
     return render(request, "documents.html", context)
 
 
+@login_required
 # Представление для аннотирования документа
 def annotate(request, document_id):
     doc = Document.objects.get(id=document_id)
@@ -67,3 +72,20 @@ def add_document(request):
         "authors": Author.objects.filter(favorite=True),
     }
     return render(request, "add_document.html", context)
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/register.html"
+
+
+def update_document_status(request, document_id):
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        document = get_object_or_404(Document, id=document_id)
+        document.status = int(status)
+        document.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error'})

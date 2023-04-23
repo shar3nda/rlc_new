@@ -17,53 +17,62 @@
   <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
 
 </head>
-<body>
-<div class="container">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <a class="navbar-brand" href="{% url 'homepage' %}">
-      <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="30"
-           width="80">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'homepage' %}">Главная</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Поиск</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'news' %}">Новости</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Помощь</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Статистика</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'documents' %}">Аннотировать</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Профиль</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</div>
+<body class="mb-4">
+{% block navbar %}
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <a class="navbar-brand" href="{% url 'homepage' %}">
+        <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="30"
+             width="80">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homepage' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Поиск</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'news' %}">Новости</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Помощь</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Статистика</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'documents' %}">Аннотировать</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Войти</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+{% endblock %}
+
 {% block content %}{% endblock %}
 
 </body>

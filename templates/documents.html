@@ -14,9 +14,7 @@
               <h5 class="card-title">{{ document.title }}</h5>
               <p class="card-text">{{ document.body }}</p>
               <p class="card-text"><small class="text-muted">{{ document.pub_date }}</small></p>
-              {% if request.user.is_superuser %}
-                <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
-              {% endif %}
+              <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
             </div>
           </div>
         {% endfor %}

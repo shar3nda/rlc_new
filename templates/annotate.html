@@ -8,7 +8,17 @@
       <div class="col-md-8">
         <div class="card mb-3">
           <div class="card-body">
-            <h5 class="card-title">{{ document.title }}</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="card-title">{{ document.title }}</h5>
+              <div class="form-group mb-0">
+                <label for="document-status" class="me-2">Статус документа:</label>
+                <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
+                  <option value="0" {% if document.status == 0 %}selected{% endif %}>Не аннотирован</option>
+                  <option value="1" {% if document.status == 1 %}selected{% endif %}>Аннотирован</option>
+                  <option value="2" {% if document.status == 2 %}selected{% endif %}>Проверен</option>
+                </select>
+              </div>
+            </div>
             {% for sentence in sentences %}
               <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
                 <div class="card-body position-relative pb-4" id="sentence-card-{{ sentence.id }}">
@@ -60,6 +70,30 @@
 
       targetCard.find(".second-entry").slideToggle(300);
       targetCard.toggleClass("second-entry-open");
+    });
+    $("#document-status").change(function () {
+      var status = $(this).val();
+      var documentId = "{{ document.id }}";
+      var csrfToken = getCSRFToken();
+
+      $.ajax({
+        url: "{% url 'update_document_status' document.id %}",
+        method: "POST",
+        data: {
+          'status': status,
+          'csrfmiddlewaretoken': csrfToken,
+        },
+        success: function (data) {
+          if (data.status === 'success') {
+            console.log("Document status updated successfully.");
+          } else {
+            console.error("Error updating document status.");
+          }
+        },
+        error: function () {
+          console.error("Error updating document status.");
+        }
+      });
     });
     document.addEventListener('DOMContentLoaded', initRecogito);
   </script>
