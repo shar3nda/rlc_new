@@ -248,3 +248,4 @@ package-lock.json
 package.json
 .eslintrc.js
 .vscode
+.idea
