@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <div class="container">
+    {% for article in articles %}
+      <div id="section{{ loop.index }}">
+        <h2>{{ article.header_rus }}</h2>
+        {{ article.text_rus|safe }}
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock content %}

@@ -11,7 +11,7 @@
             <h5 class="card-title">{{ document.title }}</h5>
             {% for sentence in sentences %}
               <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
-                <div class="card-body" id="sentence-card-{{ sentence.id }}">
+                <div class="card-body position-relative pb-4" id="sentence-card-{{ sentence.id }}">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                       <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
@@ -34,7 +34,12 @@
                       </div>
                     </li>
                   </ul>
-                  <button class="btn btn-primary toggle-entry mt-2" data-target-card="{{ sentence.id }}">Toggle</button>
+                  <div class="position-absolute bottom-0 end-0 mb-4">
+                    <button class="btn btn-sm btn-secondary toggle-entry" data-target-card="{{ sentence.id }}">
+                      <i class="arrow-icon fas fa-chevron-down" data-target-card="{{ sentence.id }}"></i>
+                    </button>
+                  </div>
+
                 </div>
               </div>
               <div id="recogito-{{ sentence.id }}" class="recogito"></div>
@@ -51,8 +56,10 @@
       var targetCard = $('div[data-card-id="' + targetCardId + '"]');
 
       $(".second-entry").not(targetCard.find(".second-entry")).slideUp("slow");
+      $(".card-body").not(targetCard).removeClass("second-entry-open");
 
       targetCard.find(".second-entry").slideToggle(300);
+      targetCard.toggleClass("second-entry-open");
     });
     document.addEventListener('DOMContentLoaded', initRecogito);
   </script>

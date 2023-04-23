@@ -79,6 +79,70 @@ function getCSRFToken() {
   return getCookie('csrftoken');
 }
 
+var CheckboxWidget = function (args) {
+
+  // 1. Find a current check status in the annotation, if any
+  var currentCheckBody = args.annotation ?
+    args.annotation.bodies.find(function (b) {
+      return b.purpose == 'highlighting';
+    }) : null;
+
+  // 2. Keep the value in a variable
+  var currentCheckValue = currentCheckBody ? currentCheckBody.value : false;
+
+  // 3. Triggers callbacks on user action
+  var toggleCheck = function (evt) {
+    if (currentCheckBody) {
+      args.onUpdateBody(currentCheckBody, {
+        type: 'TextualBody',
+        purpose: 'highlighting',
+        value: evt.target.checked
+      });
+    } else {
+      args.onAppendBody({
+        type: 'TextualBody',
+        purpose: 'highlighting',
+        value: evt.target.checked
+      });
+    }
+  }
+
+  // 4. This part renders the UI elements
+  var createCheckbox = function (checked) {
+    var checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = checked;
+    checkbox.addEventListener('change', toggleCheck);
+    return checkbox;
+  }
+  var createLabel = function () {
+    var label = document.createElement('label');
+    label.textContent = 'Orpho Annotation';
+
+    return label;
+  }
+
+  var container = document.createElement('div');
+  container.className = 'checkbox-widget';
+
+  var checkbox = createCheckbox(currentCheckValue);
+  var label = createLabel();
+
+  container.appendChild(checkbox);
+  container.appendChild(label);
+
+  return container;
+}
+
+var ColorFormatter = function (annotation) {
+  var highlightBody = annotation.bodies.find(function (b) {
+    return b.purpose == 'highlighting';
+  });
+
+  if (highlightBody)
+    return highlightBody.value;
+}
+
 function initRecogito() {
   // Get all the elements with the class 'sentence'
   const sentences = document.querySelectorAll('.sentence');
@@ -95,12 +159,14 @@ function initRecogito() {
       selectors: [{type: 'TextQuoteSelector'}],
       locale: 'ru',
       widgets: [
+        CheckboxWidget,
         'COMMENT',
         {
           widget: 'TAG',
           vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
         },
       ],
+      formatter: ColorFormatter
     });
     if (sentence.dataset.alt === 'true') {
       r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);

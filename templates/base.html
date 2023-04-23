@@ -6,63 +6,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}RLC{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/comment_widget.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <script src="{% static 'js/recogito.min.js' %}"></script>
+  <script src="{% static 'js/fontawesome-all.min.js' %}"></script>
   <script src="{% static 'js/annotator-utils.js' %}"></script>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
-  <script src="https://kit.fontawesome.com/9e3f54553a.js" crossorigin="anonymous"></script>
 
 </head>
-<body data-bs-theme="light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark custom-nav-padding">
-  <a class="navbar-brand" href="{% url 'homepage' %}">
-    <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="30" width="80">
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'homepage' %}">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Search</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">News</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Help</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Statistics</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'add_document' %}">Add Document</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'admin:index' %}">Admin Panel</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'documents' %}">Annotate</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Profile</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<body>
 <div class="container">
-  {% block content %}{% endblock %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <a class="navbar-brand" href="{% url 'homepage' %}">
+      <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="30"
+           width="80">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'homepage' %}">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Поиск</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'news' %}">Новости</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Помощь</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Статистика</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'documents' %}">Аннотировать</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Профиль</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
+{% block content %}{% endblock %}
 
 </body>
 </html>

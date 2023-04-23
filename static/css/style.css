@@ -1,20 +1,70 @@
+body {
+  padding-top: 70px;
+}
+
 .sentence {
-  color: #000;
   margin: 0;
   padding: 0;
 }
 
 .correction {
-  color: #808080;
+  color: #7f7f7f;
   font-style: italic;
   margin: 0;
   padding: 0;
 }
 
-.custom-nav-padding {
+.navbar {
   padding: 0.5rem;
 }
 
 .logo {
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
+
+/* 5. CSS styles for the color selector widget */
+.colorselector-widget {
+  padding: 5px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.checkbox-widget {
+  padding: 5px;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-widget input[type="checkbox"] {
+  outline: none;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.checkbox-widget label {
+  cursor: pointer;
+}
+
+.r6o-annotation.true {
+  background-color: rgb(20, 255, 67, .2);
+  border-bottom: 2px dashed rgb(20, 255, 67);
+}
+
+.toggle-entry {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.second-entry-open .toggle-entry {
+  transform: rotate(180deg);
+}
+
+.button-in-card {
+  bottom: 1rem;
 }

@@ -5,4 +5,5 @@ from .views import HomepageView
 
 urlpatterns = [
     path("", HomepageView.as_view(), name="homepage"),
+    path("news/", views.NewsView.as_view(), name="news"),
 ]
