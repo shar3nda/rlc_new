@@ -38,8 +38,11 @@ def add_document(request):
             # add user to the form
             form.instance.user = request.user
 
-            # extract the author from the form
-            if form.data["add_to_favorites"] == "on":
+            # check if add_to_favorites is present in the form
+            if (
+                "add_to_favorites" in form.data
+                and form.data["add_to_favorites"] == "on"
+            ):
                 author = Author.objects.create(
                     name=form.data["author_name"],
                     gender=form.data["author_gender"],
@@ -81,11 +84,11 @@ class SignUpView(generic.CreateView):
 
 
 def update_document_status(request, document_id):
-    if request.method == 'POST':
-        status = request.POST.get('status')
+    if request.method == "POST":
+        status = request.POST.get("status")
         document = get_object_or_404(Document, id=document_id)
         document.status = int(status)
         document.save()
-        return JsonResponse({'status': 'success'})
+        return JsonResponse({"status": "success"})
     else:
-        return JsonResponse({'status': 'error'})
+        return JsonResponse({"status": "error"})

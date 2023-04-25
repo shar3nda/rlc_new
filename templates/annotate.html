@@ -42,6 +42,11 @@
                       <div id="alt-correction-{{ correction.id }}" data-alt="true" class="correction">
                         {{ sentence.alt_correction }}
                       </div>
+                      <div id="sentence-markup-{{ sentence.id }}" class="sentence-markup">
+                        <h5>Морфологический разбор</h5>
+                        {{ sentence.markup|safe }}
+                      </div>
+
                     </li>
                   </ul>
                   <div class="position-absolute bottom-0 end-0 mb-4">
@@ -71,6 +76,7 @@
       targetCard.find(".second-entry").slideToggle(300);
       targetCard.toggleClass("second-entry-open");
     });
+
     $("#document-status").change(function () {
       var status = $(this).val();
       var documentId = "{{ document.id }}";
@@ -95,6 +101,11 @@
         }
       });
     });
+
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
     document.addEventListener('DOMContentLoaded', initRecogito);
   </script>
 {% endblock %}

@@ -1,9 +1,11 @@
 import platform
+import re
+import string
 
-import nltk
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 
 os = platform.system()
 MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
@@ -133,7 +135,7 @@ class Document(models.Model):
     """
 
     # The title of the document
-    title = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200)
     # The owner of the document (FK to User)
     user = models.ForeignKey(
         User,
@@ -214,27 +216,75 @@ class Document(models.Model):
 
     source = models.CharField(max_length=1000)
 
+    @staticmethod
+    def replace_word_outside_span(text, word, replacement):
+        span_pattern = re.compile(r"<span[^>]*>.*?</span>", re.IGNORECASE)
+        index = 0
+        while True:
+            match = span_pattern.search(text, index)
+            if not match:
+                break
+
+            start = text.find(word, index)
+            if start == -1:
+                break
+
+            if start < match.start():
+                return text[:start] + replacement + text[start + len(word) :]
+
+            index = match.end()
+
+        start = text.find(word, index)
+        if start != -1:
+            return text[:start] + replacement + text[start + len(word) :]
+
+        return text
+
     def save(self, **kwargs):
         """
         This method overrides the default save method of the model.
         It is used to create Sentence objects for each sentence in the document.
         """
         super().save(**kwargs)
-        # get sentences using nltk
 
-        sentences = nltk.sent_tokenize(self.body, language="russian")
-        # delete existing sentences
+        # load models
+        segmenter = Segmenter()
+        morph_vocab = MorphVocab()
+        # TODO при желании можно заменить на эмбеддинги и тэггер из худлита
+        emb = NewsEmbedding()
+        morph_tagger = NewsMorphTagger(emb)
+        doc = Doc(self.body)
 
-        Sentence.objects.filter(document=self).delete()
+        # tokenize the text
+        doc.segment(segmenter)
 
-        for i, sentence in enumerate(sentences):
-            Sentence.objects.create(document=self, text=sentence, number=i)
+        # tag morphology
+        doc.tag_morph(morph_tagger)
+
+        # lemmatize all tokens
+        for token in doc.tokens:
+            token.lemmatize(morph_vocab)
+
+        for number, sentence in enumerate(doc.sents):
+            text = sentence.text
+            markup = sentence.text
+            for token in sentence.tokens:
+                print(token)
+                tooltip_title = (
+                    f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
+                )
+                tooltip = f'<span data-toggle="tooltip" title="{tooltip_title}">{token.text}</span>'
+                markup = self.replace_word_outside_span(markup, token.text, tooltip)
+            Sentence.objects.create(
+                document=self, text=text, markup=markup, number=number
+            )
 
     class Meta:
         ordering = ["-created_on"]
 
-    def __str__(self):
-        return self.title
+
+def __str__(self):
+    return self.title
 
 
 class Sentence(models.Model):
@@ -244,6 +294,7 @@ class Sentence(models.Model):
 
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     text = models.TextField()
+    markup = models.TextField(null=True, blank=True)
     number = models.IntegerField()
 
     def get_correction(self, alt=False):
@@ -341,6 +392,8 @@ class Token(models.Model):
     sentence - номер предложения, к которому относится слово
     start - начальная позиция слова в предложении
     end - конечная позиция слова в предложении
+    pos - часть речи
+    feats - грамматические характеристики
     """
 
     token = models.CharField(max_length=200, db_index=True)
@@ -348,6 +401,9 @@ class Token(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.PROTECT)
     start = models.IntegerField()
     end = models.IntegerField()
+    pos = models.CharField(max_length=10, db_index=True, null=True)
+    feats = models.CharField(max_length=200, db_index=True, null=True)
+    lemma = models.CharField(max_length=200, db_index=True, null=True)
 
     def __str__(self):
         return self.token

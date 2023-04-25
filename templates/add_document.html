@@ -11,6 +11,12 @@
       <div class="col-md-6 offset-md-3">
         <form method="post" id="add-document-form">
           {% csrf_token %}
+          <div class="alert alert-danger" role="alert"
+               style="display: {% if form.non_field_errors %}block{% else %}none{% endif %};">
+            {% for error in form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
           <div class="row mb-3">
             <div class="col-md-6">
               <div class="form-group">
@@ -206,8 +212,8 @@
                 </div>
               </div>
               <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="add-to-favorites" name="add_to_favorites">
-                <label class="form-check-label" for="add-to-favorites">Добавить в избранные</label>
+                <input type="checkbox" class="form-check-input" id="add_to_favorites" name="add_to_favorites">
+                <label class="form-check-label" for="add_to_favorites">Добавить в избранные</label>
               </div>
             </div>
             <div class="form-group tab-pane fade" id="favorite-authors" style="display: none;">
