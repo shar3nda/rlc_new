@@ -14,9 +14,9 @@ from .models import Document, Sentence, Author
 # Представление для списка документов
 def documents(request):
     docs_list = Document.objects.all()
-    paginator = Paginator(docs_list, 10) # Show 5 documents per page
+    paginator = Paginator(docs_list, 10)  # Show 5 documents per page
 
-    page = request.GET.get('page')
+    page = request.GET.get("page")
     try:
         docs = paginator.page(page)
     except PageNotAnInteger:
@@ -51,11 +51,8 @@ def add_document(request):
             # add user to the form
             form.instance.user = request.user
 
-            # check if add_to_favorites is present in the form
-            if (
-                "add_to_favorites" in form.data
-                and form.data["add_to_favorites"] == "on"
-            ):
+            # TODO fix bug here
+            if form.data["author_selection_method"] == "manual":
                 author = Author.objects.create(
                     name=form.data["author_name"],
                     gender=form.data["author_gender"],
@@ -63,7 +60,9 @@ def add_document(request):
                     language_background=form.data["author_language_background"],
                     dominant_language=form.data["author_dominant_language"],
                     language_level=form.data["author_language_level"],
-                    favorite=form.data["add_to_favorites"] == "on",
+                    # if add_to_favorites is in form
+                    favorite="add_to_favorites" in form.data
+                    and form.data["add_to_favorites"] == "on",
                 )
             else:
                 # get an existing author
