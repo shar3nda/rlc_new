@@ -141,11 +141,6 @@ class Document(models.Model):
         User,
         blank=True,
         null=True,
-        verbose_name=_("owner"),
-        help_text=_(
-            "This is the corpus user who uploads the text to the corpus."
-            "Please, make sure that this field displays your login."
-        ),
         on_delete=models.PROTECT,
     )
     # The date when the document was created

@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -12,7 +13,19 @@ from .models import Document, Sentence, Author
 
 # Представление для списка документов
 def documents(request):
-    docs = Document.objects.all()
+    docs_list = Document.objects.all()
+    paginator = Paginator(docs_list, 10) # Show 5 documents per page
+
+    page = request.GET.get('page')
+    try:
+        docs = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        docs = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        docs = paginator.page(paginator.num_pages)
+
     context = {
         "documents": docs,
     }
