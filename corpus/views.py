@@ -13,8 +13,8 @@ from .models import Document, Sentence, Author
 
 # Представление для списка документов
 def documents(request):
-    status = request.GET.get('status', None)
-    if status in ['0', '1', '2']:
+    status = request.GET.get("status", None)
+    if status in ["0", "1", "2"]:
         docs_list = Document.objects.filter(status=status)
     else:
         docs_list = Document.objects.all()
