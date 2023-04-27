@@ -13,8 +13,13 @@ from .models import Document, Sentence, Author
 
 # Представление для списка документов
 def documents(request):
-    docs_list = Document.objects.all()
-    paginator = Paginator(docs_list, 10)  # Show 5 documents per page
+    status = request.GET.get('status', None)
+    if status in ['0', '1', '2']:
+        docs_list = Document.objects.filter(status=status)
+    else:
+        docs_list = Document.objects.all()
+
+    paginator = Paginator(docs_list, 10)  # Show 10 documents per page.
 
     page = request.GET.get("page")
     try:
@@ -28,6 +33,7 @@ def documents(request):
 
     context = {
         "documents": docs,
+        "current_status": status,
     }
     return render(request, "documents.html", context)
 

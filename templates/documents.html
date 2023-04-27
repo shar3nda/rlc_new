@@ -8,6 +8,27 @@
           <i class="fa fa-plus"></i>
           Создать документ
         </a>
+
+
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link{% if current_status != '0' and current_status != '1' and current_status != '2' %} active{% endif %}"
+               href="?">Все</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if current_status == '0' %} active{% endif %}"
+               href="?status=0">Не аннотировано</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if current_status == '1' %} active{% endif %}"
+               href="?status=1">Аннотировано</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link{% if current_status == '2' %} active{% endif %}"
+               href="?status=2">Проверено</a>
+          </li>
+        </ul>
+
         {% for document in documents %}
           <div class="card mb-3">
             <div class="card-body">
