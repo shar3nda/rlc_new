@@ -13,26 +13,49 @@
           <div class="card-body">
             <form method="post" action="{% url 'register' %}">
               {% csrf_token %}
-              {{ form.non_field_errors }}
+              {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                  {{ form.non_field_errors }}
+                </div>
+              {% endif %}
               <div class="form-group mb-2">
                 <label for="username">Username</label>
-                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" required>
-                {{ form.username.errors }}
+                <input type="text" name="username" class="form-control" id="username" placeholder="Enter username"
+                       required>
+                {% if form.username.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.username.errors }}
+                  </div>
+                {% endif %}
               </div>
               <div class="form-group mb-2">
                 <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
-                {{ form.email.errors }}
+                {% if form.email.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.email.errors }}
+                  </div>
+                {% endif %}
               </div>
               <div class="form-group mb-2">
                 <label for="password1">Password</label>
-                <input type="password" name="password1" class="form-control" id="password1" placeholder="Enter password" required>
-                {{ form.password1.errors }}
+                <input type="password" name="password1" class="form-control" id="password1" placeholder="Enter password"
+                       required>
+                {% if form.password1.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.password1.errors }}
+                  </div>
+                {% endif %}
               </div>
               <div class="form-group mb-4">
                 <label for="password2">Confirm Password</label>
-                <input type="password" name="password2" class="form-control" id="password2" placeholder="Confirm password" required>
-                {{ form.password2.errors }}
+                <input type="password" name="password2" class="form-control" id="password2"
+                       placeholder="Confirm password" required>
+                {% if form.password2.errors %}
+                  <div class="alert alert-danger mt-2" role="alert">
+                    {{ form.password2.errors }}
+                  </div>
+                {% endif %}
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
