@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corpus.apps.CorpusConfig",
     "content.apps.ContentConfig",
+    "django.contrib.postgres",
     "api.apps.ApiConfig",
 ]
 

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Search Documents</h1>
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Search documents..." value="{{ query }}">
+        <input type="submit" value="Search">
+    </form>
+
+    {% if documents %}
+        <h2>Search results:</h2>
+        <ul>
+        {% for document in documents %}
+            <li>
+                <h3>{{ document.title }}</h3>
+                <p>Author: {{ document.author }}</p>
+                <p>Created on: {{ document.created_on }}</p>
+                <p>Genre: {{ document.get_genre_display }}</p>
+                <p>Subcorpus: {{ document.subcorpus }}</p>
+                <p>Status: {{ document.get_status_display }}</p>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No documents found.</p>
+    {% endif %}
+{% endblock %}

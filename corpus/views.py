@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -110,3 +111,19 @@ def update_document_status(request, document_id):
         return JsonResponse({"status": "success"})
     else:
         return JsonResponse({"status": "error"})
+
+
+def search(request):
+    query = request.GET.get("q")
+    if query:
+        search_vector = SearchVector('body')
+        search_query = SearchQuery(query)
+        document_list = Document.objects.annotate(search=search_vector).filter(search=search_query)
+    else:
+        document_list = Document.objects.all()
+
+    context = {
+        "documents": document_list,
+        "query": query,
+    }
+    return render(request, "search.html", context)

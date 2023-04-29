@@ -11,4 +11,5 @@ urlpatterns = [
         views.update_document_status,
         name="update_document_status",
     ),
+    path("search/", views.search, name="search"),
 ]
