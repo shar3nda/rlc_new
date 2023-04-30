@@ -75,3 +75,10 @@ def get_new_id(request):
             new_id = Annotation.objects.last().id + 1
         data = {"id": new_id}
         return JsonResponse(data)
+
+
+def get_sentence_corrections(request, sentence_id):
+    if request.method == "GET":
+        sentence = Sentence.objects.get(id=sentence_id)
+        data = {"correction": sentence.correction, "alt_correction": sentence.alt_correction}
+        return JsonResponse(data)

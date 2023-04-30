@@ -29,7 +29,7 @@
                            class="sentence">
                         {{ sentence.text }}
                       </div>
-                      <div id="correction-{{ correction.id }}" data-alt="false" class="correction">
+                      <div id="correction-{{ sentence.id }}" data-alt="false" class="correction">
                         {{ sentence.correction }}
                       </div>
                     </li>
@@ -39,7 +39,7 @@
                            class="sentence">
                         {{ sentence.text }}
                       </div>
-                      <div id="alt-correction-{{ correction.id }}" data-alt="true" class="correction">
+                      <div id="alt-correction-{{ sentence.id }}" data-alt="true" class="correction">
                         {{ sentence.alt_correction }}
                       </div>
                       <div id="sentence-markup-{{ sentence.id }}" class="sentence-markup">
@@ -105,6 +105,32 @@
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
+
+    function updateCorrections(sentenceId) {
+      const url = `/api/get_corrections/${sentenceId}`;
+
+      $.ajax({
+        type: "GET",
+        url: url,
+        success: function (response) {
+          // Update the correction and alt_correction fields on the page
+          const correction = response.correction;
+          const altCorrection = response.alt_correction;
+
+          $(`#correction-${sentenceId}`).text(correction);
+          $(`#alt-correction-${sentenceId}`).text(altCorrection);
+        },
+        error: function (xhr, status, error) {
+          console.error("Error updating corrections:", error);
+        }
+      });
+    }
+
+    function refreshCorrections() {
+      {% for sentence in sentences %}
+        updateCorrections({{ sentence.id }});
+      {% endfor %}
+    }
 
     document.addEventListener('DOMContentLoaded', initRecogito);
   </script>

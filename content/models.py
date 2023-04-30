@@ -7,7 +7,7 @@ class Article(models.Model):
     """A class for news articles."""
 
     owner = models.ForeignKey(
-        User, db_index=True, blank=True, null=True, on_delete=models.PROTECT
+        User, db_index=True, blank=True, null=True, on_delete=models.CASCADE
     )
     date = models.DateField(
         help_text="Выберите",

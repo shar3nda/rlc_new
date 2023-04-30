@@ -1,6 +1,5 @@
 import platform
 import re
-import string
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -13,73 +12,84 @@ MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    GenderChoices = (("M", "Мужской"), ("F", "Женский"), ("O", "Неизвестно"))
-    gender = models.CharField(max_length=10, choices=GenderChoices)
+
+    class GenderChoices(models.TextChoices):
+        M = "M", "Мужской"
+        F = "F", "Женский"
+        O = "O", "Неизвестно"
+
+    gender = models.CharField(max_length=10, choices=GenderChoices.choices)
     program = models.CharField(max_length=255)
-    LanguageBackgroundChoices = (("H", "Эритажный"), ("F", "Иностранный"))
+
+    class LanguageBackgroundChoices(models.TextChoices):
+        H = "H", "Эритажный"
+        F = "F", "Иностранный"
+
     language_background = models.CharField(
-        max_length=10, choices=LanguageBackgroundChoices
+        max_length=10, choices=LanguageBackgroundChoices.choices
     )
-    DominantLanguageChoices = (
-        ("abk", "Абхазский"),
-        ("aze", "Азербайджанский"),
-        ("alb", "Албанский"),
-        ("amh", "Амхарский"),
-        ("eng", "Английский"),
-        ("ara", "Арабский"),
-        ("arm", "Армянский"),
-        ("ben", "Бенгальский"),
-        ("bul", "Болгарский"),
-        ("hun", "Венгерский"),
-        ("vie", "Вьетнамский"),
-        ("dut", "Голландский"),
-        ("gre", "Греческий"),
-        ("geo", "Грузинский"),
-        ("dag", "Дагестанский"),
-        ("dar", "Дари"),
-        ("heb", "Иврит"),
-        ("ind", "Индонезийский"),
-        ("spa", "Испанский"),
-        ("ita", "Итальянский"),
-        ("kaz", "Казахский"),
-        ("chi", "Китайский"),
-        ("kor", "Корейский"),
-        ("kur", "Курдский"),
-        ("khm", "Кхмерский"),
-        ("lao", "Лаосский"),
-        ("mac", "Македонский"),
-        ("mon", "Монгольский"),
-        ("ger", "Немецкий"),
-        ("nep", "Непальский"),
-        ("nor", "Норвежский"),
-        ("por", "Португальский"),
-        ("pas", "Пушту"),
-        ("rom", "Румынский"),
-        ("ser", "Сербский"),
-        ("svk", "Словацкий"),
-        ("slo", "Словенский"),
-        ("taj", "Таджикский"),
-        ("tha", "Тайский"),
-        ("tur", "Турецкий"),
-        ("turkmen", "Туркменский"),
-        ("uzb", "Узбекский"),
-        ("urd", "Урду"),
-        ("far", "Фарси"),
-        ("fin", "Финский"),
-        ("fr", "Французский"),
-        ("hin", "Хинди"),
-        ("cro", "Хорватский"),
-        ("sho", "Чешский"),
-        ("swe", "Шведский"),
-        ("sho", "Шона"),
-        ("est", "Эстонский"),
-        ("jap", "Японский"),
-    )
+
+    class DominantLanguageChoices(models.TextChoices):
+        ABK = "abk", _("Абхазский")
+        AZE = "aze", _("Азербайджанский")
+        ALB = "alb", _("Албанский")
+        AMH = "amh", _("Амхарский")
+        ENG = "eng", _("Английский")
+        ARA = "ara", _("Арабский")
+        ARM = "arm", _("Армянский")
+        BEN = "ben", _("Бенгальский")
+        BUL = "bul", _("Болгарский")
+        HUN = "hun", _("Венгерский")
+        VIE = "vie", _("Вьетнамский")
+        DUT = "dut", _("Голландский")
+        GRE = "gre", _("Греческий")
+        GEO = "geo", _("Грузинский")
+        DAG = "dag", _("Дагестанский")
+        DAR = "dar", _("Дари")
+        HEB = "heb", _("Иврит")
+        IND = "ind", _("Индонезийский")
+        SPA = "spa", _("Испанский")
+        ITA = "ita", _("Итальянский")
+        KAZ = "kaz", _("Казахский")
+        CHI = "chi", _("Китайский")
+        KOR = "kor", _("Корейский")
+        KUR = "kur", _("Курдский")
+        KHM = "khm", _("Кхмерский")
+        LAO = "lao", _("Лаосский")
+        MAC = "mac", _("Македонский")
+        MON = "mon", _("Монгольский")
+        GER = "ger", _("Немецкий")
+        NEP = "nep", _("Непальский")
+        NOR = "nor", _("Норвежский")
+        POR = "por", _("Португальский")
+        PAS = "pas", _("Пушту")
+        ROM = "rom", _("Румынский")
+        SER = "ser", _("Сербский")
+        SVK = "svk", _("Словацкий")
+        SLO = "slo", _("Словенский")
+        TAJ = "taj", _("Таджикский")
+        THA = "tha", _("Тайский")
+        TUR = "tur", _("Турецкий")
+        TURKMEN = "turkmen", _("Туркменский")
+        UZB = "uzb", _("Узбекский")
+        URD = "urd", _("Урду")
+        FAR = "far", _("Фарси")
+        FIN = "fin", _("Финский")
+        FR = "fr", _("Французский")
+        HIN = "hin", _("Хинди")
+        CRO = "cro", _("Хорватский")
+        SHO = "sho", _("Чешский")
+        SWE = "swe", _("Шведский")
+        SHONA = "shona", _("Шона")
+        EST = "est", _("Эстонский")
+        JAP = "jap", _("Японский")
+
     dominant_language = models.CharField(
         max_length=10,
         null=True,
         blank=False,
-        choices=DominantLanguageChoices,
+        choices=DominantLanguageChoices.choices,
+        default=DominantLanguageChoices.ENG,
         db_index=True,
     )
     LanguageLevelChoices = (
@@ -141,7 +151,7 @@ class Document(models.Model):
         User,
         blank=True,
         null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
     # The date when the document was created
     created_on = models.DateTimeField(auto_now_add=True)
@@ -151,62 +161,67 @@ class Document(models.Model):
         null=True,
         blank=True,
     )
+
     # жанр текста
-    GenreChoices = (
-        ("answers", "Ответы на вопросы"),
-        ("nonacademic", "Неакадемическое эссе"),
-        ("academic", "Академическое эссе"),
-        ("blog", "Блог"),
-        ("letter", "Письмо"),
-        ("story", "История"),
-        ("paraphrase", "Пересказ"),
-        ("definition", "Определение"),
-        ("bio", "Биография"),
-        ("description", "Описание"),
-        ("summary", "Краткое изложение"),
-        ("other", "Другое"),
-    )
+    class GenreChoices(models.TextChoices):
+        ANSWERS = "answers", "Ответы на вопросы"
+        NONACADEMIC = "nonacademic", "Неакадемическое эссе"
+        ACADEMIC = "academic", "Академическое эссе"
+        BLOG = "blog", "Блог"
+        LETTER = "letter", "Письмо"
+        STORY = "story", "История"
+        PARAPHRASE = "paraphrase", "Пересказ"
+        DEFINITION = "definition", "Определение"
+        BIO = "bio", "Биография"
+        DESCRIPTION = "description", "Описание"
+        SUMMARY = "summary", "Краткое изложение"
+        OTHER = "other", "Другое"
+
     genre = models.CharField(
         max_length=100,
         null=True,
         blank=True,
         db_index=True,
         verbose_name=_("genre"),
-        choices=GenreChoices,
+        choices=GenreChoices.choices,
+        default=GenreChoices.OTHER,
     )
 
     # название подкорпуса
-    SubcorpusChoices = (
-        ("HSE", "HSE"),
-        ("UNICE", "UNICE"),
-        ("RULEC", "RULEC"),
-        ("FIN", "FIN"),
-        ("BERLIN", "BERLIN"),
-        ("TOKYO", "TOKYO"),
-        ("SFEDU", "SFEDU"),
-    )
+    class SubcorpusChoices(models.TextChoices):
+        HSE = "HSE", "HSE"
+        UNICE = "UNICE", "UNICE"
+        RULEC = "RULEC", "RULEC"
+        FIN = "FIN", "FIN"
+        BERLIN = "BERLIN", "BERLIN"
+        TOKYO = "TOKYO", "TOKYO"
+        SFEDU = "SFEDU", "SFEDU"
+
     subcorpus = models.CharField(
-        max_length=100,
+        max_length=10,
         null=True,
         blank=True,
-        choices=SubcorpusChoices,
+        choices=SubcorpusChoices.choices,
+        db_index=True,
+        default=SubcorpusChoices.HSE,
     )
 
     # The text of the document
     body = models.TextField()
-    StatusChoices = (
-        (0, "Новый"),
-        (1, "Аннотированный"),
-        (2, "Проверенный"),
-    )
+
+    class StatusChoices(models.IntegerChoices):
+        NEW = 0, "Новый"
+        ANNOTATED = 1, "Аннотированный"
+        CHECKED = 2, "Проверенный"
+
     # The status of the document (new, annotated, checked)
-    status = models.IntegerField(choices=StatusChoices, default=0)
+    status = models.IntegerField(choices=StatusChoices.choices, default=0)
 
     author = models.ForeignKey(
         Author,
         blank=True,
         null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
     )
 
     source = models.CharField(max_length=1000)
@@ -264,7 +279,6 @@ class Document(models.Model):
             text = sentence.text
             markup = sentence.text
             for token in sentence.tokens:
-                print(token)
                 tooltip_title = (
                     f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
                 )
@@ -277,9 +291,8 @@ class Document(models.Model):
     class Meta:
         ordering = ["-created_on"]
 
-
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
 
 
 class Sentence(models.Model):
@@ -367,11 +380,12 @@ class Annotation(models.Model):
     An annotation is a piece of text that is annotated by a user.
     """
 
-    document = models.ForeignKey(Document, on_delete=models.PROTECT)
-    sentence = models.ForeignKey(Sentence, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
+    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     guid = models.CharField(max_length=64, unique=True, editable=False, db_index=True)
     json = models.JSONField()
+    alt = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.json)
@@ -391,8 +405,8 @@ class Token(models.Model):
     """
 
     token = models.CharField(max_length=200, db_index=True)
-    document = models.ForeignKey(Document, on_delete=models.PROTECT)
-    sentence = models.ForeignKey(Sentence, on_delete=models.PROTECT)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
+    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     start = models.IntegerField()
     end = models.IntegerField()
     pos = models.CharField(max_length=10, db_index=True, null=True)
@@ -417,7 +431,7 @@ class Morphology(models.Model):
     gram - все прочие грамматические характеристики
     """
 
-    token = models.ForeignKey(Token, on_delete=models.PROTECT)
+    token = models.ForeignKey(Token, on_delete=models.CASCADE)
     lemma = models.CharField(max_length=200, db_index=True)
     part_of_speech = models.CharField(max_length=200, db_index=True)
     grammemes = models.CharField(max_length=200, db_index=True)

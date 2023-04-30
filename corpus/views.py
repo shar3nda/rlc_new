@@ -2,13 +2,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import DocumentForm
+from .filters import DocumentFilter
+from .forms import DocumentForm, SearchForm
 from .models import Document, Sentence, Author
 
 
@@ -58,7 +58,6 @@ def add_document(request):
             # add user to the form
             form.instance.user = request.user
 
-            # TODO fix bug here
             if form.data["author_selection_method"] == "manual":
                 author = Author.objects.create(
                     name=form.data["author_name"],
@@ -114,16 +113,35 @@ def update_document_status(request, document_id):
 
 
 def search(request):
-    query = request.GET.get("q")
-    if query:
-        search_vector = SearchVector('body')
-        search_query = SearchQuery(query)
-        document_list = Document.objects.annotate(search=search_vector).filter(search=search_query)
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            request.session["search_params"] = request.POST.urlencode()
+            return redirect("search_results", page=1)
     else:
-        document_list = Document.objects.all()
+        form = SearchForm()
 
-    context = {
-        "documents": document_list,
-        "query": query,
-    }
-    return render(request, "search.html", context)
+    return render(request, "search.html", {"form": form})
+
+
+def search_results(request, page):
+    search_params = request.session.get("search_params")
+    if search_params:
+        form = SearchForm(QueryDict(search_params))
+        document_filter = DocumentFilter(
+            QueryDict(search_params), queryset=Document.objects.all()
+        )
+    else:
+        form = SearchForm()
+        document_filter = DocumentFilter(queryset=Document.objects.none())
+
+    paginator = Paginator(document_filter.qs, 10)  # Show 10 results per page
+
+    try:
+        results = paginator.page(page)
+    except PageNotAnInteger:
+        results = paginator.page(1)
+    except EmptyPage:
+        results = paginator.page(paginator.num_pages)
+
+    return render(request, "search_results.html", {"form": form, "results": results})

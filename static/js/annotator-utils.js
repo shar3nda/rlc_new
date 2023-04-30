@@ -187,6 +187,7 @@ function initRecogito() {
         annotation
       );
       console.log('Stored annotation:', annotation);
+      refreshCorrections();
     });
     r.on('updateAnnotation', async (annotation, previous) => {
       // Посылаем POST-запрос на сервер для сохранения аннотации
@@ -199,11 +200,13 @@ function initRecogito() {
         annotation
       );
       console.log('Stored annotation:', annotation);
+      refreshCorrections();
     });
     r.on('deleteAnnotation', async (annotation) => {
       // Посылаем POST-запрос на сервер для удаления аннотации
       await deleteAnnotation(annotation.id);
       console.log('Deleted annotation:', annotation);
+      refreshCorrections();
     });
   });
 }

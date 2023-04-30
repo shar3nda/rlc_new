@@ -16,4 +16,5 @@ urlpatterns = [
     path("annotations/create/", views.create_annotation, name="create_annotation"),
     path("annotations/update/", views.update_annotation, name="update_annotation"),
     path("annotations/delete/", views.delete_annotation, name="delete_annotation"),
+    path("get_corrections/<int:sentence_id>/", views.get_sentence_corrections, name="get_sentence_corrections"),
 ]
