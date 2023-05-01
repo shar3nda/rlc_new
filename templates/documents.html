@@ -30,23 +30,7 @@
         </ul>
 
         {% for document in documents %}
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">{{ document.title }}</h5>
-              <p class="card-text">{{ document.body }}</p>
-              <p class="card-text">
-                <small class="text-muted">Добавлено: {{ document.created_on }}</small>
-              </p>
-              <p class="card-text">Автор: {{ document.author }}</p>
-              <p class="card-text">Подкорпус: {{ document.get_subcorpus_display }}</p>
-              <p class="card-text">Жанр: {{ document.get_genre_display }}</p>
-              <p class="card-text">Источник: {{ document.source }}</p>
-              <p class="card-text">Язык автора: {{ document.author.get_dominant_language_display }}</p>
-              <p class="card-text">Статус: {{ document.get_status_display }}</p>
-              <p class="card-text">Создано: {{ document.created_on }}</p>
-              <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
-            </div>
-          </div>
+          {% include 'document_card.html' %}
         {% endfor %}
 
         <div class="d-flex justify-content-center">

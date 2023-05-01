@@ -250,13 +250,15 @@ class Document(models.Model):
 
         return text
 
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         """
         This method overrides the default save method of the model.
         It is used to create Sentence objects for each sentence in the document.
         """
         super().save(**kwargs)
-
+        # if the document is already saved, don't tokenize it again
+        if self.pk:
+            return
         # load models
         segmenter = Segmenter()
         morph_vocab = MorphVocab()
@@ -275,6 +277,7 @@ class Document(models.Model):
         for token in doc.tokens:
             token.lemmatize(morph_vocab)
 
+        # create Sentence objects
         for number, sentence in enumerate(doc.sents):
             text = sentence.text
             markup = sentence.text

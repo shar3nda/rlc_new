@@ -18,9 +18,7 @@ fake = Faker("ru_RU")
 # Create the admin user
 print("Creating admin user")
 User.objects.create_superuser(
-    username='admin',
-    email='admin@example.com',
-    password='password'
+    username="admin", email="admin@example.com", password="password"
 )
 
 # Create some fake users
@@ -57,6 +55,19 @@ for i in tqdm(range(num_sections), desc="Creating sections"):
 
 # Create some fake authors
 num_authors = 10
+
+
+def get_random_language_level():
+    # Flatten the choices tuple
+    flattened_choices = [
+        choice for group in Author.LanguageLevelChoices[:-1] for choice in group[1]
+    ] + [Author.LanguageLevelChoices[-1]]
+    # Select a random language level from the flattened choices
+    random_language_level = random.choice(flattened_choices)
+
+    return random_language_level[0]
+
+
 for _ in tqdm(range(num_authors), desc="Creating authors"):
     Author.objects.create(
         name=fake.name(),
@@ -64,9 +75,7 @@ for _ in tqdm(range(num_authors), desc="Creating authors"):
         program=fake.word(),
         language_background=random.choice(Author.LanguageBackgroundChoices.values),
         dominant_language=random.choice(Author.DominantLanguageChoices.values),
-        language_level=random.choice(
-            [choice[0] for group in Author.LanguageLevelChoices for choice in group[1]]
-        ),
+        language_level=get_random_language_level(),
         favorite=fake.boolean(),
     )
 
@@ -86,5 +95,4 @@ for _ in tqdm(range(num_documents), desc="Creating documents"):
         status=random.choice(Document.StatusChoices.values),
         body=fake.text(),
     )
-
 print("Seeder completed!")

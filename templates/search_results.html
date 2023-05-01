@@ -7,66 +7,51 @@
         <h3>Результаты поиска</h3>
         {% if results %}
           {% for document in results %}
-                <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">{{ document.title }}</h5>
-            <p class="card-text">{{ document.body }}</p>
-            <p class="card-text">
-                <small class="text-muted">Добавлено: {{ document.created_on }}</small>
-            </p>
-            <p class="card-text">Автор: {{ document.author }}</p>
-            <p class="card-text">Подкорпус: {{ document.get_subcorpus_display }}</p>
-            <p class="card-text">Жанр: {{ document.get_genre_display }}</p>
-            <p class="card-text">Источник: {{ document.source }}</p>
-            <p class="card-text">Язык автора: {{ document.author.get_dominant_language_display }}</p>
-            <p class="card-text">Статус: {{ document.get_status_display }}</p>
-            <p class="card-text">Создано: {{ document.created_on }}</p>
-            <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
-        </div>
-    </div>
+            {% include 'document_card.html' %}
           {% endfor %}
 
-              <nav aria-label="Page navigation">
-      <ul class="pagination">
-        {% if results.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="{% url 'search_results' 1 %}" aria-label="First">
-              <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="{% url 'search_results' results.previous_page_number %}" aria-label="Previous">
-              <span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
-            </a>
-          </li>
-        {% endif %}
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              {% if results.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'search_results' 1 %}" aria-label="First">
+                    <span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'search_results' results.previous_page_number %}"
+                     aria-label="Previous">
+                    <span aria-hidden="true"><i class="fas fa-angle-left"></i></span>
+                  </a>
+                </li>
+              {% endif %}
 
-        {% for i in results.paginator.page_range %}
-          {% if results.number == i %}
-            <li class="page-item active">
-              <a class="page-link" href="#">{{ i }}</a>
-            </li>
-          {% elif i > results.number|add:"-3" and i < results.number|add:"3" %}
-            <li class="page-item">
-              <a class="page-link" href="{% url 'search_results' i %}">{{ i }}</a>
-            </li>
-          {% endif %}
-        {% endfor %}
+              {% for i in results.paginator.page_range %}
+                {% if results.number == i %}
+                  <li class="page-item active">
+                    <a class="page-link" href="#">{{ i }}</a>
+                  </li>
+                {% elif i > results.number|add:"-3" and i < results.number|add:"3" %}
+                  <li class="page-item">
+                    <a class="page-link" href="{% url 'search_results' i %}">{{ i }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
 
-        {% if results.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="{% url 'search_results' results.next_page_number %}" aria-label="Next">
-              <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="{% url 'search_results' results.paginator.num_pages %}" aria-label="Last">
-              <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
+              {% if results.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'search_results' results.next_page_number %}" aria-label="Next">
+                    <span aria-hidden="true"><i class="fas fa-angle-right"></i></span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="{% url 'search_results' results.paginator.num_pages %}" aria-label="Last">
+                    <span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
         {% else %}
           <p>No results found.</p>
         {% endif %}

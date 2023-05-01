@@ -80,5 +80,8 @@ def get_new_id(request):
 def get_sentence_corrections(request, sentence_id):
     if request.method == "GET":
         sentence = Sentence.objects.get(id=sentence_id)
-        data = {"correction": sentence.correction, "alt_correction": sentence.alt_correction}
+        data = {
+            "correction": sentence.correction,
+            "alt_correction": sentence.alt_correction,
+        }
         return JsonResponse(data)

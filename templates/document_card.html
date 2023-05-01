@@ -1,0 +1,41 @@
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{ document.title }}</h5>
+    <p class="card-text">{{ document.body }}</p>
+    <dl class="row">
+      <dt class="col-sm-3">Добавлено:</dt>
+      <dd class="col-sm-9">{{ document.created_on }}</dd>
+
+      <dt class="col-sm-3">Автор:</dt>
+      <dd class="col-sm-9">{{ document.author.name }}</dd>
+
+      <dt class="col-sm-3">Пол автора:</dt>
+      <dd class="col-sm-9">{{ document.author.get_gender_display }}</dd>
+
+      <dt class="col-sm-3">Программа автора:</dt>
+      <dd class="col-sm-9">{{ document.author.program }}</dd>
+
+      <dt class="col-sm-3">Языковой фон автора:</dt>
+      <dd class="col-sm-9">{{ document.author.get_language_background_display }}</dd>
+
+      <dt class="col-sm-3">Язык автора:</dt>
+      <dd class="col-sm-9">{{ document.author.get_dominant_language_display }}</dd>
+
+      <dt class="col-sm-3">Уровень языка автора:</dt>
+      <dd class="col-sm-9">{{ document.author.get_language_level_display }}</dd>
+
+      <dt class="col-sm-3">Подкорпус:</dt>
+      <dd class="col-sm-9">{{ document.get_subcorpus_display }}</dd>
+
+      <dt class="col-sm-3">Жанр:</dt>
+      <dd class="col-sm-9">{{ document.get_genre_display }}</dd>
+
+      <dt class="col-sm-3">Источник:</dt>
+      <dd class="col-sm-9">{{ document.source }}</dd>
+
+      <dt class="col-sm-3">Статус:</dt>
+      <dd class="col-sm-9">{{ document.get_status_display }}</dd>
+    </dl>
+    <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
+  </div>
+</div>
