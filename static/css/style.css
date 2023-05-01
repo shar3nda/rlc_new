@@ -69,6 +69,11 @@ body {
   bottom: 1rem;
 }
 
+.accordion-button {
+  background-color: white;
+  color: #555555;
+}
+
 span {
     white-space:pre;
 }
