@@ -74,6 +74,10 @@ body {
   color: #555555;
 }
 
+#detailsAccordion {
+  margin-bottom: 10px;
+}
+
 span {
     white-space:pre;
 }
