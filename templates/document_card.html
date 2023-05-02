@@ -52,7 +52,17 @@
     </div>
     <!-- End Accordion -->   
     {% if user.is_authenticated %}
-      <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
+        <div>
+          <a href="#" class="btn btn-secondary border-0 shadow-none doc-card-btn">
+            <i class="fas fa-edit"></i>
+          </a>
+          <a href="#" class="btn btn-secondary border-0 shadow-none doc-card-btn">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </div>
+      </div>
     {% endif %}
   </div>
 </div>

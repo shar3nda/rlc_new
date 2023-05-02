@@ -74,6 +74,11 @@ body {
   color: #555555;
 }
 
+.doc-card-btn {
+  background-color: white;
+  color: #555555;
+}
+
 span {
     white-space:pre;
 }
