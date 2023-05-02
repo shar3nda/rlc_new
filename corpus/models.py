@@ -257,6 +257,7 @@ class Document(models.Model):
         """
         super().save(*args, **kwargs)
         # if the document is already tokenized, do nothing
+        # TODO rewrite this to handle the case when the document is being edited
         if Sentence.objects.filter(document=self).exists():
             return
 

@@ -49,15 +49,19 @@
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
+            </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'documents' %}">Все документы</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
-          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
+            </li>
+          {% endif %}
           {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
