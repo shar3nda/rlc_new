@@ -1,27 +1,35 @@
 import django_filters
-from django import forms
-from django.db.models import Q
 
-from .models import Document
+from .models import Document, Author
 
 
 class DocumentFilter(django_filters.FilterSet):
+    author = django_filters.ChoiceFilter(
+        field_name="author",
+        choices=Author.objects.filter(favorite=True).values_list("id", "name"),
+        lookup_expr="exact",
+    )
+    author__language_background = django_filters.ChoiceFilter(
+        field_name="author__language_background",
+        choices=Author.LanguageBackgroundChoices.choices,
+        lookup_expr="exact",
+        label="Тип носителя",
+    )
+    author__dominant_language = django_filters.ChoiceFilter(
+        field_name="author__dominant_language",
+        choices=Author.DominantLanguageChoices.choices,
+        lookup_expr="exact",
+        label="Родной язык",
+    )
+    title = django_filters.CharFilter(field_name="title", lookup_expr="icontains", label="Название")
+    body = django_filters.CharFilter(field_name="body", lookup_expr="icontains", label="Текст")
+
+
     class Meta:
         model = Document
         fields = {
-            "subcorpus": ["exact"],
-            "author__language_background": ["exact"],
+            "date": ["exact"],
             "genre": ["exact"],
+            "subcorpus": ["exact"],
+            "source": ["exact"],
         }
-
-    query = django_filters.CharFilter(method="search_query", label="Запрос")
-
-    def search_query(self, queryset, name, value):
-        in_body = self.data.get("in_body", False)
-
-        if value:
-            if in_body:
-                return queryset.filter(body__icontains=value)
-            else:
-                return queryset.filter(title__icontains=value)
-        return queryset

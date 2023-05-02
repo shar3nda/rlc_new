@@ -1,4 +1,3 @@
-import platform
 import re
 
 from django.contrib.auth.models import User
@@ -6,27 +5,28 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 
-os = platform.system()
-MYSTEM_PATH = "mystem" if os == "Linux" else "mystem.exe"
-
 
 class Author(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name="Имя")
 
     class GenderChoices(models.TextChoices):
         M = "M", "Мужской"
         F = "F", "Женский"
         O = "O", "Неизвестно"
 
-    gender = models.CharField(max_length=10, choices=GenderChoices.choices)
-    program = models.CharField(max_length=255)
+    gender = models.CharField(
+        max_length=10, choices=GenderChoices.choices, verbose_name="Пол"
+    )
+    program = models.CharField(max_length=255, verbose_name="Программа")
 
     class LanguageBackgroundChoices(models.TextChoices):
         H = "H", "Эритажный"
         F = "F", "Иностранный"
 
     language_background = models.CharField(
-        max_length=10, choices=LanguageBackgroundChoices.choices
+        max_length=10,
+        choices=LanguageBackgroundChoices.choices,
+        verbose_name="Тип носителя",
     )
 
     class DominantLanguageChoices(models.TextChoices):
@@ -91,6 +91,7 @@ class Author(models.Model):
         choices=DominantLanguageChoices.choices,
         default=DominantLanguageChoices.ENG,
         db_index=True,
+        verbose_name="Родной язык",
     )
     LanguageLevelChoices = (
         (
@@ -131,9 +132,10 @@ class Author(models.Model):
         blank=False,
         choices=LanguageLevelChoices,
         db_index=True,
+        verbose_name="Уровень владения языком",
     )
 
-    favorite = models.BooleanField(default=False)
+    favorite = models.BooleanField(default=False, verbose_name="Избранное")
 
     def __str__(self):
         return self.name
@@ -145,22 +147,20 @@ class Document(models.Model):
     """
 
     # The title of the document
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, verbose_name="Название")
     # The owner of the document (FK to User)
     user = models.ForeignKey(
         User,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
+        verbose_name="Пользователь",
     )
     # The date when the document was created
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     # Дата написания текста
-    date = models.IntegerField(
-        null=True,
-        blank=True,
-    )
+    date = models.IntegerField(null=True, blank=True, verbose_name="Год написания")
 
     # жанр текста
     class GenreChoices(models.TextChoices):
@@ -182,7 +182,7 @@ class Document(models.Model):
         null=True,
         blank=True,
         db_index=True,
-        verbose_name=_("genre"),
+        verbose_name="Жанр",
         choices=GenreChoices.choices,
         default=GenreChoices.OTHER,
     )
@@ -204,10 +204,11 @@ class Document(models.Model):
         choices=SubcorpusChoices.choices,
         db_index=True,
         default=SubcorpusChoices.HSE,
+        verbose_name="Подкорпус",
     )
 
     # The text of the document
-    body = models.TextField()
+    body = models.TextField(verbose_name="Текст")
 
     class StatusChoices(models.IntegerChoices):
         NEW = 0, "Новый"
@@ -215,16 +216,17 @@ class Document(models.Model):
         CHECKED = 2, "Проверенный"
 
     # The status of the document (new, annotated, checked)
-    status = models.IntegerField(choices=StatusChoices.choices, default=0)
-
-    author = models.ForeignKey(
-        Author,
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
+    status = models.IntegerField(
+        choices=StatusChoices.choices, default=0, verbose_name="Статус"
     )
 
-    source = models.CharField(max_length=1000)
+    author = models.ForeignKey(
+        Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Автор"
+    )
+
+    source = models.CharField(
+        max_length=1000, null=True, blank=True, verbose_name="Источник"
+    )
 
     @staticmethod
     def replace_word_outside_span(text, word, replacement):
@@ -305,10 +307,12 @@ class Sentence(models.Model):
     A sentence is a part of a document.
     """
 
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    text = models.TextField()
-    markup = models.TextField(null=True, blank=True)
-    number = models.IntegerField()
+    document = models.ForeignKey(
+        Document, on_delete=models.CASCADE, verbose_name="Документ"
+    )
+    text = models.TextField(verbose_name="Текст")
+    markup = models.TextField(null=True, blank=True, verbose_name="Разметка")
+    number = models.IntegerField(verbose_name="Номер в тексте")
 
     def get_correction(self, alt=False):
         """
@@ -385,12 +389,20 @@ class Annotation(models.Model):
     An annotation is a piece of text that is annotated by a user.
     """
 
-    document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    guid = models.CharField(max_length=64, unique=True, editable=False, db_index=True)
-    json = models.JSONField()
-    alt = models.BooleanField(default=False)
+    document = models.ForeignKey(
+        Document, on_delete=models.CASCADE, verbose_name="Документ"
+    )
+    sentence = models.ForeignKey(
+        Sentence, on_delete=models.CASCADE, verbose_name="Предложение"
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    guid = models.CharField(
+        max_length=64, unique=True, editable=False, db_index=True, verbose_name="GUID"
+    )
+    json = models.JSONField(verbose_name="JSON")
+    alt = models.BooleanField(default=False, verbose_name="Альтернативная")
 
     def __str__(self):
         return str(self.json)

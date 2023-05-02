@@ -24,7 +24,7 @@ SECRET_KEY = "django-insecure-vjt+=omxbv%z5cec^@s$3z5_qv+gva0p-c9i0jx8#i&45h2egu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "corpus.apps.CorpusConfig",
     "content.apps.ContentConfig",
     "api.apps.ApiConfig",
+    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
