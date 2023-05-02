@@ -69,6 +69,15 @@ body {
   bottom: 1rem;
 }
 
+.accordion-button {
+  background-color: white;
+  color: #555555;
+}
+
+#detailsAccordion {
+  margin-bottom: 10px;
+}
+
 span {
     white-space:pre;
 }

@@ -1,41 +1,60 @@
+<head>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
 <div class="card mb-3">
   <div class="card-body">
     <h5 class="card-title">{{ document.title }}</h5>
-    <p class="card-text">{{ document.body }}</p>
-    <dl class="row">
-      <dt class="col-sm-3">Добавлено:</dt>
-      <dd class="col-sm-9">{{ document.created_on }}</dd>
+    <p class="card-text">{{ document.body }}</p>   
+    <!-- Accordion -->
+    <div class="accordion accordion-flush" id="detailsAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="detailsAccordionHeading">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detailsAccordionCollapse" aria-expanded="false" aria-controls="detailsAccordionCollapse">
+           Информация
+          </button>
+        </h2>
+        <div id="detailsAccordionCollapse" class="accordion-collapse collapse" aria-labelledby="detailsAccordionHeading" data-bs-parent="#detailsAccordion">
+          <div class="accordion-body">
+            <dl class="row">
+              <dt class="col-sm-3">Добавлено:</dt>
+              <dd class="col-sm-9">{{ document.created_on }}</dd>
 
-      <dt class="col-sm-3">Автор:</dt>
-      <dd class="col-sm-9">{{ document.author.name }}</dd>
+              <dt class="col-sm-3">Автор:</dt>
+              <dd class="col-sm-9">{{ document.author.name }}</dd>
 
-      <dt class="col-sm-3">Пол автора:</dt>
-      <dd class="col-sm-9">{{ document.author.get_gender_display }}</dd>
+              <dt class="col-sm-3">Пол автора:</dt>
+              <dd class="col-sm-9">{{ document.author.get_gender_display }}</dd>
 
-      <dt class="col-sm-3">Программа:</dt>
-      <dd class="col-sm-9">{{ document.author.program }}</dd>
+              <dt class="col-sm-3">Программа:</dt>
+              <dd class="col-sm-9">{{ document.author.program }}</dd>
 
-      <dt class="col-sm-3">Тип носителя:</dt>
-      <dd class="col-sm-9">{{ document.author.get_language_background_display }}</dd>
+              <dt class="col-sm-3">Тип носителя:</dt>
+              <dd class="col-sm-9">{{ document.author.get_language_background_display }}</dd>
 
-      <dt class="col-sm-3">Язык автора:</dt>
-      <dd class="col-sm-9">{{ document.author.get_dominant_language_display }}</dd>
+              <dt class="col-sm-3">Язык автора:</dt>
+              <dd class="col-sm-9">{{ document.author.get_dominant_language_display }}</dd>
 
-      <dt class="col-sm-3">Уровень языка:</dt>
-      <dd class="col-sm-9">{{ document.author.get_language_level_display }}</dd>
+              <dt class="col-sm-3">Уровень языка:</dt>
+              <dd class="col-sm-9">{{ document.author.get_language_level_display }}</dd>
 
-      <dt class="col-sm-3">Подкорпус:</dt>
-      <dd class="col-sm-9">{{ document.get_subcorpus_display }}</dd>
+              <dt class="col-sm-3">Подкорпус:</dt>
+              <dd class="col-sm-9">{{ document.get_subcorpus_display }}</dd>
 
-      <dt class="col-sm-3">Жанр:</dt>
-      <dd class="col-sm-9">{{ document.get_genre_display }}</dd>
+              <dt class="col-sm-3">Жанр:</dt>
+              <dd class="col-sm-9">{{ document.get_genre_display }}</dd>
 
-      <dt class="col-sm-3">Источник:</dt>
-      <dd class="col-sm-9">{{ document.source }}</dd>
+              <dt class="col-sm-3">Источник:</dt>
+              <dd class="col-sm-9">{{ document.source }}</dd>
 
-      <dt class="col-sm-3">Статус:</dt>
-      <dd class="col-sm-9">{{ document.get_status_display }}</dd>
-    </dl>
+              <dt class="col-sm-3">Статус:</dt>
+              <dd class="col-sm-9">{{ document.get_status_display }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Accordion -->   
     <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
   </div>
 </div>
