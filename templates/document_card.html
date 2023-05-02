@@ -7,14 +7,14 @@
     <h5 class="card-title">{{ document.title }}</h5>
     <p class="card-text">{{ document.body }}</p>   
     <!-- Accordion -->
-    <div class="accordion accordion-flush" id="detailsAccordion">
+    <div class="accordion accordion-flush mb-2" id="detailsAccordion{{ document.id }}">
       <div class="accordion-item">
-        <h2 class="accordion-header" id="detailsAccordionHeading">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detailsAccordionCollapse" aria-expanded="false" aria-controls="detailsAccordionCollapse">
+        <h2 class="accordion-header" id="detailsAccordionHeading{{ document.id }}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detailsAccordionCollapse{{ document.id }}" aria-expanded="false" aria-controls="detailsAccordionCollapse">
            Информация
           </button>
         </h2>
-        <div id="detailsAccordionCollapse" class="accordion-collapse collapse" aria-labelledby="detailsAccordionHeading" data-bs-parent="#detailsAccordion">
+        <div id="detailsAccordionCollapse{{ document.id }}" class="accordion-collapse collapse" aria-labelledby="detailsAccordionHeading{{ document.id }}">
           <div class="accordion-body">
             <dl class="row">
               <dt class="col-sm-3">Добавлено:</dt>
