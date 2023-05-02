@@ -29,8 +29,8 @@ class SearchForm(forms.Form):
         choices=[("", "---------")] + list(Document.SubcorpusChoices.choices),
         required=False,
     )
-    language = forms.ChoiceField(
-        label="Язык",
+    author__language_background = forms.ChoiceField(
+        label="Тип носителя",
         choices=[("", "---------")] + list(Author.LanguageBackgroundChoices.choices),
         required=False,
     )
