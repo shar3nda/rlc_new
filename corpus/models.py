@@ -255,10 +255,11 @@ class Document(models.Model):
         This method overrides the default save method of the model.
         It is used to create Sentence objects for each sentence in the document.
         """
-        super().save(**kwargs)
-        # if the document is already saved, don't tokenize it again
-        if self.pk:
+        super().save(*args, **kwargs)
+        # if the document is already tokenized, do nothing
+        if Sentence.objects.filter(document=self).exists():
             return
+
         # load models
         segmenter = Segmenter()
         morph_vocab = MorphVocab()
