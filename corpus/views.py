@@ -62,7 +62,7 @@ def add_document(request):
                     language_level=form.data["author_language_level"],
                     # if add_to_favorites is in form
                     favorite="add_to_favorites" in form.data
-                             and form.data["add_to_favorites"] == "on",
+                    and form.data["add_to_favorites"] == "on",
                 )
             else:
                 # get an existing author
@@ -137,4 +137,4 @@ def update_document_status(request, document_id):
 
 @login_required
 def user_profile(request):
-    return render(request, 'user_profile.html', {'user': request.user})
+    return render(request, "user_profile.html", {"user": request.user})
