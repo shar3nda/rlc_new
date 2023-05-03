@@ -82,3 +82,8 @@ body {
 span {
     white-space:pre;
 }
+
+.logout-item:hover,
+.dropdown-item:focus {
+  background-color: red;
+}

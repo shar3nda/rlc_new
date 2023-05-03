@@ -15,15 +15,15 @@
   <script src="{% static 'js/annotator-utils.js' %}"></script>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
-
+  
 </head>
 <body class="d-flex flex-column min-vh-100">
 {% block navbar %}
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="{% url 'homepage' %}">
-        <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="30"
-             width="80">
+        <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="28"
+             width="80" style="margin-left: 25px;">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav"
@@ -62,17 +62,17 @@
           {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                 aria-haspopup="true" aria-expanded="false">
+                 aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
                 {{ user.username }}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'user_profile' %}">Профиль</a>
-                <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
-              </div>
+                <a class="dropdown-item logout-item" href="{% url 'logout' %}">Выйти</a>
+              </div>  
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}">Войти</a>
+              <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">Войти</a>
             </li>
           {% endif %}
         </ul>
