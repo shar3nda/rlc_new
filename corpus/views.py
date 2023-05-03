@@ -72,12 +72,12 @@ def add_document(request):
             new_document = form.save(commit=False)
             new_document.user = request.user
             new_document.save()
-            messages.success(request, "Document added successfully!")
+            messages.success(request, "Документ успешно добавлен!")
             return redirect("annotate", document_id=new_document.id)
         else:
             messages.error(
                 request,
-                "There was an error adding the document. Please check your input.",
+                "При добавлении документа произошла ошибка. Проверьте правильность заполнения формы.",
             )
     else:
         form = DocumentForm()
@@ -89,32 +89,10 @@ def add_document(request):
     return render(request, "add_document.html", context)
 
 
-def update_document(request, document_id):
-    document = get_object_or_404(Document, id=document_id)
-    if request.method == "POST":
-        form = DocumentForm(request.POST, instance=document)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Document updated successfully!")
-            return redirect("annotate", document_id=document.id)
-        else:
-            messages.error(
-                request,
-                "There was an error updating the document. Please check your input.",
-            )
-    else:
-        form = DocumentForm(instance=document)
-
-    context = {
-        "form": form,
-        "authors": Author.objects.filter(favorite=True),
-    }
-    return render(request, "update_document.html", context)
-
-
 def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     document.delete()
+    messages.success(request, "Документ успешно удален!")
     return redirect("documents")
 
 
@@ -130,6 +108,7 @@ def update_document_status(request, document_id):
         document = get_object_or_404(Document, id=document_id)
         document.status = int(status)
         document.save()
+        messages.success(request, "Статус документа успешно обновлен!")
         return JsonResponse({"status": "success"})
     else:
         return JsonResponse({"status": "error"})

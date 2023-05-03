@@ -86,30 +86,35 @@
 </div>
 
 {% block footer %}
-  <footer class="bg-dark text-light py-2">
+  <footer class="bg-dark text-light py-2 mt-4">
     <div class="container">
-      <div class="row">
-        <div class="col-md-2 text-center text-light">
-          <p class="mb-0">&copy; Школа Лингвистики ВШЭ. Все права защищены.</p>
-        </div>
-        <div class="col-md-6">
-          <h5 class="mb-3 text-light">Ссылки</h5>
-          <ul class="list-unstyled">
-            <li><a href="{% url 'homepage' %}" class="text-light">Главная</a></li>
-            <li><a href="{% url 'news' %}" class="text-light">Новости</a></li>
-            <li><a href="#" class="text-light">Помощь</a></li>
-            <li><a href="#" class="text-light">Статистика</a></li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <h5 class="mb-3 text-light">RLC</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae vestibulum enim.</p>
-        </div>
-
-      </div>
-
+      <p class="mb-0">&copy; Школа Лингвистики ВШЭ. Все права защищены.</p>
     </div>
   </footer>
 {% endblock %}
+{% if messages %}
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    {% for message in messages %}
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="{% if message.tags == 'error' %}0{% else %}3000{% endif %}">
+        <div class="toast-header">
+          <strong class="me-auto">{{ message.tags|title }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+    var toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl, { autohide: true }).show();
+    });
+  });
+</script>
 </body>
 </html>

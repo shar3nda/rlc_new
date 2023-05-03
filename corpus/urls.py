@@ -3,7 +3,12 @@ from django.urls import path
 from corpus import views
 
 urlpatterns = [
-    path("add-document/", views.add_document, name="add_document"),
+    path("add_document", views.add_document, name="add_document"),
+    path(
+        "delete_document/<int:document_id>/",
+        views.delete_document,
+        name="delete_document",
+    ),
     path("documents/", views.documents, name="documents"),
     path("annotate/<int:document_id>/", views.annotate, name="annotate"),
     path(

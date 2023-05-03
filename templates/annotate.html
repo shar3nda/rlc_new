@@ -108,6 +108,8 @@
         success: function (data) {
           if (data.status === 'success') {
             console.log("Document status updated successfully.");
+            // reload the page
+            location.reload();
           } else {
             console.error("Error updating document status.");
           }

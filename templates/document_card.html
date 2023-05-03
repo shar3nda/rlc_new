@@ -77,10 +77,7 @@
     <div class="d-flex justify-content-between">
       <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
       <div>
-        <a href="#" class="btn btn-secondary border-0 shadow-none doc-card-btn">
-          <i class="fas fa-edit"></i>
-        </a>
-        <a href="#" class="btn btn-secondary border-0 shadow-none doc-card-btn">
+        <a href="{% url 'delete_document' document_id=document.id %}" class="btn btn-secondary border-0 shadow-none doc-card-btn">
           <i class="fas fa-trash-alt"></i>
         </a>
       </div>
