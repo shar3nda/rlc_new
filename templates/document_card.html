@@ -18,40 +18,51 @@
         <div id="detailsAccordionCollapse{{ document.id }}" class="accordion-collapse collapse"
           aria-labelledby="detailsAccordionHeading{{ document.id }}">
           <div class="accordion-body">
-            <dl class="row">
-              <dt class="col-sm-3">Добавлено:</dt>
-              <dd class="col-sm-9">{{ document.created_on }}</dd>
+            <div class="row">
+              <div class="col-sm-6">
+                <dl>
+                  <h5 class="card-title">Документ</h5>
 
-              <dt class="col-sm-3">Автор:</dt>
-              <dd class="col-sm-9">{{ document.author.name }}</dd>
+                  <dt>Добавлено:</dt>
+                  <dd>{{ document.created_on }}</dd>
 
-              <dt class="col-sm-3">Пол автора:</dt>
-              <dd class="col-sm-9">{{ document.author.get_gender_display }}</dd>
+                  <dt>Жанр:</dt>
+                  <dd>{{ document.get_genre_display }}</dd>
 
-              <dt class="col-sm-3">Программа:</dt>
-              <dd class="col-sm-9">{{ document.author.program }}</dd>
+                  <dt>Подкорпус:</dt>
+                  <dd>{{ document.get_subcorpus_display }}</dd>
 
-              <dt class="col-sm-3">Тип носителя:</dt>
-              <dd class="col-sm-9">{{ document.author.get_language_background_display }}</dd>
+                  <dt>Источник:</dt>
+                  <dd>{{ document.source }}</dd>
 
-              <dt class="col-sm-3">Язык автора:</dt>
-              <dd class="col-sm-9">{{ document.author.get_dominant_language_display }}</dd>
+                  <dt>Статус:</dt>
+                  <dd>{{ document.get_status_display }}</dd>
+                </dl>
+              </div>
+              <div class="col-sm-6">
+                <dl>
+                  <h5 class="card-title">Автор</h5>
 
-              <dt class="col-sm-3">Уровень языка:</dt>
-              <dd class="col-sm-9">{{ document.author.get_language_level_display }}</dd>
+                  <dt>Имя:</dt>
+                  <dd>{{ document.author.name }}</dd>
 
-              <dt class="col-sm-3">Подкорпус:</dt>
-              <dd class="col-sm-9">{{ document.get_subcorpus_display }}</dd>
+                  <dt>Пол:</dt>
+                  <dd>{{ document.author.get_gender_display }}</dd>
 
-              <dt class="col-sm-3">Жанр:</dt>
-              <dd class="col-sm-9">{{ document.get_genre_display }}</dd>
+                  <dt>Родной язык:</dt>
+                  <dd>{{ document.author.get_dominant_language_display }}</dd>
 
-              <dt class="col-sm-3">Источник:</dt>
-              <dd class="col-sm-9">{{ document.source }}</dd>
+                  <dt>Уровень языка:</dt>
+                  <dd>{{ document.author.get_language_level_display }}</dd>
 
-              <dt class="col-sm-3">Статус:</dt>
-              <dd class="col-sm-9">{{ document.get_status_display }}</dd>
-            </dl>
+                  <dt>Тип носителя:</dt>
+                  <dd>{{ document.author.get_language_background_display }}</dd>
+
+                  <dt>Программа:</dt>
+                  <dd>{{ document.author.program }}</dd>
+                </dl>
+              </div>
+            </div>
           </div>
         </div>
       </div>
