@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% block title %}Документы{% endblock %}
 {% block content %}
   <div class="container mt-5">
@@ -12,7 +15,40 @@
         {% endif %}
         <!-- Add filter form -->
         <form method="get" class="mb-4">
-          {{ filter.form.as_p }}
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-4">
+              {{ filter.form.author|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ filter.form.author__language_background|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ filter.form.author__dominant_language|as_crispy_field }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              {{ filter.form.date|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+              {{ filter.form.genre|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+              {{ filter.form.subcorpus|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+              {{ filter.form.source|as_crispy_field }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              {{ filter.form.title|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+              {{ filter.form.body|as_crispy_field }}
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary">Фильтровать</button>
         </form>
 

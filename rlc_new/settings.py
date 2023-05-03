@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     "corpus.apps.CorpusConfig",
     "content.apps.ContentConfig",
     "api.apps.ApiConfig",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

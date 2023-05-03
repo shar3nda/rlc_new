@@ -21,9 +21,12 @@ class DocumentFilter(django_filters.FilterSet):
         lookup_expr="exact",
         label="Родной язык",
     )
-    title = django_filters.CharFilter(field_name="title", lookup_expr="icontains", label="Название")
-    body = django_filters.CharFilter(field_name="body", lookup_expr="icontains", label="Текст")
-
+    title = django_filters.CharFilter(
+        field_name="title", lookup_expr="icontains", label="Название"
+    )
+    body = django_filters.CharFilter(
+        field_name="body", lookup_expr="icontains", label="Текст"
+    )
 
     class Meta:
         model = Document
