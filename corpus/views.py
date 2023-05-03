@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse, QueryDict
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -62,7 +62,7 @@ def add_document(request):
                     language_level=form.data["author_language_level"],
                     # if add_to_favorites is in form
                     favorite="add_to_favorites" in form.data
-                    and form.data["add_to_favorites"] == "on",
+                             and form.data["add_to_favorites"] == "on",
                 )
             else:
                 # get an existing author
@@ -89,6 +89,35 @@ def add_document(request):
     return render(request, "add_document.html", context)
 
 
+def update_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    if request.method == "POST":
+        form = DocumentForm(request.POST, instance=document)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Document updated successfully!")
+            return redirect("annotate", document_id=document.id)
+        else:
+            messages.error(
+                request,
+                "There was an error updating the document. Please check your input.",
+            )
+    else:
+        form = DocumentForm(instance=document)
+
+    context = {
+        "form": form,
+        "authors": Author.objects.filter(favorite=True),
+    }
+    return render(request, "update_document.html", context)
+
+
+def delete_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    document.delete()
+    return redirect("documents")
+
+
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy("login")
@@ -104,3 +133,8 @@ def update_document_status(request, document_id):
         return JsonResponse({"status": "success"})
     else:
         return JsonResponse({"status": "error"})
+
+
+@login_required
+def user_profile(request):
+    return render(request, 'user_profile.html', {'user': request.user})

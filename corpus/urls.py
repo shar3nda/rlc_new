@@ -11,4 +11,5 @@ urlpatterns = [
         views.update_document_status,
         name="update_document_status",
     ),
+    path('user_profile/', views.user_profile, name='user_profile'),
 ]
