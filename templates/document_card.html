@@ -5,13 +5,13 @@
     <div class="accordion accordion-flush mb-2" id="detailsAccordion{{ document.id }}">
       <div class="accordion-item">
         <h2 class="accordion-header" id="detailsAccordionHeading{{ document.id }}">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#detailsAccordionCollapse{{ document.id }}" aria-expanded="false"
+          <button class="accordion-button collapsed bg-white rounded-0 shadow-sm fw-bold" type="button"
+            data-bs-toggle="collapse" data-bs-target="#detailsAccordionCollapse{{ document.id }}" aria-expanded="false"
             aria-controls="detailsAccordionCollapse">
             {% if title_query %}
-            <h5 class="card-title">{{ document.title|highlight_search:title_query }}</h5>
+            <h5 class="card-title m-0">{{ document.title|highlight_search:title_query }}</h5>
             {% else %}
-            <h5 class="card-title">{{ document.title }}</h5>
+            <h5 class="card-title m-0">{{ document.title }}</h5>
             {% endif %}
           </button>
         </h2>
@@ -19,47 +19,47 @@
           aria-labelledby="detailsAccordionHeading{{ document.id }}">
           <div class="accordion-body">
             <div class="row">
-              <div class="col-sm-6">
-                <dl>
-                  <h5 class="card-title">Документ</h5>
+              <div class="col-md-5 mb-3">
+                <h5 class="card-title">Документ</h5>
+                <hr class="mb-0">
+                <dl class="row">
+                  <dt class="col-sm-5">Добавлено:</dt>
+                  <dd class="col-sm-7">{{ document.created_on }}</dd>
 
-                  <dt>Добавлено:</dt>
-                  <dd>{{ document.created_on }}</dd>
+                  <dt class="col-sm-5">Жанр:</dt>
+                  <dd class="col-sm-7">{{ document.get_genre_display }}</dd>
 
-                  <dt>Жанр:</dt>
-                  <dd>{{ document.get_genre_display }}</dd>
+                  <dt class="col-sm-5">Подкорпус:</dt>
+                  <dd class="col-sm-7">{{ document.get_subcorpus_display }}</dd>
 
-                  <dt>Подкорпус:</dt>
-                  <dd>{{ document.get_subcorpus_display }}</dd>
+                  <dt class="col-sm-5">Источник:</dt>
+                  <dd class="col-sm-7">{{ document.source }}</dd>
 
-                  <dt>Источник:</dt>
-                  <dd>{{ document.source }}</dd>
-
-                  <dt>Статус:</dt>
-                  <dd>{{ document.get_status_display }}</dd>
+                  <dt class="col-sm-5">Статус:</dt>
+                  <dd class="col-sm-7">{{ document.get_status_display }}</dd>
                 </dl>
               </div>
-              <div class="col-sm-6">
-                <dl>
-                  <h5 class="card-title">Автор</h5>
+              <div class="col-md-7 mb-3">
+                <h5 class="card-title">Автор</h5>
+                <hr class="mb-0">
+                <dl class="row">
+                  <dt class="col-sm-4">Имя:</dt>
+                  <dd class="col-sm-8">{{ document.author.name }}</dd>
 
-                  <dt>Имя:</dt>
-                  <dd>{{ document.author.name }}</dd>
+                  <dt class="col-sm-4">Пол:</dt>
+                  <dd class="col-sm-8">{{ document.author.get_gender_display }}</dd>
 
-                  <dt>Пол:</dt>
-                  <dd>{{ document.author.get_gender_display }}</dd>
+                  <dt class="col-sm-4">Родной язык:</dt>
+                  <dd class="col-sm-8">{{ document.author.get_dominant_language_display }}</dd>
 
-                  <dt>Родной язык:</dt>
-                  <dd>{{ document.author.get_dominant_language_display }}</dd>
+                  <dt class="col-sm-4">Уровень языка:</dt>
+                  <dd class="col-sm-8">{{ document.author.get_language_level_display }}</dd>
 
-                  <dt>Уровень языка:</dt>
-                  <dd>{{ document.author.get_language_level_display }}</dd>
+                  <dt class="col-sm-4">Тип носителя:</dt>
+                  <dd class="col-sm-8">{{ document.author.get_language_background_display }}</dd>
 
-                  <dt>Тип носителя:</dt>
-                  <dd>{{ document.author.get_language_background_display }}</dd>
-
-                  <dt>Программа:</dt>
-                  <dd>{{ document.author.program }}</dd>
+                  <dt class="col-sm-4">Программа:</dt>
+                  <dd class="col-sm-8">{{ document.author.program }}</dd>
                 </dl>
               </div>
             </div>
