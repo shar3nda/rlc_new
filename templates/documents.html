@@ -13,9 +13,7 @@
             Создать документ
           </a>
         {% endif %}
-        <!-- Add filter form -->
         <form method="get" class="mb-4">
-          {% csrf_token %}
           <div class="row">
             <div class="col-md-4">
               {{ filter.form.author|as_crispy_field }}
