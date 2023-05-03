@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "corpus.apps.CorpusConfig",
     "content.apps.ContentConfig",
     "api.apps.ApiConfig",
-    "widget_tweaks",
 ]
 
 MIDDLEWARE = [
