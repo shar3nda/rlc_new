@@ -84,6 +84,6 @@ span {
 }
 
 .logout-item:hover,
-.dropdown-item:focus {
+.logout-item:focus {
   background-color: red;
 }
