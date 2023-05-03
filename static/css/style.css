@@ -83,7 +83,7 @@ span {
     white-space:pre;
 }
 
-.dropdown-item:hover[href="{% url 'logout' %}"] {
+.logout-item:hover,
+.dropdown-item:focus {
   background-color: red;
-  color: #fff;
 }
