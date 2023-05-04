@@ -60,16 +60,16 @@
             </li>
           {% endif %}
           {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                 aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-                {{ user.username }}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'user_profile' %}">Профиль</a>
-                <a class="dropdown-item logout-item" href="{% url 'logout' %}">Выйти</a>
-              </div>  
-            </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+              {{ user.username }}
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'user_profile' %}">Профиль</a>
+              <a class="dropdown-item logout-item" href="{% url 'logout' %}">Выйти</a>
+            </div>  
+          </li>
           {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">Войти</a>
