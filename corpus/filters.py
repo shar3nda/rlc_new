@@ -6,7 +6,7 @@ from .models import Document, Author
 class DocumentFilter(django_filters.FilterSet):
     author = django_filters.ChoiceFilter(
         field_name="author",
-        choices=Author.objects.filter(favorite=True).values_list("id", "name"),
+        choices=Author.objects.filter(favorite=True).order_by("name").values_list("id", "name"),
         lookup_expr="exact",
     )
     user = django_filters.ChoiceFilter(
