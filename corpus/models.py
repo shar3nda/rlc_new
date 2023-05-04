@@ -383,6 +383,10 @@ class Sentence(models.Model):
     def __str__(self):
         return self.text
 
+    class Meta:
+        ordering = ["number"]
+
+
 
 class Annotation(models.Model):
     """
