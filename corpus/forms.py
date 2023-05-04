@@ -61,7 +61,7 @@ class NewAuthorForm(forms.ModelForm):
             "favorite": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
         labels = {
-            "favorite": "Добавить в избранные",
+            "favorite": "Добавить в сохраненные",
         }
 
 
