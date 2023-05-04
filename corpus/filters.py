@@ -13,7 +13,7 @@ class DocumentFilter(django_filters.FilterSet):
         field_name="user__username",
         choices=User.objects.values_list("username", "username"),
         lookup_expr="exact",
-        label="Пользователь",
+        label="Создатель",
     )
     author__language_background = django_filters.ChoiceFilter(
         field_name="author__language_background",
