@@ -93,44 +93,32 @@ class Author(models.Model):
         db_index=True,
         verbose_name="Родной язык",
     )
-    LanguageLevelChoices = (
-        (
-            "Beginner",
-            (
-                ("NL", _("Novice Low")),
-                ("NM", _("Novice Middle")),
-                ("NH", _("Novice High")),
-                ("A1", _("A1")),
-                ("A2", _("A2")),
-            ),
-        ),
-        (
-            "Intermediate",
-            (
-                ("IL", _("Intermediate Low")),
-                ("IM", _("Intermediate Middle")),
-                ("IH", _("Intermediate High")),
-                ("B1", _("B1")),
-                ("B2", _("B2")),
-            ),
-        ),
-        (
-            "Advanced",
-            (
-                ("AL", _("Advanced Low")),
-                ("AM", _("Advanced Middle")),
-                ("AH", _("Advanced High")),
-                ("C1", _("C1")),
-                ("C2", _("C2")),
-            ),
-        ),
-        ("Other", _("Other")),
-    )
+
+    class LanguageLevelChoices(models.TextChoices):
+        NOV = "NOV", "Novice"
+        NL = "NL", "Novice Low"
+        NM = "NM", "Novice Middle"
+        NH = "NH", "Novice High"
+        A1 = "A1", "A1"
+        A2 = "A2", "A2"
+        INT = "INT", "Intermediate"
+        IL = "IL", "Intermediate Low"
+        IM = "IM", "Intermediate Middle"
+        IH = "IH", "Intermediate High"
+        B1 = "B1", "B1"
+        B2 = "B2", "B2"
+        ADV = "ADV", "Advanced"
+        AL = "AL", "Advanced Low"
+        AM = "AM", "Advanced Middle"
+        AH = "AH", "Advanced High"
+        C1 = "C1", "C1"
+        C2 = "C2", "C2"
+
     language_level = models.CharField(
         max_length=10,
         null=True,
         blank=False,
-        choices=LanguageLevelChoices,
+        choices=LanguageLevelChoices.choices,
         db_index=True,
         verbose_name="Уровень владения языком",
     )

@@ -9,7 +9,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h5 class="card-title">{{ document.title }}</h5>
+
               <div class="form-group mb-0">
                 <label for="document-status" class="me-2">Статус документа:</label>
                 <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
@@ -19,6 +19,7 @@
                 </select>
               </div>
             </div>
+            {% include 'document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
               <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
   <div class="card-body position-relative pb-4" id="sentence-card-{{ sentence.id }}">
@@ -44,7 +45,7 @@
           </button>
         </h2>
         <div id="altSentenceCollapse-{{ sentence.id }}" class="accordion-collapse collapse"
-             aria-labelledby="altSentenceHeading-{{ sentence.id }}"">
+             aria-labelledby="altSentenceHeading-{{ sentence.id }}">
           <div class="accordion-body">
             <div id="alt-sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}"
                  data-document-id="{{ document.id }}" data-user-id="{{ user.id }}" data-alt="true"
@@ -79,12 +80,9 @@
 
     </div>
     <!-- End Accordion -->
-
-
+    </div>
   </div>
-</div>
-
-              <div id="recogito-{{ sentence.id }}" class="recogito"></div>
+<div id="recogito-{{ sentence.id }}" class="recogito"></div>
             {% endfor %}
             <p class="card-text"><small class="text-muted">{{ document.created_on }}</small></p>
           </div>

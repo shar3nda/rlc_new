@@ -8,7 +8,7 @@
       <div class="col-md-6 offset-md-3">
         <form method="post" id="add-document-form">
           {% csrf_token %}
-          <h3 class="mb-3">{% if editing %}Редактирование{% else %}Добавление{% endif %} документа</h3>
+          <h3 class="mb-3">Добавление документа</h3>
           <div class="alert alert-danger" role="alert"
                style="display: {% if form.non_field_errors %}block{% else %}none{% endif %};">
             {% for error in form.non_field_errors %}
@@ -60,54 +60,7 @@
           <input type="hidden" id="author-selection-method" name="author_selection_method" value="manual">
 
           <div class="tab-content">
-            <div id="author-fields" class="tab-pane fade show active">
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.name.label_tag }}
-                    {{ author_form.name }}
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.gender.label_tag }}
-                    {{ author_form.gender }}
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.program.label_tag }}
-                    {{ author_form.program }}
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.language_background.label_tag }}
-                    {{ author_form.language_background }}
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.dominant_language.label_tag }}
-                    {{ author_form.dominant_language }}
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    {{ author_form.language_level.label_tag }}
-                    {{ author_form.language_level }}
-                  </div>
-                </div>
-              </div>
-              <div class="form-check mb-3">
-                {{ author_form.favorite.label_tag }}
-                {{ author_form.favorite }}
-              </div>
-            </div>
+            {% include 'author_card.html' %}
             <div class="form-group tab-pane fade" id="favorite-authors">
               {{ favorite_author_form.selected_author.label_tag }}
               {{ favorite_author_form.selected_author }}
@@ -118,8 +71,7 @@
             {{ form.source.label_tag }}
             {{ form.source }}
           </div>
-          <button type="submit" class="btn btn-lg btn-primary">{% if editing %}Сохранить{% else %}
-            Добавить{% endif %}</button>
+          <button type="submit" class="btn btn-lg btn-primary">Добавить</button>
         </form>
       </div>
     </div>

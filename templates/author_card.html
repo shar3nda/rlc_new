@@ -1,0 +1,48 @@
+<div id="author-fields" class="tab-pane fade show active">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.name.label_tag }}
+        {{ author_form.name }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.gender.label_tag }}
+        {{ author_form.gender }}
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.program.label_tag }}
+        {{ author_form.program }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.language_background.label_tag }}
+        {{ author_form.language_background }}
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.dominant_language.label_tag }}
+        {{ author_form.dominant_language }}
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        {{ author_form.language_level.label_tag }}
+        {{ author_form.language_level }}
+      </div>
+    </div>
+  </div>
+  <div class="form-check mb-3">
+    {{ author_form.favorite.label_tag }}
+    {{ author_form.favorite }}
+  </div>
+</div>

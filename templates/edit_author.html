@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h3>Редактирование автора</h3>
+  <form method="post">
+    {% csrf_token %}
+    {% include 'author_card.html' %}
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+  </form>
+{% endblock %}

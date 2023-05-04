@@ -68,23 +68,26 @@
       </div>
     </div>
     <!-- End Accordion -->
-    {% if body_query %}
-      <p class="card-text">{{ document.body|highlight_search:body_query }}</p>
-    {% else %}
-      <p class="card-text">{{ document.body }}</p>
+    {% if not annotate_view %}
+      {% if body_query %}
+        <p class="card-text">{{ document.body|highlight_search:body_query }}</p>
+      {% else %}
+        <p class="card-text">{{ document.body }}</p>
+      {% endif %}
     {% endif %}
     {% if user.is_authenticated %}
-
       <div class="d-flex justify-content-between">
-        <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
+        {% if not annotate_view %}
+          <a href="{% url 'annotate' document.id %}" class="btn btn-primary">Аннотировать</a>
+        {% endif %}
         <div>
           <a href="{% url 'edit_document' document_id=document.id %}"
              class="btn btn-info border-0 shadow-none doc-card-btn">
-            <i class="fas fa-edit"></i>
+            <i class="fas fa-edit"></i> Редактировать
           </a>
           <a href="{% url 'delete_document' document_id=document.id %}"
              class="btn btn-danger border-0 shadow-none doc-card-btn">
-            <i class="fas fa-trash-alt"></i>
+            <i class="fas fa-trash-alt"></i> Удалить
           </a>
         </div>
       </div>

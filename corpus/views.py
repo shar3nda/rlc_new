@@ -45,29 +45,26 @@ def annotate(request, document_id):
 
 
 @login_required
-def add_or_edit_document(request, document_id=None):
-    editing = document_id is not None
-    document = get_object_or_404(Document, id=document_id) if editing else None
-    preselect_favorite_author = False
-
+def add_document(request):
     if request.method == "POST":
-        form = DocumentForm(request.POST, instance=document)
+        form = DocumentForm(request.POST)
         author_form = NewAuthorForm(request.POST, prefix="author")
         favorite_author_form = FavoriteAuthorForm(
             request.POST, prefix="favorite_author"
         )
+
         if form.is_valid():
             if (
-                request.POST["author_selection_method"] == "manual"
-                and author_form.is_valid()
+                    request.POST["author_selection_method"] == "manual"
+                    and author_form.is_valid()
             ):
                 author = author_form.save()
                 document = form.save(commit=False)
                 document.author = author
                 document.save()
             elif (
-                request.POST["author_selection_method"] == "dropdown"
-                and favorite_author_form.is_valid()
+                    request.POST["author_selection_method"] == "dropdown"
+                    and favorite_author_form.is_valid()
             ):
                 document = form.save(commit=False)
                 document.author = favorite_author_form.cleaned_data["selected_author"]
@@ -77,8 +74,40 @@ def add_or_edit_document(request, document_id=None):
                     request,
                     "Invalid author information. Please check the form and try again.",
                 )
-                return redirect("edit_document", document_id=document_id)
+                return redirect("add_document")
 
+            messages.success(request, "Document saved successfully.")
+            return redirect("annotate", document_id=document.id)
+        else:
+            messages.error(
+                request,
+                "An error occurred while saving the document. Please check the form and try again.",
+            )
+            return redirect("add_document")
+    else:
+        form = DocumentForm()
+        author_form = NewAuthorForm(prefix="author")
+        favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
+
+    return render(
+        request,
+        "add_document.html",
+        {
+            "form": form,
+            "author_form": author_form,
+            "favorite_author_form": favorite_author_form,
+        },
+    )
+
+
+@login_required
+def edit_document(request, document_id):
+    document = get_object_or_404(Document, id=document_id)
+    if request.method == "POST":
+        form = DocumentForm(request.POST, instance=document)
+
+        if form.is_valid():
+            form.save()
             messages.success(request, "Document saved successfully.")
             return redirect("annotate", document_id=document.id)
         else:
@@ -89,29 +118,50 @@ def add_or_edit_document(request, document_id=None):
             return redirect("edit_document", document_id=document_id)
     else:
         form = DocumentForm(instance=document)
-
-        if editing and document.author.favorite:
-            author_form = NewAuthorForm(prefix="author")
+        if document.author.favorite:
             favorite_author_form = FavoriteAuthorForm(
                 prefix="favorite_author", initial={"selected_author": document.author}
             )
-            preselect_favorite_author = True
-        elif editing:
-            author_form = NewAuthorForm(prefix="author", instance=document.author)
-            favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
         else:
-            author_form = NewAuthorForm(prefix="author")
             favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
 
     return render(
         request,
-        "add_or_edit_document.html",
+        "edit_document.html",
         {
             "form": form,
-            "author_form": author_form,
+            "document": document,
             "favorite_author_form": favorite_author_form,
-            "editing": editing,
-            "preselect_favorite_author": preselect_favorite_author,
+        },
+    )
+
+
+@login_required
+def edit_author(request, author_id, document_id):
+    author = get_object_or_404(Author, id=author_id)
+    if request.method == "POST":
+        form = NewAuthorForm(request.POST, instance=author, prefix="author")
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Author saved successfully.")
+            return redirect("edit_document", document_id=document_id)
+        else:
+            messages.error(
+                request,
+                "An error occurred while saving the author. Please check the form and try again.",
+            )
+            return redirect("edit_author", author_id=author_id, document_id=document_id)
+    else:
+        form = NewAuthorForm(instance=author, prefix="author")
+
+    return render(
+        request,
+        "edit_author.html",
+        {
+            "author_form": form,
+            "author": author,
+            "document": get_object_or_404(Document, id=document_id),
         },
     )
 

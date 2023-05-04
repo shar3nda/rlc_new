@@ -2,8 +2,8 @@ import os
 import random
 
 import django
-from tqdm import tqdm
 from faker import Faker
+from tqdm import tqdm
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rlc_new.settings")
 django.setup()
@@ -13,7 +13,6 @@ from corpus.models import Document, Author
 from content.models import Article, Section
 
 fake = Faker("ru_RU")
-
 
 # Create the admin user
 print("Creating admin user")
@@ -56,18 +55,6 @@ for i in tqdm(range(num_sections), desc="Creating sections"):
 # Create some fake authors
 num_authors = 10
 
-
-def get_random_language_level():
-    # Flatten the choices tuple
-    flattened_choices = [
-        choice for group in Author.LanguageLevelChoices[:-1] for choice in group[1]
-    ] + [Author.LanguageLevelChoices[-1]]
-    # Select a random language level from the flattened choices
-    random_language_level = random.choice(flattened_choices)
-
-    return random_language_level[0]
-
-
 for _ in tqdm(range(num_authors), desc="Creating authors"):
     Author.objects.create(
         name=fake.name(),
@@ -75,7 +62,7 @@ for _ in tqdm(range(num_authors), desc="Creating authors"):
         program=fake.word(),
         language_background=random.choice(Author.LanguageBackgroundChoices.values),
         dominant_language=random.choice(Author.DominantLanguageChoices.values),
-        language_level=get_random_language_level(),
+        language_level=random.choice(Author.LanguageLevelChoices.values),
         favorite=fake.boolean(),
     )
 
