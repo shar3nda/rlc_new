@@ -257,43 +257,54 @@ class Document(models.Model):
         This method overrides the default save method of the model.
         It is used to create Sentence objects for each sentence in the document.
         """
+
+        body_changed = False
+
+        # Check if the document exists and the body has changed
+        if self.pk:
+            old_document = Document.objects.get(pk=self.pk)
+            if old_document.body != self.body:
+                body_changed = True
+        else:
+            body_changed = True
+
         super().save(*args, **kwargs)
-        # if the document is already tokenized, do nothing
-        # TODO rewrite this to handle the case when the document is being edited
-        if Sentence.objects.filter(document=self).exists():
-            return
 
-        # load models
-        segmenter = Segmenter()
-        morph_vocab = MorphVocab()
-        # TODO при желании можно заменить на эмбеддинги и тэггер из худлита
-        emb = NewsEmbedding()
-        morph_tagger = NewsMorphTagger(emb)
-        doc = Doc(self.body)
+        if body_changed:
+            Sentence.objects.filter(document=self).delete()
+            Annotation.objects.filter(document=self).delete()
 
-        # tokenize the text
-        doc.segment(segmenter)
+            # load models
+            segmenter = Segmenter()
+            morph_vocab = MorphVocab()
+            # TODO при желании можно заменить на эмбеддинги и тэггер из худлита
+            emb = NewsEmbedding()
+            morph_tagger = NewsMorphTagger(emb)
+            doc = Doc(self.body)
 
-        # tag morphology
-        doc.tag_morph(morph_tagger)
+            # tokenize the text
+            doc.segment(segmenter)
 
-        # lemmatize all tokens
-        for token in doc.tokens:
-            token.lemmatize(morph_vocab)
+            # tag morphology
+            doc.tag_morph(morph_tagger)
 
-        # create Sentence objects
-        for number, sentence in enumerate(doc.sents):
-            text = sentence.text
-            markup = sentence.text
-            for token in sentence.tokens:
-                tooltip_title = (
-                    f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
+            # lemmatize all tokens
+            for token in doc.tokens:
+                token.lemmatize(morph_vocab)
+
+            # create Sentence objects
+            for number, sentence in enumerate(doc.sents):
+                text = sentence.text
+                markup = sentence.text
+                for token in sentence.tokens:
+                    tooltip_title = (
+                        f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
+                    )
+                    tooltip = f'<span data-toggle="tooltip" title="{tooltip_title}">{token.text}</span>'
+                    markup = self.replace_word_outside_span(markup, token.text, tooltip)
+                Sentence.objects.create(
+                    document=self, text=text, markup=markup, number=number
                 )
-                tooltip = f'<span data-toggle="tooltip" title="{tooltip_title}">{token.text}</span>'
-                markup = self.replace_word_outside_span(markup, token.text, tooltip)
-            Sentence.objects.create(
-                document=self, text=text, markup=markup, number=number
-            )
 
     class Meta:
         ordering = ["-created_on"]
@@ -385,7 +396,6 @@ class Sentence(models.Model):
 
     class Meta:
         ordering = ["number"]
-
 
 
 class Annotation(models.Model):

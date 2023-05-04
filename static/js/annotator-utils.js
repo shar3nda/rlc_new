@@ -117,7 +117,7 @@ var CheckboxWidget = function (args) {
   }
   var createLabel = function () {
     var label = document.createElement('label');
-    label.textContent = 'Orpho Annotation';
+    label.textContent = 'Дополнительная аннотация';
 
     return label;
   }
@@ -151,7 +151,6 @@ function initRecogito() {
   sentences.forEach((sentence) => {
     // Create a unique ID for each sentence element
     // Initialize a RecogitoJS instance for the sentence element
-    console.log(`Initializing RecogitoJS for sentence ${sentence.id}`);
     const r = Recogito.init({
       allowEmpty: false,
       content: document.getElementById(sentence.id), readOnly: false,
