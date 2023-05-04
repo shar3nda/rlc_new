@@ -12,9 +12,7 @@ class DocumentFilter(django_filters.FilterSet):
     user = django_filters.ChoiceFilter(
         field_name="user__username",
         # sorted usernames
-        choices=sorted(
-            User.objects.values_list("username", "username").distinct(), key=lambda x: x[0]
-        ),
+        choices=User.objects.values_list("username", "username").order_by("username"),
         lookup_expr="exact",
         label="Создатель",
     )

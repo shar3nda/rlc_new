@@ -39,9 +39,10 @@ def annotate(request, document_id):
     doc = Document.objects.get(id=document_id)
     context = {
         "document": doc,
-        "sentences": Sentence.objects.filter(document=doc),
+        "sentences": Sentence.objects.filter(document=doc).order_by("number"),
     }
     return render(request, "annotate.html", context)
+
 
 @login_required
 def add_or_edit_document(request, document_id=None):
@@ -49,50 +50,70 @@ def add_or_edit_document(request, document_id=None):
     document = get_object_or_404(Document, id=document_id) if editing else None
     preselect_favorite_author = False
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = DocumentForm(request.POST, instance=document)
-        author_form = NewAuthorForm(request.POST, prefix='author')
-        favorite_author_form = FavoriteAuthorForm(request.POST, prefix='favorite_author')
+        author_form = NewAuthorForm(request.POST, prefix="author")
+        favorite_author_form = FavoriteAuthorForm(
+            request.POST, prefix="favorite_author"
+        )
         if form.is_valid():
-            if request.POST['author_selection_method'] == 'manual' and author_form.is_valid():
+            if (
+                request.POST["author_selection_method"] == "manual"
+                and author_form.is_valid()
+            ):
                 author = author_form.save()
                 document = form.save(commit=False)
                 document.author = author
                 document.save()
-            elif request.POST['author_selection_method'] == 'dropdown' and favorite_author_form.is_valid():
+            elif (
+                request.POST["author_selection_method"] == "dropdown"
+                and favorite_author_form.is_valid()
+            ):
                 document = form.save(commit=False)
-                document.author = favorite_author_form.cleaned_data['selected_author']
+                document.author = favorite_author_form.cleaned_data["selected_author"]
                 document.save()
             else:
-                messages.error(request, 'Invalid author information. Please check the form and try again.')
-                return redirect('edit_document', document_id=document_id)
+                messages.error(
+                    request,
+                    "Invalid author information. Please check the form and try again.",
+                )
+                return redirect("edit_document", document_id=document_id)
 
-            messages.success(request, 'Document saved successfully.')
-            return redirect('annotate', document_id=document.id)
+            messages.success(request, "Document saved successfully.")
+            return redirect("annotate", document_id=document.id)
         else:
-            messages.error(request, 'An error occurred while saving the document. Please check the form and try again.')
-            return redirect('edit_document', document_id=document_id)
+            messages.error(
+                request,
+                "An error occurred while saving the document. Please check the form and try again.",
+            )
+            return redirect("edit_document", document_id=document_id)
     else:
         form = DocumentForm(instance=document)
 
         if editing and document.author.favorite:
-            author_form = NewAuthorForm(prefix='author')
-            favorite_author_form = FavoriteAuthorForm(prefix='favorite_author', initial={'selected_author': document.author})
+            author_form = NewAuthorForm(prefix="author")
+            favorite_author_form = FavoriteAuthorForm(
+                prefix="favorite_author", initial={"selected_author": document.author}
+            )
             preselect_favorite_author = True
         elif editing:
-            author_form = NewAuthorForm(prefix='author', instance=document.author)
-            favorite_author_form = FavoriteAuthorForm(prefix='favorite_author')
+            author_form = NewAuthorForm(prefix="author", instance=document.author)
+            favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
         else:
-            author_form = NewAuthorForm(prefix='author')
-            favorite_author_form = FavoriteAuthorForm(prefix='favorite_author')
+            author_form = NewAuthorForm(prefix="author")
+            favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
 
-    return render(request, 'add_or_edit_document.html', {
-        'form': form,
-        'author_form': author_form,
-        'favorite_author_form': favorite_author_form,
-        'editing': editing,
-        'preselect_favorite_author': preselect_favorite_author,
-    })
+    return render(
+        request,
+        "add_or_edit_document.html",
+        {
+            "form": form,
+            "author_form": author_form,
+            "favorite_author_form": favorite_author_form,
+            "editing": editing,
+            "preselect_favorite_author": preselect_favorite_author,
+        },
+    )
 
 
 def delete_document(request, document_id):
