@@ -65,12 +65,13 @@ def add_or_edit_document(request, document_id=None):
                 document.save()
             else:
                 messages.error(request, 'Invalid author information. Please check the form and try again.')
-                return redirect('add_edit_document', document_id=document_id)
+                return redirect('edit_document', document_id=document_id)
 
             messages.success(request, 'Document saved successfully.')
-            return redirect('document_list')  # Replace 'document_list' with the view name for the list of documents
+            return redirect('annotate', document_id=document.id)
         else:
             messages.error(request, 'An error occurred while saving the document. Please check the form and try again.')
+            return redirect('edit_document', document_id=document_id)
     else:
         form = DocumentForm(instance=document)
 
@@ -92,6 +93,7 @@ def add_or_edit_document(request, document_id=None):
         'editing': editing,
         'preselect_favorite_author': preselect_favorite_author,
     })
+
 
 def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
