@@ -9,9 +9,12 @@ class DocumentFilter(django_filters.FilterSet):
         choices=Author.objects.filter(favorite=True).values_list("id", "name"),
         lookup_expr="exact",
     )
-    username = django_filters.ChoiceFilter(
+    user = django_filters.ChoiceFilter(
         field_name="user__username",
-        choices=User.objects.values_list("username", "username"),
+        # sorted usernames
+        choices=sorted(
+            User.objects.values_list("username", "username").distinct(), key=lambda x: x[0]
+        ),
         lookup_expr="exact",
         label="Создатель",
     )
@@ -41,4 +44,5 @@ class DocumentFilter(django_filters.FilterSet):
             "genre": ["exact"],
             "subcorpus": ["exact"],
             "source": ["exact"],
+            "user": ["exact"],
         }
