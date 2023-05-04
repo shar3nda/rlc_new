@@ -1,5 +1,5 @@
+from django.contrib.auth.models import User
 import django_filters
-
 from .models import Document, Author
 
 
@@ -8,6 +8,12 @@ class DocumentFilter(django_filters.FilterSet):
         field_name="author",
         choices=Author.objects.filter(favorite=True).values_list("id", "name"),
         lookup_expr="exact",
+    )
+    username = django_filters.ChoiceFilter(
+        field_name="user__username",
+        choices=User.objects.values_list("username", "username"),
+        lookup_expr="exact",
+        label="Пользователь",
     )
     author__language_background = django_filters.ChoiceFilter(
         field_name="author__language_background",

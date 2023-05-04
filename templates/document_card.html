@@ -35,11 +35,14 @@
 
                   <dt class="col-sm-5">Статус:</dt>
                   <dd class="col-sm-7">{{ document.get_status_display }}</dd>
+
+                  <dt class="col-sm-5">Создатель:</dt>
+                  <dd class="col-sm-7">{{ document.user.username }}</dd>
                 </dl>
               </div>
               <div class="col-md-7 mb-3">
                 <dl class="row">
-                  <dt class="col-sm-4">Имя:</dt>
+                  <dt class="col-sm-4">Автор:</dt>
                   <dd class="col-sm-8">{{ document.author.name }}</dd>
 
                   <dt class="col-sm-4">Пол:</dt>
