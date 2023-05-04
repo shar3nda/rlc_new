@@ -15,14 +15,17 @@
         {% endif %}
         <form method="get" class="mb-4">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
               {{ filter.form.author|as_crispy_field }}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               {{ filter.form.author__language_background|as_crispy_field }}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               {{ filter.form.author__dominant_language|as_crispy_field }}
+            </div>
+            <div class="col-md-3">
+              {{ filter.form.username|as_crispy_field }}
             </div>
           </div>
           <div class="row">
@@ -45,7 +48,7 @@
             </div>
             <div class="col-md-6">
               {{ filter.form.body|as_crispy_field }}
-            </div>
+          </div>
           </div>
           <button type="submit" class="btn btn-primary">Фильтровать</button>
         </form>
