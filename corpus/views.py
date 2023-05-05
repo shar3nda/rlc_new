@@ -105,15 +105,26 @@ def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == "POST":
         form = DocumentForm(request.POST, instance=document)
+        favorite_author_form = FavoriteAuthorForm(
+            request.POST, prefix="favorite_author"
+        )
 
         if form.is_valid():
-            form.save()
-            messages.success(request, "Document saved successfully.")
+            form.save(commit=False)
+            if favorite_author_form.is_valid():
+                document.author = favorite_author_form.cleaned_data["selected_author"]
+                document.save()
+            else:
+                messages.error(
+                    request,
+                    "Не удалось сохранить автора. Пожалуйста, проверьте форму и попробуйте снова.",
+                )
+                return redirect("edit_document", document_id=document_id)
             return redirect("annotate", document_id=document.id)
         else:
             messages.error(
                 request,
-                "An error occurred while saving the document. Please check the form and try again.",
+                "Во время сохранения документа произошла ошибка. Пожалуйста, проверьте форму и попробуйте снова.",
             )
             return redirect("edit_document", document_id=document_id)
     else:
