@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
+import re
+
+_RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
 
 class Author(models.Model):
@@ -212,7 +215,9 @@ class Document(models.Model):
         Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Автор"
     )
 
-    time_limit = models.BooleanField(default=False, verbose_name="Ограничение по времени")
+    time_limit = models.BooleanField(
+        default=False, verbose_name="Ограничение по времени"
+    )
 
     oral = models.BooleanField(default=False, verbose_name="Устный текст")
 
@@ -265,6 +270,8 @@ class Document(models.Model):
         if body_changed:
             Sentence.objects.filter(document=self).delete()
             Annotation.objects.filter(document=self).delete()
+
+            self.body = _RE_COMBINE_WHITESPACE.sub(" ", self.body).strip()
 
             # load models
             segmenter = Segmenter()
@@ -332,7 +339,7 @@ class Sentence(models.Model):
                 for body in annotation.json["body"]
                 if body["purpose"] == "highlighting"
             ]
-            if highliters and highliters[0]["value"] == True:
+            if highliters and highliters[0]["value"]:
                 continue
             replacement = [
                 correction

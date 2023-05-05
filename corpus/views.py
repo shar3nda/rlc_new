@@ -55,16 +55,16 @@ def add_document(request):
 
         if form.is_valid():
             if (
-                    request.POST["author_selection_method"] == "manual"
-                    and author_form.is_valid()
+                request.POST["author_selection_method"] == "manual"
+                and author_form.is_valid()
             ):
                 author = author_form.save()
                 document = form.save(commit=False)
                 document.author = author
                 document.save()
             elif (
-                    request.POST["author_selection_method"] == "dropdown"
-                    and favorite_author_form.is_valid()
+                request.POST["author_selection_method"] == "dropdown"
+                and favorite_author_form.is_valid()
             ):
                 document = form.save(commit=False)
                 document.author = favorite_author_form.cleaned_data["selected_author"]

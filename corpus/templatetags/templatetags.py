@@ -19,5 +19,5 @@ def highlight_search(text, search_text):
 @register.filter
 def update_page_number(query_params, page_number):
     query_dict = QueryDict(query_params, mutable=True)
-    query_dict['page'] = page_number
+    query_dict["page"] = page_number
     return query_dict.urlencode()

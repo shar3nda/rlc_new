@@ -85,12 +85,39 @@
              class="btn btn-info border-0 shadow-none doc-card-btn">
             <i class="fas fa-edit"></i> Редактировать
           </a>
-          <a href="{% url 'delete_document' document_id=document.id %}"
-             class="btn btn-danger border-0 shadow-none doc-card-btn">
+          <button type="button" class="btn btn-danger border-0 shadow-none doc-card-btn" data-bs-toggle="modal"
+                  data-bs-target="#deleteConfirmationModal" data-document-id="{{ document.id }}">
             <i class="fas fa-trash-alt"></i> Удалить
-          </a>
+          </button>
+          <div class="modal fade" id="deleteConfirmationModal" tabindex="-1"
+               aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteConfirmationModalLabel">Подтверждение удаления</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Вы уверены, что хотите удалить этот документ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                  <a href="#" id="confirmDelete" class="btn btn-danger">Удалить</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     {% endif %}
   </div>
 </div>
+<script>
+  $(document).ready(function () {
+    $(document).on('click', 'button[data-bs-toggle="modal"]', function () {
+      const documentId = $(this).data('document-id');
+      const deleteUrl = "{% url 'delete_document' document_id=123 %}".replace('123', documentId);
+      $('#confirmDelete').attr('href', deleteUrl);
+    });
+  });
+</script>

@@ -9,7 +9,11 @@ urlpatterns = [
         views.edit_document,
         name="edit_document",
     ),
-    path('edit_author/<int:author_id>/document/<int:document_id>/', views.edit_author, name='edit_author'),
+    path(
+        "edit_author/<int:author_id>/document/<int:document_id>/",
+        views.edit_author,
+        name="edit_author",
+    ),
     path(
         "delete_document/<int:document_id>/",
         views.delete_document,

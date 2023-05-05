@@ -79,10 +79,6 @@ body {
   color: #555555;
 }
 
-span {
-    white-space:pre;
-}
-
 .logout-item:hover,
 .logout-item:focus {
   background-color: red;
