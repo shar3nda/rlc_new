@@ -51,6 +51,14 @@
               {{ filter.form.body|as_crispy_field }}
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              {{ filter.form.annotator|as_crispy_field }}
+            </div>
+            <div class="col-md-6">
+              {{ filter.form.status|as_crispy_field }}
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary">Фильтровать</button>
         </form>
 

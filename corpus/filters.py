@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
-from django.db.models import Q
 import django_filters
-from .models import Document, Author
+from .models import Document, Author, Annotation
 
 
 class DocumentFilter(django_filters.FilterSet):
@@ -42,12 +41,26 @@ class DocumentFilter(django_filters.FilterSet):
     body = django_filters.CharFilter(
         field_name="body", lookup_expr="icontains", label="Текст"
     )
+    author__name = django_filters.CharFilter(
+        field_name="author__name", lookup_expr="icontains", label="Автор"
+    )
+    user__username = django_filters.CharFilter(
+        field_name="user__username", lookup_expr="exact", label="Создатель"
+    )
+    annotator = django_filters.ModelChoiceFilter(
+        field_name="annotators",
+        queryset=User.objects.order_by("username"),
+        to_field_name="id",
+        label="Разметчик",
+        distinct=True,
+    )
+    status = django_filters.ChoiceFilter(
+        field_name="status",
+        choices=Document.StatusChoices.choices,
+        lookup_expr="exact",
+        label="Статус",
+    )
 
-    def author_search_filter(self, queryset, name, value):
-        return queryset.filter(author__name__icontains=value)
-
-    def user_search_filter(self, queryset, name, value):
-        return queryset.filter(user__username__icontains=value)
 
     class Meta:
         model = Document

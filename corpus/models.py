@@ -1,7 +1,10 @@
 import re
 
+from django.apps import apps
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 import re
@@ -224,6 +227,19 @@ class Document(models.Model):
     source = models.CharField(
         max_length=1000, null=True, blank=True, verbose_name="Источник"
     )
+
+    annotators = models.ManyToManyField(
+        User,
+        related_name="annotated_documents",
+        blank=True,
+        verbose_name="Аннотаторы",
+    )
+
+    @receiver(post_save)
+    def update_document_annotators(sender, instance, created, **kwargs):
+        Annotation = apps.get_model("corpus", "Annotation")
+        if created and sender == Annotation:
+            instance.document.annotators.add(instance.user)
 
     @staticmethod
     def replace_word_outside_span(text, word, replacement):
