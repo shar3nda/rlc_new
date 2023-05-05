@@ -212,6 +212,10 @@ class Document(models.Model):
         Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Автор"
     )
 
+    time_limit = models.BooleanField(default=False, verbose_name="Ограничение по времени")
+
+    oral = models.BooleanField(default=False, verbose_name="Устный текст")
+
     source = models.CharField(
         max_length=1000, null=True, blank=True, verbose_name="Источник"
     )

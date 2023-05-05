@@ -59,7 +59,7 @@
           </ul>
           <input type="hidden" id="author-selection-method" name="author_selection_method" value="manual">
 
-          <div class="tab-content">
+          <div class="tab-content mb-4">
             {% include 'author_card.html' %}
             <div class="form-group tab-pane fade" id="favorite-authors">
               {{ favorite_author_form.selected_author.label_tag }}
@@ -67,6 +67,20 @@
             </div>
           </div>
 
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.time_limit.label_tag }}
+                {{ form.time_limit }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.oral.label_tag }}
+                {{ form.oral }}
+              </div>
+            </div>
+          </div>
           <div class="form-group mb-4">
             {{ form.source.label_tag }}
             {{ form.source }}
@@ -77,53 +91,53 @@
     </div>
   </div>
   <script>
-  function disableFields(selector) {
-    $(selector).find(':input').each(function () {
-      $(this).prop('disabled', true);
-    });
-  }
+    function disableFields(selector) {
+      $(selector).find(':input').each(function () {
+        $(this).prop('disabled', true);
+      });
+    }
 
-  function enableFields(selector) {
-    $(selector).find(':input').each(function () {
-      $(this).prop('disabled', false);
-    });
-  }
+    function enableFields(selector) {
+      $(selector).find(':input').each(function () {
+        $(this).prop('disabled', false);
+      });
+    }
 
-  $(document).ready(function () {
-    $("#add-author-tab").click(function () {
-      $("#author-fields").addClass("active show");
-      $("#favorite-authors").removeClass("active show");
-      $("#add-author-tab").addClass("active");
-      $("#select-author-tab").removeClass("active");
-      $("#author-selection-method").val("manual");
-      enableFields('#author-fields');
+    $(document).ready(function () {
+      $("#add-author-tab").click(function () {
+        $("#author-fields").addClass("active show");
+        $("#favorite-authors").removeClass("active show");
+        $("#add-author-tab").addClass("active");
+        $("#select-author-tab").removeClass("active");
+        $("#author-selection-method").val("manual");
+        enableFields('#author-fields');
+        disableFields('#favorite-authors');
+      });
+
+      $("#select-author-tab").click(function () {
+        $("#author-fields").removeClass("active show");
+        $("#favorite-authors").addClass("active show");
+        $("#add-author-tab").removeClass("active");
+        $("#select-author-tab").addClass("active");
+        $("#author-selection-method").val("dropdown");
+        enableFields('#favorite-authors');
+        disableFields('#author-fields');
+      });
+
+      // Initially disable fields in the non-focused form
       disableFields('#favorite-authors');
+
+      $("#add-document-form").submit(function (event) {
+        // Check if the form is valid
+        if (!this.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      });
+
+      {% if preselect_favorite_author %}
+        $("#select-author-tab").click();
+      {% endif %}
     });
-
-    $("#select-author-tab").click(function () {
-      $("#author-fields").removeClass("active show");
-      $("#favorite-authors").addClass("active show");
-      $("#add-author-tab").removeClass("active");
-      $("#select-author-tab").addClass("active");
-      $("#author-selection-method").val("dropdown");
-      enableFields('#favorite-authors');
-      disableFields('#author-fields');
-    });
-
-    // Initially disable fields in the non-focused form
-    disableFields('#favorite-authors');
-
-    $("#add-document-form").submit(function (event) {
-      // Check if the form is valid
-      if (!this.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    });
-
-    {% if preselect_favorite_author %}
-      $("#select-author-tab").click();
-    {% endif %}
-  });
-</script>
+  </script>
 {% endblock %}

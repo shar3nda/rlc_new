@@ -12,6 +12,8 @@ class DocumentForm(forms.ModelForm):
             "genre",
             "subcorpus",
             "body",
+            "time_limit",
+            "oral",
             "source",
         ]
         widgets = {
@@ -29,6 +31,8 @@ class DocumentForm(forms.ModelForm):
             "genre": forms.Select(attrs={"class": "form-select"}),
             "subcorpus": forms.Select(attrs={"class": "form-select"}),
             "body": forms.Textarea(attrs={"class": "form-control", "rows": "10"}),
+            "time_limit": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "oral": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "source": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
             ),
