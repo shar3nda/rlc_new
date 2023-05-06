@@ -2,8 +2,10 @@ import json
 
 from django.contrib.auth.models import User
 from django.http import JsonResponse
+from django.shortcuts import redirect
 
 from corpus.models import Annotation, Document, Sentence
+from corpus.views import user_profile
 
 
 def get_annotations(request):
@@ -85,3 +87,14 @@ def get_sentence_corrections(request, sentence_id):
             "alt_correction": sentence.alt_correction,
         }
         return JsonResponse(data)
+
+
+def get_user_info(request):
+    if request.method == "GET":
+        user = User.objects.get(id=request.user.id)
+        data = {
+            "id": redirect(user_profile).url,
+            "displayName": user.username,
+        }
+        return JsonResponse(data)
+

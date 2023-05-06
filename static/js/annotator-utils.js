@@ -168,6 +168,18 @@ function initRecogito() {
       mode: 'html',
       formatter: ColorFormatter
     });
+
+    // fetch user info from /api/get_user_info/
+    $.ajax({
+      url: '/api/get_user_info/',
+      type: 'GET',
+      success: function (data) {
+        r.setAuthInfo(data);
+      }
+    })
+
+
+    r.setAuthInfo();
     if (sentence.dataset.alt === 'true') {
       r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
     } else {
