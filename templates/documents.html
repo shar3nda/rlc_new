@@ -16,17 +16,14 @@
         {% endif %}
         <form method="get" class="mb-4">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
               {{ filter.form.author|as_crispy_field }}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               {{ filter.form.author__language_background|as_crispy_field }}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               {{ filter.form.author__dominant_language|as_crispy_field }}
-            </div>
-            <div class="col-md-3">
-              {{ filter.form.user|as_crispy_field }}
             </div>
           </div>
           <div class="row">
@@ -44,19 +41,22 @@
             </div>
           </div>
           <div class="row">
+            <div class="col-md-4">
+              {{ filter.form.user|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ filter.form.annotator|as_crispy_field }}
+            </div>
+            <div class="col-md-4">
+              {{ filter.form.status|as_crispy_field }}
+            </div>
+          </div>
+          <div class="row">
             <div class="col-md-6">
               {{ filter.form.title|as_crispy_field }}
             </div>
             <div class="col-md-6">
               {{ filter.form.body|as_crispy_field }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              {{ filter.form.annotator|as_crispy_field }}
-            </div>
-            <div class="col-md-6">
-              {{ filter.form.status|as_crispy_field }}
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Фильтровать</button>
