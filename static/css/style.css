@@ -181,3 +181,39 @@ body[data-bs-theme="dark"] .r6o-widget.comment .r6o-comment-dropdown-menu li {
   color: var(--bs-light);
   border-color: var(--bs-secondary);
 }
+
+.dark-accordion[data-bs-theme="dark"] {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+.dark-accordion[data-bs-theme="dark"] .accordion-button {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+.dark-accordion[data-bs-theme="dark"] .accordion-button:hover {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+.dark-accordion[data-bs-theme="dark"] .accordion-button:not(.collapsed) {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+.dark-accordion[data-bs-theme="dark"] .accordion-collapse {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+.dark-accordion[data-bs-theme="dark"] .accordion-body {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
