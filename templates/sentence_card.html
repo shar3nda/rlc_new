@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
   <div class="card-body position-relative pb-4" id="sentence-card-{{ sentence.id }}">
     <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}" data-document-id="{{ document.id }}"
@@ -19,7 +21,7 @@
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#altSentenceCollapse-{{ sentence.id }}" aria-expanded="false"
                   aria-controls="altSentenceCollapse-{{ sentence.id }}">
-            Альтернативное исправление
+                  {% trans "Alternative correction" %}
           </button>
         </h2>
         <div id="altSentenceCollapse-{{ sentence.id }}" class="accordion-collapse collapse"
@@ -44,7 +46,7 @@
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#sentenceMarkupCollapse-{{ sentence.id }}" aria-expanded="false"
                   aria-controls="sentenceMarkupCollapse-{{ sentence.id }}">
-            Морфологический разбор
+                  {% trans "Morphological analysis" %}
           </button>
         </h2>
         <div id="sentenceMarkupCollapse-{{ sentence.id }}" class="accordion-collapse collapse"

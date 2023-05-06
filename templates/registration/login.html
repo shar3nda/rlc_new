@@ -2,13 +2,15 @@
 {% block title %}Login{% endblock %}
 {% block navbar %}{% endblock %}
 
+{% load i18n %}
+
 {% block content %}
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-header">
-            <h5>Вход</h5>
+            <h5>{% trans "Login" %}</h5>
           </div>
           <div class="card-body">
             <form method="post" action="{% url 'login' %}">
@@ -20,7 +22,7 @@
                 </div>
               {% endif %}
               <div class="form-group mb-2">
-                <label for="username">Логин</label>
+                <label for="username">{% trans "Username" %}</label>
                 <input type="text" name="username" class="form-control" id="username" placeholder="Ваш логин..."
                        required>
                 {% if form.username.errors %}
@@ -31,7 +33,7 @@
 
               </div>
               <div class="form-group mb-4">
-                <label for="password">Пароль</label>
+                <label for="password">{% trans "Password" %}</label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="Ваш пароль..."
                        required>
               </div>
@@ -41,8 +43,8 @@
                 </div>
               {% endif %}
               <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary">Войти</button>
-                <a href="{% url 'register' %}" class="btn btn-secondary">Создать аккаунт</a>
+                <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
+                <a href="{% url 'register' %}" class="btn btn-secondary">{% trans "Create account" %}</a>
               </div>
             </form>
           </div>

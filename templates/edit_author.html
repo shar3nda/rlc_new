@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
-  <h3>Редактирование автора</h3>
+  <h3>{% trans "Edit author" %}</h3>
   <form method="post">
     {% csrf_token %}
     {% include 'author_card.html' %}
-    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
   </form>
 {% endblock %}
