@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="width: 50%;">
+  <canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+<script>
+var data = {
+  labels: {{ labels|safe }},
+  datasets: [{
+    data: {{ data|safe }},
+    backgroundColor: {{ colors|safe }}
+  }]
+};
+var chart = new Chart(document.getElementById('chart'), {
+  type: 'pie',
+  data: data
+});
+</script>
+{% endblock %}
