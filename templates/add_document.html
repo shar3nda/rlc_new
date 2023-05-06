@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -8,7 +10,7 @@
       <div class="col-md-6 offset-md-3">
         <form method="post" id="add-document-form">
           {% csrf_token %}
-          <h3 class="mb-3">Добавление документа</h3>
+          <h3 class="mb-3">{% trans "Add document" %}</h3>
           <div class="alert alert-danger" role="alert"
                style="display: {% if form.non_field_errors %}block{% else %}none{% endif %};">
             {% for error in form.non_field_errors %}
@@ -64,11 +66,11 @@
           <ul class="nav nav-tabs mb-2">
             <li class="nav-item">
               <a class="nav-link active" id="add-author-tab" href="#" data-bs-toggle="tab"
-                 data-bs-target="#author-fields">Новый автор</a>
+                 data-bs-target="#author-fields">{% trans "New author" %}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="select-author-tab" href="#" data-bs-toggle="tab"
-                 data-bs-target="#favorite-authors">Сохраненный автор</a>
+                 data-bs-target="#favorite-authors">{% trans "Saved author" %}</a>
             </li>
           </ul>
           <input type="hidden" id="author-selection-method" name="author_selection_method" value="manual">
@@ -85,7 +87,7 @@
             {{ form.source.label_tag }}
             {{ form.source }}
           </div>
-          <button type="submit" class="btn btn-lg btn-primary">Добавить</button>
+          <button type="submit" class="btn btn-lg btn-primary">{% trans "Add" %}</button>
         </form>
       </div>
     </div>

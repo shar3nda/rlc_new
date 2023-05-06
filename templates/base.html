@@ -1,4 +1,7 @@
 {% load static %}
+
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="{{ language_code }}">
 <head>
@@ -19,6 +22,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 {% block navbar %}
+
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="{% url 'homepage' %}">
@@ -33,30 +37,40 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'homepage' %}">Главная</a>
+            <a class="nav-link" href="{% url 'homepage' %}">  {% trans "Main" %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'news' %}">Новости</a>
+            <a class="nav-link" href="{% url 'news' %}">{% trans "News" %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Помощь</a>
+            <a class="nav-link" href="#">{% trans "Help" %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Статистика</a>
+            <a class="nav-link" href="#">{% trans "Statics" %}</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-          {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'add_document' %}">Новый документ</a>
-            </li>
-          {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'documents' %}">Все документы</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+               {% trans "Language" %}
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item">{% trans "Russian" %}</a>
+              <a class="dropdown-item">{% trans "English" %}</a>
+            </div>
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}">Администрация</a>
+              <a class="nav-link" href="{% url 'add_document' %}">{% trans "New document" %}</a>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'documents' %}">{% trans "All documents" %}</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin panel" %}</a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
@@ -66,13 +80,13 @@
               {{ user.username }}
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'user_profile' %}">Профиль</a>
-              <a class="dropdown-item logout-item" href="{% url 'logout' %}">Выйти</a>
+              <a class="dropdown-item" href="{% url 'user_profile' %}">{% trans "Profile" %}</a>
+              <a class="dropdown-item logout-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
             </div>
           </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">Войти</a>
+              <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">{% trans "Log in" %}</a>
             </li>
           {% endif %}
         </ul>
@@ -88,7 +102,7 @@
 {% block footer %}
   <footer class="bg-dark text-light py-2 mt-4">
     <div class="container">
-      <p class="mb-0">&copy; Школа Лингвистики ВШЭ. Все права защищены.</p>
+      <p class="mb-0">&copy; {% trans "HSE School of Linguistics. All rights reserved." %}</p>
     </div>
   </footer>
 {% endblock %}

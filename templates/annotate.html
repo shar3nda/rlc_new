@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}{{ document.title }}{% endblock %}
+{% load i18n %}
 
 {% block content %}
   <div class="container mt-5">
@@ -11,11 +12,11 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
 
               <div class="form-group mb-0">
-                <label for="document-status" class="me-2">Статус документа:</label>
+                <label for="document-status" class="me-2">{% trans "Document status" %}</label>
                 <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
-                  <option value="0" {% if document.status == 0 %}selected{% endif %}>Не аннотирован</option>
-                  <option value="1" {% if document.status == 1 %}selected{% endif %}>Аннотирован</option>
-                  <option value="2" {% if document.status == 2 %}selected{% endif %}>Проверен</option>
+                  <option value="0" {% if document.status == 0 %}selected{% endif %}>{% trans "Not annotated" %}</option>
+                  <option value="1" {% if document.status == 1 %}selected{% endif %}>{% trans "Annotated" %}</option>
+                  <option value="2" {% if document.status == 2 %}selected{% endif %}>{% trans "Checked" %}</option>
                 </select>
               </div>
             </div>
