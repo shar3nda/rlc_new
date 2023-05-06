@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
@@ -8,7 +10,7 @@
       <div class="col-md-6 offset-md-3">
         <form method="post" id="add-document-form">
           {% csrf_token %}
-          <h3 class="mb-3">Редактирование документа</h3>
+          <h3 class="mb-3">{% trans "Edit document" %}</h3>
           <div class="alert alert-danger" role="alert"
                style="display: {% if form.non_field_errors %}block{% else %}none{% endif %};">
             {% for error in form.non_field_errors %}
@@ -57,30 +59,29 @@
           </div>
 
           <dl class="row">
-            <dt class="col-sm-4">Автор:</dt>
+            <dt class="col-sm-4">{% trans "Author" %}:</dt>
             <dd class="col-sm-8">{{ document.author.name }}</dd>
 
-            <dt class="col-sm-4">Пол:</dt>
+            <dt class="col-sm-4">{% trans "Gender" %}:</dt>
             <dd class="col-sm-8">{{ document.author.get_gender_display }}</dd>
 
-            <dt class="col-sm-4">Родной язык:</dt>
+            <dt class="col-sm-4">{% trans "Dominant language" %}:</dt>
             <dd class="col-sm-8">{{ document.author.get_dominant_language_display }}</dd>
 
-            <dt class="col-sm-4">Уровень языка:</dt>
+            <dt class="col-sm-4">{% trans "Language level" %}:</dt>
             <dd class="col-sm-8">{{ document.author.get_language_level_display }}</dd>
 
-            <dt class="col-sm-4">Тип носителя:</dt>
+            <dt class="col-sm-4">{% trans "Language background" %}:</dt>
             <dd class="col-sm-8">{{ document.author.get_language_background_display }}</dd>
 
-            <dt class="col-sm-4">Программа:</dt>
+            <dt class="col-sm-4">{% trans "Program" %}:</dt>
             <dd class="col-sm-8">{{ document.author.program }}</dd>
           </dl>
 
           <p>
-            <a href="{% url 'edit_author' author_id=document.author.id document_id=document.id %}">Редактировать
-              автора</a>
+            <a href="{% url 'edit_author' author_id=document.author.id document_id=document.id %}">{% trans "Edit author" %}</a>
           </p>
-          <button type="submit" class="btn btn-lg btn-primary">Сохранить</button>
+          <button type="submit" class="btn btn-lg btn-primary">{% trans "Save" %}</button>
         </form>
       </div>
     </div>

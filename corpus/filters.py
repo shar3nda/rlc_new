@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 import django_filters
 from .models import Document, Author, Annotation
 
-
 class DocumentFilter(django_filters.FilterSet):
     author = django_filters.ChoiceFilter(
         field_name="author",
