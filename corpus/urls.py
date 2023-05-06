@@ -27,4 +27,5 @@ urlpatterns = [
         name="update_document_status",
     ),
     path("user_profile/", views.user_profile, name="user_profile"),
+    path("statistics/", views.statistics, name="statistics")
 ]

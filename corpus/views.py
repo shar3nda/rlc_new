@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db.models import Count
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
@@ -31,6 +32,28 @@ def documents(request):
         "title_query": request.GET.get("title", ""),
     }
     return render(request, "documents.html", context)
+
+
+def statistics(request):
+    # Aggregate the data
+    status_counts = Document.objects.values('status').annotate(count=Count('status'))
+
+    # Prepare the data for the chart
+    labels = [status[1] for status in Document.StatusChoices.choices]
+    text_types = []
+    for status_value, status_label in Document.StatusChoices.choices:
+        count = int(status_counts.get(status=status_value)['count'])
+        text_types.append(count)
+    texts_count = int(Document.objects.all().count())
+    colors = ['#FFC107', '#03A9F4', '#4CAF50']
+
+    # Render the chart
+    context = {'labels': labels,
+               'text_types': text_types,
+               'colors': colors,
+               'texts_count': texts_count
+               }
+    return render(request, 'statistics.html', context)
 
 
 @login_required

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+  <h2>Total Documents: {{ texts_count }}</h2>
+</div>
+<div style="width: 50%;">
+  <canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
+<script>
+var text_types_data = {
+  labels: {{ labels|safe }},
+  datasets: [{
+    data: {{ text_types|safe }},
+    backgroundColor: {{ colors|safe }}
+  }]
+};
+var chart = new Chart(document.getElementById('chart'), {
+  type: 'pie',
+  data: text_types_data
+});
+</script>
+{% endblock %}
