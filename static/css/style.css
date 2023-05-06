@@ -69,17 +69,115 @@ body {
   bottom: 1rem;
 }
 
-.accordion-button {
-  background-color: white;
-  color: #555555;
+#darkModeSwitch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.doc-card-btn {
-  background-color: white;
-  color: #555555;
+body[data-bs-theme="dark"] #darkModeSwitch {
+  color: var(--bs-light);
+  border-color: var(--bs-light);
 }
 
-.logout-item:hover,
-.logout-item:focus {
-  background-color: red;
+body[data-bs-theme="dark"] #darkModeSwitch .fas.fa-moon {
+  transform: rotate(25deg);
+}
+
+
+/* RecogitoJS annotator window dark theme */
+body[data-bs-theme="dark"] .r6o-widget {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-section {
+  background-color: var(--bs-dark);
+  border-bottom-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-tag {
+  background-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-popover-footer {
+  background-color: var(--bs-dark);
+  border-top-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-btn {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-btn:hover {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  opacity: 0.8;
+}
+
+body[data-bs-theme="dark"] .r6o-footer {
+  background-color: var(--bs-dark);
+  border-top-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-editor-inner {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-editable-text {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget.r6o-tag input {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget .comment .editable {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border-color: var(--bs-secondary) !important;
+}
+
+body[data-bs-theme="dark"] .r6o-widget.comment.editable {
+  background-color: var(--bs-dark) !important;
+  color: var(--bs-light) !important;
+  border-color: var(--bs-secondary) !important;
+}
+
+body[data-bs-theme="dark"] .r6o-widget .r6o-editable-text:focus {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget.comment .r6o-arrow-down {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+
+body[data-bs-theme="dark"] .r6o-widget.comment .r6o-comment-dropdown-menu {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget.r6o-tag .r6o-autocomplete li {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
+}
+
+body[data-bs-theme="dark"] .r6o-widget.comment .r6o-comment-dropdown-menu li {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-secondary);
 }

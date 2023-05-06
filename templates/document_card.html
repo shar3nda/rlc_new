@@ -5,7 +5,7 @@
     <div class="accordion accordion-flush mb-2" id="detailsAccordion{{ document.id }}">
       <div class="accordion-item">
         <h2 class="accordion-header" id="detailsAccordionHeading{{ document.id }}">
-          <button class="accordion-button collapsed bg-white rounded-0 shadow-sm fw-bold" type="button"
+          <button class="accordion-button collapsed rounded-0 shadow-sm fw-bold" type="button"
                   data-bs-toggle="collapse" data-bs-target="#detailsAccordionCollapse{{ document.id }}"
                   aria-expanded="false"
                   aria-controls="detailsAccordionCollapse">
@@ -82,10 +82,10 @@
         {% endif %}
         <div>
           <a href="{% url 'edit_document' document_id=document.id %}"
-             class="btn btn-info border-0 shadow-none doc-card-btn">
+             class="btn btn-info border-0 shadow-none">
             <i class="fas fa-edit"></i> Редактировать
           </a>
-          <button type="button" class="btn btn-danger border-0 shadow-none doc-card-btn" data-bs-toggle="modal"
+          <button type="button" class="btn btn-danger border-0 shadow-none" data-bs-toggle="modal"
                   data-bs-target="#deleteConfirmationModal" data-document-id="{{ document.id }}">
             <i class="fas fa-trash-alt"></i> Удалить
           </button>
