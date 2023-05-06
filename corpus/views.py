@@ -40,19 +40,19 @@ def statistics(request):
 
     # Prepare the data for the chart
     labels = [status[1] for status in Document.StatusChoices.choices]
-    new_count = int(Document.objects.filter(status=0).count())
-    annotated_count = int(Document.objects.filter(status=1).count())
-    checked_count = int(Document.objects.filter(status=2).count())
-    data = [
-        #status_counts.filter(status=status[0]).order_by().values_list('count', flat=True).first() or 0
-        #for status in Document.StatusChoices.choices
-        new_count, annotated_count, checked_count
-    ]
-
+    text_types = []
+    for status_value, status_label in Document.StatusChoices.choices:
+        count = int(status_counts.get(status=status_value)['count'])
+        text_types.append(count)
+    texts_count = int(Document.objects.all().count())
     colors = ['#FFC107', '#03A9F4', '#4CAF50']
 
     # Render the chart
-    context = {'labels': labels, 'data': data, 'colors': colors}
+    context = {'labels': labels,
+               'text_types': text_types,
+               'colors': colors,
+               'texts_count': texts_count
+               }
     return render(request, 'statistics.html', context)
 
 
