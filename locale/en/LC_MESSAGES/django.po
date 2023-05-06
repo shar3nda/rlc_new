@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-06 15:14+0300\n"
+"POT-Creation-Date: 2023-05-06 21:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -306,10 +306,219 @@ msgstr ""
 msgid "analyses"
 msgstr ""
 
-#: .\templates\base.html:26
-msgid "Hello"
+#: .\templates\add_document.html:13
+msgid "Add document"
+msgstr ""
+
+#: .\templates\add_document.html:69
+msgid "New author"
+msgstr ""
+
+#: .\templates\add_document.html:73
+msgid "Saved author"
+msgstr ""
+
+#: .\templates\add_document.html:90
+msgid "Add"
+msgstr ""
+
+#: .\templates\annotate.html:15
+msgid "Document status"
+msgstr ""
+
+#: .\templates\annotate.html:17
+msgid "Not annotated"
+msgstr ""
+
+#: .\templates\annotate.html:18
+msgid "Annotated"
+msgstr ""
+
+#: .\templates\annotate.html:19
+msgid "Checked"
+msgstr ""
+
+#: .\templates\base.html:40
+msgid "Main"
+msgstr ""
+
+#: .\templates\base.html:43
+msgid "News"
+msgstr ""
+
+#: .\templates\base.html:46
+msgid "Help"
+msgstr ""
+
+#: .\templates\base.html:49
+msgid "Statics"
+msgstr ""
+
+#: .\templates\base.html:56
+msgid "Dark Mode"
+msgstr ""
+
+#: .\templates\base.html:62
+msgid "Language"
+msgstr ""
+
+#: .\templates\base.html:65
+msgid "Russian"
+msgstr ""
+
+#: .\templates\base.html:66
+msgid "English"
+msgstr ""
+
+#: .\templates\base.html:71
+msgid "New document"
+msgstr ""
+
+#: .\templates\base.html:75
+msgid "All documents"
+msgstr ""
+
+#: .\templates\base.html:79
+msgid "Admin panel"
+msgstr ""
+
+#: .\templates\base.html:89
+msgid "Profile"
+msgstr ""
+
+#: .\templates\base.html:90
+msgid "Log out"
+msgstr ""
+
+#: .\templates\base.html:95
+msgid "Log in"
+msgstr ""
+
+#: .\templates\base.html:111
+msgid "HSE School of Linguistics. All rights reserved."
+msgstr ""
+
+#: .\templates\document_card.html:26
+msgid "Added"
+msgstr ""
+
+#: .\templates\document_card.html:29
+msgid "Genre"
+msgstr ""
+
+#: .\templates\document_card.html:32
+msgid "Subcorpus"
+msgstr ""
+
+#: .\templates\document_card.html:35
+msgid "Source"
+msgstr ""
+
+#: .\templates\document_card.html:38
+msgid "Status"
+msgstr ""
+
+#: .\templates\document_card.html:41
+msgid "Owner"
+msgstr ""
+
+#: .\templates\document_card.html:47 .\templates\edit_document.html:62
+msgid "Author"
+msgstr ""
+
+#: .\templates\document_card.html:50 .\templates\edit_document.html:65
+msgid "Gender"
+msgstr ""
+
+#: .\templates\document_card.html:53 .\templates\edit_document.html:68
+msgid "Dominant language"
+msgstr ""
+
+#: .\templates\document_card.html:56 .\templates\edit_document.html:71
+msgid "Language level"
+msgstr ""
+
+#: .\templates\document_card.html:59 .\templates\edit_document.html:74
+msgid "Language background"
+msgstr ""
+
+#: .\templates\document_card.html:62 .\templates\edit_document.html:77
+msgid "Program"
+msgstr ""
+
+#: .\templates\document_card.html:82
+msgid "Annotate"
+msgstr ""
+
+#: .\templates\document_card.html:87
+msgid "Edit"
+msgstr ""
+
+#: .\templates\document_card.html:91 .\templates\document_card.html:106
+msgid "Delete"
+msgstr ""
+
+#: .\templates\document_card.html:98
+msgid "Confirm deletion"
+msgstr ""
+
+#: .\templates\document_card.html:102
+msgid "Are you sure you want to delete this document?"
+msgstr ""
+
+#: .\templates\document_card.html:105
+msgid "Cancel"
+msgstr ""
+
+#: .\templates\documents.html:7
+msgid "Documents"
+msgstr ""
+
+#: .\templates\documents.html:15
+msgid "Create document"
+msgstr ""
+
+#: .\templates\documents.html:63
+msgid "Filter"
+msgstr ""
+
+#: .\templates\edit_author.html:6 .\templates\edit_document.html:82
+msgid "Edit author"
+msgstr ""
+
+#: .\templates\edit_author.html:10 .\templates\edit_document.html:84
+msgid "Save"
+msgstr ""
+
+#: .\templates\edit_document.html:13
+msgid "Edit document"
 msgstr ""
 
 #: .\templates\homepage.html:31
 msgid "Back to Top"
+msgstr ""
+
+#: .\templates\registration\login.html:13
+#: .\templates\registration\login.html:46
+msgid "Login"
+msgstr ""
+
+#: .\templates\registration\login.html:25
+msgid "Username"
+msgstr ""
+
+#: .\templates\registration\login.html:36
+msgid "Password"
+msgstr ""
+
+#: .\templates\registration\login.html:47
+msgid "Create account"
+msgstr ""
+
+#: .\templates\sentence_card.html:24
+msgid "Alternative correction"
+msgstr ""
+
+#: .\templates\sentence_card.html:49
+msgid "Morphological analysis"
 msgstr ""

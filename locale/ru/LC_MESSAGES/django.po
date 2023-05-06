@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-06 15:14+0300\n"
+"POT-Creation-Date: 2023-05-06 21:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,63 +22,63 @@ msgstr ""
 
 #: .\content\models.py:14
 msgid "date"
-msgstr ""
+msgstr "Дата"
 
 #: .\content\models.py:19 .\content\models.py:39
 msgid "Please enter the news text in Russian."
-msgstr ""
+msgstr "Пожалуйста, введите текст новости на русском языке."
 
 #: .\content\models.py:20 .\content\models.py:40
 msgid "text in Russian"
-msgstr ""
+msgstr "Текст на русском языке"
 
 #: .\content\models.py:23 .\content\models.py:43
 msgid "Please enter the news text in English."
-msgstr ""
+msgstr "Пожалуйста, введите текст новости на английском языке."
 
 #: .\content\models.py:24 .\content\models.py:44
 msgid "text in English"
-msgstr ""
+msgstr "Текст на английском языке"
 
 #: .\content\models.py:31
 msgid "article"
-msgstr ""
+msgstr "Статья"
 
 #: .\content\models.py:32
 msgid "articles"
-msgstr ""
+msgstr "Статьи"
 
 #: .\content\models.py:48
 msgid "Enter the name of the section in Russian"
-msgstr ""
+msgstr "Введите название раздела на русском языке"
 
 #: .\content\models.py:49
 msgid "name in Russian"
-msgstr ""
+msgstr "Название на русском языке"
 
 #: .\content\models.py:53
 msgid "Enter the name of the section in English"
-msgstr ""
+msgstr "Введите название раздела на английском языке"
 
 #: .\content\models.py:54
 msgid "name in English"
-msgstr ""
+msgstr "Название на английском языке"
 
 #: .\content\models.py:57
 msgid "Please enter the number of the entry on the page"
-msgstr ""
+msgstr "Пожалуйста, введите номер записи на странице"
 
 #: .\content\models.py:58
 msgid "entry number"
-msgstr ""
+msgstr "Номер записи"
 
 #: .\content\models.py:62
 msgid "section"
-msgstr ""
+msgstr "Раздел"
 
 #: .\content\models.py:63
 msgid "sections"
-msgstr ""
+msgstr "Разделы"
 
 #: .\corpus\models.py:39
 msgid "Абхазский"
@@ -294,24 +294,236 @@ msgstr ""
 
 #: .\corpus\models.py:463
 msgid "token"
-msgstr ""
+msgstr "Токен"
 
 #: .\corpus\models.py:464
 msgid "tokens"
-msgstr ""
+msgstr "Токены"
 
 #: .\corpus\models.py:486
 msgid "analysis"
-msgstr ""
+msgstr "Анализ"
 
 #: .\corpus\models.py:487
 msgid "analyses"
-msgstr ""
+msgstr "Анализы"
 
-#: .\templates\base.html:26
-msgid "Hello"
-msgstr "Привет"
+#: .\templates\add_document.html:13
+msgid "Add document"
+msgstr "Добавить документ"
+
+#: .\templates\add_document.html:69
+msgid "New author"
+msgstr "Новый автор"
+
+#: .\templates\add_document.html:73
+msgid "Saved author"
+msgstr "Сохраненный автор"
+
+#: .\templates\add_document.html:90
+msgid "Add"
+msgstr "Добавить"
+
+#: .\templates\annotate.html:15
+msgid "Document status"
+msgstr "Статус документа"
+
+#: .\templates\annotate.html:17
+msgid "Not annotated"
+msgstr "Не аннотирован"
+
+#: .\templates\annotate.html:18
+msgid "Annotated"
+msgstr "Аннотирован"
+
+#: .\templates\annotate.html:19
+msgid "Checked"
+msgstr "Проверен"
+
+#: .\templates\base.html:40
+msgid "Main"
+msgstr "Главная"
+
+#: .\templates\base.html:43
+msgid "News"
+msgstr "Новости"
+
+#: .\templates\base.html:46
+msgid "Help"
+msgstr "Помощь"
+
+#: .\templates\base.html:49
+msgid "Statics"
+msgstr "Статистика"
+
+#: .\templates\base.html:56
+msgid "Dark Mode"
+msgstr "Тёмный режим"
+
+#: .\templates\base.html:62
+msgid "Language"
+msgstr "Язык"
+
+#: .\templates\base.html:65
+msgid "Russian"
+msgstr "Русский"
+
+#: .\templates\base.html:66
+msgid "English"
+msgstr "Английский"
+
+#: .\templates\base.html:71
+msgid "New document"
+msgstr "Новый документ"
+
+#: .\templates\base.html:75
+msgid "All documents"
+msgstr "Все документы"
+
+#: .\templates\base.html:79
+msgid "Admin panel"
+msgstr "Администрирование"
+
+#: .\templates\base.html:89
+msgid "Profile"
+msgstr "Профиль"
+
+#: .\templates\base.html:90
+msgid "Log out"
+msgstr "Выйти"
+
+#: .\templates\base.html:95
+msgid "Log in"
+msgstr "Войти"
+
+#: .\templates\base.html:111
+msgid "HSE School of Linguistics. All rights reserved."
+msgstr "Школа лингвистики ВШЭ. Все права защтщены"
+
+#: .\templates\document_card.html:26
+msgid "Added"
+msgstr "Добавлено"
+
+#: .\templates\document_card.html:29
+msgid "Genre"
+msgstr "Жанр"
+
+#: .\templates\document_card.html:32
+msgid "Subcorpus"
+msgstr "Подкорпус"
+
+#: .\templates\document_card.html:35
+msgid "Source"
+msgstr "Источник"
+
+#: .\templates\document_card.html:38
+msgid "Status"
+msgstr "Статус"
+
+#: .\templates\document_card.html:41
+msgid "Owner"
+msgstr "Добавил"
+
+#: .\templates\document_card.html:47 .\templates\edit_document.html:62
+msgid "Author"
+msgstr "Автор"
+
+#: .\templates\document_card.html:50 .\templates\edit_document.html:65
+msgid "Gender"
+msgstr "Пол"
+
+#: .\templates\document_card.html:53 .\templates\edit_document.html:68
+msgid "Dominant language"
+msgstr "Родной язык"
+
+#: .\templates\document_card.html:56 .\templates\edit_document.html:71
+msgid "Language level"
+msgstr "Уровень языка"
+
+#: .\templates\document_card.html:59 .\templates\edit_document.html:74
+msgid "Language background"
+msgstr "Тип носителя"
+
+#: .\templates\document_card.html:62 .\templates\edit_document.html:77
+msgid "Program"
+msgstr "Программа"
+
+#: .\templates\document_card.html:82
+msgid "Annotate"
+msgstr "Аннотировать"
+
+#: .\templates\document_card.html:87
+msgid "Edit"
+msgstr "Изменить"
+
+#: .\templates\document_card.html:91 .\templates\document_card.html:106
+msgid "Delete"
+msgstr "Удалить"
+
+#: .\templates\document_card.html:98
+msgid "Confirm deletion"
+msgstr "Подтвердите удаление"
+
+#: .\templates\document_card.html:102
+msgid "Are you sure you want to delete this document?"
+msgstr "Вы уверены, что хотите удалить документ?"
+
+#: .\templates\document_card.html:105
+msgid "Cancel"
+msgstr "Отмена"
+
+#: .\templates\documents.html:7
+msgid "Documents"
+msgstr "Документы"
+
+#: .\templates\documents.html:15
+msgid "Create document"
+msgstr "Создать документ"
+
+#: .\templates\documents.html:63
+msgid "Filter"
+msgstr "Фильтровать"
+
+#: .\templates\edit_author.html:6 .\templates\edit_document.html:82
+msgid "Edit author"
+msgstr "Редактировать автора"
+
+#: .\templates\edit_author.html:10 .\templates\edit_document.html:84
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\edit_document.html:13
+msgid "Edit document"
+msgstr "Изменить документ"
 
 #: .\templates\homepage.html:31
 msgid "Back to Top"
-msgstr ""
+msgstr "Вернуться наверх"
+
+#: .\templates\registration\login.html:13
+#: .\templates\registration\login.html:46
+msgid "Login"
+msgstr "Войти"
+
+#: .\templates\registration\login.html:25
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\templates\registration\login.html:36
+msgid "Password"
+msgstr "Пароль"
+
+#: .\templates\registration\login.html:47
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+#: .\templates\sentence_card.html:24
+msgid "Alternative correction"
+msgstr "Альтернативное исправление"
+
+#: .\templates\sentence_card.html:49
+msgid "Morphological analysis"
+msgstr "Морфологический разбор"
+
+#~ msgid "Hello"
+#~ msgstr "Привет"

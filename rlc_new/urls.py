@@ -19,13 +19,13 @@ from corpus.views import SignUpView
 from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("corpus/", include("corpus.urls")),
-    path("api/", include("api.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path("register/", SignUpView.as_view(), name="register"),
+    path("admin/", admin.site.urls)
 ]
 
 urlpatterns += i18n_patterns( 
-    path("", include("content.urls"))
+    path("", include("content.urls")),
+    path("corpus/", include("corpus.urls")),
+    path("api/", include("api.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("register/", SignUpView.as_view(), name="register")
 )

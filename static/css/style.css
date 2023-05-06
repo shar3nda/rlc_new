@@ -75,6 +75,13 @@ body {
   justify-content: center;
 }
 
+.logout-item:hover,
+.logout-item:focus {
+  background-color: red;
+  color: #fff; 
+  outline: none;
+}
+
 body[data-bs-theme="dark"] #darkModeSwitch {
   color: var(--bs-light);
   border-color: var(--bs-light);
