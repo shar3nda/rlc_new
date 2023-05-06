@@ -352,7 +352,7 @@ msgstr ""
 
 #: .\templates\base.html:49
 msgid "Statics"
-msgstr ""
+msgstr "Statistics"
 
 #: .\templates\base.html:56
 msgid "Dark Mode"
