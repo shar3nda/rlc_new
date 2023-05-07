@@ -13,17 +13,17 @@ _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Имя")
+    name = models.CharField(max_length=255, verbose_name=_("Author name"))
 
     class GenderChoices(models.TextChoices):
-        M = "M", "Мужской"
-        F = "F", "Женский"
-        O = "O", "Неизвестно"
+        M = "M", _("Male")
+        F = "F", _("Female")
+        O = "O", _("Other")
 
     gender = models.CharField(
-        max_length=10, choices=GenderChoices.choices, verbose_name="Пол"
+        max_length=10, choices=GenderChoices.choices, verbose_name=_("Gender")
     )
-    program = models.CharField(max_length=255, verbose_name="Программа")
+    program = models.CharField(max_length=255, verbose_name=_("Programm"))
 
     class LanguageBackgroundChoices(models.TextChoices):
         H = "H", "Эритажный"
@@ -32,63 +32,63 @@ class Author(models.Model):
     language_background = models.CharField(
         max_length=10,
         choices=LanguageBackgroundChoices.choices,
-        verbose_name="Тип носителя",
+        verbose_name=_("Language background"),
     )
 
     class DominantLanguageChoices(models.TextChoices):
-        ABK = "abk", _("Абхазский")
-        AZE = "aze", _("Азербайджанский")
-        ALB = "alb", _("Албанский")
-        AMH = "amh", _("Амхарский")
-        ENG = "eng", _("Английский")
-        ARA = "ara", _("Арабский")
-        ARM = "arm", _("Армянский")
-        BEN = "ben", _("Бенгальский")
-        BUL = "bul", _("Болгарский")
-        HUN = "hun", _("Венгерский")
-        VIE = "vie", _("Вьетнамский")
-        DUT = "dut", _("Голландский")
-        GRE = "gre", _("Греческий")
-        GEO = "geo", _("Грузинский")
-        DAG = "dag", _("Дагестанский")
-        DAR = "dar", _("Дари")
-        HEB = "heb", _("Иврит")
-        IND = "ind", _("Индонезийский")
-        SPA = "spa", _("Испанский")
-        ITA = "ita", _("Итальянский")
-        KAZ = "kaz", _("Казахский")
-        CHI = "chi", _("Китайский")
-        KOR = "kor", _("Корейский")
-        KUR = "kur", _("Курдский")
-        KHM = "khm", _("Кхмерский")
-        LAO = "lao", _("Лаосский")
-        MAC = "mac", _("Македонский")
-        MON = "mon", _("Монгольский")
-        GER = "ger", _("Немецкий")
-        NEP = "nep", _("Непальский")
-        NOR = "nor", _("Норвежский")
-        POR = "por", _("Португальский")
-        PAS = "pas", _("Пушту")
-        ROM = "rom", _("Румынский")
-        SER = "ser", _("Сербский")
-        SVK = "svk", _("Словацкий")
-        SLO = "slo", _("Словенский")
-        TAJ = "taj", _("Таджикский")
-        THA = "tha", _("Тайский")
-        TUR = "tur", _("Турецкий")
-        TURKMEN = "turkmen", _("Туркменский")
-        UZB = "uzb", _("Узбекский")
-        URD = "urd", _("Урду")
-        FAR = "far", _("Фарси")
-        FIN = "fin", _("Финский")
-        FR = "fr", _("Французский")
-        HIN = "hin", _("Хинди")
-        CRO = "cro", _("Хорватский")
-        SHO = "sho", _("Чешский")
-        SWE = "swe", _("Шведский")
-        SHONA = "shona", _("Шона")
-        EST = "est", _("Эстонский")
-        JAP = "jap", _("Японский")
+        ABK = "abk", _("Abkhazian")
+        AZE = "aze", _("Azerbaijani")
+        ALB = "alb", _("Albanian")
+        AMH = "amh", _("Amharic")
+        ENG = "eng", _("English")
+        ARA = "ara", _("Arabic")
+        ARM = "arm", _("Armenian")
+        BEN = "ben", _("Bengali")
+        BUL = "bul", _("Bulgarian")
+        HUN = "hun", _("Hungarian")
+        VIE = "vie", _("Vietnamese")
+        DUT = "dut", _("Dutch")
+        GRE = "gre", _("Greek")
+        GEO = "geo", _("Georgian")
+        DAG = "dag", _("Daghestanian")
+        DAR = "dar", _("Dari")
+        HEB = "heb", _("Hebrew")
+        IND = "ind", _("Indonesian")
+        SPA = "spa", _("Spanish")
+        ITA = "ita", _("Italian")
+        KAZ = "kaz", _("Kazakh")
+        CHI = "chi", _("Chinese")
+        KOR = "kor", _("Korean")
+        KUR = "kur", _("Kurdish")
+        KHM = "khm", _("Khmer")
+        LAO = "lao", _("Lao")
+        MAC = "mac", _("Macedonian")
+        MON = "mon", _("Mongolian")
+        GER = "ger", _("German")
+        NEP = "nep", _("Nepali")
+        NOR = "nor", _("Norwegian")
+        POR = "por", _("Portuguese")
+        PAS = "pas", _("Pashto")
+        ROM = "rom", _("Romanian")
+        SER = "ser", _("Serbian")
+        SVK = "svk", _("Slovak")
+        SLO = "slo", _("Slovenian")
+        TAJ = "taj", _("Tajik")
+        THA = "tha", _("Thai")
+        TUR = "tur", _("Turkish")
+        TURKMEN = "turkmen", _("Turkmen")
+        UZB = "uzb", _("Uzbek")
+        URD = "urd", _("Urdu")
+        FAR = "far", _("Farsi")
+        FIN = "fin", _("Finnish")
+        FR = "fr", _("French")
+        HIN = "hin", _("Hindi")
+        CRO = "cro", _("Croatian")
+        SHO = "sho", _("Czech")
+        SWE = "swe", _("Swedish")
+        SHONA = "shona", _("Shona")
+        EST = "est", _("Estonian")
+        JAP = "jap", _("Japanese")
 
     dominant_language = models.CharField(
         max_length=10,
@@ -126,10 +126,10 @@ class Author(models.Model):
         blank=False,
         choices=LanguageLevelChoices.choices,
         db_index=True,
-        verbose_name="Уровень владения языком",
+        verbose_name=_("Language level"),
     )
 
-    favorite = models.BooleanField(default=False, verbose_name="Избранное")
+    favorite = models.BooleanField(default=False, verbose_name=_("Favourites"))
 
     def __str__(self):
         return self.name
@@ -141,42 +141,42 @@ class Document(models.Model):
     """
 
     # The title of the document
-    title = models.CharField(max_length=200, verbose_name="Название")
+    title = models.CharField(max_length=200, verbose_name=_("Title"))
     # The owner of the document (FK to User)
     user = models.ForeignKey(
         User,
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name="Пользователь",
+        verbose_name=_("User"),
     )
     # The date when the document was created
-    created_on = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name=_("Created on"))
 
     # Дата написания текста
-    date = models.IntegerField(null=True, blank=True, verbose_name="Год написания")
+    date = models.IntegerField(null=True, blank=True, verbose_name=_("Written in"))
 
     # жанр текста
     class GenreChoices(models.TextChoices):
-        ANSWERS = "answers", "Ответы на вопросы"
-        NONACADEMIC = "nonacademic", "Неакадемическое эссе"
-        ACADEMIC = "academic", "Академическое эссе"
-        BLOG = "blog", "Блог"
-        LETTER = "letter", "Письмо"
-        STORY = "story", "История"
-        PARAPHRASE = "paraphrase", "Пересказ"
-        DEFINITION = "definition", "Определение"
-        BIO = "bio", "Биография"
-        DESCRIPTION = "description", "Описание"
-        SUMMARY = "summary", "Краткое изложение"
-        OTHER = "other", "Другое"
+        ANSWERS = "answers", _("Answers to questions")
+        NONACADEMIC = "nonacademic", _("Non–academic essay")
+        ACADEMIC = "academic", _("Academic essay")
+        BLOG = "blog", _("Blog")
+        LETTER = "letter", _("Letter")
+        STORY = "story", _("Story")
+        PARAPHRASE = "paraphrase", _("Paraphrase")
+        DEFINITION = "definition", _("Definition")
+        BIO = "bio",  _("Biography")
+        DESCRIPTION = "description", _("Description")
+        SUMMARY = "summary", _("Summary")
+        OTHER = "other", _("Other")
 
     genre = models.CharField(
         max_length=100,
         null=True,
         blank=True,
         db_index=True,
-        verbose_name="Жанр",
+        verbose_name=_("Genre"),
         choices=GenreChoices.choices,
         default=GenreChoices.OTHER,
     )
@@ -198,11 +198,11 @@ class Document(models.Model):
         choices=SubcorpusChoices.choices,
         db_index=True,
         default=SubcorpusChoices.HSE,
-        verbose_name="Подкорпус",
+        verbose_name=_("Subcorpus"),
     )
 
     # The text of the document
-    body = models.TextField(verbose_name="Текст")
+    body = models.TextField(verbose_name=_("Text"))
 
     class StatusChoices(models.IntegerChoices):
         NEW = 0, "Новый"
@@ -211,28 +211,28 @@ class Document(models.Model):
 
     # The status of the document (new, annotated, checked)
     status = models.IntegerField(
-        choices=StatusChoices.choices, default=0, verbose_name="Статус"
+        choices=StatusChoices.choices, default=0, verbose_name=_("Status")
     )
 
     author = models.ForeignKey(
-        Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name="Автор"
+        Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_("Author")
     )
 
     time_limit = models.BooleanField(
-        default=False, verbose_name="Ограничение по времени"
+        default=False, verbose_name=_("Time limit")
     )
 
-    oral = models.BooleanField(default=False, verbose_name="Устный текст")
+    oral = models.BooleanField(default=False, verbose_name=_("Oral"))
 
     source = models.CharField(
-        max_length=1000, null=True, blank=True, verbose_name="Источник"
+        max_length=1000, null=True, blank=True, verbose_name=_("Source")
     )
 
     annotators = models.ManyToManyField(
         User,
         related_name="annotated_documents",
         blank=True,
-        verbose_name="Аннотаторы",
+        verbose_name=_("Annotators"),
     )
 
     @receiver(post_save)
@@ -334,11 +334,11 @@ class Sentence(models.Model):
     """
 
     document = models.ForeignKey(
-        Document, on_delete=models.CASCADE, verbose_name="Документ"
+        Document, on_delete=models.CASCADE, verbose_name=_("Document")
     )
-    text = models.TextField(verbose_name="Текст")
-    markup = models.TextField(null=True, blank=True, verbose_name="Разметка")
-    number = models.IntegerField(verbose_name="Номер в тексте")
+    text = models.TextField(verbose_name=_("Text"))
+    markup = models.TextField(null=True, blank=True, verbose_name=_("Markup"))
+    number = models.IntegerField(verbose_name=_("Position in text"))
 
     def get_correction(self, alt=False):
         """
@@ -416,16 +416,16 @@ class Annotation(models.Model):
     """
 
     document = models.ForeignKey(
-        Document, on_delete=models.CASCADE, verbose_name="Документ"
+        Document, on_delete=models.CASCADE, verbose_name=_("Document")
     )
     sentence = models.ForeignKey(
-        Sentence, on_delete=models.CASCADE, verbose_name="Предложение"
+        Sentence, on_delete=models.CASCADE, verbose_name=_("Sentence")
     )
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+        User, on_delete=models.CASCADE, verbose_name=_("User")
     )
     guid = models.CharField(
-        max_length=64, unique=True, editable=False, db_index=True, verbose_name="GUID"
+        max_length=64, unique=True, editable=False, db_index=True, verbose_name=_("GUID")
     )
     json = models.JSONField(verbose_name="JSON")
     alt = models.BooleanField(default=False, verbose_name="Альтернативная")

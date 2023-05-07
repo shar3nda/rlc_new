@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 import django_filters
 from .models import Document, Author, Annotation
+from django.utils.translation import gettext_lazy as _
 
 class DocumentFilter(django_filters.FilterSet):
     author = django_filters.ChoiceFilter(
@@ -9,55 +10,59 @@ class DocumentFilter(django_filters.FilterSet):
         .values_list("id", "name")
         .order_by("name"),
         lookup_expr="exact",
+        label=_("Author"),
     )
     author_search = django_filters.CharFilter(
         method="author_search_filter",
-        label="Поиск автора",
+        label=_("Author search"),
     )
     user = django_filters.ModelChoiceFilter(
         queryset=User.objects.order_by("username"),
-        label="Создатель",
+        label=_("Owner"),
     )
     user_search = django_filters.CharFilter(
         method="user_search_filter",
-        label="Поиск создателя",
+        label=_("Owner search"),
     )
     author__language_background = django_filters.ChoiceFilter(
         field_name="author__language_background",
         choices=Author.LanguageBackgroundChoices.choices,
         lookup_expr="exact",
-        label="Тип носителя",
+        label=_("Language background"),
     )
     author__dominant_language = django_filters.ChoiceFilter(
         field_name="author__dominant_language",
         choices=Author.DominantLanguageChoices.choices,
         lookup_expr="exact",
-        label="Родной язык",
+        label=_("Dominant language"),
     )
     title = django_filters.CharFilter(
-        field_name="title", lookup_expr="icontains", label="Название"
+        field_name="title", lookup_expr="icontains", label=_("Title")
     )
     body = django_filters.CharFilter(
-        field_name="body", lookup_expr="icontains", label="Текст"
+        field_name="body", lookup_expr="icontains", label=_("Text")
     )
     author__name = django_filters.CharFilter(
-        field_name="author__name", lookup_expr="icontains", label="Автор"
+        field_name="author__name", lookup_expr="icontains", label=_("Author")
+    )
+    source = django_filters.CharFilter(
+        field_name="source", lookup_expr="icontains", label=_("Source")
     )
     user__username = django_filters.CharFilter(
-        field_name="user__username", lookup_expr="exact", label="Создатель"
+        field_name="user__username", lookup_expr="exact", label=_("Owner")
     )
     annotator = django_filters.ModelChoiceFilter(
         field_name="annotators",
         queryset=User.objects.order_by("username"),
         to_field_name="id",
-        label="Разметчик",
+        label=_("Annotator"),
         distinct=True,
     )
     status = django_filters.ChoiceFilter(
         field_name="status",
         choices=Document.StatusChoices.choices,
         lookup_expr="exact",
-        label="Статус",
+        label=_("Status"),
     )
 
 

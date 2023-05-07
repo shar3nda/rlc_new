@@ -1,6 +1,7 @@
 from django import forms
 
 from .models import Document, Author
+from django.utils.translation import gettext_lazy as _
 
 
 class DocumentForm(forms.ModelForm):
@@ -72,6 +73,6 @@ class NewAuthorForm(forms.ModelForm):
 class FavoriteAuthorForm(forms.Form):
     selected_author = forms.ModelChoiceField(
         queryset=Author.objects.filter(favorite=True),
-        label="Сохраненные авторы",
+        label=_("Saved authors"),
         widget=forms.Select(attrs={"class": "form-select"}),
     )
