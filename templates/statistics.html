@@ -7,7 +7,9 @@
 <div style="width: 50%;">
   <canvas id="chart"></canvas>
 </div>
-
+<div style="width: 50%;">
+    <canvas id="languagesChart"></canvas>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
 var text_types_data = {
@@ -21,5 +23,35 @@ var chart = new Chart(document.getElementById('chart'), {
   type: 'pie',
   data: text_types_data
 });
+
+
+
+
+var languages_data = {
+  labels: {{ languages_labels|safe }},
+  datasets: [{
+
+    data: {{ languages_counts|safe }},
+    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
+    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
+    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
+    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+  }]
+};
+var languagesChart = new Chart(document.getElementById('languagesChart'), {
+  type: 'bar',
+  data: languages_data,
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Языки, представленные в корпусе:'
+      }
+    }
+  }
+});
+
+
+
 </script>
 {% endblock %}
