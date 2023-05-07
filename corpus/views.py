@@ -53,11 +53,13 @@ def statistics(request):
     languages_counts = defaultdict(int)
     gender_counts = defaultdict(int)
     lang_background_counts = defaultdict(int)
+    genre_counts = defaultdict(int)
     for doc in Document.objects.all():
         languages_counts[doc.author.get_dominant_language_display()] += 1
         gender_counts[doc.author.get_gender_display()] += 1
         lang_background_counts[doc.author.get_language_background_display()] += 1
-    print(gender_counts)
+        genre_counts[doc.get_genre_display()] += 1
+    print(genre_counts)
     # Render the chart
     context = {'labels': labels,
                'text_types': text_types,
@@ -69,6 +71,8 @@ def statistics(request):
                'gender_counts': list(gender_counts.values()),
                'lang_background_labels': list(lang_background_counts.keys()),
                'lang_background_counts': list(lang_background_counts.values()),
+               'genre_labels': list(genre_counts.keys()),
+               'genre_counts': list(genre_counts.values()),
                }
     return render(request, 'statistics.html', context)
 

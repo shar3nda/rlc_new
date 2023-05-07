@@ -1,20 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-  <h2>Total Documents: {{ texts_count }}</h2>
+
+<div style="text-align: center;">
+  <h1 style="font-size: 4rem;">Total Documents:</h1>
+  <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
 </div>
-<div style="width: 50%;">
-  <canvas id="chart"></canvas>
+<div style="display: flex; justify-content: center;">
+  <div style="width: 60%; margin-right: 2rem;">
+    <canvas id="text_types_chart"></canvas>
+  </div>
+  <div style="width: 40%;">
+    <canvas id="gender_chart"></canvas>
+  </div>
 </div>
-<div style="width: 50%;">
-  <canvas id="gender_chart"></canvas>
-</div>
-<div style="width: 50%;">
+<div style="display: flex; justify-content: center;">
+  <div style="width: 60%; margin-right: 2rem;">
+    <canvas id="genre_chart"></canvas>
+  </div>
+  <div style="width: 40%;">
     <canvas id="lang_background_chart"></canvas>
+  </div>
 </div>
-<div style="width: 50%;">
+<div style="text-align: center; margin-top: 4rem;">
+  <h2 style="font-size: 2rem;">Languages:</h2>
+  <div style="width: 80%; margin: 0 auto;">
     <canvas id="languagesChart"></canvas>
+  </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
@@ -25,9 +37,17 @@ var text_types_data = {
     backgroundColor: {{ colors|safe }}
   }]
 };
-var chart = new Chart(document.getElementById('chart'), {
+var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   type: 'pie',
-  data: text_types_data
+  data: text_types_data,
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: 'Аннотировано текстов:'
+      }
+    }
+  }
 });
 
 
@@ -43,12 +63,35 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
   data: gender_data,
  options: {
     plugins: {
+      title: {
+        display: true,
+        text: 'Соотношение полов авторов:'
+      }
+    }
+  }
+});
+
+var genre_data = {
+  labels: {{ genre_labels|safe }},
+  datasets: [{
+    data: {{ genre_counts|safe }},
+    backgroundColor: ['#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
+    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
+    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+  }]
+};
+var genre_chart = new Chart(document.getElementById('genre_chart'), {
+  type: 'bar',
+  data: genre_data,
+ options: {
+    indexAxis: 'y',
+    plugins: {
       legend: {
         display: false
       },
       title: {
         display: true,
-        text: 'Соотношение полов авторов:'
+        text: 'Соотношение жанров, представленных в корпусе:'
       }
     }
   }
@@ -62,13 +105,10 @@ var lang_background_data = {
   }]
 };
 var lang_background_chart = new Chart(document.getElementById('lang_background_chart'), {
-  type: 'pie',
+  type: 'doughnut',
   data: lang_background_data,
  options: {
     plugins: {
-      legend: {
-        display: false
-      },
       title: {
         display: true,
         text: 'Русский язык:'
