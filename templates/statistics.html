@@ -55,7 +55,7 @@
       <div class="accordion-body">
         <div style="text-align: center;">
           <h1 style="font-size: 4rem;">{% trans "Total sentences"%}:</h1>
-          <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ total_sentences }}</h1>
+          <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-sentences-counter">{{ total_sentences }}</h1>
           <div style="text-align: center; margin-top: 4rem;">
             <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
             <div style="width: 80%; margin: 0 auto;">
@@ -70,6 +70,48 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
+
+// Store the total number of sentences outside of the countSentences function
+let totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
+
+// Add event listener to accordion button to update the total number of sentences when the content changes
+const accordionButton = document.querySelector('[data-bs-target="#sentences-collapse"]');
+accordionButton.addEventListener('show.bs.collapse', () => {
+    totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
+});
+
+// Set up the counter animation
+let counter = totalSentences - 100
+const counterElement = document.querySelector('#total-sentences-counter');
+let intervalId = null;
+let isAccordionOpen = false;
+
+// Add event listener to accordion button to trigger the animation when the accordion is being opened
+accordionButton.addEventListener('click', () => {
+    // Only play the animation if the accordion is being opened
+    if (accordionButton.getAttribute('aria-expanded') === 'true') {
+        isAccordionOpen = true;
+
+        // Clear any existing intervals
+        clearInterval(intervalId);
+
+        // Set up the counter animation
+        counter = totalSentences - 100;
+        intervalId = setInterval(() => {
+            counterElement.textContent = counter;
+            counter++;
+            if (counter > totalSentences) {
+                clearInterval(intervalId);
+                counterElement.textContent = totalSentences;
+            }
+        }, 5);
+    } else {
+        isAccordionOpen = false;
+    }
+});
+
+
+
 var text_types_data = {
   labels: {{ labels|safe }},
   datasets: [{
