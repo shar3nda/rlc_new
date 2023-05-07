@@ -97,4 +97,3 @@ def get_user_info(request):
             "displayName": user.username,
         }
         return JsonResponse(data)
-

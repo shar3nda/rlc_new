@@ -14,6 +14,10 @@
             <i class="fa fa-plus"></i>
             {% trans "Create document" %}
           </a>
+          <a href="{% url 'export_documents' %}?{{ request.GET.urlencode }}" class="btn btn-secondary mb-4">
+            <i class="fa fa-file-export"></i>
+            {% trans "Export Found Documents" %}
+          </a>
         {% endif %}
         <form method="get" class="mb-4">
           <div class="row">
@@ -60,7 +64,7 @@
               {{ filter.form.body|as_crispy_field }}
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">{% trans "Filter" %}</button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> {% trans "Filter" %}</button>
         </form>
 
         {% for document in documents %}
@@ -138,8 +142,6 @@
             {% endwith %}
           </nav>
         </div>
-
-
       </div>
     </div>
   </div>

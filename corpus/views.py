@@ -3,7 +3,9 @@ from collections import defaultdict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -13,6 +15,21 @@ from django.db.models import Count
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author
+
+
+def export_documents(request):
+    # Get the current queryset based on the search parameters in the request
+    document_list = Document.objects.all()
+    filter = DocumentFilter(request.GET, queryset=document_list)
+
+    # Serialize the filtered documents to JSON
+    data = [document.serialize() for document in filter.qs]
+
+    # Create the JsonResponse object with the appropriate JSON header
+    response = JsonResponse(data, safe=False)
+    response["Content-Disposition"] = 'attachment; filename="documents.json"'
+
+    return response
 
 
 def documents(request):
@@ -38,16 +55,16 @@ def documents(request):
 
 def statistics(request):
     # Aggregate the data
-    status_counts = Document.objects.values('status').annotate(count=Count('status'))
+    status_counts = Document.objects.values("status").annotate(count=Count("status"))
 
     # Prepare the data for the chart
     labels = [status[1] for status in Document.StatusChoices.choices]
     text_types = []
     for status_value, status_label in Document.StatusChoices.choices:
-        count = int(status_counts.get(status=status_value)['count'])
+        count = int(status_counts.get(status=status_value)["count"])
         text_types.append(count)
     texts_count = int(Document.objects.all().count())
-    colors = ['#FFC107', '#03A9F4', '#4CAF50']
+    colors = ["#FFC107", "#03A9F4", "#4CAF50"]
 
     # Статистика по языкам
     languages_counts = defaultdict(int)
