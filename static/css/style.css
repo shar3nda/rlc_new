@@ -75,6 +75,17 @@ body {
   justify-content: center;
 }
 
+.btn-edit {
+  color: white;
+  background-color: #1E90FF;
+}
+
+.btn-edit:hover,
+.btn-edit:focus{
+  color: white;
+  background-color: #6495ED;
+}
+
 .logout-item:hover,
 .logout-item:focus {
   background-color: red;
