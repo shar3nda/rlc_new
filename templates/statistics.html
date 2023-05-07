@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
 
 <div class="accordion" style="margin-top: 4rem;">
   <div class="accordion-item">
     <h2 class="accordion-header" id="docs-heading">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#docs-collapse" aria-expanded="false" aria-controls="docs-collapse">
-        Document Statistics
+        {% blocktrans %} "Document statics" {% endblocktrans %} 
       </button>
     </h2>
     <div id="docs-collapse" class="accordion-collapse collapse" aria-labelledby="docs-heading">
       <div class="accordion-body">
         <div style="text-align: center;">
-          <h1 style="font-size: 4rem;">Total Documents:</h1>
+          <h1 style="font-size: 4rem;">{% trans "Total Documents" %} :</h1>
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
         </div>
         <div style="display: flex; justify-content: center;">
@@ -32,7 +34,7 @@
           </div>
         </div>
         <div style="text-align: center; margin-top: 4rem;">
-          <h2 style="font-size: 2rem;">Documents written by authors with dominant languages:</h2>
+          <h2 style="font-size: 2rem;">{% trans "Documents written by authors with dominant languages" %}:</h2>
           <div style="width: 80%; margin: 0 auto;">
             <canvas id="languagesChart"></canvas>
           </div>
@@ -52,10 +54,10 @@
     <div id="sentences-collapse" class="accordion-collapse collapse" aria-labelledby="sentences-heading">
       <div class="accordion-body">
         <div style="text-align: center;">
-          <h1 style="font-size: 4rem;">Total sentences:</h1>
+          <h1 style="font-size: 4rem;">{% trans "Total sentences"%}:</h1>
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ total_sentences }}</h1>
           <div style="text-align: center; margin-top: 4rem;">
-            <h2 style="font-size: 2rem;">>Sentences written by authors with dominant languages:</h2>
+            <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
             <div style="width: 80%; margin: 0 auto;">
               <canvas id="lang_sent_chart"></canvas>
             </div>
@@ -82,7 +84,7 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Аннотировано текстов:'
+        text: {% blocktrans %}'Texts annotated:'{% endblocktrans %}
       }
     }
   }
@@ -103,7 +105,7 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Соотношение текстов с мужским/женским/неизвестным авторством:'
+        text: {% blocktrans %}'Gender ratio:'{% endblocktrans %}
       }
     }
   }
@@ -129,7 +131,7 @@ var genre_chart = new Chart(document.getElementById('genre_chart'), {
       },
       title: {
         display: true,
-        text: 'Соотношение жанров, представленных в корпусе:'
+        text: {% blocktrans %}'Genre ratio:'{% endblocktrans %}
       }
     }
   }
@@ -149,7 +151,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
     plugins: {
       title: {
         display: true,
-        text: 'Соотношение текстов, написанных авторами с эритажным/иностранным владением русского'
+        text: {% blocktrans %}'Language background text ratio'{% endblocktrans %}
       }
     }
   }
@@ -159,7 +161,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
 var languages_data = {
   labels: {{ languages_labels|safe }},
   datasets: [{
-  label: 'текстов на данном языке',
+  label: {% blocktrans %}'Texts'{% endblocktrans %},
     data: {{ languages_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
@@ -178,7 +180,7 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
       },
       title: {
         display: false,
-        text: 'Языки, представленные в корпусе:'
+        text: {% blocktrans %}'Language ratio:'{% endblocktrans %}
       }
     }
   }
@@ -191,7 +193,7 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
 var lang_sent_data = {
   labels: {{ lang_sent_labels|safe }},
   datasets: [{
-  label: 'предложений на данном языке',
+  label: {% blocktrans %}'Sentences'{% endblocktrans %},
     data: {{ lang_sent_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
