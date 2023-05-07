@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -47,12 +49,28 @@ def statistics(request):
     texts_count = int(Document.objects.all().count())
     colors = ['#FFC107', '#03A9F4', '#4CAF50']
 
+    # Статистика по языкам
+    english_docs_count = int(Document.objects.filter(author__dominant_language='ENG').count())
+    abkhaz_docs_count = int(Document.objects.filter(author__dominant_language='abk').count())
+
+    languages_counts = defaultdict(int)
+    # for language_value, language_label in Author.DominantLanguageChoices.choices:
+    #     count = int(Document.objects.filter(author__dominant_language=language_value).count())
+    #     print(count)
+    #     languages_counts[language_label] = count
+    for doc in Document.objects.all():
+        languages_counts[doc.author.get_dominant_language_display()] += 1
+    print(languages_counts)
+
     # Render the chart
     context = {'labels': labels,
                'text_types': text_types,
                'colors': colors,
-               'texts_count': texts_count
+               'texts_count': texts_count,
+               'languages_labels': list(languages_counts.keys()),
+               'languages_counts': list(languages_counts.values()),
                }
+    print(languages_counts.keys())
     return render(request, 'statistics.html', context)
 
 
