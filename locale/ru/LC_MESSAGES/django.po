@@ -86,10 +86,8 @@ msgid "Author"
 msgstr "Автор"
 
 #: .\corpus\filters.py:17
-#, fuzzy
-#| msgid "Author"
 msgid "Author search"
-msgstr "Автор"
+msgstr "Поиск автора"
 
 #: .\corpus\filters.py:21 .\corpus\filters.py:52
 #: .\templates\document_card.html:41
@@ -124,8 +122,6 @@ msgid "Source"
 msgstr "Источник"
 
 #: .\corpus\filters.py:58
-#, fuzzy
-#| msgid "Annotate"
 msgid "Annotator"
 msgstr "Разметчик"
 
@@ -135,14 +131,10 @@ msgid "Status"
 msgstr "Статус"
 
 #: .\corpus\forms.py:76
-#, fuzzy
-#| msgid "Saved author"
 msgid "Saved authors"
-msgstr "Сохраненный автор"
+msgstr "Сохраненные авторы"
 
 #: .\corpus\models.py:16
-#, fuzzy
-#| msgid "Author"
 msgid "Author name"
 msgstr "Автор"
 
@@ -164,8 +156,6 @@ msgid "Gender"
 msgstr "Пол"
 
 #: .\corpus\models.py:26
-#, fuzzy
-#| msgid "Program"
 msgid "Programm"
 msgstr "Программа"
 
@@ -388,17 +378,13 @@ msgstr "Уровень языка"
 
 #: .\corpus\models.py:132
 msgid "Favourites"
-msgstr ""
+msgstr "Избранные"
 
 #: .\corpus\models.py:151 .\corpus\models.py:425
-#, fuzzy
-#| msgid "Username"
 msgid "User"
-msgstr "Имя пользователя"
+msgstr "Пользователь"
 
 #: .\corpus\models.py:154
-#, fuzzy
-#| msgid "Create account"
 msgid "Created on"
 msgstr "Дата создания"
 
@@ -443,8 +429,6 @@ msgid "Biography"
 msgstr "Биография"
 
 #: .\corpus\models.py:170
-#, fuzzy
-#| msgid "section"
 msgid "Description"
 msgstr "Описание"
 
