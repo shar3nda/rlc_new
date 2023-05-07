@@ -155,7 +155,7 @@ msgstr ""
 
 #: .\corpus\models.py:26
 msgid "Programm"
-msgstr ""
+msgstr "Program"
 
 #: .\corpus\models.py:39
 msgid "Abkhazian"
