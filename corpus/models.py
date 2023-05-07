@@ -1,3 +1,4 @@
+import json
 import re
 
 from django.apps import apps
@@ -26,8 +27,9 @@ class Author(models.Model):
     program = models.CharField(max_length=255, verbose_name=_("Programm"))
 
     class LanguageBackgroundChoices(models.TextChoices):
-        H = "H", "Эритажный"
-        F = "F", "Иностранный"
+        H = "H", _("Heritage")
+        F = "F", _("Foreign")
+        O = "O", _("Other")
 
     language_background = models.CharField(
         max_length=10,
@@ -119,6 +121,7 @@ class Author(models.Model):
         AH = "AH", "Advanced High"
         C1 = "C1", "C1"
         C2 = "C2", "C2"
+        O = "O", "Other"
 
     language_level = models.CharField(
         max_length=10,
@@ -133,6 +136,16 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+    def serialize(self):
+        return {
+            "name": self.name,
+            "gender": self.gender,
+            "program": self.program,
+            "language_background": self.language_background,
+            "dominant_language": self.dominant_language,
+            "language_level": self.language_level,
+        }
 
 
 class Document(models.Model):
@@ -166,7 +179,7 @@ class Document(models.Model):
         STORY = "story", _("Story")
         PARAPHRASE = "paraphrase", _("Paraphrase")
         DEFINITION = "definition", _("Definition")
-        BIO = "bio",  _("Biography")
+        BIO = "bio", _("Biography")
         DESCRIPTION = "description", _("Description")
         SUMMARY = "summary", _("Summary")
         OTHER = "other", _("Other")
@@ -215,12 +228,14 @@ class Document(models.Model):
     )
 
     author = models.ForeignKey(
-        Author, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_("Author")
+        Author,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_("Author"),
     )
 
-    time_limit = models.BooleanField(
-        default=False, verbose_name=_("Time limit")
-    )
+    time_limit = models.BooleanField(default=False, verbose_name=_("Time limit"))
 
     oral = models.BooleanField(default=False, verbose_name=_("Oral"))
 
@@ -234,6 +249,25 @@ class Document(models.Model):
         blank=True,
         verbose_name=_("Annotators"),
     )
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "user": self.user.username if self.user else None,
+            "created_on": self.created_on.isoformat(),
+            "date": self.date,
+            "genre": self.genre,
+            "subcorpus": self.subcorpus,
+            "body": self.body,
+            "status": self.get_status_display(),
+            "author": self.author.serialize() if self.author else None,
+            "time_limit": self.time_limit,
+            "oral": self.oral,
+            "source": self.source,
+            "annotators": [annotator.username for annotator in self.annotators.all()],
+            "sentences": [sentence.serialize() for sentence in self.sentence_set.all()],
+        }
 
     @receiver(post_save)
     def update_document_annotators(sender, instance, created, **kwargs):
@@ -398,6 +432,16 @@ class Sentence(models.Model):
 
         return corrected_text
 
+    def serialize(self):
+        return {
+            "text": self.text,
+            "markup": self.markup,
+            "number": self.number,
+            "annotations": [
+                annotation.serialize() for annotation in self.annotation_set.all()
+            ],
+        }
+
     @property
     def correction(self):
         return self.get_correction()
@@ -421,14 +465,22 @@ class Annotation(models.Model):
     sentence = models.ForeignKey(
         Sentence, on_delete=models.CASCADE, verbose_name=_("Sentence")
     )
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name=_("User")
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("User"))
     guid = models.CharField(
-        max_length=64, unique=True, editable=False, db_index=True, verbose_name=_("GUID")
+        max_length=64,
+        unique=True,
+        editable=False,
+        db_index=True,
+        verbose_name=_("GUID"),
     )
     json = models.JSONField(verbose_name="JSON")
     alt = models.BooleanField(default=False, verbose_name="Альтернативная")
+
+    def serialize(self):
+        result = self.json
+        result["alt"] = self.alt
+        result["user"] = self.user.username
+        return result
 
     def __str__(self):
         return str(self.json)
