@@ -58,16 +58,27 @@
               <span class="ms-2">{% trans "Dark Mode" %}</span>
             </button>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-               {% trans "Language" %}
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item">{% trans "Russian" %}</a>
-              <a class="dropdown-item">{% trans "English" %}</a>
+          <li class="nav-item ms-2">
+            <form action="{% url 'set_language' %}" method="post" class="d-inline-block">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown"
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE == 'en' %}
+                  English (en)
+                {% elif LANGUAGE_CODE == 'ru' %}
+                  Русский (ru)
+                {% endif %}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                <button class="dropdown-item" type="submit" name="language" value="en">English (en)</button>
+                <button class="dropdown-item" type="submit" name="language" value="ru">Русский (ru)</button>
+              </div>
             </div>
+          </form>
           </li>
+
           {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'add_document' %}">{% trans "New document" %}</a>
@@ -82,16 +93,16 @@
             </li>
           {% endif %}
           {% if user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-              {{ user.username }}
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'user_profile' %}">{% trans "Profile" %}</a>
-              <a class="dropdown-item logout-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
-            </div>
-          </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+                {{ user.username }}
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'user_profile' %}">{% trans "Profile" %}</a>
+                <a class="dropdown-item logout-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              </div>
+            </li>
           {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">{% trans "Log in" %}</a>
