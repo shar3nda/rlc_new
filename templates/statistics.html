@@ -8,6 +8,12 @@
   <canvas id="chart"></canvas>
 </div>
 <div style="width: 50%;">
+  <canvas id="gender_chart"></canvas>
+</div>
+<div style="width: 50%;">
+    <canvas id="lang_background_chart"></canvas>
+</div>
+<div style="width: 50%;">
     <canvas id="languagesChart"></canvas>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
@@ -25,6 +31,51 @@ var chart = new Chart(document.getElementById('chart'), {
 });
 
 
+var gender_data = {
+  labels: {{ gender_labels|safe }},
+  datasets: [{
+    data: {{ gender_counts|safe }},
+    backgroundColor: ['#FF69B4', '#00BCD4', '#CDDC39']
+  }]
+};
+var gender_chart = new Chart(document.getElementById('gender_chart'), {
+  type: 'pie',
+  data: gender_data,
+ options: {
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Соотношение полов авторов:'
+      }
+    }
+  }
+});
+
+var lang_background_data = {
+  labels: {{ lang_background_labels|safe }},
+  datasets: [{
+    data: {{ lang_background_counts|safe }},
+    backgroundColor: ['#009688', '#FFEB3B', '#673AB7']
+  }]
+};
+var lang_background_chart = new Chart(document.getElementById('lang_background_chart'), {
+  type: 'pie',
+  data: lang_background_data,
+ options: {
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Русский язык:'
+      }
+    }
+  }
+});
 
 
 var languages_data = {
