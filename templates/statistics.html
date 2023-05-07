@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
 
 <div style="text-align: center;">
-  <h1 style="font-size: 4rem;">Total Documents:</h1>
+  <h1 style="font-size: 4rem;">{% trans "Total Documents" %}:</h1>
   <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
 </div>
 <div style="display: flex; justify-content: center;">
@@ -23,7 +25,7 @@
   </div>
 </div>
 <div style="text-align: center; margin-top: 4rem;">
-  <h2 style="font-size: 2rem;">Languages:</h2>
+  <h2 style="font-size: 2rem;">{% trans "Languages"%}:</h2>
   <div style="width: 80%; margin: 0 auto;">
     <canvas id="languagesChart"></canvas>
   </div>
@@ -44,7 +46,7 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Аннотировано текстов:'
+        text: {% blocktrans %} "Texts annotated:" {% endblocktrans %}
       }
     }
   }
@@ -65,7 +67,7 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Соотношение полов авторов:'
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
       }
     }
   }
@@ -91,7 +93,7 @@ var genre_chart = new Chart(document.getElementById('genre_chart'), {
       },
       title: {
         display: true,
-        text: 'Соотношение жанров, представленных в корпусе:'
+        text: {% blocktrans %} "Genre ratio:" {% endblocktrans %}
       }
     }
   }
@@ -111,7 +113,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
     plugins: {
       title: {
         display: true,
-        text: 'Русский язык:'
+        text: {% blocktrans %} "Russian language:" {% endblocktrans %}
       }
     }
   }
@@ -140,7 +142,7 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
       },
       title: {
         display: true,
-        text: 'Языки, представленные в корпусе:'
+        text: {% blocktrans %} "Language ratio:" {% endblocktrans %}
       }
     }
   }

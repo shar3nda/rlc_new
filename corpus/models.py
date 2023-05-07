@@ -26,8 +26,8 @@ class Author(models.Model):
     program = models.CharField(max_length=255, verbose_name=_("Programm"))
 
     class LanguageBackgroundChoices(models.TextChoices):
-        H = "H", "Эритажный"
-        F = "F", "Иностранный"
+        H = "H", _("Heritage")
+        F = "F", _("Foreign")
 
     language_background = models.CharField(
         max_length=10,
@@ -205,9 +205,9 @@ class Document(models.Model):
     body = models.TextField(verbose_name=_("Text"))
 
     class StatusChoices(models.IntegerChoices):
-        NEW = 0, "Новый"
-        ANNOTATED = 1, "Аннотированный"
-        CHECKED = 2, "Проверенный"
+        NEW = 0, _("New")
+        ANNOTATED = 1, _("Annotated")
+        CHECKED = 2, _("Checked")
 
     # The status of the document (new, annotated, checked)
     status = models.IntegerField(
