@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 13:59+0300\n"
+"POT-Creation-Date: 2023-05-07 19:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,8 +112,8 @@ msgstr "Родной язык"
 msgid "Title"
 msgstr "Название"
 
-#: .\corpus\filters.py:43 .\corpus\models.py:205
-msgid "Текст"
+#: .\corpus\filters.py:43 .\corpus\models.py:205 .\corpus\models.py:339
+msgid "Text"
 msgstr "Текст"
 
 #: .\corpus\filters.py:49 .\corpus\models.py:228
@@ -159,6 +159,14 @@ msgstr "Пол"
 msgid "Programm"
 msgstr "Программа"
 
+#: .\corpus\models.py:29
+msgid "Heritage"
+msgstr "Эритажный"
+
+#: .\corpus\models.py:30
+msgid "Foreign"
+msgstr "Иностранный"
+
 #: .\corpus\models.py:39
 msgid "Abkhazian"
 msgstr "Абхазский"
@@ -175,7 +183,7 @@ msgstr "Албанский"
 msgid "Amharic"
 msgstr "Амхарский"
 
-#: .\corpus\models.py:43 .\templates\base.html:68
+#: .\corpus\models.py:43
 msgid "English"
 msgstr "Английский"
 
@@ -444,6 +452,18 @@ msgstr "Жанр"
 msgid "Subcorpus"
 msgstr "Подкорпус"
 
+#: .\corpus\models.py:208
+msgid "New"
+msgstr "Новый"
+
+#: .\corpus\models.py:209 .\templates\annotate.html:18
+msgid "Annotated"
+msgstr "Аннотирован"
+
+#: .\corpus\models.py:210 .\templates\annotate.html:19
+msgid "Checked"
+msgstr "Проверен"
+
 #: .\corpus\models.py:222
 msgid "Time limit"
 msgstr "Ограничение по времени"
@@ -459,10 +479,6 @@ msgstr "Разметчик"
 #: .\corpus\models.py:337 .\corpus\models.py:419
 msgid "Document"
 msgstr "Документ"
-
-#: .\corpus\models.py:339
-msgid "Text"
-msgstr "Текст"
 
 #: .\corpus\models.py:340
 msgid "Markup"
@@ -520,14 +536,6 @@ msgstr "Статус документа"
 msgid "Not annotated"
 msgstr "Не аннотирован"
 
-#: .\templates\annotate.html:18
-msgid "Annotated"
-msgstr "Аннотирован"
-
-#: .\templates\annotate.html:19
-msgid "Checked"
-msgstr "Проверен"
-
 #: .\templates\base.html:42
 msgid "Main"
 msgstr "Главная"
@@ -548,39 +556,31 @@ msgstr "Статистика"
 msgid "Dark Mode"
 msgstr "Тёмный режим"
 
-#: .\templates\base.html:64
-msgid "Language"
-msgstr "Язык"
-
-#: .\templates\base.html:67
-msgid "Russian"
-msgstr "Русский"
-
-#: .\templates\base.html:73
+#: .\templates\base.html:84
 msgid "New document"
 msgstr "Новый документ"
 
-#: .\templates\base.html:77
+#: .\templates\base.html:88
 msgid "All documents"
 msgstr "Все документы"
 
-#: .\templates\base.html:81
+#: .\templates\base.html:92
 msgid "Admin panel"
 msgstr "Администрирование"
 
-#: .\templates\base.html:91
+#: .\templates\base.html:102
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\base.html:92
+#: .\templates\base.html:103
 msgid "Log out"
 msgstr "Выйти"
 
-#: .\templates\base.html:97
+#: .\templates\base.html:108
 msgid "Log in"
 msgstr "Войти"
 
-#: .\templates\base.html:113
+#: .\templates\base.html:124
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr "Школа лингвистики ВШЭ. Все права защтщены"
 
@@ -668,6 +668,40 @@ msgstr "Альтернативное исправление"
 #: .\templates\sentence_card.html:49
 msgid "Morphological analysis"
 msgstr "Морфологический разбор"
+
+#: .\templates\statistics.html:8
+msgid "Total Documents"
+msgstr "Всего документов"
+
+#: .\templates\statistics.html:28
+msgid "Languages"
+msgstr "Языки"
+
+#: .\templates\statistics.html:49
+msgid " \"Texts annotated:\" "
+msgstr " \"Аннотировано текстов:\" "
+
+#: .\templates\statistics.html:70
+msgid " \"Gender ratio:\" "
+msgstr " \"Соотношение полов:\" "
+
+#: .\templates\statistics.html:96
+msgid " \"Genre ratio:\" "
+msgstr " \"Тексты по жанрам:\" "
+
+#: .\templates\statistics.html:116
+msgid " \"Russian language:\" "
+msgstr " \"Русский язык:\" "
+
+#: .\templates\statistics.html:145
+msgid " \"Language ratio:\" "
+msgstr " \"Тексты по языкам:\" "
+
+#~ msgid "Текст"
+#~ msgstr "Текст"
+
+#~ msgid "Russian"
+#~ msgstr "Русский"
 
 #~ msgid "Hello"
 #~ msgstr "Привет"

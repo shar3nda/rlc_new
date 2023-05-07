@@ -3,6 +3,7 @@ import django_filters
 from .models import Document, Author, Annotation
 from django.utils.translation import gettext_lazy as _
 
+
 class DocumentFilter(django_filters.FilterSet):
     author = django_filters.ChoiceFilter(
         field_name="author",
@@ -64,7 +65,6 @@ class DocumentFilter(django_filters.FilterSet):
         lookup_expr="exact",
         label=_("Status"),
     )
-
 
     class Meta:
         model = Document
