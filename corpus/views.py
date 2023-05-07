@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -8,6 +10,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db.models import Count
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
@@ -63,14 +66,32 @@ def statistics(request):
     texts_count = int(Document.objects.all().count())
     colors = ["#FFC107", "#03A9F4", "#4CAF50"]
 
+    # Статистика по языкам
+    languages_counts = defaultdict(int)
+    gender_counts = defaultdict(int)
+    lang_background_counts = defaultdict(int)
+    genre_counts = defaultdict(int)
+    for doc in Document.objects.all():
+        languages_counts[doc.author.get_dominant_language_display()] += 1
+        gender_counts[doc.author.get_gender_display()] += 1
+        lang_background_counts[doc.author.get_language_background_display()] += 1
+        genre_counts[doc.get_genre_display()] += 1
+    print(genre_counts)
     # Render the chart
-    context = {
-        "labels": labels,
-        "text_types": text_types,
-        "colors": colors,
-        "texts_count": texts_count,
-    }
-    return render(request, "statistics.html", context)
+    context = {'labels': labels,
+               'text_types': text_types,
+               'colors': colors,
+               'texts_count': texts_count,
+               'languages_labels': list(languages_counts.keys()),
+               'languages_counts': list(languages_counts.values()),
+               'gender_labels': list(gender_counts.keys()),
+               'gender_counts': list(gender_counts.values()),
+               'lang_background_labels': list(lang_background_counts.keys()),
+               'lang_background_counts': list(lang_background_counts.values()),
+               'genre_labels': list(genre_counts.keys()),
+               'genre_counts': list(genre_counts.values()),
+               }
+    return render(request, 'statistics.html', context)
 
 
 @login_required
