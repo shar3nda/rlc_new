@@ -30,12 +30,13 @@ var chart = new Chart(document.getElementById('chart'), {
 var languages_data = {
   labels: {{ languages_labels|safe }},
   datasets: [{
-
+  label: 'My Dataset',
     data: {{ languages_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
     '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
     '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+
   }]
 };
 var languagesChart = new Chart(document.getElementById('languagesChart'), {
@@ -43,6 +44,9 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
   data: languages_data,
   options: {
     plugins: {
+      legend: {
+        display: false
+      },
       title: {
         display: true,
         text: 'Языки, представленные в корпусе:'
