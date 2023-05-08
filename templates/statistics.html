@@ -203,7 +203,11 @@ accordionButton.addEventListener('click', () => {
     }
 });
 
+var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
 
+if (darkModeEnabled) {
+  console.log(darkModeEnabled)
+}
 
 var text_types_data = {
   labels: {{ labels|safe }},
@@ -225,25 +229,16 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   }
 });
 
-var currentTheme;
+var genderLightColors = ['#636ee8', '#e07fe0', '#c9e8ff'];
+var genderDarkColors = ['#9a7fd1', '#e8a7e0', '#6bb2ff'];
 
-const body = document.querySelector('body');
-if (body.classList.contains('dark')) {
-  currentTheme = 'dark';
-} else {
-  currentTheme = 'light';
-}
-
-var lightColors = ['#636ee8', '#e07fe0', '#c9e8ff'];
-var darkColors = ['#FF1493', '#00CED1', '#8BC34A'];
-
-var chartColors = currentTheme === 'dark' ? darkColors : lightColors;
+var genderChartColors = darkModeEnabled ? genderDarkColors : genderLightColors;
 
 var gender_data = {
   labels: {{ gender_labels|safe }},
   datasets: [{
     data: {{ gender_counts|safe }},
-    backgroundColor: chartColors
+    backgroundColor: genderChartColors
   }]
 };
 var gender_chart = new Chart(document.getElementById('gender_chart'), {
