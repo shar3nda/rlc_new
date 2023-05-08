@@ -161,12 +161,25 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   }
 });
 
+var currentTheme;
+
+const body = document.querySelector('body');
+if (body.classList.contains('dark')) {
+  currentTheme = 'dark';
+} else {
+  currentTheme = 'light';
+}
+
+var lightColors = ['#FF69B4', '#00BCD4', '#CDDC39'];
+var darkColors = ['#FF1493', '#00CED1', '#8BC34A'];
+
+var chartColors = currentTheme === 'dark' ? darkColors : lightColors;
 
 var gender_data = {
   labels: {{ gender_labels|safe }},
   datasets: [{
     data: {{ gender_counts|safe }},
-    backgroundColor: ['#FF69B4', '#00BCD4', '#CDDC39']
+    backgroundColor: chartColors
   }]
 };
 var gender_chart = new Chart(document.getElementById('gender_chart'), {
