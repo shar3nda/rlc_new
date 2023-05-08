@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 20:40+0300\n"
+"POT-Creation-Date: 2023-05-07 21:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -675,69 +675,81 @@ msgstr "Альтернативное исправление"
 msgid "Morphological analysis"
 msgstr "Морфологический разбор"
 
-#: .\templates\statistics.html:9
+#: .\templates\statistics.html:11
 #, fuzzy
 #| msgid "Document status"
-msgid "Document statics"
+msgid "Document static"
 msgstr "Статус документа"
 
-#: .\templates\statistics.html:15
+#: .\templates\statistics.html:17
 msgid "Total Documents"
 msgstr "Всего документов"
 
-#: .\templates\statistics.html:35
+#: .\templates\statistics.html:37
 msgid "Documents written by authors with dominant languages"
 msgstr "Тексты по языкам"
 
-#: .\templates\statistics.html:55
+#: .\templates\statistics.html:51
+#, fuzzy
+#| msgid "Sentence"
+msgid "Sentence static"
+msgstr "Статистика по предложениям"
+
+#: .\templates\statistics.html:57
 msgid "Total sentences"
 msgstr "Всего предложений"
 
-#: .\templates\statistics.html:58
+#: .\templates\statistics.html:60
 msgid "Sentences written by authors with dominant languages"
 msgstr "Предложения по языкам"
 
-#: .\templates\statistics.html:85
-#, fuzzy
-#| msgid " \"Texts annotated:\" "
-msgid "'Texts annotated:'"
+#: .\templates\statistics.html:87
+msgid " \"Texts annotated:\" "
 msgstr " \"Аннотировано текстов:\" "
 
-#: .\templates\statistics.html:106
-#, fuzzy
-#| msgid " \"Gender ratio:\" "
-msgid "'Gender ratio:'"
+#: .\templates\statistics.html:108
+msgid " \"Gender ratio:\" "
 msgstr " \"Соотношение полов:\" "
 
-#: .\templates\statistics.html:132
+#: .\templates\statistics.html:134
 #, fuzzy
 #| msgid " \"Genre ratio:\" "
-msgid "'Genre ratio:'"
+msgid " \"Genre ratio:\" "
 msgstr " \"Тексты по жанрам:\" "
 
-#: .\templates\statistics.html:152
+#: .\templates\statistics.html:154
 #, fuzzy
 #| msgid "Language background"
-msgid "'Language background text ratio'"
+msgid " \"Language background ratio\" "
 msgstr "Тексты по типу носителя"
 
-#: .\templates\statistics.html:162
+#: .\templates\statistics.html:164
 #, fuzzy
 #| msgid "Text"
-msgid "'Texts'"
-msgstr "Тексты"
+msgid "\"Texts\""
+msgstr "Текст"
 
-#: .\templates\statistics.html:181
+#: .\templates\statistics.html:183
 #, fuzzy
 #| msgid " \"Language ratio:\" "
-msgid "'Language ratio:'"
+msgid " \"Language ratio:\" "
 msgstr " \"Тексты по языкам:\" "
 
-#: .\templates\statistics.html:194
+#: .\templates\statistics.html:196
 #, fuzzy
 #| msgid "Sentence"
-msgid "'Sentences'"
-msgstr "'Предложения'"
+msgid " \"Sentences\" "
+msgstr "Предложение"
+
+#, fuzzy
+#~| msgid "Text"
+#~ msgid "'Texts'"
+#~ msgstr "Тексты"
+
+#, fuzzy
+#~| msgid "Sentence"
+#~ msgid "'Sentences'"
+#~ msgstr "'Предложения'"
 
 #~ msgid "Languages"
 #~ msgstr "Языки"

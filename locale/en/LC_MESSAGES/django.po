@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-07 20:40+0300\n"
+"POT-Creation-Date: 2023-05-07 21:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -671,52 +671,56 @@ msgstr ""
 msgid "Morphological analysis"
 msgstr ""
 
-#: .\templates\statistics.html:9
-msgid "Document statics"
+#: .\templates\statistics.html:11
+msgid "Document static"
 msgstr ""
 
-#: .\templates\statistics.html:15
+#: .\templates\statistics.html:17
 msgid "Total Documents"
 msgstr ""
 
-#: .\templates\statistics.html:35
+#: .\templates\statistics.html:37
 msgid "Documents written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:55
+#: .\templates\statistics.html:51
+msgid "Sentence static"
+msgstr ""
+
+#: .\templates\statistics.html:57
 msgid "Total sentences"
 msgstr ""
 
-#: .\templates\statistics.html:58
+#: .\templates\statistics.html:60
 msgid "Sentences written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:85
-msgid "'Texts annotated:'"
+#: .\templates\statistics.html:87
+msgid " \"Texts annotated:\" "
 msgstr ""
 
-#: .\templates\statistics.html:106
-msgid "'Gender ratio:'"
+#: .\templates\statistics.html:108
+msgid " \"Gender ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:132
-msgid "'Genre ratio:'"
+#: .\templates\statistics.html:134
+msgid " \"Genre ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:152
-msgid "'Language background text ratio'"
+#: .\templates\statistics.html:154
+msgid " \"Language background ratio\" "
 msgstr ""
 
-#: .\templates\statistics.html:162
-msgid "'Texts'"
+#: .\templates\statistics.html:164
+msgid "\"Texts\""
 msgstr ""
 
-#: .\templates\statistics.html:181
-msgid "'Language ratio:'"
+#: .\templates\statistics.html:183
+msgid " \"Language ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:194
-msgid "'Sentences'"
+#: .\templates\statistics.html:196
+msgid " \"Sentences\" "
 msgstr ""
 
 #~ msgid "Текст"
