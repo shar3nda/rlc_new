@@ -1,4 +1,4 @@
-import json
+import re
 
 from django.apps import apps
 from django.contrib.auth.models import User
@@ -7,7 +7,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
-import re
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 
@@ -23,7 +22,7 @@ class Author(models.Model):
     gender = models.CharField(
         max_length=10, choices=GenderChoices.choices, verbose_name=_("Gender")
     )
-    program = models.CharField(max_length=255, verbose_name=_("Programm"))
+    program = models.CharField(max_length=255, verbose_name=_("Program"))
 
     class LanguageBackgroundChoices(models.TextChoices):
         H = "H", _("Heritage")
@@ -98,40 +97,14 @@ class Author(models.Model):
         choices=DominantLanguageChoices.choices,
         default=DominantLanguageChoices.ENG,
         db_index=True,
-        verbose_name="Родной язык",
-    )
-
-    class LanguageLevelChoices(models.TextChoices):
-        NOV = "NOV", "Novice"
-        NL = "NL", "Novice Low"
-        NM = "NM", "Novice Middle"
-        NH = "NH", "Novice High"
-        A1 = "A1", "A1"
-        A2 = "A2", "A2"
-        INT = "INT", "Intermediate"
-        IL = "IL", "Intermediate Low"
-        IM = "IM", "Intermediate Middle"
-        IH = "IH", "Intermediate High"
-        B1 = "B1", "B1"
-        B2 = "B2", "B2"
-        ADV = "ADV", "Advanced"
-        AL = "AL", "Advanced Low"
-        AM = "AM", "Advanced Middle"
-        AH = "AH", "Advanced High"
-        C1 = "C1", "C1"
-        C2 = "C2", "C2"
-        O = "O", "Other"
-
-    language_level = models.CharField(
-        max_length=10,
-        null=True,
-        blank=False,
-        choices=LanguageLevelChoices.choices,
-        db_index=True,
-        verbose_name=_("Language level"),
+        verbose_name=_("Dominant language"),
     )
 
     favorite = models.BooleanField(default=False, verbose_name=_("Favourites"))
+
+    source = models.CharField(
+        max_length=200, null=True, blank=True, verbose_name=_("Source")
+    )
 
     def __str__(self):
         return self.name
@@ -143,7 +116,7 @@ class Author(models.Model):
             "program": self.program,
             "language_background": self.language_background,
             "dominant_language": self.dominant_language,
-            "language_level": self.language_level,
+            "source": self.source
         }
 
 
@@ -193,6 +166,36 @@ class Document(models.Model):
         default=GenreChoices.OTHER,
     )
 
+    class LanguageLevelChoices(models.TextChoices):
+        NOV = "NOV", "Novice"
+        NL = "NL", "Novice Low"
+        NM = "NM", "Novice Middle"
+        NH = "NH", "Novice High"
+        A1 = "A1", "A1"
+        A2 = "A2", "A2"
+        INT = "INT", "Intermediate"
+        IL = "IL", "Intermediate Low"
+        IM = "IM", "Intermediate Middle"
+        IH = "IH", "Intermediate High"
+        B1 = "B1", "B1"
+        B2 = "B2", "B2"
+        ADV = "ADV", "Advanced"
+        AL = "AL", "Advanced Low"
+        AM = "AM", "Advanced Middle"
+        AH = "AH", "Advanced High"
+        C1 = "C1", "C1"
+        C2 = "C2", "C2"
+        UNK = "UNK", "Unknown"
+
+    language_level = models.CharField(
+        max_length=10,
+        null=True,
+        blank=False,
+        choices=LanguageLevelChoices.choices,
+        db_index=True,
+        verbose_name=_("Language level"),
+    )
+
     # название подкорпуса
     class SubcorpusChoices(models.TextChoices):
         HSE = "HSE", "HSE"
@@ -238,10 +241,6 @@ class Document(models.Model):
 
     oral = models.BooleanField(default=False, verbose_name=_("Oral"))
 
-    source = models.CharField(
-        max_length=1000, null=True, blank=True, verbose_name=_("Source")
-    )
-
     annotators = models.ManyToManyField(
         User,
         related_name="annotated_documents",
@@ -263,7 +262,7 @@ class Document(models.Model):
             "author": self.author.serialize() if self.author else None,
             "time_limit": self.time_limit,
             "oral": self.oral,
-            "source": self.source,
+            "language_level": self.language_level,
             "annotators": [annotator.username for annotator in self.annotators.all()],
             "sentences": [sentence.serialize() for sentence in self.sentence_set.all()],
         }
@@ -288,13 +287,13 @@ class Document(models.Model):
                 break
 
             if start < match.start():
-                return text[:start] + replacement + text[start + len(word) :]
+                return text[:start] + replacement + text[start + len(word):]
 
             index = match.end()
 
         start = text.find(word, index)
         if start != -1:
-            return text[:start] + replacement + text[start + len(word) :]
+            return text[:start] + replacement + text[start + len(word):]
 
         return text
 
@@ -424,9 +423,9 @@ class Sentence(models.Model):
 
         for correction in corrections:
             corrected_text = (
-                corrected_text[: correction["start"]]
-                + correction["replacement"]
-                + corrected_text[correction["end"] :]
+                    corrected_text[: correction["start"]]
+                    + correction["replacement"]
+                    + corrected_text[correction["end"]:]
             )
 
         return corrected_text
