@@ -5,8 +5,71 @@
 {% block content %}
 {% load templatetags %}
 <!-- Template -->
+<style>
+  /* Hide the table initially */
+  table {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  /* Show the table when it's in view */
+  table.in-view {
+    opacity: 1;
+  }
+
+  /* Hide the rows initially */
+  table.in-view tbody tr {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+
+  /* Show the rows one by one */
+  table.in-view tbody tr.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.1s * var(--index));
+  }
+</style>
+
+<script>
+  // Wait for the page to load
+  window.addEventListener('load', function() {
+    // Get the table element
+    const table = document.querySelector('table');
+
+    // Check if an element is in view
+    function checkInView(element) {
+      const rect = element.getBoundingClientRect();
+      const inView = (rect.top <= window.innerHeight) && (rect.bottom >= 0);
+      return inView;
+    }
+
+    // Show the table and rows if they're in view
+    function showTable() {
+      if (checkInView(table)) {
+        table.classList.add('in-view');
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach((row, index) => {
+          if (checkInView(row)) {
+            row.classList.add('in-view');
+            row.style.setProperty('--index', index);
+          }
+        });
+        window.removeEventListener('scroll', showTable);
+      }
+    }
+
+    // Check if the table is in view when the page loads
+    showTable();
+
+    // Check if the table is in view when the user scrolls
+    window.addEventListener('scroll', showTable);
+  });
+</script>
+
 <div style="font-family: Arial, sans-serif; font-size: 14px;">
-  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; margin-top: 60px;">Dominant Language Statistics</h2>
+  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Dominant Language Statistics</h2>
   <div style="margin: 0 auto; width: 80%;">
     <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px; text-align: center;">
       <thead>
@@ -28,6 +91,7 @@
     </table>
   </div>
 </div>
+
 
 
 
@@ -100,46 +164,52 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
 
-// Store the total number of sentences outside of the countSentences function
-let totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
-
-// Add event listener to accordion button to update the total number of sentences when the content changes
-const accordionButton = document.querySelector('[data-bs-target="#sentences-collapse"]');
-accordionButton.addEventListener('show.bs.collapse', () => {
-    totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
-});
-
-// Set up the counter animation
-let counter = totalSentences - 100
-const counterElement = document.querySelector('#total-sentences-counter');
-let intervalId = null;
-let isAccordionOpen = false;
-
-// Add event listener to accordion button to trigger the animation when the accordion is being opened
-accordionButton.addEventListener('click', () => {
-    // Only play the animation if the accordion is being opened
-    if (accordionButton.getAttribute('aria-expanded') === 'true') {
-        isAccordionOpen = true;
-
-        // Clear any existing intervals
-        clearInterval(intervalId);
-
-        // Set up the counter animation
-        counter = totalSentences - 100;
-        intervalId = setInterval(() => {
-            counterElement.textContent = counter;
-            counter++;
-            if (counter > totalSentences) {
-                clearInterval(intervalId);
-                counterElement.textContent = totalSentences;
-            }
-        }, 5);
+function animateCounter(counterId, targetAccordion) {
+    let totalValue = parseInt(document.querySelector(counterId).textContent);
+    const accordionButton = document.querySelector(targetAccordion);
+    accordionButton.addEventListener('show.bs.collapse', () => {
+        totalValue = parseInt(document.querySelector(counterId).textContent);
+    });
+    if (totalValue > 100) {
+        let counter = totalValue - 100;
     } else {
-        isAccordionOpen = false;
+        let counter = 0;
     }
-});
 
+    const counterElement = document.querySelector(counterId);
+    let intervalId = null;
+    let isAccordionOpen = false;
 
+    accordionButton.addEventListener('click', () => {
+        if (accordionButton.getAttribute('aria-expanded') === 'true') {
+            isAccordionOpen = true;
+            clearInterval(intervalId);
+            if (totalValue > 100) {
+                counter = totalValue - 100;
+            } else {
+                counter = 0;
+            }
+            intervalId = setInterval(() => {
+                counterElement.textContent = counter;
+                counter++;
+                if (counter > totalValue) {
+                    clearInterval(intervalId);
+                    counterElement.textContent = totalValue;
+                }
+            }, 5);
+        } else {
+            isAccordionOpen = false;
+        }
+    });
+}
+
+animateCounter('#total-docs-counter', '[data-bs-target="#docs-collapse"]');
+animateCounter('#total-sentences-counter', '[data-bs-target="#sentences-collapse"]');
+var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+
+if (darkModeEnabled) {
+  console.log(darkModeEnabled)
+}
 
 var text_types_data = {
   labels: {{ labels|safe }},
@@ -152,6 +222,12 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   type: 'pie',
   data: text_types_data,
   options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
     plugins: {
       title: {
         display: true,
@@ -161,18 +237,28 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   }
 });
 
+var genderLightColors = ['#636ee8', '#e07fe0', '#c9e8ff'];
+var genderDarkColors = ['#8d46b5', '#e246a6', '#33a5ff'];
+
+var genderChartColors = darkModeEnabled ? genderDarkColors : genderLightColors;
 
 var gender_data = {
   labels: {{ gender_labels|safe }},
   datasets: [{
     data: {{ gender_counts|safe }},
-    backgroundColor: ['#FF69B4', '#00BCD4', '#CDDC39']
+    backgroundColor: genderChartColors
   }]
 };
 var gender_chart = new Chart(document.getElementById('gender_chart'), {
   type: 'pie',
   data: gender_data,
  options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
     plugins: {
       title: {
         display: true,
@@ -186,9 +272,8 @@ var genre_data = {
   labels: {{ genre_labels|safe }},
   datasets: [{
     data: {{ genre_counts|safe }},
-    backgroundColor: ['#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#0F52BA', '#0072B5', '#1C3F95', '#265682', '#3A8FB7', '#3A99FF', '#36648B', '#4A7CAC', '#6CA6CD', '#9AC0DF', '#B0E0E6', '#C1E0E8',
+     '#9575cd', '#673ab7', '#4a148c', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9400d3', '#ab47bc', '#ba68c8', '#ce93d8', '#d1c4e9', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6']
   }]
 };
 var genre_chart = new Chart(document.getElementById('genre_chart'), {
@@ -212,13 +297,19 @@ var lang_background_data = {
   labels: {{ lang_background_labels|safe }},
   datasets: [{
     data: {{ lang_background_counts|safe }},
-    backgroundColor: ['#009688', '#FFEB3B', '#673AB7']
+    backgroundColor: ['#c7417b', '#553772', '#1f306e']
   }]
 };
 var lang_background_chart = new Chart(document.getElementById('lang_background_chart'), {
   type: 'doughnut',
   data: lang_background_data,
  options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
     plugins: {
       title: {
         display: true,
@@ -234,10 +325,11 @@ var languages_data = {
   datasets: [{
   label: {% blocktrans %}"Texts"{% endblocktrans %},
     data: {{ languages_counts|safe }},
-    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
-    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#8a2be2', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#8a2be2']
 
   }]
 };
@@ -266,10 +358,11 @@ var lang_sent_data = {
   datasets: [{
   label: {% blocktrans %} "Sentences" {% endblocktrans %},
     data: {{ lang_sent_counts|safe }},
-    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
-    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#8a2be2', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#8a2be2']
 
   }]
 };
