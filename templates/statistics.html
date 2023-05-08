@@ -222,8 +222,8 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   options: {
   elements: {
     arc: {
-      borderWidth: 1, // <-- Set this to derired value
-      borderColor:'#0000'
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
     }
   },
     plugins: {
@@ -236,7 +236,7 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
 });
 
 var genderLightColors = ['#636ee8', '#e07fe0', '#c9e8ff'];
-var genderDarkColors = ['#9a7fd1', '#e8a7e0', '#6bb2ff'];
+var genderDarkColors = ['#8d46b5', '#e246a6', '#33a5ff'];
 
 var genderChartColors = darkModeEnabled ? genderDarkColors : genderLightColors;
 
@@ -251,6 +251,12 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
   type: 'pie',
   data: gender_data,
  options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
     plugins: {
       title: {
         display: true,
@@ -296,6 +302,12 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
   type: 'doughnut',
   data: lang_background_data,
  options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
     plugins: {
       title: {
         display: true,
