@@ -93,7 +93,11 @@ def statistics(request):
         if author.favorite:
             total_fav_authors += 1
 
+    languages_counts = dict(sorted(languages_counts.items()))
+    lang_sent_counts = dict(sorted(lang_sent_counts.items()))
     # Render the chart
+    table_data = list(zip(languages_counts.keys(), languages_counts.values(), lang_sent_counts.values()))
+    print(table_data)
     context = {'labels': labels,
                'text_types': text_types,
                'colors': colors,
@@ -108,9 +112,10 @@ def statistics(request):
                'genre_counts': list(genre_counts.values()),
                'total_sentences': total_sentences,
                'lang_sent_labels': list(lang_sent_counts.keys()),
-               'lang_sent_counts': list(genre_counts.values()),
+               'lang_sent_counts': list(lang_sent_counts.values()),
                'total_authors': total_authors,
                'total_fav_authors': total_fav_authors,
+               'table_data': table_data,
                }
     return render(request, 'statistics.html', context)
 
