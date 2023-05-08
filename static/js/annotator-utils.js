@@ -143,6 +143,41 @@ var ColorFormatter = function (annotation) {
     return highlightBody.value;
 }
 
+function submitCorrectedSentence(sentenceId) {
+  const originalSentence = $(`#sentence-${sentenceId}`).text();
+  const correctedSentence = $(`#corrected-sentence-input-${sentenceId}`).val();
+
+  // API request to auto_annotate
+  $.ajax({
+    url: '/api/auto_annotate/',
+    type: 'post',
+    data: {
+      original_sentence: originalSentence,
+      corrected_sentence: correctedSentence,
+      csrfmiddlewaretoken: getCSRFToken(),
+    },
+    success: function (response) {
+      // Create new annotations
+      response.annotations.forEach((annotation) => {
+        const sentence = document.getElementById(`sentence-${sentenceId}`);
+        const guid = annotation.guid;
+        const documentId = sentence.dataset.documentId;
+        const userId = sentence.dataset.userId;
+        const alt = false;
+        const body = annotation.body;
+        createAnnotation(documentId, sentenceId, userId, guid, alt, body);
+        console.log('Annotation created:', annotation);
+      });
+      // refresh the page
+      window.location.reload(true);
+    },
+    error: function (error) {
+      console.error('Error fetching auto annotations:', error);
+    },
+  });
+}
+
+
 function initRecogito() {
   // Get all the elements with the class 'sentence'
   const sentences = document.querySelectorAll('.sentence');
@@ -152,7 +187,7 @@ function initRecogito() {
     // Create a unique ID for each sentence element
     // Initialize a RecogitoJS instance for the sentence element
     const r = Recogito.init({
-      allowEmpty: false,
+      allowEmpty: true,
       content: document.getElementById(sentence.id), readOnly: false,
       showTooltip: true,
       selectors: [{type: 'TextQuoteSelector'}],
@@ -178,8 +213,6 @@ function initRecogito() {
       }
     })
 
-
-    r.setAuthInfo();
     if (sentence.dataset.alt === 'true') {
       r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
     } else {

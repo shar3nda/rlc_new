@@ -78,20 +78,21 @@ def statistics(request):
         genre_counts[doc.get_genre_display()] += 1
     print(genre_counts)
     # Render the chart
-    context = {'labels': labels,
-               'text_types': text_types,
-               'colors': colors,
-               'texts_count': texts_count,
-               'languages_labels': list(languages_counts.keys()),
-               'languages_counts': list(languages_counts.values()),
-               'gender_labels': list(gender_counts.keys()),
-               'gender_counts': list(gender_counts.values()),
-               'lang_background_labels': list(lang_background_counts.keys()),
-               'lang_background_counts': list(lang_background_counts.values()),
-               'genre_labels': list(genre_counts.keys()),
-               'genre_counts': list(genre_counts.values()),
-               }
-    return render(request, 'statistics.html', context)
+    context = {
+        "labels": labels,
+        "text_types": text_types,
+        "colors": colors,
+        "texts_count": texts_count,
+        "languages_labels": list(languages_counts.keys()),
+        "languages_counts": list(languages_counts.values()),
+        "gender_labels": list(gender_counts.keys()),
+        "gender_counts": list(gender_counts.values()),
+        "lang_background_labels": list(lang_background_counts.keys()),
+        "lang_background_counts": list(lang_background_counts.values()),
+        "genre_labels": list(genre_counts.keys()),
+        "genre_counts": list(genre_counts.values()),
+    }
+    return render(request, "statistics.html", context)
 
 
 @login_required

@@ -2,26 +2,37 @@
 
 <div class="card mb-2" style="max-width: 100%;" data-card-id="{{ sentence.id }}">
   <div class="card-body position-relative pb-4" id="sentence-card-{{ sentence.id }}">
-    <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}" data-document-id="{{ document.id }}"
-         data-user-id="{{ user.id }}" data-alt="false" class="sentence">
-      {{ sentence.text }}
+    <div class="d-flex align-items-center">
+      <div id="sentence-{{ sentence.id }}" data-sentence-id="{{ sentence.id }}" data-document-id="{{ document.id }}"
+           data-user-id="{{ user.id }}" data-alt="false" class="sentence">
+        {{ sentence.text }}
+      </div>
+      <button id="auto-annotate-btn-{{ sentence.id }}" class="btn btn-sm btn-outline-primary ms-2">
+        <i class="fas fa-wand-sparkles"></i>
+      </button>
     </div>
-
+    <div class="mt-2" style="display: none;" id="corrected-sentence-container-{{ sentence.id }}">
+      <div class="input-group">
+        <input id="corrected-sentence-input-{{ sentence.id }}" class="form-control" type="text"
+               placeholder="{% trans 'Enter the corrected sentence' %}">
+        <button id="submit-corrected-sentence-btn-{{ sentence.id }}" class="btn btn-sm btn-primary"
+                onclick="submitCorrectedSentence({{ sentence.id }}, {{ sentence.document.id }})">
+          {% trans "Submit" %}
+        </button>
+      </div>
+    </div>
     <div id="correction-{{ sentence.id }}" data-alt="false"
          class="correction mb-2">
       {{ sentence.correction }}
     </div>
 
-    <!-- Accordion -->
     <div class="accordion" id="sentenceAccordion-{{ sentence.id }}">
-
-      <!-- Alt Sentence Accordion Item -->
       <div class="accordion-item">
         <h2 class="accordion-header" id="altSentenceHeading-{{ sentence.id }}">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#altSentenceCollapse-{{ sentence.id }}" aria-expanded="false"
                   aria-controls="altSentenceCollapse-{{ sentence.id }}">
-                  {% trans "Alternative correction" %}
+            {% trans "Alternative correction" %}
           </button>
         </h2>
         <div id="altSentenceCollapse-{{ sentence.id }}" class="accordion-collapse collapse"
@@ -40,13 +51,12 @@
         </div>
       </div>
 
-      <!-- Sentence Markup Accordion Item -->
       <div class="accordion-item">
         <h2 class="accordion-header" id="sentenceMarkupHeading-{{ sentence.id }}">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                   data-bs-target="#sentenceMarkupCollapse-{{ sentence.id }}" aria-expanded="false"
                   aria-controls="sentenceMarkupCollapse-{{ sentence.id }}">
-                  {% trans "Morphological analysis" %}
+            {% trans "Morphological analysis" %}
           </button>
         </h2>
         <div id="sentenceMarkupCollapse-{{ sentence.id }}" class="accordion-collapse collapse"
@@ -60,7 +70,6 @@
       </div>
 
     </div>
-    <!-- End Accordion -->
   </div>
 </div>
 <div id="recogito-{{ sentence.id }}" class="recogito"></div>
