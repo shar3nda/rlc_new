@@ -78,8 +78,10 @@
           <div class="tab-content mb-4">
             {% include 'author_card.html' %}
             <div class="form-group tab-pane fade" id="favorite-authors">
-              {{ favorite_author_form.selected_author.label_tag }}
-              {{ favorite_author_form.selected_author }}
+              <label
+                  for="{{ favorite_author_form.selected_author.auto_id }}">{{ favorite_author_form.selected_author.label }}</label>
+              <input type="text" class="form-control" id="{{ favorite_author_form.selected_author.auto_id }}"
+                     placeholder="{% trans "Search for saved authors..." %}">
             </div>
           </div>
 
@@ -140,6 +142,20 @@
       {% if preselect_favorite_author %}
         $("#select-author-tab").click();
       {% endif %}
+    });
+    $(document).ready(function () {
+      var authors = [
+        {% for author in favorite_author_form.selected_author.field.queryset %}
+          "{{ author }}"{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ];
+
+      $("#{{ favorite_author_form.selected_author.auto_id }}").autocomplete({
+        minLength: 0,
+        source: authors
+      }).focus(function () {
+        $(this).autocomplete("search", "");
+      });
     });
   </script>
 {% endblock %}
