@@ -220,6 +220,12 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   type: 'pie',
   data: text_types_data,
   options: {
+  elements: {
+    arc: {
+      borderWidth: 1, // <-- Set this to derired value
+      borderColor:'#0000'
+    }
+  },
     plugins: {
       title: {
         display: true,
