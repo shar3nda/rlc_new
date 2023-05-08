@@ -34,9 +34,7 @@ class DocumentForm(forms.ModelForm):
             "body": forms.Textarea(attrs={"class": "form-control", "rows": "10"}),
             "time_limit": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "oral": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "language_level": forms.TextInput(
-                attrs={"class": "form-control", "maxlength": "200"}
-            ),
+            "language_level": forms.Select(attrs={"class": "form-select"}),
         }
 
 
