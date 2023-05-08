@@ -101,7 +101,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="docs-heading">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#docs-collapse" aria-expanded="false" aria-controls="docs-collapse">
-        {% blocktrans %} "Document statics" {% endblocktrans %} 
+        {% trans "Document static" %}
       </button>
     </h2>
     <div id="docs-collapse" class="accordion-collapse collapse" aria-labelledby="docs-heading">
@@ -141,7 +141,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="sentences-heading">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sentences-collapse" aria-expanded="false" aria-controls="sentences-collapse">
-        Sentence Statistics
+        {% trans "Sentence static" %}
       </button>
     </h2>
     <div id="sentences-collapse" class="accordion-collapse collapse" aria-labelledby="sentences-heading">
@@ -219,7 +219,7 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %}'Texts annotated:'{% endblocktrans %}
+        text: {% blocktrans %} "Texts annotated:" {% endblocktrans %}
       }
     }
   }
@@ -240,7 +240,7 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %}'Gender ratio:'{% endblocktrans %}
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
       }
     }
   }
@@ -266,7 +266,7 @@ var genre_chart = new Chart(document.getElementById('genre_chart'), {
       },
       title: {
         display: true,
-        text: {% blocktrans %}'Genre ratio:'{% endblocktrans %}
+        text: {% blocktrans %} "Genre ratio:" {% endblocktrans %}
       }
     }
   }
@@ -286,7 +286,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %}'Language background text ratio'{% endblocktrans %}
+        text: {% blocktrans %} "Language background ratio" {% endblocktrans %}
       }
     }
   }
@@ -296,7 +296,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
 var languages_data = {
   labels: {{ languages_labels|safe }},
   datasets: [{
-  label: {% blocktrans %}'Texts'{% endblocktrans %},
+  label: {% blocktrans %}"Texts"{% endblocktrans %},
     data: {{ languages_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
@@ -315,7 +315,7 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
       },
       title: {
         display: false,
-        text: {% blocktrans %}'Language ratio:'{% endblocktrans %}
+        text: {% blocktrans %} "Language ratio:" {% endblocktrans %}
       }
     }
   }
@@ -328,7 +328,7 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
 var lang_sent_data = {
   labels: {{ lang_sent_labels|safe }},
   datasets: [{
-  label: {% blocktrans %}'Sentences'{% endblocktrans %},
+  label: {% blocktrans %} "Sentences" {% endblocktrans %},
     data: {{ lang_sent_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
