@@ -92,6 +92,7 @@ def statistics(request):
         total_authors += 1
         if author.favorite:
             total_fav_authors += 1
+        auth_gender[author.get_gender_display()] += 1
 
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
@@ -115,6 +116,8 @@ def statistics(request):
                'lang_sent_counts': list(lang_sent_counts.values()),
                'total_authors': total_authors,
                'total_fav_authors': total_fav_authors,
+               'auth_gender_labels': list(auth_gender.keys()),
+               'auth_gender_counts': list(auth_gender.values()),
                'table_data': table_data,
                }
     return render(request, 'statistics.html', context)

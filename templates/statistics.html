@@ -92,11 +92,6 @@
   </div>
 </div>
 
-
-
-
-
-
 <div class="accordion" style="margin-top: 4rem;">
   <div class="accordion-item">
     <h2 class="accordion-header" id="docs-heading">
@@ -161,6 +156,34 @@
     </div>
   </div>
 </div>
+
+
+<div class="accordion" style="margin-top: 4rem;">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="authors-heading">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#authors-collapse" aria-expanded="false" aria-controls="authors-collapse">
+        {% trans "Author statistics" %}
+      </button>
+    </h2>
+    <div id="authors-collapse" class="accordion-collapse collapse" aria-labelledby="authors-heading">
+      <div class="accordion-body">
+        <div style="text-align: center;">
+          <h1 style="font-size: 4rem;">{% trans "Total authors"%}:</h1>
+          <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-authors-counter">{{ total_authors }}</h1>
+          <h1 style="font-size: 4rem;">{{ total_fav_authors }} of which are favorite:</h1>
+          <div style="text-align: center; margin-top: 4rem;">
+            <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
+          </div>
+          <div style="width: 40%;">
+            <canvas id="auth_gender_chart"></canvas>
+          </div>
+          <!-- Your sentence statistics and charts go here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
 
@@ -170,10 +193,15 @@ function animateCounter(counterId, targetAccordion) {
     accordionButton.addEventListener('show.bs.collapse', () => {
         totalValue = parseInt(document.querySelector(counterId).textContent);
     });
-    if (totalValue > 100) {
-        let counter = totalValue - 100;
+   let speed = 5;
+   if (totalValue > 100) {
+      let counter = totalValue - 100;
+    } else if (totalValue > 50) {
+      let counter = 0;
+      speed = 15;
     } else {
-        let counter = 0;
+      let counter = 0;
+      speed = 40;
     }
 
     const counterElement = document.querySelector(counterId);
@@ -196,7 +224,7 @@ function animateCounter(counterId, targetAccordion) {
                     clearInterval(intervalId);
                     counterElement.textContent = totalValue;
                 }
-            }, 5);
+            }, speed);
         } else {
             isAccordionOpen = false;
         }
@@ -205,6 +233,7 @@ function animateCounter(counterId, targetAccordion) {
 
 animateCounter('#total-docs-counter', '[data-bs-target="#docs-collapse"]');
 animateCounter('#total-sentences-counter', '[data-bs-target="#sentences-collapse"]');
+animateCounter('#total-authors-counter', '[data-bs-target="#authors-collapse"]');
 var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
 
 if (darkModeEnabled) {
@@ -377,6 +406,34 @@ var lang_sent_chart = new Chart(document.getElementById('lang_sent_chart'), {
       title: {
         display: false,
         text: 'Языки, представленные в корпусе:'
+      }
+    }
+  }
+});
+
+
+
+var auth_gender_data = {
+  labels: {{ auth_gender_labels|safe }},
+  datasets: [{
+    data: {{ auth_gender_counts|safe }},
+    backgroundColor: genderChartColors
+  }]
+};
+var auth_gender_chart = new Chart(document.getElementById('auth_gender_chart'), {
+  type: 'pie',
+  data: auth_gender_data,
+ options: {
+  elements: {
+    arc: {
+      borderWidth: 4,
+      borderColor:'#212529'
+    }
+  },
+    plugins: {
+      title: {
+        display: true,
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
       }
     }
   }
