@@ -5,8 +5,63 @@
 {% block content %}
 {% load templatetags %}
 <!-- Template -->
-<h1 style="font-size: 4rem;">work in progress</h1>
 
+
+  <body>
+    <div class="header" id="help_header">
+      <h1>Help Page</h1>
+    </div>
+    <div class="wrapper">
+      <aside class="sidebar" id="sidebar">
+        <ul>
+          <li class="active"><a href="#getting-started">Getting Started</a></li>
+          <li><a href="#account-settings">Немного о корпусе</a></li>
+          <li><a href="#billing">Как размечать?</a></li>
+          <li><a href="#support">Регистрация и авторизация</a></li>
+        </ul>
+      </aside>
+      <main class="content" id="content">
+        <section class="section" id="getting-started">
+          <h2>Немного о корпусе</h2>
+          <p>
+            Добро пожаловать в Русский Учебный Корпус!
+            Наш ресурс - это коллекция текстов, написанных иностранцами на русском языке.
+            Мы собираем всю возможную информацию об этих текстах, а также об их авторах,
+            чтобы предоставить как можно более полезную и актуальную информацию.
+            Каждый текст, добавленный в наш корпус, проходит тщательную проверку на наличие ошибок.
+            Разметчики исправляют все найденные ошибки и присваивают тексту соответствующие теги.
+            После этого текст проходит дополнительную проверку экспертом.
+            Мы разделяем все тексты на три категории: "Не размечено", "Размечено, не проверено" и "Размечено, проверено".
+
+          </p>
+
+        </section>
+        <section class="section" id="account-settings">
+          <h2>Account Settings</h2>
+          <p>Here's how you can update your account settings:</p>
+          <ol>
+            <li>Go to the "Settings" page.</li>
+            <li>Update your profile information.</li>
+            <li>Change your password.</li>
+          </ol>
+        </section>
+        <section class="section" id="billing">
+          <h2>Billing</h2>
+          <p>Here's how you can manage your billing information:</p>
+          <ol>
+            <li>Go to the "Billing" page.</li>
+            <li>Add or remove a payment method.</li>
+            <li>View your payment history.</li>
+            <li>Update your billing information.</li>
+          </ol>
+        </section>
+        <section class="section" id="support">
+          <h2>Support</h2>
+          <p>If you need any help, please contact us at support@mywebsite.com.</p>
+        </section>
+      </main>
+    </div>
+  </body>
 
 
 

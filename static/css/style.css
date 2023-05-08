@@ -240,3 +240,47 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   color: var(--bs-light);
   border-color: var(--bs-secondary);
 }
+
+/* Style the header */
+#help_header {
+  background-color: #3498db;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Style the sidebar */
+#sidebar {
+  float: left;
+  width: 210px;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 100;
+
+}
+
+/* Style the content */
+#content {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+/* Style the sections */
+.section {
+  margin-bottom: 40px;
+}
+
+/* Style the links in the sidebar */
+#sidebar a {
+  display: block;
+  color: #000;
+  padding: 10px;
+  text-decoration: none;
+}
+
+/* Style the active link in the sidebar */
+#sidebar .active a {
+  background
