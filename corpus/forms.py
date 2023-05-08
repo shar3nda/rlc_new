@@ -15,7 +15,7 @@ class DocumentForm(forms.ModelForm):
             "body",
             "time_limit",
             "oral",
-            "source",
+            "language_level",
         ]
         widgets = {
             "title": forms.TextInput(
@@ -34,7 +34,7 @@ class DocumentForm(forms.ModelForm):
             "body": forms.Textarea(attrs={"class": "form-control", "rows": "10"}),
             "time_limit": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "oral": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "source": forms.TextInput(
+            "language_level": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
             ),
         }
@@ -49,7 +49,7 @@ class NewAuthorForm(forms.ModelForm):
             "program",
             "language_background",
             "dominant_language",
-            "language_level",
+            "source",
             "favorite",
         ]
         widgets = {
@@ -62,11 +62,13 @@ class NewAuthorForm(forms.ModelForm):
             ),
             "language_background": forms.Select(attrs={"class": "form-select"}),
             "dominant_language": forms.Select(attrs={"class": "form-select"}),
-            "language_level": forms.Select(attrs={"class": "form-select"}),
+            "source": forms.TextInput(
+                attrs={"class": "form-control", "maxlength": "200"}
+            ),
             "favorite": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
         labels = {
-            "favorite": "Добавить в сохраненные",
+            "favorite": _("Add to favorites"),
         }
 
 

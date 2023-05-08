@@ -46,8 +46,11 @@ class DocumentFilter(django_filters.FilterSet):
     author__name = django_filters.CharFilter(
         field_name="author__name", lookup_expr="icontains", label=_("Author")
     )
-    source = django_filters.CharFilter(
-        field_name="source", lookup_expr="icontains", label=_("Source")
+    language_level = django_filters.ChoiceFilter(
+        field_name="language_level",
+        choices=Document.LanguageLevelChoices.choices,
+        lookup_expr="exact",
+        label=_("Language level"),
     )
     user__username = django_filters.CharFilter(
         field_name="user__username", lookup_expr="exact", label=_("Owner")
@@ -72,6 +75,6 @@ class DocumentFilter(django_filters.FilterSet):
             "date": ["exact"],
             "genre": ["exact"],
             "subcorpus": ["exact"],
-            "source": ["exact"],
+            "language_level": ["exact"],
             "user": ["exact"],
         }

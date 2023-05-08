@@ -32,8 +32,8 @@
                   <dt class="col-sm-5">{% trans "Subcorpus" %}:</dt>
                   <dd class="col-sm-7">{{ document.get_subcorpus_display }}</dd>
 
-                  <dt class="col-sm-5">{% trans "Source" %}:</dt>
-                  <dd class="col-sm-7">{{ document.source }}</dd>
+                  <dt class="col-sm-5">{% trans "Language level" %}:</dt>
+                  <dd class="col-sm-7">{{ document.get_language_level_display }}</dd>
 
                   <dt class="col-sm-5">{% trans "Status" %}:</dt>
                   <dd class="col-sm-7">{{ document.get_status_display }}</dd>
@@ -53,8 +53,8 @@
                   <dt class="col-sm-4">{% trans "Dominant language" %}:</dt>
                   <dd class="col-sm-8">{{ document.author.get_dominant_language_display }}</dd>
 
-                  <dt class="col-sm-4">{% trans "Language level" %}:</dt>
-                  <dd class="col-sm-8">{{ document.author.get_language_level_display }}</dd>
+                  <dt class="col-sm-4">{% trans "Source" %}:</dt>
+                  <dd class="col-sm-8">{{ document.author.source }}</dd>
 
                   <dt class="col-sm-4">{% trans "Language background" %}:</dt>
                   <dd class="col-sm-8">{{ document.author.get_language_background_display }}</dd>

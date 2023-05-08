@@ -10,7 +10,7 @@ class AuthorAdmin(admin.ModelAdmin):
         "program",
         "language_background",
         "dominant_language",
-        "language_level",
+        "source",
         "favorite",
     )
     list_filter = ("favorite",)  # Enable filtering by 'favorite'
@@ -18,7 +18,7 @@ class AuthorAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {"fields": ("name", "gender", "program", "language_background")}),
-        ("Язык", {"fields": ("dominant_language", "language_level")}),
+        ("Язык", {"fields": ("dominant_language", "source")}),
         ("Доп. опции", {"fields": ("favorite",)}),
     )
 

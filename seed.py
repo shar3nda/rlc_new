@@ -62,7 +62,7 @@ for _ in tqdm(range(num_authors), desc="Creating authors"):
         program=fake.word(),
         language_background=random.choice(Author.LanguageBackgroundChoices.values),
         dominant_language=random.choice(Author.DominantLanguageChoices.values),
-        language_level=random.choice(Author.LanguageLevelChoices.values),
+        source=fake.word(),
         favorite=fake.boolean(),
     )
 
@@ -78,7 +78,7 @@ for _ in tqdm(range(num_documents), desc="Creating documents"):
         date=random.choice([2022, 2023]),
         genre=random.choice(Document.GenreChoices.values),
         subcorpus=random.choice(Document.SubcorpusChoices.values),
-        source=fake.word(),
+        language_level=random.choice(Document.LanguageLevelChoices.values),
         status=random.choice(Document.StatusChoices.values),
         body=fake.text(),
     )
