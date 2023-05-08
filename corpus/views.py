@@ -131,6 +131,11 @@ def statistics(request):
     return render(request, 'statistics.html', context)
 
 
+def help(request):
+
+    return render(request, 'help.html')
+
+
 @login_required
 # Представление для аннотирования документа
 def annotate(request, document_id):
