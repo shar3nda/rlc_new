@@ -1,35 +1,146 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% load i18n %}
 
-<div style="text-align: center;">
-  <h1 style="font-size: 4rem;">Total Documents:</h1>
-  <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
+{% block content %}
+{% load templatetags %}
+<!-- Template -->
+<div style="font-family: Arial, sans-serif; font-size: 14px;">
+  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; margin-top: 60px;">Dominant Language Statistics</h2>
+  <div style="margin: 0 auto; width: 80%;">
+    <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px; text-align: center;">
+      <thead>
+        <tr style="border-bottom: 2px solid #000;">
+          <th style="padding: 10px 15px; font-weight: bold;">Dominant Language</th>
+          <th style="padding: 10px 15px; font-weight: bold;">Texts Count</th>
+          <th style="padding: 10px 15px; font-weight: bold;">Sentences Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in table_data %}
+            <tr style="border-bottom: 1px solid #ddd;">
+              {% for data in row %}
+              <td style="padding: 10px 15px;">{{ data }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
-<div style="display: flex; justify-content: center;">
-  <div style="width: 60%; margin-right: 2rem;">
-    <canvas id="text_types_chart"></canvas>
-  </div>
-  <div style="width: 40%;">
-    <canvas id="gender_chart"></canvas>
+
+
+
+
+
+<div class="accordion" style="margin-top: 4rem;">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="docs-heading">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#docs-collapse" aria-expanded="false" aria-controls="docs-collapse">
+        {% trans "Document static" %}
+      </button>
+    </h2>
+    <div id="docs-collapse" class="accordion-collapse collapse" aria-labelledby="docs-heading">
+      <div class="accordion-body">
+        <div style="text-align: center;">
+          <h1 style="font-size: 4rem;">{% trans "Total Documents" %} :</h1>
+          <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <div style="width: 60%; margin-right: 2rem;">
+            <canvas id="text_types_chart"></canvas>
+          </div>
+          <div style="width: 40%;">
+            <canvas id="gender_chart"></canvas>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <div style="width: 60%; margin-right: 2rem;">
+            <canvas id="genre_chart"></canvas>
+          </div>
+          <div style="width: 40%;">
+            <canvas id="lang_background_chart"></canvas>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 4rem;">
+          <h2 style="font-size: 2rem;">{% trans "Documents written by authors with dominant languages" %}:</h2>
+          <div style="width: 80%; margin: 0 auto;">
+            <canvas id="languagesChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div style="display: flex; justify-content: center;">
-  <div style="width: 60%; margin-right: 2rem;">
-    <canvas id="genre_chart"></canvas>
-  </div>
-  <div style="width: 40%;">
-    <canvas id="lang_background_chart"></canvas>
-  </div>
-</div>
-<div style="text-align: center; margin-top: 4rem;">
-  <h2 style="font-size: 2rem;">Languages:</h2>
-  <div style="width: 80%; margin: 0 auto;">
-    <canvas id="languagesChart"></canvas>
+
+<div class="accordion" style="margin-top: 4rem;">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="sentences-heading">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sentences-collapse" aria-expanded="false" aria-controls="sentences-collapse">
+        {% trans "Sentence static" %}
+      </button>
+    </h2>
+    <div id="sentences-collapse" class="accordion-collapse collapse" aria-labelledby="sentences-heading">
+      <div class="accordion-body">
+        <div style="text-align: center;">
+          <h1 style="font-size: 4rem;">{% trans "Total sentences"%}:</h1>
+          <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-sentences-counter">{{ total_sentences }}</h1>
+          <div style="text-align: center; margin-top: 4rem;">
+            <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
+            <div style="width: 80%; margin: 0 auto;">
+              <canvas id="lang_sent_chart"></canvas>
+            </div>
+          </div>
+          <!-- Your sentence statistics and charts go here -->
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2"></script>
 <script>
+
+// Store the total number of sentences outside of the countSentences function
+let totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
+
+// Add event listener to accordion button to update the total number of sentences when the content changes
+const accordionButton = document.querySelector('[data-bs-target="#sentences-collapse"]');
+accordionButton.addEventListener('show.bs.collapse', () => {
+    totalSentences = parseInt(document.querySelector('#total-sentences-counter').textContent);
+});
+
+// Set up the counter animation
+let counter = totalSentences - 100
+const counterElement = document.querySelector('#total-sentences-counter');
+let intervalId = null;
+let isAccordionOpen = false;
+
+// Add event listener to accordion button to trigger the animation when the accordion is being opened
+accordionButton.addEventListener('click', () => {
+    // Only play the animation if the accordion is being opened
+    if (accordionButton.getAttribute('aria-expanded') === 'true') {
+        isAccordionOpen = true;
+
+        // Clear any existing intervals
+        clearInterval(intervalId);
+
+        // Set up the counter animation
+        counter = totalSentences - 100;
+        intervalId = setInterval(() => {
+            counterElement.textContent = counter;
+            counter++;
+            if (counter > totalSentences) {
+                clearInterval(intervalId);
+                counterElement.textContent = totalSentences;
+            }
+        }, 5);
+    } else {
+        isAccordionOpen = false;
+    }
+});
+
+
+
 var text_types_data = {
   labels: {{ labels|safe }},
   datasets: [{
@@ -44,7 +155,7 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Аннотировано текстов:'
+        text: {% blocktrans %} "Texts annotated:" {% endblocktrans %}
       }
     }
   }
@@ -65,7 +176,7 @@ var gender_chart = new Chart(document.getElementById('gender_chart'), {
     plugins: {
       title: {
         display: true,
-        text: 'Соотношение полов авторов:'
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
       }
     }
   }
@@ -91,7 +202,7 @@ var genre_chart = new Chart(document.getElementById('genre_chart'), {
       },
       title: {
         display: true,
-        text: 'Соотношение жанров, представленных в корпусе:'
+        text: {% blocktrans %} "Genre ratio:" {% endblocktrans %}
       }
     }
   }
@@ -111,7 +222,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
     plugins: {
       title: {
         display: true,
-        text: 'Русский язык:'
+        text: {% blocktrans %} "Language background ratio" {% endblocktrans %}
       }
     }
   }
@@ -121,7 +232,7 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
 var languages_data = {
   labels: {{ languages_labels|safe }},
   datasets: [{
-  label: 'My Dataset',
+  label: {% blocktrans %}"Texts"{% endblocktrans %},
     data: {{ languages_counts|safe }},
     backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
     '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
@@ -139,13 +250,44 @@ var languagesChart = new Chart(document.getElementById('languagesChart'), {
         display: false
       },
       title: {
-        display: true,
-        text: 'Языки, представленные в корпусе:'
+        display: false,
+        text: {% blocktrans %} "Language ratio:" {% endblocktrans %}
       }
     }
   }
 });
 
+
+
+
+
+var lang_sent_data = {
+  labels: {{ lang_sent_labels|safe }},
+  datasets: [{
+  label: {% blocktrans %} "Sentences" {% endblocktrans %},
+    data: {{ lang_sent_counts|safe }},
+    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
+    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
+    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
+    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+
+  }]
+};
+var lang_sent_chart = new Chart(document.getElementById('lang_sent_chart'), {
+  type: 'bar',
+  data: lang_sent_data,
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: false,
+        text: 'Языки, представленные в корпусе:'
+      }
+    }
+  }
+});
 
 
 </script>

@@ -66,9 +66,9 @@ def statistics(request):
     texts_count = int(Document.objects.all().count())
     colors = ["#FFC107", "#03A9F4", "#4CAF50"]
 
-    # Статистика по языкам
+    # Статистика по документам
     languages_counts = defaultdict(int)
-    gender_counts = defaultdict(int)
+    gender_counts = defaultdict(int) # количество текстов с женским авторством, НЕ количество женщин авторов
     lang_background_counts = defaultdict(int)
     genre_counts = defaultdict(int)
     for doc in Document.objects.all():
@@ -76,23 +76,48 @@ def statistics(request):
         gender_counts[doc.author.get_gender_display()] += 1
         lang_background_counts[doc.author.get_language_background_display()] += 1
         genre_counts[doc.get_genre_display()] += 1
-    print(genre_counts)
+
+    # статистика по предложениям
+    total_sentences = 0
+    lang_sent_counts = defaultdict(int)
+    for sent in Sentence.objects.all():
+        lang_sent_counts[sent.document.author.get_dominant_language_display()] += 1
+        total_sentences += 1
+
+    total_authors = 0
+    total_fav_authors = 0
+    auth_gender = defaultdict(int)
+    # Статистика по авторам
+    for author in Author.objects.all():
+        total_authors += 1
+        if author.favorite:
+            total_fav_authors += 1
+
+    languages_counts = dict(sorted(languages_counts.items()))
+    lang_sent_counts = dict(sorted(lang_sent_counts.items()))
     # Render the chart
-    context = {
-        "labels": labels,
-        "text_types": text_types,
-        "colors": colors,
-        "texts_count": texts_count,
-        "languages_labels": list(languages_counts.keys()),
-        "languages_counts": list(languages_counts.values()),
-        "gender_labels": list(gender_counts.keys()),
-        "gender_counts": list(gender_counts.values()),
-        "lang_background_labels": list(lang_background_counts.keys()),
-        "lang_background_counts": list(lang_background_counts.values()),
-        "genre_labels": list(genre_counts.keys()),
-        "genre_counts": list(genre_counts.values()),
-    }
-    return render(request, "statistics.html", context)
+    table_data = list(zip(languages_counts.keys(), languages_counts.values(), lang_sent_counts.values()))
+    print(table_data)
+    context = {'labels': labels,
+               'text_types': text_types,
+               'colors': colors,
+               'texts_count': texts_count,
+               'languages_labels': list(languages_counts.keys()),
+               'languages_counts': list(languages_counts.values()),
+               'gender_labels': list(gender_counts.keys()),
+               'gender_counts': list(gender_counts.values()),
+               'lang_background_labels': list(lang_background_counts.keys()),
+               'lang_background_counts': list(lang_background_counts.values()),
+               'genre_labels': list(genre_counts.keys()),
+               'genre_counts': list(genre_counts.values()),
+               'total_sentences': total_sentences,
+               'lang_sent_labels': list(lang_sent_counts.keys()),
+               'lang_sent_counts': list(lang_sent_counts.values()),
+               'total_authors': total_authors,
+               'total_fav_authors': total_fav_authors,
+               'table_data': table_data,
+               }
+    return render(request, 'statistics.html', context)
 
 
 @login_required
