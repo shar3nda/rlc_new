@@ -64,7 +64,7 @@ def statistics(request):
         count = int(status_counts.get(status=status_value)["count"])
         text_types.append(count)
     texts_count = int(Document.objects.all().count())
-    colors = ["#FFC107", "#03A9F4", "#4CAF50"]
+    colors = ["#8c61ff", "#44c2fd", "#6592fd"]
 
     # Статистика по документам
     languages_counts = defaultdict(int)

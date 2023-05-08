@@ -234,7 +234,7 @@ if (body.classList.contains('dark')) {
   currentTheme = 'light';
 }
 
-var lightColors = ['#FF69B4', '#00BCD4', '#CDDC39'];
+var lightColors = ['#636ee8', '#e07fe0', '#c9e8ff'];
 var darkColors = ['#FF1493', '#00CED1', '#8BC34A'];
 
 var chartColors = currentTheme === 'dark' ? darkColors : lightColors;
@@ -263,9 +263,8 @@ var genre_data = {
   labels: {{ genre_labels|safe }},
   datasets: [{
     data: {{ genre_counts|safe }},
-    backgroundColor: ['#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#0F52BA', '#0072B5', '#1C3F95', '#265682', '#3A8FB7', '#3A99FF', '#36648B', '#4A7CAC', '#6CA6CD', '#9AC0DF', '#B0E0E6', '#C1E0E8',
+     '#9575cd', '#673ab7', '#4a148c', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9400d3', '#ab47bc', '#ba68c8', '#ce93d8', '#d1c4e9', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6']
   }]
 };
 var genre_chart = new Chart(document.getElementById('genre_chart'), {
@@ -289,7 +288,7 @@ var lang_background_data = {
   labels: {{ lang_background_labels|safe }},
   datasets: [{
     data: {{ lang_background_counts|safe }},
-    backgroundColor: ['#009688', '#FFEB3B', '#673AB7']
+    backgroundColor: ['#c7417b', '#553772', '#1f306e']
   }]
 };
 var lang_background_chart = new Chart(document.getElementById('lang_background_chart'), {
@@ -311,10 +310,11 @@ var languages_data = {
   datasets: [{
   label: {% blocktrans %}"Texts"{% endblocktrans %},
     data: {{ languages_counts|safe }},
-    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
-    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#8a2be2', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#8a2be2']
 
   }]
 };
@@ -343,10 +343,11 @@ var lang_sent_data = {
   datasets: [{
   label: {% blocktrans %} "Sentences" {% endblocktrans %},
     data: {{ lang_sent_counts|safe }},
-    backgroundColor: ['#FFC107', '#03A9F4', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63', '#009688',
-    '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4', '#E91E63',
-    '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548', '#4CAF50', '#FF5722', '#2196F3', '#8BC34A', '#FF9800', '#9C27B0', '#CDDC39', '#F44336', '#00BCD4',
-    '#E91E63', '#009688', '#FFEB3B', '#673AB7', '#CDDC39', '#FFC107', '#795548']
+    backgroundColor: ['#8a2be2', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#8a2be2']
 
   }]
 };
