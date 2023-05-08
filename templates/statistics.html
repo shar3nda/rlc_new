@@ -5,8 +5,71 @@
 {% block content %}
 {% load templatetags %}
 <!-- Template -->
+<style>
+  /* Hide the table initially */
+  table {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  /* Show the table when it's in view */
+  table.in-view {
+    opacity: 1;
+  }
+
+  /* Hide the rows initially */
+  table.in-view tbody tr {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  }
+
+  /* Show the rows one by one */
+  table.in-view tbody tr.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(0.1s * var(--index));
+  }
+</style>
+
+<script>
+  // Wait for the page to load
+  window.addEventListener('load', function() {
+    // Get the table element
+    const table = document.querySelector('table');
+
+    // Check if an element is in view
+    function checkInView(element) {
+      const rect = element.getBoundingClientRect();
+      const inView = (rect.top <= window.innerHeight) && (rect.bottom >= 0);
+      return inView;
+    }
+
+    // Show the table and rows if they're in view
+    function showTable() {
+      if (checkInView(table)) {
+        table.classList.add('in-view');
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach((row, index) => {
+          if (checkInView(row)) {
+            row.classList.add('in-view');
+            row.style.setProperty('--index', index);
+          }
+        });
+        window.removeEventListener('scroll', showTable);
+      }
+    }
+
+    // Check if the table is in view when the page loads
+    showTable();
+
+    // Check if the table is in view when the user scrolls
+    window.addEventListener('scroll', showTable);
+  });
+</script>
+
 <div style="font-family: Arial, sans-serif; font-size: 14px;">
-  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; margin-top: 60px;">Dominant Language Statistics</h2>
+  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Dominant Language Statistics</h2>
   <div style="margin: 0 auto; width: 80%;">
     <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px; text-align: center;">
       <thead>
@@ -28,6 +91,7 @@
     </table>
   </div>
 </div>
+
 
 
 

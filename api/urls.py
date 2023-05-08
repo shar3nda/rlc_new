@@ -22,4 +22,5 @@ urlpatterns = [
         name="get_sentence_corrections",
     ),
     path("get_user_info/", views.get_user_info, name="get_user_info"),
+    path("auto_annotate/", views.auto_annotate, name="auto_annotate"),
 ]

@@ -7,3 +7,5 @@ django-crispy-forms
 crispy-bootstrap5
 Faker
 tqdm
+Levenshtein
+nltk

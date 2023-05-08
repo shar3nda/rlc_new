@@ -175,6 +175,16 @@
       }
     });
   });
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+  // Add this code for toggling the input container
+  $(document).on('click', '[id^=auto-annotate-btn-]', function() {
+    const sentenceId = $(this).attr('id').split('-')[3];
+    const inputContainer = $(`#corrected-sentence-container-${sentenceId}`);
+    inputContainer.toggle();
+  });
 </script>
 </body>
 </html>

@@ -1,11 +1,96 @@
+import datetime
 import json
+import uuid
 
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect
 
+from auto_annotator.annotator import Annotator
 from corpus.models import Annotation, Document, Sentence
 from corpus.views import user_profile
+
+
+def get_word_positions(sentence, words, word_number):
+    if word_number > len(words) or word_number < 1:
+        raise ValueError(
+            f"Word number is out of range (len={len(words)}, number={word_number})"
+        )
+
+    target_word = words[word_number - 1]
+    start_position = sentence.find(target_word)
+
+    if start_position == -1:
+        raise ValueError(f"Word '{target_word}' not found in sentence '{sentence}'")
+
+    end_position = start_position + len(target_word) - 1
+    return start_position, end_position
+
+
+def auto_annotate(request):
+    if request.method == "POST":
+        original = request.POST["original_sentence"]
+        corrected = request.POST["corrected_sentence"]
+    else:
+        return JsonResponse({"error": "Only POST requests are allowed."})
+
+    a = Annotator()
+    edits, orig_tokenized, cor_tokenized = a.annotate(original, corrected)
+    annotations = []
+    for index, edit in enumerate(edits):
+        original_tokens = edit.o_toks
+        if len(original_tokens) == 0:
+            text, tokens, number = (
+                original,
+                [tok.text for tok in orig_tokenized.tokens],
+                edit.o_start,
+            )
+            original_start, original_end = get_word_positions(text, tokens, number)
+        else:
+            original_start = original_tokens[0].start
+            original_end = original_tokens[-1].stop
+
+        guid = uuid.uuid4()
+        annotation = {
+            "guid": f"#{guid}",
+            "body": {
+                "id": f"#{guid}",
+                "body": [
+                    {
+                        "type": "TextualBody",
+                        "value": edit.type,
+                        "created": datetime.datetime.now().isoformat(),
+                        "creator": {"id": "/corpus/user_profile/", "name": "auto"},
+                        "purpose": "tagging",
+                    },
+                    {
+                        "type": "TextualBody",
+                        "value": edit.c_str,
+                        "created": datetime.datetime.now().isoformat(),
+                        "creator": {"id": "/corpus/user_profile/", "name": "auto"},
+                        "purpose": "commenting",
+                    },
+                ],
+                "type": "Annotation",
+                "target": {
+                    "selector": [
+                        {
+                            "type": "TextQuoteSelector",
+                            "exact": edit.o_str,
+                        },
+                        {
+                            "type": "TextPositionSelector",
+                            "start": original_start,
+                            "end": original_end,
+                        },
+                    ]
+                },
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+            },
+        }
+        annotations.append(annotation)
+
+    return JsonResponse({"annotations": annotations})
 
 
 def get_annotations(request):
