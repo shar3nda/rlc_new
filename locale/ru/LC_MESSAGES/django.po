@@ -582,7 +582,7 @@ msgstr "Войти"
 
 #: .\templates\base.html:124
 msgid "HSE School of Linguistics. All rights reserved."
-msgstr "Школа лингвистики ВШЭ. Все права защтщены"
+msgstr "Школа лингвистики ВШЭ. Все права защищены"
 
 #: .\templates\document_card.html:26
 msgid "Added"

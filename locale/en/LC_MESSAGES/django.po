@@ -673,7 +673,7 @@ msgstr ""
 
 #: .\templates\statistics.html:11
 msgid "Document static"
-msgstr ""
+msgstr "Document statistics"
 
 #: .\templates\statistics.html:17
 msgid "Total Documents"
@@ -685,7 +685,7 @@ msgstr ""
 
 #: .\templates\statistics.html:51
 msgid "Sentence static"
-msgstr ""
+msgstr "Sentence statistics"
 
 #: .\templates\statistics.html:57
 msgid "Total sentences"
