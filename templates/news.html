@@ -1,13 +1,23 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
 {% block content %}
 
   <div class="container">
-    {% for article in articles %}
-      <div id="section{{ loop.index }}">
-        <h2>{{ article.header_rus }}</h2>
-        {{ article.text_rus|safe }}
+    <div class="row">
+      <div class="col-md-9">
+        {% for article in articles %}
+          <div id="article{{ article.number }}" class="my-5">
+            <div class="card border-1">
+              <div class="card-body">
+                <h2 class="card-title text-center mb-3" style="text-align: left">Очень важная новость!!</h2>
+                <p class="card-text">{{ article.text_rus|safe }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
       </div>
-    {% endfor %}
+    </div>
   </div>
-
 {% endblock content %}
