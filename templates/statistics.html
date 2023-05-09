@@ -170,12 +170,21 @@
         <div style="text-align: center;">
           <h1 style="font-size: 4rem;">{% trans "Total authors"%}:</h1>
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-authors-counter">{{ total_authors }}</h1>
-          <h1 style="font-size: 4rem;">{{ total_fav_authors }} of which are favorite:</h1>
+          <h1 style="font-size: 4rem; margin-bottom: 5rem;">{{ total_fav_authors }} of which are favorited:</h1>
+
+          <div style="display: flex; justify-content: space-between;">
+            <div style="width: 45%;">
+              <canvas id="auth_gender_chart"></canvas>
+            </div>
+            <div style="width: 45%;">
+              <canvas id="auth_lang_bg_chart"></canvas>
+            </div>
+          </div>
           <div style="text-align: center; margin-top: 4rem;">
             <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
           </div>
-          <div style="width: 40%;">
-            <canvas id="auth_gender_chart"></canvas>
+          <div style="width: 80%; margin: 0 auto;">
+            <canvas id="auth_lang_chart"></canvas>
           </div>
           <!-- Your sentence statistics and charts go here -->
         </div>
@@ -439,6 +448,61 @@ var auth_gender_chart = new Chart(document.getElementById('auth_gender_chart'), 
   }
 });
 
+
+var auth_lang_data = {
+  labels: {{ auth_lang_labels|safe }},
+  datasets: [{
+  label: {% blocktrans %} "Authors" {% endblocktrans %},
+    data: {{ auth_lang_counts|safe }},
+    backgroundColor: ['#8a2be2', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#483d8b', '#6a5acd', '#8b00ff', '#9c27b0', '#ab47bc', '#ba68c8', '#ce93d8', '#e1bee7', '#e8daef', '#f1e6fa', '#ede7f6',
+  '#d1c4e9', '#b39ddb', '#9575cd', '#7e57c2', '#673ab7', '#4a148c', '#5e35b1', '#6a1b9a', '#7b1fa2', '#8e24aa', '#9c27b0', '#ab47bc', '#ba68c8', '#d1c4e9',
+  '#b39ddb', '#673ab7', '#9400d3', '#8a2be2']
+
+  }]
+};
+var auth_lang_chart = new Chart(document.getElementById('auth_lang_chart'), {
+  type: 'bar',
+  data: auth_lang_data,
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: false,
+        text: 'Языки, представленные в корпусе:'
+      }
+    }
+  }
+});
+
+var auth_lang_bg_data = {
+  labels: {{ auth_lang_bg_labels|safe }},
+  datasets: [{
+    data: {{ auth_lang_bg_counts|safe }},
+    backgroundColor: ['#c7417b', '#553772', '#1f306e']
+  }]
+};
+var auth_lang_bg_chart = new Chart(document.getElementById('auth_lang_bg_chart'), {
+  type: 'doughnut',
+  data: auth_lang_bg_data,
+ options: {
+  elements: {
+    arc: {
+      borderWidth: 4, // <-- Set this to derired value
+      borderColor:'#212529'
+    }
+  },
+    plugins: {
+      title: {
+        display: true,
+        text: {% blocktrans %} "Language background ratio" {% endblocktrans %}
+      }
+    }
+  }
+});
 
 </script>
 {% endblock %}

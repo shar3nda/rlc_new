@@ -87,12 +87,16 @@ def statistics(request):
     total_authors = 0
     total_fav_authors = 0
     auth_gender = defaultdict(int)
+    auth_lang_bg_counts = defaultdict(int)
+    auth_lang_counts = defaultdict(int)
     # Статистика по авторам
     for author in Author.objects.all():
         total_authors += 1
         if author.favorite:
             total_fav_authors += 1
         auth_gender[author.get_gender_display()] += 1
+        auth_lang_bg_counts[author.get_language_background_display()] += 1
+        auth_lang_counts[author.get_dominant_language_display()] += 1
 
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
@@ -118,9 +122,18 @@ def statistics(request):
                'total_fav_authors': total_fav_authors,
                'auth_gender_labels': list(auth_gender.keys()),
                'auth_gender_counts': list(auth_gender.values()),
+               'auth_lang_bg_labels': list(auth_lang_bg_counts.keys()),
+               'auth_lang_bg_counts': list(auth_lang_bg_counts.values()),
+               'auth_lang_labels': list(auth_lang_counts.keys()),
+               'auth_lang_counts': list(auth_lang_counts.values()),
                'table_data': table_data,
                }
     return render(request, 'statistics.html', context)
+
+
+def help(request):
+
+    return render(request, 'help.html')
 
 
 @login_required
