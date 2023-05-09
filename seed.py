@@ -17,14 +17,14 @@ fake = Faker("ru_RU")
 # Create the admin user
 print("Creating admin user")
 User.objects.create_superuser(
-    username="admin", email="admin@example.com", password="password"
+    username="admin", email="admin@example.com", password="VerySecureAdminPassword123!"
 )
 
 # Create some fake users
 num_users = 5
 for _ in tqdm(range(num_users), desc="Creating users"):
     User.objects.create_user(
-        username=fake.user_name(), email=fake.email(), password="password"
+        username=fake.user_name(), email=fake.email(), password="VerySecureUserPassword123!"
     )
 
 users = User.objects.all()
