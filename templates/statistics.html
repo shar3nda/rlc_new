@@ -69,14 +69,14 @@
 </script>
 
 <div style="font-family: Arial, sans-serif; font-size: 14px;">
-  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Dominant Language Statistics</h2>
+  <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">{% trans "Dominant Language Statistics" %}</h2>
   <div style="margin: 0 auto; width: 80%;">
     <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px; text-align: center;">
       <thead>
         <tr style="border-bottom: 2px solid #000;">
-          <th style="padding: 10px 15px; font-weight: bold;">Dominant Language</th>
-          <th style="padding: 10px 15px; font-weight: bold;">Texts Count</th>
-          <th style="padding: 10px 15px; font-weight: bold;">Sentences Count</th>
+          <th style="padding: 10px 15px; font-weight: bold;">{% trans "Dominant Language" %}</th>
+          <th style="padding: 10px 15px; font-weight: bold;">{% trans "Texts Count" %}</th>
+          <th style="padding: 10px 15px; font-weight: bold;">{% trans "Sentences Count" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -170,7 +170,7 @@
         <div style="text-align: center;">
           <h1 style="font-size: 4rem;">{% trans "Total authors"%}:</h1>
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-authors-counter">{{ total_authors }}</h1>
-          <h1 style="font-size: 4rem; margin-bottom: 5rem;">{{ total_fav_authors }} of which are favorited:</h1>
+          <h1 style="font-size: 4rem; margin-bottom: 5rem;">{{ total_fav_authors }} {% trans "of which are favorited"%}</h1>
 
           <div style="display: flex; justify-content: space-between;">
             <div style="width: 45%;">
@@ -181,7 +181,7 @@
             </div>
           </div>
           <div style="text-align: center; margin-top: 4rem;">
-            <h2 style="font-size: 2rem;">{% trans "Sentences written by authors with dominant languages" %}:</h2>
+            <h2 style="font-size: 2rem;">{% trans "Authors dominant languages ratio" %}</h2>
           </div>
           <div style="width: 80%; margin: 0 auto;">
             <canvas id="auth_lang_chart"></canvas>
