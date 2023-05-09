@@ -80,8 +80,9 @@
             <div class="form-group tab-pane fade" id="favorite-authors">
               <label
                   for="{{ favorite_author_form.selected_author.auto_id }}">{{ favorite_author_form.selected_author.label }}</label>
-              <input type="text" class="form-control" id="{{ favorite_author_form.selected_author.auto_id }}"
+              <input type="text" class="form-control" id="search-author"
                      placeholder="{% trans "Search for saved authors..." %}">
+              {{ favorite_author_form.selected_author.as_hidden }}
             </div>
           </div>
 
@@ -146,13 +147,21 @@
     $(document).ready(function () {
       var authors = [
         {% for author in favorite_author_form.selected_author.field.queryset %}
-          "{{ author }}"{% if not forloop.last %},{% endif %}
+          {
+            value: "{{ author.pk }}",
+            label: "{{ author }}"
+          }{% if not forloop.last %},{% endif %}
         {% endfor %}
       ];
 
-      $("#{{ favorite_author_form.selected_author.auto_id }}").autocomplete({
+      $("#search-author").autocomplete({
         minLength: 0,
-        source: authors
+        source: authors,
+        select: function (event, ui) {
+          $("#{{ favorite_author_form.selected_author.auto_id }}").val(ui.item.value);
+          $(this).val(ui.item.label);
+          event.preventDefault();
+        }
       }).focus(function () {
         $(this).autocomplete("search", "");
       });

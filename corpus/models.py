@@ -343,6 +343,7 @@ class Document(models.Model):
             for number, sentence in enumerate(doc.sents):
                 text = sentence.text
                 markup = sentence.text
+                print(sentence.tokens)
                 for token in sentence.tokens:
                     tooltip_title = (
                         f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
