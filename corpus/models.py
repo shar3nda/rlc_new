@@ -340,19 +340,31 @@ class Document(models.Model):
                 token.lemmatize(morph_vocab)
 
             # create Sentence objects
-            for number, sentence in enumerate(doc.sents):
+            for sentence_num, sentence in enumerate(doc.sents):
                 text = sentence.text
-                markup = sentence.text
-                print(sentence.tokens)
+                markup = []
                 for token in sentence.tokens:
                     tooltip_title = (
                         f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
                     )
                     tooltip = f'<span data-toggle="tooltip" title="{tooltip_title}">{token.text}</span>'
-                    markup = self.replace_word_outside_span(markup, token.text, tooltip)
-                Sentence.objects.create(
-                    document=self, text=text, markup=markup, number=number
+                    markup.append(tooltip)
+                markup = " ".join(markup)
+                new_sentence = Sentence.objects.create(
+                    document=self, text=text, markup=markup, number=sentence_num
                 )
+                for token_num, token in enumerate(sentence.tokens):
+                    Token.objects.create(
+                        document=self,
+                        sentence=new_sentence,
+                        number=token_num,
+                        start=token.start if hasattr(token, "start") else 1,
+                        end=token.end if hasattr(token, "end") else token.start + len(token.text),
+                        token=token.text if token.text else 1,
+                        lemma=token.lemma,
+                        pos=token.pos,
+                        feats=token.feats,
+                    )
 
     class Meta:
         ordering = ["-created_on"]
@@ -494,6 +506,7 @@ class Token(models.Model):
     sentence - номер предложения, к которому относится слово
     start - начальная позиция слова в предложении
     end - конечная позиция слова в предложении
+    number - номер слова в предложении
     pos - часть речи
     feats - грамматические характеристики
     """
@@ -503,8 +516,9 @@ class Token(models.Model):
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
     start = models.IntegerField()
     end = models.IntegerField()
+    number = models.IntegerField()
     pos = models.CharField(max_length=10, db_index=True, null=True)
-    feats = models.CharField(max_length=200, db_index=True, null=True)
+    feats = models.JSONField(db_index=True, null=True)
     lemma = models.CharField(max_length=200, db_index=True, null=True)
 
     def __str__(self):
@@ -513,26 +527,3 @@ class Token(models.Model):
     class Meta:
         verbose_name = _("token")
         verbose_name_plural = _("tokens")
-
-
-class Morphology(models.Model):
-    """Хранит информацию о морфологических разборах.
-
-    Поля разбора:
-    token - номер токена, к которому относится разбор
-    lemma - начальная форма слова
-    lex - часть речи
-    gram - все прочие грамматические характеристики
-    """
-
-    token = models.ForeignKey(Token, on_delete=models.CASCADE)
-    lemma = models.CharField(max_length=200, db_index=True)
-    part_of_speech = models.CharField(max_length=200, db_index=True)
-    grammemes = models.CharField(max_length=200, db_index=True)
-
-    def __str__(self):
-        return self.lemma + " " + self.part_of_speech + " " + self.grammemes
-
-    class Meta:
-        verbose_name = _("analysis")
-        verbose_name_plural = _("analyses")
