@@ -430,20 +430,24 @@ var auth_gender_data = {
     backgroundColor: genderChartColors
   }]
 };
+
 var auth_gender_chart = new Chart(document.getElementById('auth_gender_chart'), {
   type: 'pie',
   data: auth_gender_data,
- options: {
-  elements: {
-    arc: {
-      borderWidth: 4,
-      borderColor:'#212529'
-    }
-  },
+  options: {
+    elements: {
+      arc: {
+        borderWidth: 4,
+        borderColor:'#212529'
+      }
+    },
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %},
+        font: {
+          size: 32
+        }
       }
     }
   }
