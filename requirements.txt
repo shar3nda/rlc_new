@@ -1,7 +1,7 @@
-django~=4.2
+django>=4.2.1
 black~=23.3.0
 natasha~=1.5.0
-psycopg~=3.1.8
+psycopg>=3.1.9
 django-filter~=23.2
 django-crispy-forms
 crispy-bootstrap5
