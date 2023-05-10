@@ -768,7 +768,7 @@ msgstr " \"Тексты по языкам:\" "
 
 #: .\templates\statistics.html:397
 msgid " \"Sentences\" "
-msgstr " \"Предложение\" "
+msgstr " \"Предложения\" "
 
 #: .\templates\statistics.html:455
 msgid " \"Authors\" "

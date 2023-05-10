@@ -171,7 +171,7 @@
         <div style="text-align: center;">
           <h1 style="font-size: 4rem;">{% trans "Total authors"%}:</h1>
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-authors-counter">{{ total_authors }}</h1>
-          <h1 style="font-size: 4rem; margin-bottom: 5rem;">{{ total_fav_authors }} of which are favorited:</h1>
+          <h1 style="font-size: 4rem; margin-bottom: 5rem;">{{ total_fav_authors }} {% trans "of which are favorited" %}</h1>
 
           <div style="display: flex; justify-content: space-between;">
             <div style="width: 45%;">
@@ -263,14 +263,17 @@ var text_types_chart = new Chart(document.getElementById('text_types_chart'), {
   options: {
   elements: {
     arc: {
-      borderWidth: 4, // <-- Set this to derired value
+      borderWidth: 4,
       borderColor:'#212529'
     }
   },
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %} "Texts annotated:" {% endblocktrans %}
+        text: {% blocktrans %} "Texts annotated:" {% endblocktrans %},
+        font: {
+          size: 32
+        }
       }
     }
   }
@@ -291,17 +294,20 @@ var gender_data = {
 var gender_chart = new Chart(document.getElementById('gender_chart'), {
   type: 'pie',
   data: gender_data,
- options: {
-  elements: {
-    arc: {
-      borderWidth: 4, // <-- Set this to derired value
-      borderColor:'#212529'
-    }
-  },
+  options: {
+    elements: {
+      arc: {
+        borderWidth: 4,
+        borderColor: '#212529'
+      }
+    },
     plugins: {
       title: {
         display: true,
-        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %}
+        text: {% blocktrans %} "Gender ratio:" {% endblocktrans %},
+        font: {
+          size: 32
+        }
       }
     }
   }
@@ -318,7 +324,7 @@ var genre_data = {
 var genre_chart = new Chart(document.getElementById('genre_chart'), {
   type: 'bar',
   data: genre_data,
- options: {
+  options: {
     indexAxis: 'y',
     plugins: {
       legend: {
@@ -326,7 +332,10 @@ var genre_chart = new Chart(document.getElementById('genre_chart'), {
       },
       title: {
         display: true,
-        text: {% blocktrans %} "Genre ratio:" {% endblocktrans %}
+        text: {% blocktrans %} "Genre ratio:" {% endblocktrans %},
+        font: {
+          size: 32
+        }
       }
     }
   }
@@ -345,16 +354,20 @@ var lang_background_chart = new Chart(document.getElementById('lang_background_c
  options: {
   elements: {
     arc: {
-      borderWidth: 4, // <-- Set this to derired value
+      borderWidth: 4,
       borderColor:'#212529'
     }
   },
-    plugins: {
-      title: {
-        display: true,
-        text: {% blocktrans %} "Language background ratio" {% endblocktrans %}
+  plugins: {
+    title: {
+      display: true,
+      text: {% blocktrans %} "Language background ratio" {% endblocktrans %},
+      font: {
+        size: 32
       }
     }
+  }
+
   }
 });
 
@@ -496,14 +509,17 @@ var auth_lang_bg_chart = new Chart(document.getElementById('auth_lang_bg_chart')
  options: {
   elements: {
     arc: {
-      borderWidth: 4, // <-- Set this to derired value
+      borderWidth: 4,
       borderColor:'#212529'
     }
   },
-    plugins: {
-      title: {
-        display: true,
-        text: {% blocktrans %} "Language background ratio" {% endblocktrans %}
+  plugins: {
+    title: {
+      display: true,
+      text: {% blocktrans %} "Language background ratio" {% endblocktrans %},
+      font: {
+          size: 32
+        }
       }
     }
   }

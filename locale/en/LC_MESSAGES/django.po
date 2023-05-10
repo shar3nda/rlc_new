@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-09 16:27+0300\n"
+"POT-Creation-Date: 2023-05-10 13:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: .\corpus\filters.py:44 .\corpus\models.py:220 .\corpus\models.py:372
+#: .\corpus\filters.py:44 .\corpus\models.py:220 .\corpus\models.py:384
 msgid "Text"
 msgstr ""
 
@@ -391,7 +391,7 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-#: .\corpus\models.py:136 .\corpus\models.py:467
+#: .\corpus\models.py:136 .\corpus\models.py:479
 msgid "User"
 msgstr ""
 
@@ -479,40 +479,32 @@ msgstr ""
 msgid "Annotators"
 msgstr ""
 
-#: .\corpus\models.py:370 .\corpus\models.py:462
+#: .\corpus\models.py:382 .\corpus\models.py:474
 msgid "Document"
 msgstr ""
 
-#: .\corpus\models.py:373
+#: .\corpus\models.py:385
 msgid "Markup"
 msgstr ""
 
-#: .\corpus\models.py:374
+#: .\corpus\models.py:386
 msgid "Position in text"
 msgstr ""
 
-#: .\corpus\models.py:465
+#: .\corpus\models.py:477
 msgid "Sentence"
 msgstr ""
 
-#: .\corpus\models.py:473
+#: .\corpus\models.py:485
 msgid "GUID"
 msgstr ""
 
-#: .\corpus\models.py:514
+#: .\corpus\models.py:528
 msgid "token"
 msgstr ""
 
-#: .\corpus\models.py:515
+#: .\corpus\models.py:529
 msgid "tokens"
-msgstr ""
-
-#: .\corpus\models.py:537
-msgid "analysis"
-msgstr ""
-
-#: .\corpus\models.py:538
-msgid "analyses"
 msgstr ""
 
 #: .\templates\add_document.html:13
@@ -702,75 +694,71 @@ msgstr ""
 msgid "Sentences Count"
 msgstr "Sentence statistics"
 
-#: .\templates\statistics.html:99
+#: .\templates\statistics.html:100
 msgid "Document static"
 msgstr "Document statistics"
 
-#: .\templates\statistics.html:105
+#: .\templates\statistics.html:106
 msgid "Total Documents"
 msgstr ""
 
-#: .\templates\statistics.html:125
+#: .\templates\statistics.html:126
 msgid "Documents written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:139
+#: .\templates\statistics.html:140
 msgid "Sentence static"
 msgstr "Sentence statistics"
 
-#: .\templates\statistics.html:145
+#: .\templates\statistics.html:146
 msgid "Total sentences"
 msgstr ""
 
-#: .\templates\statistics.html:148
+#: .\templates\statistics.html:149 .\templates\statistics.html:185
 msgid "Sentences written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:165
+#: .\templates\statistics.html:166
 msgid "Author statistics"
 msgstr ""
 
-#: .\templates\statistics.html:171
+#: .\templates\statistics.html:172
 msgid "Total authors"
 msgstr ""
 
-#: .\templates\statistics.html:173
+#: .\templates\statistics.html:174
 msgid "of which are favorited"
 msgstr ""
 
-#: .\templates\statistics.html:184
-msgid "Authors dominant languages ratio"
-msgstr ""
-
-#: .\templates\statistics.html:272
+#: .\templates\statistics.html:273
 msgid " \"Texts annotated:\" "
 msgstr ""
 
-#: .\templates\statistics.html:303 .\templates\statistics.html:445
+#: .\templates\statistics.html:307 .\templates\statistics.html:460
 msgid " \"Gender ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:328
+#: .\templates\statistics.html:335
 msgid " \"Genre ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:354 .\templates\statistics.html:501
+#: .\templates\statistics.html:364 .\templates\statistics.html:519
 msgid " \"Language background ratio\" "
 msgstr ""
 
-#: .\templates\statistics.html:364
+#: .\templates\statistics.html:378
 msgid "\"Texts\""
 msgstr ""
 
-#: .\templates\statistics.html:384
+#: .\templates\statistics.html:398
 msgid " \"Language ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:397
+#: .\templates\statistics.html:411
 msgid " \"Sentences\" "
 msgstr ""
 
-#: .\templates\statistics.html:455
+#: .\templates\statistics.html:473
 msgid " \"Authors\" "
 msgstr ""
 
