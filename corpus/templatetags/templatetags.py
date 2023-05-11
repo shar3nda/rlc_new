@@ -1,3 +1,5 @@
+import re
+
 from django import template
 from django.http import QueryDict
 from django.utils.html import escape
@@ -12,7 +14,7 @@ def highlight_search(text, search_text):
         return text
 
     search_text = escape(search_text)
-    highlighted = text.replace(search_text, f"<mark>{search_text}</mark>")
+    highlighted = re.sub(f'({search_text})', f'<mark>\\1</mark>', text, flags=re.IGNORECASE)
     return mark_safe(highlighted)
 
 

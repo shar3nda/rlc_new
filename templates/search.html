@@ -1,0 +1,34 @@
+<!-- search.html -->
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-5">
+  <form class="form-inline justify-content-center" method="get">
+    {% csrf_token %}
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" value="{% if query %}{{ query }}{% endif %}"
+        placeholder="{% trans 'Search' %}">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-secondary">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  {% if results %}
+    <h2 class="mt-5">{% trans 'Search results for' %} "{{ query }}":</h2>
+    <ul class="list-group mt-3">
+      {% for result in results %}
+        <li class="list-group-item">
+          <a href="{% url 'annotate' document_id=result.pk %}">{{ result.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% elif query %}
+    <h2 class="mt-5">{% trans 'No results found for' %} "{{ query }}".</h2>
+  {% endif %}
+</div>
+{% endblock %}

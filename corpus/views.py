@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -308,3 +308,14 @@ def update_document_status(request, document_id):
 @login_required
 def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
+
+
+def search(request):
+    query = request.GET.get("q")
+    if query:
+        results = Document.objects.filter(
+            body__search=query
+        )
+    else:
+        results = []
+    return render(request, "search.html", {"results": results, "query": query})

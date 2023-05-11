@@ -273,30 +273,6 @@ class Document(models.Model):
         if created and sender == Annotation:
             instance.document.annotators.add(instance.user)
 
-    @staticmethod
-    def replace_word_outside_span(text, word, replacement):
-        span_pattern = re.compile(r"<span[^>]*>.*?</span>", re.IGNORECASE)
-        index = 0
-        while True:
-            match = span_pattern.search(text, index)
-            if not match:
-                break
-
-            start = text.find(word, index)
-            if start == -1:
-                break
-
-            if start < match.start():
-                return text[:start] + replacement + text[start + len(word):]
-
-            index = match.end()
-
-        start = text.find(word, index)
-        if start != -1:
-            return text[:start] + replacement + text[start + len(word):]
-
-        return text
-
     def save(self, *args, **kwargs):
         """
         This method overrides the default save method of the model.

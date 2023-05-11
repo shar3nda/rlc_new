@@ -155,15 +155,6 @@ def delete_annotation(request):
         return JsonResponse({"id": annotation_id})
 
 
-def get_new_id(request):
-    if request.method == "GET":
-        new_id = 1
-        if Annotation.objects.count() > 0:
-            new_id = Annotation.objects.last().id + 1
-        data = {"id": new_id}
-        return JsonResponse(data)
-
-
 def get_sentence_corrections(request, sentence_id):
     if request.method == "GET":
         sentence = Sentence.objects.get(id=sentence_id)
