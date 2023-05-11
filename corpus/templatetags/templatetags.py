@@ -14,7 +14,9 @@ def highlight_search(text, search_text):
         return text
 
     search_text = escape(search_text)
-    highlighted = re.sub(f'({search_text})', f'<mark>\\1</mark>', text, flags=re.IGNORECASE)
+    highlighted = re.sub(
+        f"({search_text})", f"<mark>\\1</mark>", text, flags=re.IGNORECASE
+    )
     return mark_safe(highlighted)
 
 
@@ -25,6 +27,6 @@ def update_page_number(query_params, page_number):
     return query_dict.urlencode()
 
 
-@register.filter(name='zip')
+@register.filter(name="zip")
 def zip_lists(a, b):
     return zip(a, b)

@@ -24,7 +24,9 @@ User.objects.create_superuser(
 num_users = 5
 for _ in tqdm(range(num_users), desc="Creating users"):
     User.objects.create_user(
-        username=fake.user_name(), email=fake.email(), password="VerySecureUserPassword123!"
+        username=fake.user_name(),
+        email=fake.email(),
+        password="VerySecureUserPassword123!",
     )
 
 users = User.objects.all()

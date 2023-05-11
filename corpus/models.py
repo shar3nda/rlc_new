@@ -9,6 +9,11 @@ from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+# load models outside the function scope
+_SEGMENTER = Segmenter()
+_MORPH_VOCAB = MorphVocab()
+_EMB = NewsEmbedding()
+_MORPH_TAGGER = NewsMorphTagger(_EMB)
 
 
 class Author(models.Model):
@@ -116,7 +121,7 @@ class Author(models.Model):
             "program": self.program,
             "language_background": self.language_background,
             "dominant_language": self.dominant_language,
-            "source": self.source
+            "source": self.source,
         }
 
 
@@ -283,9 +288,8 @@ class Document(models.Model):
 
         # Check if the document exists and the body has changed
         if self.pk:
-            old_document = Document.objects.get(pk=self.pk)
-            if old_document.body != self.body:
-                body_changed = True
+            old_document = Document.objects.only("body").get(pk=self.pk)
+            body_changed = old_document.body != self.body
         else:
             body_changed = True
 
@@ -296,51 +300,45 @@ class Document(models.Model):
             Annotation.objects.filter(document=self).delete()
 
             self.body = _RE_COMBINE_WHITESPACE.sub(" ", self.body).strip()
-
-            # load models
-            segmenter = Segmenter()
-            morph_vocab = MorphVocab()
-            # TODO при желании можно заменить на эмбеддинги и тэггер из худлита
-            emb = NewsEmbedding()
-            morph_tagger = NewsMorphTagger(emb)
             doc = Doc(self.body)
 
             # tokenize the text
-            doc.segment(segmenter)
+            doc.segment(_SEGMENTER)
 
             # tag morphology
-            doc.tag_morph(morph_tagger)
+            doc.tag_morph(_MORPH_TAGGER)
 
             # lemmatize all tokens
             for token in doc.tokens:
-                token.lemmatize(morph_vocab)
+                token.lemmatize(_MORPH_VOCAB)
 
             # create Sentence objects
             for sentence_num, sentence in enumerate(doc.sents):
                 text = sentence.text
-                markup = []
-                for token in sentence.tokens:
-                    tooltip_title = (
-                        f"Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}"
-                    )
-                    tooltip = f'<span data-toggle="tooltip" title="{tooltip_title}">{token.text}</span>'
-                    markup.append(tooltip)
+                markup = [
+                    f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>'
+                    for token in sentence.tokens
+                ]
                 markup = " ".join(markup)
                 new_sentence = Sentence.objects.create(
                     document=self, text=text, markup=markup, number=sentence_num
                 )
-                for token_num, token in enumerate(sentence.tokens):
-                    Token.objects.create(
+
+                tokens = [
+                    Token(
                         document=self,
                         sentence=new_sentence,
-                        number=token_num,
-                        start=token.start if hasattr(token, "start") else 1,
-                        end=token.end if hasattr(token, "end") else token.start + len(token.text),
+                        number=token_num + 1,
+                        start=getattr(token, "start", 1),
+                        end=getattr(token, "end", token.start + len(token.text)),
                         token=token.text if token.text else 1,
                         lemma=token.lemma,
                         pos=token.pos,
                         feats=token.feats,
                     )
+                    for token_num, token in enumerate(sentence.tokens)
+                ]
+                Token.objects.bulk_create(tokens)
 
     class Meta:
         ordering = ["-created_on"]
@@ -412,9 +410,9 @@ class Sentence(models.Model):
 
         for correction in corrections:
             corrected_text = (
-                    corrected_text[: correction["start"]]
-                    + correction["replacement"]
-                    + corrected_text[correction["end"]:]
+                corrected_text[: correction["start"]]
+                + correction["replacement"]
+                + corrected_text[correction["end"] :]
             )
 
         return corrected_text
