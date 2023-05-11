@@ -4,20 +4,15 @@
 
 {% block content %}
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-9">
-        {% for article in articles %}
-          <div id="article{{ article.number }}" class="my-5">
-            <div class="card border-1">
-              <div class="card-body">
-                <h2 class="card-title text-center mb-3" style="text-align: left">Очень важная новость!!</h2>
-                <p class="card-text">{{ article.text_rus|safe }}</p>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+{% for article in articles %}
+<div id="section{{ loop.index }}">
+  <h2>{{ article.date }}</h2>
+  <div class="card border-1">
+    <div class="card-body">
+      {{ article.text_rus|safe }}
     </div>
   </div>
+</div>
+{% endfor %}
+
 {% endblock content %}
