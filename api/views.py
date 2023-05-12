@@ -2,6 +2,7 @@ import datetime
 import json
 import uuid
 
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect
@@ -27,6 +28,7 @@ def get_word_positions(sentence, words, word_number):
     return start_position, end_position
 
 
+@permission_required("corpus.add_annotation", raise_exception=True)
 def auto_annotate(request):
     if request.method == "POST":
         original = request.POST["original_sentence"]
@@ -123,6 +125,7 @@ def get_alt_sentence_annotations(request, sentence_id):
         return JsonResponse(data, safe=False)
 
 
+@permission_required("corpus.add_annotation", raise_exception=True)
 def create_annotation(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -137,6 +140,7 @@ def create_annotation(request):
         return JsonResponse({"id": annotation.id})
 
 
+@permission_required("corpus.change_annotation", raise_exception=True)
 def update_annotation(request):
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -147,6 +151,7 @@ def update_annotation(request):
         return JsonResponse({"id": annotation.id})
 
 
+@permission_required("corpus.delete_annotation", raise_exception=True)
 def delete_annotation(request):
     if request.method == "DELETE":
         annotation_id = json.loads(request.body)["guid"]

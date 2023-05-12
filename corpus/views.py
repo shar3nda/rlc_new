@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -144,7 +144,6 @@ def help(request):
     return render(request, "help.html")
 
 
-@login_required
 # Представление для аннотирования документа
 def annotate(request, document_id):
     doc = Document.objects.get(id=document_id)
@@ -155,7 +154,7 @@ def annotate(request, document_id):
     return render(request, "annotate.html", context)
 
 
-@login_required
+@permission_required("annotator.change_document")
 def add_document(request):
     if request.method == "POST":
         form = DocumentForm(request.POST)
@@ -211,7 +210,7 @@ def add_document(request):
     )
 
 
-@login_required
+@permission_required("corpus.change_document")
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     if request.method == "POST":

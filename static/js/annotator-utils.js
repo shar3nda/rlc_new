@@ -177,83 +177,96 @@ function submitCorrectedSentence(sentenceId) {
   });
 }
 
-function initRecogito() {
-  // Get all the elements with the class 'sentence'
-  const sentences = document.querySelectorAll('.sentence');
 
+function initRecogito(canAnnotate, isLoggedIn) {
+  console.log(`canAnnotate: ${canAnnotate}, isLoggedIn: ${isLoggedIn}`);
+  if (!isLoggedIn) {
+    setupRecogito(canAnnotate);
+    return;
+  }
   // Fetch user info from /api/get_user_info/ using AJAX
   $.ajax({
     url: '/api/get_user_info/',
     type: 'GET',
     success: function (data) {
-      // Initialize Recogito for each sentence with the fetched user info
-      sentences.forEach((sentence) => {
-        // Create a unique ID for each sentence element
-        // Initialize a RecogitoJS instance for the sentence element
-        const r = Recogito.init({
-          allowEmpty: true,
-          content: document.getElementById(sentence.id), readOnly: false,
-          showTooltip: true,
-          selectors: [{type: 'TextQuoteSelector'}],
-          locale: 'ru',
-          widgets: [
-            CheckboxWidget,
-            'COMMENT',
-            {
-              widget: 'TAG',
-              vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
-            },
-          ],
-          mode: 'html',
-          formatter: ColorFormatter
-        });
-
-        // Set user info for the Recogito instance
-        r.setAuthInfo(data);
-
-        if (sentence.dataset.alt === 'true') {
-          r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
-        } else {
-          r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
-        }
-
-        r.on('createAnnotation', async (annotation, overrideId) => {
-          // TODO проверять, что аннотации не залезают друг на друга
-          // Посылаем POST-запрос на сервер для сохранения аннотации
-          await createAnnotation(
-            sentence.dataset.documentId,
-            sentence.dataset.sentenceId,
-            sentence.dataset.userId,
-            annotation.id,
-            sentence.dataset.alt,
-            annotation
-          );
-          console.log('Stored annotation:', annotation);
-          refreshCorrections();
-        });
-        r.on('updateAnnotation', async (annotation, previous) => {
-          // Посылаем POST-запрос на сервер для сохранения аннотации
-          await updateAnnotation(
-            sentence.dataset.documentId,
-            sentence.dataset.sentenceId,
-            sentence.dataset.userId,
-            annotation.id,
-            sentence.dataset.alt,
-            annotation
-          );
-          console.log('Stored annotation:', annotation);
-          refreshCorrections();
-        });
-        r.on('deleteAnnotation', async (annotation) => {
-          // Посылаем POST-запрос на сервер для удаления аннотации
-          await deleteAnnotation(annotation.id);
-          console.log('Deleted annotation:', annotation);
-          refreshCorrections();
-        });
-      });
+      setupRecogito(canAnnotate, data);
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.error('Error fetching user info:', textStatus, errorThrown);
+      setupRecogito(canAnnotate);
     }
+  });
+}
+
+function setupRecogito(canAnnotate, data = null) {
+  // Get all the elements with the class 'sentence'
+  const sentences = document.querySelectorAll('.sentence');
+
+  // Initialize Recogito for each sentence with the fetched user info
+  sentences.forEach((sentence) => {
+    // Create a unique ID for each sentence element
+    // Initialize a RecogitoJS instance for the sentence element
+    const r = Recogito.init({
+      allowEmpty: true,
+      content: document.getElementById(sentence.id),
+      readOnly: !canAnnotate,
+      showTooltip: true,
+      selectors: [{type: 'TextQuoteSelector'}],
+      locale: 'ru',
+      widgets: [
+        CheckboxWidget,
+        'COMMENT',
+        {
+          widget: 'TAG',
+          vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
+        },
+      ],
+      mode: 'html',
+      formatter: ColorFormatter
+    });
+
+    // Set user info for the Recogito instance
+    if (data) {
+      r.setUserInfo(data);
+    }
+
+    if (sentence.dataset.alt === 'true') {
+      r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
+    } else {
+      r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
+    }
+
+    r.on('createAnnotation', async (annotation, overrideId) => {
+      // TODO проверять, что аннотации не залезают друг на друга
+      // Посылаем POST-запрос на сервер для сохранения аннотации
+      await createAnnotation(
+        sentence.dataset.documentId,
+        sentence.dataset.sentenceId,
+        sentence.dataset.userId,
+        annotation.id,
+        sentence.dataset.alt,
+        annotation
+      );
+      console.log('Stored annotation:', annotation);
+      refreshCorrections();
+    });
+    r.on('updateAnnotation', async (annotation, previous) => {
+      // Посылаем POST-запрос на сервер для сохранения аннотации
+      await updateAnnotation(
+        sentence.dataset.documentId,
+        sentence.dataset.sentenceId,
+        sentence.dataset.userId,
+        annotation.id,
+        sentence.dataset.alt,
+        annotation
+      );
+      console.log('Stored annotation:', annotation);
+      refreshCorrections();
+    });
+    r.on('deleteAnnotation', async (annotation) => {
+      // Посылаем POST-запрос на сервер для удаления аннотации
+      await deleteAnnotation(annotation.id);
+      console.log('Deleted annotation:', annotation);
+      refreshCorrections();
+    });
   });
 }

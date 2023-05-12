@@ -9,17 +9,18 @@
       <div class="col-md-8">
         <div class="card mb-3">
           <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-
-              <div class="form-group mb-0">
-                <label for="document-status" class="me-2">{% trans "Document status" %}</label>
-                <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
-                  <option value="0" {% if document.status == 0 %}selected{% endif %}>{% trans "Not annotated" %}</option>
-                  <option value="1" {% if document.status == 1 %}selected{% endif %}>{% trans "Annotated" %}</option>
-                  <option value="2" {% if document.status == 2 %}selected{% endif %}>{% trans "Checked" %}</option>
-                </select>
+            {% if can_change_document %}
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-group mb-0">
+                  <label for="document-status" class="me-2">{% trans "Document status" %}</label>
+                  <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
+                    <option value="0" {% if document.status == 0 %}selected{% endif %}>{% trans "Not annotated" %}</option>
+                    <option value="1" {% if document.status == 1 %}selected{% endif %}>{% trans "Annotated" %}</option>
+                    <option value="2" {% if document.status == 2 %}selected{% endif %}>{% trans "Checked" %}</option>
+                  </select>
+                </div>
               </div>
-            </div>
+            {% endif %}
             {% include 'document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
               {% include 'sentence_card.html' with sentence=sentence %}
@@ -90,6 +91,11 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', initRecogito);
+    document.addEventListener('DOMContentLoaded', function () {
+      initRecogito(
+        {% if perms.corpus.add_annotation %}true{% else %}false{% endif %},
+        {% if user.is_authenticated %}true{% else %}false{% endif %}
+      );
+    });
   </script>
 {% endblock %}
