@@ -728,7 +728,7 @@ msgstr "Предложения по языкам"
 
 #: .\templates\statistics.html:165
 msgid "Author statistics"
-msgstr "Поиск автора"
+msgstr "Статистика по авторам"
 
 #: .\templates\statistics.html:171
 msgid "Total authors"
