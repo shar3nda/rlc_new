@@ -14,11 +14,11 @@
             <i class="fa fa-plus"></i>
             {% trans "Create document" %}
           </a>
-          <a href="{% url 'export_documents' %}?{{ request.GET.urlencode }}" class="btn btn-secondary mb-4">
-            <i class="fa fa-file-export"></i>
-            {% trans "Export Found Documents" %}
-          </a>
         {% endif %}
+        <a href="{% url 'export_documents' %}?{{ request.GET.urlencode }}" class="btn btn-secondary mb-4">
+          <i class="fa fa-file-export"></i>
+          {% trans "Export Found Documents" %}
+        </a>
         <form method="get" class="mb-4">
           <div class="row">
             <div class="col-md-4">
