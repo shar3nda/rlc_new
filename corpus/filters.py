@@ -1,10 +1,14 @@
-from django.contrib.auth.models import User
 import django_filters
-from .models import Document, Author, Annotation
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+
+from .models import Document, Author
 
 
 class DocumentFilter(django_filters.FilterSet):
+    def body_search(self, queryset, name, value):
+        return queryset.filter(body__search=value)
+
     author = django_filters.ChoiceFilter(
         field_name="author",
         choices=Author.objects.filter(favorite=True)
@@ -40,9 +44,7 @@ class DocumentFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(
         field_name="title", lookup_expr="icontains", label=_("Title")
     )
-    body = django_filters.CharFilter(
-        field_name="body", lookup_expr="icontains", label=_("Text")
-    )
+    body = django_filters.CharFilter(method="body_search", label=_("Text"))
     author__name = django_filters.CharFilter(
         field_name="author__name", lookup_expr="icontains", label=_("Author")
     )

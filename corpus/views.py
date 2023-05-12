@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -68,7 +68,9 @@ def statistics(request):
 
     # Статистика по документам
     languages_counts = defaultdict(int)
-    gender_counts = defaultdict(int) # количество текстов с женским авторством, НЕ количество женщин авторов
+    gender_counts = defaultdict(
+        int
+    )  # количество текстов с женским авторством, НЕ количество женщин авторов
     lang_background_counts = defaultdict(int)
     genre_counts = defaultdict(int)
     for doc in Document.objects.all():
@@ -101,39 +103,45 @@ def statistics(request):
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
     # Render the chart
-    table_data = list(zip(languages_counts.keys(), languages_counts.values(), lang_sent_counts.values()))
+    table_data = list(
+        zip(
+            languages_counts.keys(),
+            languages_counts.values(),
+            lang_sent_counts.values(),
+        )
+    )
     print(table_data)
-    context = {'labels': labels,
-               'text_types': text_types,
-               'colors': colors,
-               'texts_count': texts_count,
-               'languages_labels': list(languages_counts.keys()),
-               'languages_counts': list(languages_counts.values()),
-               'gender_labels': list(gender_counts.keys()),
-               'gender_counts': list(gender_counts.values()),
-               'lang_background_labels': list(lang_background_counts.keys()),
-               'lang_background_counts': list(lang_background_counts.values()),
-               'genre_labels': list(genre_counts.keys()),
-               'genre_counts': list(genre_counts.values()),
-               'total_sentences': total_sentences,
-               'lang_sent_labels': list(lang_sent_counts.keys()),
-               'lang_sent_counts': list(lang_sent_counts.values()),
-               'total_authors': total_authors,
-               'total_fav_authors': total_fav_authors,
-               'auth_gender_labels': list(auth_gender.keys()),
-               'auth_gender_counts': list(auth_gender.values()),
-               'auth_lang_bg_labels': list(auth_lang_bg_counts.keys()),
-               'auth_lang_bg_counts': list(auth_lang_bg_counts.values()),
-               'auth_lang_labels': list(auth_lang_counts.keys()),
-               'auth_lang_counts': list(auth_lang_counts.values()),
-               'table_data': table_data,
-               }
-    return render(request, 'statistics.html', context)
+    context = {
+        "labels": labels,
+        "text_types": text_types,
+        "colors": colors,
+        "texts_count": texts_count,
+        "languages_labels": list(languages_counts.keys()),
+        "languages_counts": list(languages_counts.values()),
+        "gender_labels": list(gender_counts.keys()),
+        "gender_counts": list(gender_counts.values()),
+        "lang_background_labels": list(lang_background_counts.keys()),
+        "lang_background_counts": list(lang_background_counts.values()),
+        "genre_labels": list(genre_counts.keys()),
+        "genre_counts": list(genre_counts.values()),
+        "total_sentences": total_sentences,
+        "lang_sent_labels": list(lang_sent_counts.keys()),
+        "lang_sent_counts": list(lang_sent_counts.values()),
+        "total_authors": total_authors,
+        "total_fav_authors": total_fav_authors,
+        "auth_gender_labels": list(auth_gender.keys()),
+        "auth_gender_counts": list(auth_gender.values()),
+        "auth_lang_bg_labels": list(auth_lang_bg_counts.keys()),
+        "auth_lang_bg_counts": list(auth_lang_bg_counts.values()),
+        "auth_lang_labels": list(auth_lang_counts.keys()),
+        "auth_lang_counts": list(auth_lang_counts.values()),
+        "table_data": table_data,
+    }
+    return render(request, "statistics.html", context)
 
 
 def help(request):
-
-    return render(request, 'help.html')
+    return render(request, "help.html")
 
 
 @login_required
@@ -308,3 +316,12 @@ def update_document_status(request, document_id):
 @login_required
 def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
+
+
+def search(request):
+    query = request.GET.get("q")
+    if query:
+        results = Document.objects.filter(body__search=query)
+    else:
+        results = []
+    return render(request, "search.html", {"results": results, "query": query})

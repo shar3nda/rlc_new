@@ -1,5 +1,8 @@
+import re
+
 from django import template
 from django.http import QueryDict
+from urllib.parse import urlencode
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -12,7 +15,9 @@ def highlight_search(text, search_text):
         return text
 
     search_text = escape(search_text)
-    highlighted = text.replace(search_text, f"<mark>{search_text}</mark>")
+    highlighted = re.sub(
+        f"({search_text})", f"<mark>\\1</mark>", text, flags=re.IGNORECASE
+    )
     return mark_safe(highlighted)
 
 
@@ -23,6 +28,22 @@ def update_page_number(query_params, page_number):
     return query_dict.urlencode()
 
 
-@register.filter(name='zip')
+@register.filter(name="zip")
 def zip_lists(a, b):
     return zip(a, b)
+
+
+@register.inclusion_tag('paginator.html')
+def paginator(page_obj, request):
+    query_dict = request.GET.copy()
+    if 'page' in query_dict:
+        query_dict.pop('page')
+
+    base_url = request.path
+    query_string = urlencode(query_dict)
+
+    return {
+        'page_obj': page_obj,
+        'base_url': base_url,
+        'query_string': query_string,
+    }
