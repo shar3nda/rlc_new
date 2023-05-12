@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:15.3-alpine
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+  web:
+    env_file:
+      - .env
+    build: .
+    command: gunicorn rlc_new.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - web
