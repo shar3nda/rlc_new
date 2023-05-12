@@ -132,7 +132,7 @@ msgstr "Статус"
 
 #: .\corpus\forms.py:69
 msgid "Add to favorites"
-msgstr "Добаавить в сохраненные"
+msgstr "Добавить в сохраненные"
 
 #: .\corpus\forms.py:76
 msgid "Saved authors"
@@ -692,7 +692,7 @@ msgstr "Статистика по родным языкам"
 
 #: .\templates\statistics.html:77
 msgid "Dominant Language"
-msgstr "Родной язык"
+msgstr "Доминантный язык"
 
 #: .\templates\statistics.html:78
 msgid "Texts Count"
@@ -772,7 +772,7 @@ msgstr " \"Предложения\" "
 
 #: .\templates\statistics.html:455
 msgid " \"Authors\" "
-msgstr " \"Аавторы\" "
+msgstr " \"Авторы\" "
 
 #~ msgid "Programm"
 #~ msgstr "Программа"
