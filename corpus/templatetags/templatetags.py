@@ -2,6 +2,7 @@ import re
 
 from django import template
 from django.http import QueryDict
+from urllib.parse import urlencode
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -30,3 +31,19 @@ def update_page_number(query_params, page_number):
 @register.filter(name="zip")
 def zip_lists(a, b):
     return zip(a, b)
+
+
+@register.inclusion_tag('paginator.html')
+def paginator(page_obj, request):
+    query_dict = request.GET.copy()
+    if 'page' in query_dict:
+        query_dict.pop('page')
+
+    base_url = request.path
+    query_string = urlencode(query_dict)
+
+    return {
+        'page_obj': page_obj,
+        'base_url': base_url,
+        'query_string': query_string,
+    }

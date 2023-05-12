@@ -13,7 +13,9 @@ from corpus.models import Document, Author
 
 users = User.objects.all()
 authors = Author.objects.all()
-num_documents = 50
+subcorpuses = Document.SubcorpusChoices.values
+lang_levels = Document.LanguageLevelChoices.values
+statuses = Document.StatusChoices.values
 
 # load docs from backup/annotator_document.json
 with open("../backup/annotator_document.json", "r") as f:
@@ -22,20 +24,14 @@ with open("../backup/annotator_document.json", "r") as f:
     docs = [doc for doc in docs if doc["body"] != "loaded from xml"]
 
 for doc in tqdm(docs, desc="Creating documents"):
-    if doc["body"] == "loaded from xml":
-        continue
     Document.objects.create(
         title=doc["title"],
         user=random.choice(users),
-        author=Author.objects.create(
-            name=doc["author"],
-            gender=doc["gender"],
-            language_background=doc["language_background"],
-        ),
+        author=random.choice(authors),
         date=random.choice([2022, 2023]),
         genre=doc["genre"],
-        subcorpus=doc["subcorpus"],
-        language_level=doc["level"],
-        status=2 if doc["checked"] else (1 if doc["annotated"] else 0),
+        subcorpus=random.choice(subcorpuses),
+        language_level=random.choice(lang_levels),
+        status=random.choice(statuses),
         body=doc["body"],
     )

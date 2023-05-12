@@ -44,7 +44,7 @@ class DocumentFilter(django_filters.FilterSet):
     title = django_filters.CharFilter(
         field_name="title", lookup_expr="icontains", label=_("Title")
     )
-    body = django_filters.CharFilter(method="body_search", label=_("Body search"))
+    body = django_filters.CharFilter(method="body_search", label=_("Text"))
     author__name = django_filters.CharFilter(
         field_name="author__name", lookup_expr="icontains", label=_("Author")
     )
