@@ -226,7 +226,7 @@ function setupRecogito(canAnnotate, data = null) {
 
     // Set user info for the Recogito instance
     if (data) {
-      r.setUserInfo(data);
+      r.setAuthInfo(data);
     }
 
     if (sentence.dataset.alt === 'true') {
