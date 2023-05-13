@@ -9,7 +9,7 @@
       <div class="col-md-8">
         <div class="card mb-3">
           <div class="card-body">
-            {% if can_change_document %}
+            {% if perms.corpus.change_document %}
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="form-group mb-0">
                   <label for="document-status" class="me-2">{% trans "Document status" %}</label>
