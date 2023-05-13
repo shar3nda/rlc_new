@@ -35,6 +35,7 @@ class DocumentForm(forms.ModelForm):
             "time_limit": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "oral": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "language_level": forms.Select(attrs={"class": "form-select"}),
+            "user": forms.HiddenInput(),
         }
 
 

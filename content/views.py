@@ -38,4 +38,4 @@ def article_create_view(request):
 def delete_article(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
-    return redirect('news')
+    return redirect("news")

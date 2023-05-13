@@ -170,6 +170,7 @@ def add_document(request):
             ):
                 author = author_form.save()
                 document = form.save(commit=False)
+                document.user = request.user
                 document.author = author
                 document.save()
             elif (
@@ -177,6 +178,7 @@ def add_document(request):
                 and favorite_author_form.is_valid()
             ):
                 document = form.save(commit=False)
+                document.user = request.user
                 document.author = favorite_author_form.cleaned_data["selected_author"]
                 document.save()
             else:
@@ -195,7 +197,7 @@ def add_document(request):
             )
             return redirect("add_document")
     else:
-        form = DocumentForm()
+        form = DocumentForm(initial={"user": request.user.id})
         author_form = NewAuthorForm(prefix="author")
         favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
 
