@@ -3,16 +3,29 @@
 {% load i18n %}
 
 {% block content %}
+  <a href="{% url 'create_article' %}" class="btn btn-primary btn-lg active mb-4" role="button" aria-pressed="true">
+    {% trans "Add article" %}
+  </a>
 
-{% for article in articles %}
-<div id="section{{ loop.index }}">
-  <h2>{{ article.date }}</h2>
-  <div class="card border-1">
-    <div class="card-body">
-      {{ article.text_rus|safe }}
+  {% for article in articles %}
+    <div id="section{{ forloop.counter }}" class="mb-5">
+      <h2>{{ article.date }}</h2>
+      <div class="card border-1">
+        <div class="card-body">
+          {% if LANGUAGE_CODE == 'ru' %}
+            {{ article.text_rus|safe }}
+          {% else %}
+            {{ article.text_eng|safe }}
+          {% endif %}
+          <br>
+          {% if perms.content.delete_article %}
+            <a href="{% url 'delete_article' pk=article.pk %}" class="btn btn-danger mt-3" role="button" aria-pressed="true">
+              {% trans "Delete article" %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-{% endfor %}
+  {% endfor %}
 
 {% endblock content %}
