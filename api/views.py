@@ -124,42 +124,6 @@ def auto_annotate(request):
     return JsonResponse({"annotations": annotations})
 
 
-def get_annotations(request):
-    """
-    This API endpoint returns all annotations in the database.
-
-    Method: GET
-    URL: /api/annotations/
-
-    Response: 
-    {
-        "annotations": [{annotation1}, {annotation2}, ...]
-    }
-    """
-    if request.method == "GET":
-        annotations = Annotation.objects.all()
-        data = {"annotations": list(annotations.values())}
-        return JsonResponse(data)
-
-
-def get_documents(request):
-    """
-    This API endpoint returns all documents in the database.
-
-    Method: GET
-    URL: /api/documents/
-
-    Response:
-    {
-        "documents": [{document1}, {document2}, ...]
-    }
-    """
-    if request.method == "GET":
-        documents = Document.objects.all()
-        data = {"documents": list(documents.values())}
-        return JsonResponse(data)
-
-
 def get_sentence_annotations(request, sentence_id):
     """
     This API endpoint returns all annotations for a specific sentence.
