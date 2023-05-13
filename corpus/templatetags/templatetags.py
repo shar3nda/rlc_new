@@ -33,17 +33,17 @@ def zip_lists(a, b):
     return zip(a, b)
 
 
-@register.inclusion_tag('paginator.html')
+@register.inclusion_tag("paginator.html")
 def paginator(page_obj, request):
     query_dict = request.GET.copy()
-    if 'page' in query_dict:
-        query_dict.pop('page')
+    if "page" in query_dict:
+        query_dict.pop("page")
 
     base_url = request.path
     query_string = urlencode(query_dict)
 
     return {
-        'page_obj': page_obj,
-        'base_url': base_url,
-        'query_string': query_string,
+        "page_obj": page_obj,
+        "base_url": base_url,
+        "query_string": query_string,
     }

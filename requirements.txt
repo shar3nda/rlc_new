@@ -9,3 +9,4 @@ Faker
 tqdm
 Levenshtein
 nltk
+gunicorn
