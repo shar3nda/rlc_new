@@ -1,7 +1,7 @@
 from django import forms
-
-from .models import Document, Author
 from django.utils.translation import gettext_lazy as _
+
+from .models import Document, Author, Token
 
 
 class DocumentForm(forms.ModelForm):
@@ -77,3 +77,21 @@ class FavoriteAuthorForm(forms.Form):
         label=_("Saved authors"),
         widget=forms.Select(attrs={"class": "form-select"}),
     )
+
+
+class TokenSearchForm(forms.ModelForm):
+    class Meta:
+        model = Token
+        fields = ["token", "lemma"]
+        widgets = {
+            "token": forms.TextInput(
+                attrs={"class": "form-control", "maxlength": "200"}
+            ),
+            "lemma": forms.TextInput(
+                attrs={"class": "form-control", "maxlength": "200"}
+            ),
+        }
+        labels = {
+            "token": _("Token"),
+            "lemma": _("Lemma"),
+        }

@@ -13,7 +13,7 @@ from django.views import generic
 from django.db.models import Count
 
 from .filters import DocumentFilter
-from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
+from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchForm
 from .models import Document, Sentence, Author
 
 
@@ -320,9 +320,17 @@ def user_profile(request):
 
 
 def search(request):
-    query = request.GET.get("q")
-    if query:
-        results = Document.objects.filter(body__search=query)
-    else:
-        results = []
-    return render(request, "search.html", {"results": results, "query": query})
+    form = TokenSearchForm(request.GET)
+    results = Document.objects.none()  # No results initially
+    if form.is_valid() and form.cleaned_data:
+        filter_args = {
+            f"token__{k}": v for k, v in form.cleaned_data.items() if v is not None
+        }
+        results = Document.objects.filter(**filter_args).distinct()
+
+    paginator = Paginator(results, 10)  # Show 10 results per page
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "lexgram_search.html", {"form": form, "page_obj": page_obj})

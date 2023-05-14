@@ -125,6 +125,59 @@ class Author(models.Model):
         }
 
 
+def get_feat(token_feats, feat_key, expected_value=None):
+    if token_feats is None:
+        return None
+    value = token_feats.get(feat_key)
+    if value is None:
+        return None
+    if expected_value is not None:
+        return value == expected_value
+    return value
+
+
+def make_sentence(self, sentence, sentence_num):
+    text = sentence.text
+    markup = [
+        f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>'
+        for token in sentence.tokens
+    ]
+    markup = " ".join(markup)
+    new_sentence = Sentence.objects.create(
+        document=self, text=text, markup=markup, number=sentence_num
+    )
+
+    tokens = [
+        Token(
+            document=self,
+            sentence=new_sentence,
+            number=token_num + 1,
+            start=getattr(token, "start", 1),
+            end=getattr(token, "end", token.start + len(token.text)),
+            token=token.text if token.text else 1,
+            lemma=token.lemma,
+            pos=token.pos,
+            animate=get_feat(token.feats, "Animacy", "Anim"),
+            perfect=get_feat(token.feats, "Aspect", "Perf"),
+            gram_case=get_feat(token.feats, "Case"),
+            degree=get_feat(token.feats, "Degree"),
+            foreign=get_feat(token.feats, "Foreign", "Yes"),
+            gender=get_feat(token.feats, "Gender"),
+            hyph=get_feat(token.feats, "Hyph", "Yes"),
+            mood=get_feat(token.feats, "Mood"),
+            plural=get_feat(token.feats, "Number", "Plur"),
+            person=get_feat(token.feats, "Person"),
+            negative=get_feat(token.feats, "Polarity", "Neg"),
+            tense=get_feat(token.feats, "Tense"),
+            short=get_feat(token.feats, "Variant", "Short"),
+            verb_form=get_feat(token.feats, "VerbForm"),
+            voice=get_feat(token.feats, "Voice"),
+        )
+        for token_num, token in enumerate(sentence.tokens)
+    ]
+    Token.objects.bulk_create(tokens)
+
+
 class Document(models.Model):
     """
     A document is a text that can be annotated.
@@ -314,31 +367,7 @@ class Document(models.Model):
 
             # create Sentence objects
             for sentence_num, sentence in enumerate(doc.sents):
-                text = sentence.text
-                markup = [
-                    f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>'
-                    for token in sentence.tokens
-                ]
-                markup = " ".join(markup)
-                new_sentence = Sentence.objects.create(
-                    document=self, text=text, markup=markup, number=sentence_num
-                )
-
-                tokens = [
-                    Token(
-                        document=self,
-                        sentence=new_sentence,
-                        number=token_num + 1,
-                        start=getattr(token, "start", 1),
-                        end=getattr(token, "end", token.start + len(token.text)),
-                        token=token.text if token.text else 1,
-                        lemma=token.lemma,
-                        pos=token.pos,
-                        feats=token.feats,
-                    )
-                    for token_num, token in enumerate(sentence.tokens)
-                ]
-                Token.objects.bulk_create(tokens)
+                make_sentence(self, sentence, sentence_num)
 
     class Meta:
         ordering = ["-created_on"]
@@ -472,28 +501,129 @@ class Annotation(models.Model):
 
 
 class Token(models.Model):
-    """Хранит информацию о токенах.
+    class POS(models.TextChoices):
+        ADJ = "ADJ", _("ADJ")
+        ADP = "ADP", _("ADP")
+        ADV = "ADV", _("ADV")
+        AUX = "AUX", _("AUX")
+        CCONJ = "CCONJ", _("CCONJ")
+        DET = "DET", _("DET")
+        INTJ = "INTJ", _("INTJ")
+        NOUN = "NOUN", _("NOUN")
+        NUM = "NUM", _("NUM")
+        PART = "PART", _("PART")
+        PRON = "PRON", _("PRON")
+        PROPN = "PROPN", _("PROPN")
+        PUNCT = "PUNCT", _("PUNCT")
+        SCONJ = "SCONJ", _("SCONJ")
+        SYM = "SYM", _("SYM")
+        VERB = "VERB", _("VERB")
+        X = "X", _("X")
 
-    Поля токенов:
-    token - само слово
-    document - номер текста, к которому относится слово
-    sentence - номер предложения, к которому относится слово
-    start - начальная позиция слова в предложении
-    end - конечная позиция слова в предложении
-    number - номер слова в предложении
-    pos - часть речи
-    feats - грамматические характеристики
-    """
+    class CaseChoices(models.TextChoices):
+        ACC = "Acc", _("Acc")
+        DAT = "Dat", _("Dat")
+        GEN = "Gen", _("Gen")
+        INS = "Ins", _("Ins")
+        LOC = "Loc", _("Loc")
+        NOM = "Nom", _("Nom")
+        PAR = "Par", _("Par")
+        VOC = "Voc", _("Voc")
+
+    class DegreeChoices(models.TextChoices):
+        CMP = "Cmp", _("Cmp")
+        POS = "Pos", _("Pos")
+        SUP = "Sup", _("Sup")
+
+    class GenderChoices(models.TextChoices):
+        FEM = "Fem", _("Fem")
+        MASC = "Masc", _("Masc")
+        NEUT = "Neut", _("Neut")
+
+    class MoodChoices(models.TextChoices):
+        CND = "Cnd", _("Cnd")
+        IMP = "Imp", _("Imp")
+        IND = "Ind", _("Ind")
+
+    class PersonChoices(models.TextChoices):
+        FIRST = "1", _("1")
+        SECOND = "2", _("2")
+        THIRD = "3", _("3")
+
+    class TenseChoices(models.TextChoices):
+        FUT = "Fut", _("Fut")
+        PAST = "Past", _("Past")
+        PRES = "Pres", _("Pres")
+
+    class VerbFormChoices(models.TextChoices):
+        CONV = "Conv", _("Conv")
+        FIN = "Fin", _("Fin")
+        INF = "Inf", _("Inf")
+        PART = "Part", _("Part")
+
+    class VoiceChoices(models.TextChoices):
+        ACT = "Act", _("Act")
+        MID = "Mid", _("Mid")
+        PASS = "Pass", _("Pass")
 
     token = models.CharField(max_length=200, db_index=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    start = models.IntegerField()
-    end = models.IntegerField()
-    number = models.IntegerField()
-    pos = models.CharField(max_length=10, db_index=True, null=True)
-    feats = models.JSONField(db_index=True, null=True)
-    lemma = models.CharField(max_length=200, db_index=True, null=True)
+    start = models.IntegerField(null=True, blank=True)
+    end = models.IntegerField(null=True, blank=True)
+    number = models.IntegerField(null=True, blank=True)
+    pos = models.CharField(
+        max_length=10, choices=POS.choices, null=True, blank=True, db_index=True
+    )
+    lemma = models.CharField(db_index=True, null=True, blank=True)
+
+    animate = models.BooleanField(null=True, blank=True)
+    perfect = models.BooleanField(null=True, blank=True)
+    gram_case = models.CharField(
+        max_length=3, choices=CaseChoices.choices, null=True, blank=True, db_index=True
+    )
+    degree = models.CharField(
+        max_length=3,
+        choices=DegreeChoices.choices,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+    foreign = models.BooleanField(null=True, blank=True)
+    gender = models.CharField(
+        max_length=4,
+        choices=GenderChoices.choices,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+    hyph = models.BooleanField(null=True, blank=True)
+    mood = models.CharField(
+        max_length=3, choices=MoodChoices.choices, null=True, blank=True, db_index=True
+    )
+    plural = models.BooleanField(null=True, blank=True)
+    person = models.CharField(
+        max_length=1,
+        choices=PersonChoices.choices,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+    negative = models.BooleanField(null=True, blank=True)
+    tense = models.CharField(
+        max_length=4, choices=TenseChoices.choices, null=True, blank=True, db_index=True
+    )
+    short = models.BooleanField(null=True, blank=True)
+    verb_form = models.CharField(
+        max_length=4,
+        choices=VerbFormChoices.choices,
+        null=True,
+        blank=True,
+        db_index=True,
+    )
+    voice = models.CharField(
+        max_length=4, choices=VoiceChoices.choices, null=True, blank=True, db_index=True
+    )
 
     def __str__(self):
         return self.token

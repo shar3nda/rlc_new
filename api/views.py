@@ -164,7 +164,7 @@ def create_annotation(request):
     Method: POST
     URL: /api/annotation/
 
-    Request Body: 
+    Request Body:
     {
         "sentence": <sentence_id>,
         "document": <document_id>,
@@ -174,7 +174,7 @@ def create_annotation(request):
         "body": <json_data>,
     }
 
-    Response: 
+    Response:
     {
         "id": <annotation_id>
     }
@@ -206,7 +206,7 @@ def update_annotation(request):
         "body": <json_data>,
     }
 
-    Response: 
+    Response:
     {
         "id": <annotation_id>
     }
@@ -218,6 +218,7 @@ def update_annotation(request):
         annotation.json = data["body"]
         annotation.save()
         return JsonResponse({"id": annotation.id})
+
 
 @permission_required("corpus.delete_annotation", raise_exception=True)
 def delete_annotation(request):
@@ -232,7 +233,7 @@ def delete_annotation(request):
         "guid": <guid>
     }
 
-    Response: 
+    Response:
     {
         "id": <annotation_id>
     }
