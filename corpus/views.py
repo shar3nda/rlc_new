@@ -319,18 +319,32 @@ def search(request):
 
     if form.is_valid() and form.cleaned_data:
         # Define the fields to be filtered on and their corresponding lookup types
-        filter_fields = {
-            'token': 'token__token',
-            'lemma': 'token__lemma',
-            'pos': 'token__pos',
-            # Add more fields here...
-        }
+        filter_fields = (
+            "token",
+            "lemma",
+            "pos",
+            "animacy",
+            "aspect",
+            "case",
+            "degree",
+            "foreign",
+            "gender",
+            "hyph",
+            "mood",
+            "gram_number",
+            "person",
+            "polarity",
+            "tense",
+            "variant",
+            "verb_form",
+            "voice",
+        )
 
         # Create Q objects for each filter, if a value was provided
         queries = [
-            Q(**{filter_fields[field]: value})
-            for field, value in form.cleaned_data.items()
-            if value and field in filter_fields
+            Q(**{f'token__{field}': form.cleaned_data[field]})
+            for field in filter_fields
+            if field in form.cleaned_data and form.cleaned_data[field]
         ]
 
         # Combine the Q objects with the AND operator
