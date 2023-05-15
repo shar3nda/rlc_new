@@ -82,7 +82,11 @@ class FavoriteAuthorForm(forms.Form):
 class TokenSearchForm(forms.ModelForm):
     class Meta:
         model = Token
-        fields = ["token", "lemma"]
+        fields = [
+            "token",
+            "lemma",
+            "pos",
+        ]
         widgets = {
             "token": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
@@ -90,8 +94,16 @@ class TokenSearchForm(forms.ModelForm):
             "lemma": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
             ),
+            "pos": forms.Select(
+                attrs={"class": "form-select", "maxlength": "200"}
+            ),
         }
         labels = {
             "token": _("Token"),
             "lemma": _("Lemma"),
+            "pos": _("POS"),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(TokenSearchForm, self).__init__(*args, **kwargs)
+        self.fields['token'].required = False

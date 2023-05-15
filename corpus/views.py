@@ -3,14 +3,12 @@ from collections import defaultdict
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import UserCreationForm
-from django.core import serializers
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from django.db.models import Count
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchForm
@@ -296,12 +294,6 @@ def delete_document(request, document_id):
     return redirect("documents")
 
 
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy("login")
-    template_name = "registration/register.html"
-
-
 def update_document_status(request, document_id):
     if request.method == "POST":
         status = request.POST.get("status")
@@ -319,18 +311,41 @@ def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
 
 
+from django.db.models import Q
+
 def search(request):
     form = TokenSearchForm(request.GET)
     results = Document.objects.none()  # No results initially
+
     if form.is_valid() and form.cleaned_data:
-        filter_args = {
-            f"token__{k}": v for k, v in form.cleaned_data.items() if v is not None
+        # Define the fields to be filtered on and their corresponding lookup types
+        filter_fields = {
+            'token': 'token__token',
+            'lemma': 'token__lemma',
+            'pos': 'token__pos',
+            # Add more fields here...
         }
-        results = Document.objects.filter(**filter_args).distinct()
+
+        # Create Q objects for each filter, if a value was provided
+        queries = [
+            Q(**{filter_fields[field]: value})
+            for field, value in form.cleaned_data.items()
+            if value and field in filter_fields
+        ]
+
+        # Combine the Q objects with the AND operator
+        if queries:
+            query = queries.pop()
+            for item in queries:
+                query &= item
+
+            # Apply the filter
+            results = Document.objects.filter(query).distinct()
 
     paginator = Paginator(results, 10)  # Show 10 results per page
 
-    page_number = request.GET.get("page")
+    page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, "lexgram_search.html", {"form": form, "page_obj": page_obj})
+

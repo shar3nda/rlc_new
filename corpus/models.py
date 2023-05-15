@@ -157,19 +157,19 @@ def make_sentence(self, sentence, sentence_num):
             token=token.text if token.text else 1,
             lemma=token.lemma,
             pos=token.pos,
-            animate=get_feat(token.feats, "Animacy", "Anim"),
-            perfect=get_feat(token.feats, "Aspect", "Perf"),
-            gram_case=get_feat(token.feats, "Case"),
+            animacy=get_feat(token.feats, "Animacy"),
+            aspect=get_feat(token.feats, "Aspect"),
+            case=get_feat(token.feats, "Case"),
             degree=get_feat(token.feats, "Degree"),
-            foreign=get_feat(token.feats, "Foreign", "Yes"),
+            foreign=get_feat(token.feats, "Foreign"),
             gender=get_feat(token.feats, "Gender"),
-            hyph=get_feat(token.feats, "Hyph", "Yes"),
+            hyph=get_feat(token.feats, "Hyph"),
             mood=get_feat(token.feats, "Mood"),
-            plural=get_feat(token.feats, "Number", "Plur"),
+            gram_number=get_feat(token.feats, "Number"),
             person=get_feat(token.feats, "Person"),
-            negative=get_feat(token.feats, "Polarity", "Neg"),
+            polarity=get_feat(token.feats, "Polarity"),
             tense=get_feat(token.feats, "Tense"),
-            short=get_feat(token.feats, "Variant", "Short"),
+            variant=get_feat(token.feats, "Variant"),
             verb_form=get_feat(token.feats, "VerbForm"),
             voice=get_feat(token.feats, "Voice"),
         )
@@ -520,7 +520,15 @@ class Token(models.Model):
         VERB = "VERB", _("VERB")
         X = "X", _("X")
 
-    class CaseChoices(models.TextChoices):
+    class Animacy(models.TextChoices):
+        ANIM = "Anim", _("Anim")
+        INAN = "Inan", _("Inan")
+
+    class Aspect(models.TextChoices):
+        IMP = "Imp", _("Imp")
+        PERF = "Perf", _("Perf")
+
+    class Case(models.TextChoices):
         ACC = "Acc", _("Acc")
         DAT = "Dat", _("Dat")
         GEN = "Gen", _("Gen")
@@ -530,38 +538,54 @@ class Token(models.Model):
         PAR = "Par", _("Par")
         VOC = "Voc", _("Voc")
 
-    class DegreeChoices(models.TextChoices):
+    class Degree(models.TextChoices):
         CMP = "Cmp", _("Cmp")
         POS = "Pos", _("Pos")
         SUP = "Sup", _("Sup")
 
-    class GenderChoices(models.TextChoices):
+    class Foreign(models.TextChoices):
+        YES = "Yes", _("Yes")
+
+    class Gender(models.TextChoices):
         FEM = "Fem", _("Fem")
         MASC = "Masc", _("Masc")
         NEUT = "Neut", _("Neut")
 
-    class MoodChoices(models.TextChoices):
+    class Hyph(models.TextChoices):
+        YES = "Yes", _("Yes")
+
+    class Mood(models.TextChoices):
         CND = "Cnd", _("Cnd")
         IMP = "Imp", _("Imp")
         IND = "Ind", _("Ind")
 
-    class PersonChoices(models.TextChoices):
+    class Number(models.TextChoices):
+        PLUR = "Plur", _("Plur")
+        SING = "Sing", _("Sing")
+
+    class Person(models.TextChoices):
         FIRST = "1", _("1")
         SECOND = "2", _("2")
         THIRD = "3", _("3")
 
-    class TenseChoices(models.TextChoices):
+    class Polarity(models.TextChoices):
+        NEG = "Neg", _("Neg")
+
+    class Tense(models.TextChoices):
         FUT = "Fut", _("Fut")
         PAST = "Past", _("Past")
         PRES = "Pres", _("Pres")
 
-    class VerbFormChoices(models.TextChoices):
+    class Variant(models.TextChoices):
+        SHORT = "Short", _("Short")
+
+    class VerbForm(models.TextChoices):
         CONV = "Conv", _("Conv")
         FIN = "Fin", _("Fin")
         INF = "Inf", _("Inf")
         PART = "Part", _("Part")
 
-    class VoiceChoices(models.TextChoices):
+    class Voice(models.TextChoices):
         ACT = "Act", _("Act")
         MID = "Mid", _("Mid")
         PASS = "Pass", _("Pass")
@@ -575,54 +599,51 @@ class Token(models.Model):
     pos = models.CharField(
         max_length=10, choices=POS.choices, null=True, blank=True, db_index=True
     )
-    lemma = models.CharField(db_index=True, null=True, blank=True)
-
-    animate = models.BooleanField(null=True, blank=True)
-    perfect = models.BooleanField(null=True, blank=True)
-    gram_case = models.CharField(
-        max_length=3, choices=CaseChoices.choices, null=True, blank=True, db_index=True
+    lemma = models.CharField(null=True, blank=True, db_index=True)
+    animacy = models.CharField(
+        max_length=4, choices=Animacy.choices, null=True, blank=True, db_index=True
+    )
+    aspect = models.CharField(
+        max_length=4, choices=Aspect.choices, null=True, blank=True, db_index=True
+    )
+    case = models.CharField(
+        max_length=3, choices=Case.choices, null=True, blank=True, db_index=True
     )
     degree = models.CharField(
-        max_length=3,
-        choices=DegreeChoices.choices,
-        null=True,
-        blank=True,
-        db_index=True,
+        max_length=3, choices=Degree.choices, null=True, blank=True, db_index=True
     )
-    foreign = models.BooleanField(null=True, blank=True)
+    foreign = models.CharField(
+        max_length=3, choices=Foreign.choices, null=True, blank=True, db_index=True
+    )
     gender = models.CharField(
-        max_length=4,
-        choices=GenderChoices.choices,
-        null=True,
-        blank=True,
-        db_index=True,
+        max_length=4, choices=Gender.choices, null=True, blank=True, db_index=True
     )
-    hyph = models.BooleanField(null=True, blank=True)
+    hyph = models.CharField(
+        max_length=3, choices=Hyph.choices, null=True, blank=True, db_index=True
+    )
     mood = models.CharField(
-        max_length=3, choices=MoodChoices.choices, null=True, blank=True, db_index=True
+        max_length=3, choices=Mood.choices, null=True, blank=True, db_index=True
     )
-    plural = models.BooleanField(null=True, blank=True)
+    gram_number = models.CharField(
+        max_length=4, choices=Number.choices, null=True, blank=True, db_index=True
+    )
     person = models.CharField(
-        max_length=1,
-        choices=PersonChoices.choices,
-        null=True,
-        blank=True,
-        db_index=True,
+        max_length=1, choices=Person.choices, null=True, blank=True, db_index=True
     )
-    negative = models.BooleanField(null=True, blank=True)
+    polarity = models.CharField(
+        max_length=3, choices=Polarity.choices, null=True, blank=True, db_index=True
+    )
     tense = models.CharField(
-        max_length=4, choices=TenseChoices.choices, null=True, blank=True, db_index=True
+        max_length=4, choices=Tense.choices, null=True, blank=True, db_index=True
     )
-    short = models.BooleanField(null=True, blank=True)
+    variant = models.CharField(
+        max_length=5, choices=Variant.choices, null=True, blank=True, db_index=True
+    )
     verb_form = models.CharField(
-        max_length=4,
-        choices=VerbFormChoices.choices,
-        null=True,
-        blank=True,
-        db_index=True,
+        max_length=4, choices=VerbForm.choices, null=True, blank=True, db_index=True
     )
     voice = models.CharField(
-        max_length=4, choices=VoiceChoices.choices, null=True, blank=True, db_index=True
+        max_length=4, choices=Voice.choices, null=True, blank=True, db_index=True
     )
 
     def __str__(self):

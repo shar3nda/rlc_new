@@ -8,14 +8,21 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8">
-        <h1>Search Documents</h1>
-        <form method="get">
+        <h1>{% trans "Lexico-grammatical search" %}</h1>
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            {% for error in form.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+        <form method="get" class="mb-5">
           {{ form.as_p }}
-          <button type="submit">Search</button>
+          <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
         </form>
 
         {% if page_obj %}
-          <h2>Search Results</h2>
+          <h2>{% trans "Search results" %}</h2>
           <ul>
             {% for document in page_obj %}
               {% include 'document_card.html' %}
