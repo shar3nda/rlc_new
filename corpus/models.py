@@ -414,8 +414,9 @@ class Sentence(models.Model):
                 if correction["purpose"] == "commenting"
             ]
             if not replacement:
-                continue
-            replacement = replacement[0]["value"]
+                replacement = ""
+            else:
+                replacement = replacement[0]["value"]
             selectors = annotation.json["target"]["selector"]
             text_position_selector = [
                 selector
