@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+_RE_SPAN_PATTERN = re.compile(r"<span>.*?</span>")
 # load models outside the function scope
 _SEGMENTER = Segmenter()
 _MORPH_VOCAB = MorphVocab()
@@ -125,56 +126,58 @@ class Author(models.Model):
         }
 
 
-def get_feat(token_feats, feat_key, expected_value=None):
-    if token_feats is None:
-        return None
-    value = token_feats.get(feat_key)
-    if value is None:
-        return None
-    if expected_value is not None:
-        return value == expected_value
-    return value
-
-
 def make_sentence(self, sentence, sentence_num):
     text = sentence.text
-    markup = [
-        f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>'
-        for token in sentence.tokens
-    ]
-    markup = " ".join(markup)
+    markup = sentence.text
+    replacements = []
+    offset = 0
+    if hasattr(sentence.tokens[0], "start"):
+        offset = sentence.tokens[0].start
+    for token in sentence.tokens:
+        replacements.append(
+            (
+                getattr(token, "start", 1) - offset,
+                getattr(token, "end", token.start + len(token.text)) - offset,
+                f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>',
+            )
+        )
+    replacements.sort(key=lambda x: x[1], reverse=True)
+    for start, end, replacement in replacements:
+        markup = markup[:start] + replacement + markup[end:]
     new_sentence = Sentence.objects.create(
         document=self, text=text, markup=markup, number=sentence_num
     )
 
-    tokens = [
-        Token(
-            document=self,
-            sentence=new_sentence,
-            number=token_num + 1,
-            start=getattr(token, "start", 1),
-            end=getattr(token, "end", token.start + len(token.text)),
-            token=token.text if token.text else 1,
-            lemma=token.lemma,
-            pos=token.pos,
-            animacy=get_feat(token.feats, "Animacy"),
-            aspect=get_feat(token.feats, "Aspect"),
-            case=get_feat(token.feats, "Case"),
-            degree=get_feat(token.feats, "Degree"),
-            foreign=get_feat(token.feats, "Foreign"),
-            gender=get_feat(token.feats, "Gender"),
-            hyph=get_feat(token.feats, "Hyph"),
-            mood=get_feat(token.feats, "Mood"),
-            gram_number=get_feat(token.feats, "Number"),
-            person=get_feat(token.feats, "Person"),
-            polarity=get_feat(token.feats, "Polarity"),
-            tense=get_feat(token.feats, "Tense"),
-            variant=get_feat(token.feats, "Variant"),
-            verb_form=get_feat(token.feats, "VerbForm"),
-            voice=get_feat(token.feats, "Voice"),
+    tokens = []
+    for token_num, token in enumerate(sentence.tokens):
+        feats = token.feats or {}
+        tokens.append(
+            Token(
+                document=self,
+                sentence=new_sentence,
+                number=token_num + 1,
+                start=getattr(token, "start", 1),
+                end=getattr(token, "end", token.start + len(token.text)),
+                token=token.text if token.text else 1,
+                lemma=token.lemma,
+                pos=token.pos,
+                animacy=feats.get("Animacy"),
+                aspect=feats.get("Aspect"),
+                case=feats.get("Case"),
+                degree=feats.get("Degree"),
+                foreign=feats.get("Foreign"),
+                gender=feats.get("Gender"),
+                hyph=feats.get("Hyph"),
+                mood=feats.get("Mood"),
+                gram_number=feats.get("Number"),
+                person=feats.get("Person"),
+                polarity=feats.get("Polarity"),
+                tense=feats.get("Tense"),
+                variant=feats.get("Variant"),
+                verb_form=feats.get("VerbForm"),
+                voice=feats.get("Voice"),
+            )
         )
-        for token_num, token in enumerate(sentence.tokens)
-    ]
     Token.objects.bulk_create(tokens)
 
 
@@ -427,8 +430,8 @@ class Sentence(models.Model):
 
             corrections.append(
                 {
-                    "start": text_position_selector["start"] - 1,
-                    "end": text_position_selector["end"] - 1,
+                    "start": text_position_selector["start"],
+                    "end": text_position_selector["end"],
                     "exact": text_quote_selector["exact"],
                     "replacement": replacement,
                 }

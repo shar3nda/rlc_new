@@ -109,56 +109,30 @@ class TokenSearchForm(forms.ModelForm):
             "lemma": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
             ),
-            "pos": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "animacy": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "aspect": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "case": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "degree": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "foreign": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "gender": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "hyph": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "mood": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
+            "pos": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "animacy": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "aspect": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "case": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "degree": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "foreign": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "gender": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "hyph": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "mood": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "gram_number": forms.Select(
                 attrs={"class": "form-select", "maxlength": "200"}
             ),
-            "person": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
+            "person": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "polarity": forms.Select(
                 attrs={"class": "form-select", "maxlength": "200"}
             ),
-            "tense": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
-            "variant": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
+            "tense": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "variant": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "verb_form": forms.Select(
                 attrs={"class": "form-select", "maxlength": "200"}
             ),
-            "voice": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
+            "voice": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
         }
 
     def __init__(self, *args, **kwargs):
         super(TokenSearchForm, self).__init__(*args, **kwargs)
-        self.fields['token'].required = False
+        self.fields["token"].required = False

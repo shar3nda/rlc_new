@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.db.models import Q
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchForm
@@ -311,8 +312,6 @@ def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
 
 
-from django.db.models import Q
-
 def search(request):
     form = TokenSearchForm(request.GET)
     results = Document.objects.none()  # No results initially
@@ -342,7 +341,7 @@ def search(request):
 
         # Create Q objects for each filter, if a value was provided
         queries = [
-            Q(**{f'token__{field}': form.cleaned_data[field]})
+            Q(**{f"token__{field}": form.cleaned_data[field]})
             for field in filter_fields
             if field in form.cleaned_data and form.cleaned_data[field]
         ]
@@ -358,8 +357,7 @@ def search(request):
 
     paginator = Paginator(results, 10)  # Show 10 results per page
 
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     return render(request, "lexgram_search.html", {"form": form, "page_obj": page_obj})
-
