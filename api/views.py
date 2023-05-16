@@ -71,15 +71,11 @@ def auto_annotate(request):
     for index, edit in enumerate(edits):
         original_tokens = edit.o_toks
         if len(original_tokens) == 0:
-            text, tokens, number = (
-                original,
-                [tok.text for tok in orig_tokenized.tokens],
-                edit.o_start,
-            )
-            original_start, original_end = get_word_positions(text, tokens, number)
-        else:
-            original_start = original_tokens[0].start
-            original_end = original_tokens[-1].stop
+            original_tokens = [orig_tokenized.tokens[edit.o_start - 1]]
+            edit.o_str = original_tokens[0].text
+            edit.c_str = f'{edit.o_str} {edit.c_str}'
+        original_start = original_tokens[0].start
+        original_end = original_tokens[-1].stop
 
         guid = uuid.uuid4()
         annotation = {
