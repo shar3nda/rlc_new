@@ -30,6 +30,35 @@ def get_word_positions(sentence, words, word_number):
 
 @permission_required("corpus.add_annotation", raise_exception=True)
 def auto_annotate(request):
+    """
+    This API endpoint automatically generates annotations for a corrected sentence.
+
+    Method: POST
+    URL: /api/auto_annotate/
+
+    Request Body:
+    {
+        "original_sentence": <original_sentence>,
+        "corrected_sentence": <corrected_sentence>
+    }
+
+    Response:
+    {
+        "annotations": [
+            <annotation 1 in W3C format>,
+            <annotation 2 in W3C format>,
+            ...
+        ]
+    }
+
+    This endpoint accepts an original and a corrected sentence. It then applies
+    automatic annotation logic to the sentences, generating a list of annotations
+    that represent the differences between the original and corrected sentences.
+    Each annotation includes information about the type of edit, the corrected
+    text, and the position of the original text within the original sentence.
+
+    If the request method is not POST, an error message is returned.
+    """
     if request.method == "POST":
         original = request.POST["original_sentence"]
         corrected = request.POST["corrected_sentence"]
@@ -42,15 +71,11 @@ def auto_annotate(request):
     for index, edit in enumerate(edits):
         original_tokens = edit.o_toks
         if len(original_tokens) == 0:
-            text, tokens, number = (
-                original,
-                [tok.text for tok in orig_tokenized.tokens],
-                edit.o_start,
-            )
-            original_start, original_end = get_word_positions(text, tokens, number)
-        else:
-            original_start = original_tokens[0].start
-            original_end = original_tokens[-1].stop
+            original_tokens = [orig_tokenized.tokens[edit.o_start - 1]]
+            edit.o_str = original_tokens[0].text
+            edit.c_str = f"{edit.o_str} {edit.c_str}"
+        original_start = original_tokens[0].start
+        original_end = original_tokens[-1].stop
 
         guid = uuid.uuid4()
         annotation = {
@@ -95,21 +120,15 @@ def auto_annotate(request):
     return JsonResponse({"annotations": annotations})
 
 
-def get_annotations(request):
-    if request.method == "GET":
-        annotations = Annotation.objects.all()
-        data = {"annotations": list(annotations.values())}
-        return JsonResponse(data)
-
-
-def get_documents(request):
-    if request.method == "GET":
-        documents = Document.objects.all()
-        data = {"documents": list(documents.values())}
-        return JsonResponse(data)
-
-
 def get_sentence_annotations(request, sentence_id):
+    """
+    This API endpoint returns all annotations for a specific sentence.
+
+    Method: GET
+    URL: /api/sentence_annotations/{sentence_id}/
+
+    Response: [{annotation1}, {annotation2}, ...]
+    """
     if request.method == "GET":
         sentence_annotations = Annotation.objects.filter(
             sentence=sentence_id, alt=False
@@ -119,6 +138,14 @@ def get_sentence_annotations(request, sentence_id):
 
 
 def get_alt_sentence_annotations(request, sentence_id):
+    """
+    This API endpoint returns all alternate annotations for a specific sentence.
+
+    Method: GET
+    URL: /api/alt_sentence_annotations/{sentence_id}/
+
+    Response: [{annotation1}, {annotation2}, ...]
+    """
     if request.method == "GET":
         sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
         data = [annotation.json for annotation in sentence_annotations]
@@ -127,6 +154,27 @@ def get_alt_sentence_annotations(request, sentence_id):
 
 @permission_required("corpus.add_annotation", raise_exception=True)
 def create_annotation(request):
+    """
+    This API endpoint creates a new annotation.
+
+    Method: POST
+    URL: /api/annotation/
+
+    Request Body:
+    {
+        "sentence": <sentence_id>,
+        "document": <document_id>,
+        "user": <user_id>,
+        "guid": <guid>,
+        "alt": <true_or_false>,
+        "body": <json_data>,
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
     if request.method == "POST":
         data = json.loads(request.body)
         annotation = Annotation.objects.create(
@@ -142,6 +190,23 @@ def create_annotation(request):
 
 @permission_required("corpus.change_annotation", raise_exception=True)
 def update_annotation(request):
+    """
+    This API endpoint updates an existing annotation.
+
+    Method: PUT
+    URL: /api/annotation/
+
+    Request Body:
+    {
+        "guid": <guid>,
+        "body": <json_data>,
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
     if request.method == "PUT":
         data = json.loads(request.body)
         annotation_id = json.loads(request.body)["guid"]
@@ -153,6 +218,22 @@ def update_annotation(request):
 
 @permission_required("corpus.delete_annotation", raise_exception=True)
 def delete_annotation(request):
+    """
+    This API endpoint deletes an existing annotation.
+
+    Method: DELETE
+    URL: /api/annotation/
+
+    Request Body:
+    {
+        "guid": <guid>
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
     if request.method == "DELETE":
         annotation_id = json.loads(request.body)["guid"]
         annotation = Annotation.objects.get(guid=annotation_id)
@@ -161,6 +242,18 @@ def delete_annotation(request):
 
 
 def get_sentence_corrections(request, sentence_id):
+    """
+    This API endpoint returns the correction and alternative correction for a specific sentence.
+
+    Method: GET
+    URL: /api/sentence_corrections/{sentence_id}/
+
+    Response:
+    {
+        "correction": <correction>,
+        "alt_correction": <alt_correction>
+    }
+    """
     if request.method == "GET":
         sentence = Sentence.objects.get(id=sentence_id)
         data = {
@@ -171,6 +264,18 @@ def get_sentence_corrections(request, sentence_id):
 
 
 def get_user_info(request):
+    """
+    This API endpoint returns the user's profile and display name.
+
+    Method: GET
+    URL: /api/user_info/
+
+    Response:
+    {
+        "id": <profile_url>,
+        "displayName": <username>
+    }
+    """
     if request.method == "GET":
         user = User.objects.get(id=request.user.id)
         data = {

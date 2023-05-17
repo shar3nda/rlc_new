@@ -30,6 +30,5 @@ urlpatterns = [
     path("statistics/", views.statistics, name="statistics"),
     path("help/", views.help, name="help"),
     path("export_documents/", views.export_documents, name="export_documents"),
-    # search path
     path("search/", views.search, name="search"),
 ]

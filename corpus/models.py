@@ -2,6 +2,7 @@ import re
 
 from django.apps import apps
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -9,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+_RE_SPAN_PATTERN = re.compile(r"<span>.*?</span>")
 # load models outside the function scope
 _SEGMENTER = Segmenter()
 _MORPH_VOCAB = MorphVocab()
@@ -123,6 +125,61 @@ class Author(models.Model):
             "dominant_language": self.dominant_language,
             "source": self.source,
         }
+
+
+def make_sentence(self, sentence, sentence_num):
+    text = sentence.text
+    markup = sentence.text
+    replacements = []
+    offset = 0
+    if hasattr(sentence.tokens[0], "start"):
+        offset = sentence.tokens[0].start
+    for token in sentence.tokens:
+        replacements.append(
+            (
+                getattr(token, "start", 1) - offset,
+                getattr(token, "end", token.start + len(token.text)) - offset,
+                f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>',
+            )
+        )
+    replacements.sort(key=lambda x: x[1], reverse=True)
+    for start, end, replacement in replacements:
+        markup = markup[:start] + replacement + markup[end:]
+    new_sentence = Sentence.objects.create(
+        document=self, text=text, markup=markup, number=sentence_num
+    )
+
+    tokens = []
+    for token_num, token in enumerate(sentence.tokens):
+        feats = token.feats or {}
+        tokens.append(
+            Token(
+                document=self,
+                sentence=new_sentence,
+                number=token_num + 1,
+                start=getattr(token, "start", 1),
+                end=getattr(token, "end", token.start + len(token.text)),
+                token=token.text if token.text else 1,
+                lemma=token.lemma,
+                pos=token.pos,
+                animacy=feats.get("Animacy"),
+                aspect=feats.get("Aspect"),
+                case=feats.get("Case"),
+                degree=feats.get("Degree"),
+                foreign=feats.get("Foreign"),
+                gender=feats.get("Gender"),
+                hyph=feats.get("Hyph"),
+                mood=feats.get("Mood"),
+                gram_number=feats.get("Number"),
+                person=feats.get("Person"),
+                polarity=feats.get("Polarity"),
+                tense=feats.get("Tense"),
+                variant=feats.get("Variant"),
+                verb_form=feats.get("VerbForm"),
+                voice=feats.get("Voice"),
+            )
+        )
+    Token.objects.bulk_create(tokens)
 
 
 class Document(models.Model):
@@ -314,37 +371,28 @@ class Document(models.Model):
 
             # create Sentence objects
             for sentence_num, sentence in enumerate(doc.sents):
-                text = sentence.text
-                markup = [
-                    f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>'
-                    for token in sentence.tokens
-                ]
-                markup = " ".join(markup)
-                new_sentence = Sentence.objects.create(
-                    document=self, text=text, markup=markup, number=sentence_num
-                )
-
-                tokens = [
-                    Token(
-                        document=self,
-                        sentence=new_sentence,
-                        number=token_num + 1,
-                        start=getattr(token, "start", 1),
-                        end=getattr(token, "end", token.start + len(token.text)),
-                        token=token.text if token.text else 1,
-                        lemma=token.lemma,
-                        pos=token.pos,
-                        feats=token.feats,
-                    )
-                    for token_num, token in enumerate(sentence.tokens)
-                ]
-                Token.objects.bulk_create(tokens)
+                make_sentence(self, sentence, sentence_num)
 
     class Meta:
         ordering = ["-created_on"]
 
     def __str__(self):
         return self.title
+
+
+def get_selectors(annotation_json):
+    selectors = annotation_json["target"]["selector"]
+    text_position_selector = [
+        selector for selector in selectors if selector["type"] == "TextPositionSelector"
+    ][0]
+    text_quote_selector = [
+        selector for selector in selectors if selector["type"] == "TextQuoteSelector"
+    ][0]
+    return (
+        text_position_selector.get("start"),
+        text_position_selector.get("end"),
+        text_quote_selector.get("exact"),
+    )
 
 
 class Sentence(models.Model):
@@ -382,25 +430,16 @@ class Sentence(models.Model):
                 if correction["purpose"] == "commenting"
             ]
             if not replacement:
-                continue
-            replacement = replacement[0]["value"]
-            selectors = annotation.json["target"]["selector"]
-            text_position_selector = [
-                selector
-                for selector in selectors
-                if selector["type"] == "TextPositionSelector"
-            ][0]
-            text_quote_selector = [
-                selector
-                for selector in selectors
-                if selector["type"] == "TextQuoteSelector"
-            ][0]
+                replacement = ""
+            else:
+                replacement = replacement[0]["value"]
 
+            start, end, exact = get_selectors(annotation.json)
             corrections.append(
                 {
-                    "start": text_position_selector["start"] - 1,
-                    "end": text_position_selector["end"] - 1,
-                    "exact": text_quote_selector["exact"],
+                    "start": start,
+                    "end": end,
+                    "exact": exact,
                     "replacement": replacement,
                 }
             )
@@ -439,6 +478,21 @@ class Sentence(models.Model):
         return self.text
 
 
+def get_orig_text(annotation_json):
+    target = annotation_json.get("target", {})
+    _, _, exact = get_selectors(annotation_json)
+    return exact
+
+
+def get_error_tags(annotation_json):
+    body = annotation_json.get("body", [])
+    error_tags = []
+    for body_item in body:
+        if body_item.get("purpose") == "tagging":
+            error_tags.append(body_item.get("value", []))
+    return error_tags
+
+
 class Annotation(models.Model):
     """
     An annotation is a piece of text that is annotated by a user.
@@ -460,6 +514,28 @@ class Annotation(models.Model):
     )
     json = models.JSONField(verbose_name="JSON")
     alt = models.BooleanField(default=False, verbose_name="Альтернативная")
+    orig_text = models.TextField(verbose_name=_("Original text"))
+    start = models.IntegerField(verbose_name=_("Start"))
+    end = models.IntegerField(verbose_name=_("End"))
+    tokens = models.ManyToManyField(
+        to="corpus.Token", verbose_name=_("Tokens"), blank=True
+    )
+    error_tags = ArrayField(
+        models.CharField(max_length=64, blank=True),
+        blank=True,
+        null=True,
+        verbose_name=_("Error tags"),
+    )
+
+    # save and set orig_text and error_tags
+    def save(self, *args, **kwargs):
+        self.start, self.end, self.orig_text = get_selectors(self.json)
+        self.error_tags = get_error_tags(self.json)
+        toks = Token.objects.filter(
+            sentence=self.sentence, start__gte=self.start, end__lte=self.end
+        )
+        self.tokens.set(toks)
+        super().save(*args, **kwargs)
 
     def serialize(self):
         result = self.json
@@ -472,28 +548,150 @@ class Annotation(models.Model):
 
 
 class Token(models.Model):
-    """Хранит информацию о токенах.
+    class POS(models.TextChoices):
+        ADJ = "ADJ", _("ADJ")
+        ADP = "ADP", _("ADP")
+        ADV = "ADV", _("ADV")
+        AUX = "AUX", _("AUX")
+        CCONJ = "CCONJ", _("CCONJ")
+        DET = "DET", _("DET")
+        INTJ = "INTJ", _("INTJ")
+        NOUN = "NOUN", _("NOUN")
+        NUM = "NUM", _("NUM")
+        PART = "PART", _("PART")
+        PRON = "PRON", _("PRON")
+        PROPN = "PROPN", _("PROPN")
+        PUNCT = "PUNCT", _("PUNCT")
+        SCONJ = "SCONJ", _("SCONJ")
+        SYM = "SYM", _("SYM")
+        VERB = "VERB", _("VERB")
+        X = "X", _("X")
 
-    Поля токенов:
-    token - само слово
-    document - номер текста, к которому относится слово
-    sentence - номер предложения, к которому относится слово
-    start - начальная позиция слова в предложении
-    end - конечная позиция слова в предложении
-    number - номер слова в предложении
-    pos - часть речи
-    feats - грамматические характеристики
-    """
+    class Animacy(models.TextChoices):
+        ANIM = "Anim", _("Anim")
+        INAN = "Inan", _("Inan")
+
+    class Aspect(models.TextChoices):
+        IMP = "Imp", _("Imp")
+        PERF = "Perf", _("Perf")
+
+    class Case(models.TextChoices):
+        ACC = "Acc", _("Acc")
+        DAT = "Dat", _("Dat")
+        GEN = "Gen", _("Gen")
+        INS = "Ins", _("Ins")
+        LOC = "Loc", _("Loc")
+        NOM = "Nom", _("Nom")
+        PAR = "Par", _("Par")
+        VOC = "Voc", _("Voc")
+
+    class Degree(models.TextChoices):
+        CMP = "Cmp", _("Cmp")
+        POS = "Pos", _("Pos")
+        SUP = "Sup", _("Sup")
+
+    class Foreign(models.TextChoices):
+        YES = "Yes", _("Yes")
+
+    class Gender(models.TextChoices):
+        FEM = "Fem", _("Fem")
+        MASC = "Masc", _("Masc")
+        NEUT = "Neut", _("Neut")
+
+    class Hyph(models.TextChoices):
+        YES = "Yes", _("Yes")
+
+    class Mood(models.TextChoices):
+        CND = "Cnd", _("Cnd")
+        IMP = "Imp", _("Imp")
+        IND = "Ind", _("Ind")
+
+    class Number(models.TextChoices):
+        PLUR = "Plur", _("Plur")
+        SING = "Sing", _("Sing")
+
+    class Person(models.TextChoices):
+        FIRST = "1", _("1")
+        SECOND = "2", _("2")
+        THIRD = "3", _("3")
+
+    class Polarity(models.TextChoices):
+        NEG = "Neg", _("Neg")
+
+    class Tense(models.TextChoices):
+        FUT = "Fut", _("Fut")
+        PAST = "Past", _("Past")
+        PRES = "Pres", _("Pres")
+
+    class Variant(models.TextChoices):
+        SHORT = "Short", _("Short")
+
+    class VerbForm(models.TextChoices):
+        CONV = "Conv", _("Conv")
+        FIN = "Fin", _("Fin")
+        INF = "Inf", _("Inf")
+        PART = "Part", _("Part")
+
+    class Voice(models.TextChoices):
+        ACT = "Act", _("Act")
+        MID = "Mid", _("Mid")
+        PASS = "Pass", _("Pass")
 
     token = models.CharField(max_length=200, db_index=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     sentence = models.ForeignKey(Sentence, on_delete=models.CASCADE)
-    start = models.IntegerField()
-    end = models.IntegerField()
-    number = models.IntegerField()
-    pos = models.CharField(max_length=10, db_index=True, null=True)
-    feats = models.JSONField(db_index=True, null=True)
-    lemma = models.CharField(max_length=200, db_index=True, null=True)
+    start = models.IntegerField(null=True, blank=True)
+    end = models.IntegerField(null=True, blank=True)
+    number = models.IntegerField(null=True, blank=True)
+    pos = models.CharField(
+        max_length=10, choices=POS.choices, null=True, blank=True, db_index=True
+    )
+    lemma = models.CharField(null=True, blank=True, db_index=True)
+    animacy = models.CharField(
+        max_length=4, choices=Animacy.choices, null=True, blank=True, db_index=True
+    )
+    aspect = models.CharField(
+        max_length=4, choices=Aspect.choices, null=True, blank=True, db_index=True
+    )
+    case = models.CharField(
+        max_length=3, choices=Case.choices, null=True, blank=True, db_index=True
+    )
+    degree = models.CharField(
+        max_length=3, choices=Degree.choices, null=True, blank=True, db_index=True
+    )
+    foreign = models.CharField(
+        max_length=3, choices=Foreign.choices, null=True, blank=True, db_index=True
+    )
+    gender = models.CharField(
+        max_length=4, choices=Gender.choices, null=True, blank=True, db_index=True
+    )
+    hyph = models.CharField(
+        max_length=3, choices=Hyph.choices, null=True, blank=True, db_index=True
+    )
+    mood = models.CharField(
+        max_length=3, choices=Mood.choices, null=True, blank=True, db_index=True
+    )
+    gram_number = models.CharField(
+        max_length=4, choices=Number.choices, null=True, blank=True, db_index=True
+    )
+    person = models.CharField(
+        max_length=1, choices=Person.choices, null=True, blank=True, db_index=True
+    )
+    polarity = models.CharField(
+        max_length=3, choices=Polarity.choices, null=True, blank=True, db_index=True
+    )
+    tense = models.CharField(
+        max_length=4, choices=Tense.choices, null=True, blank=True, db_index=True
+    )
+    variant = models.CharField(
+        max_length=5, choices=Variant.choices, null=True, blank=True, db_index=True
+    )
+    verb_form = models.CharField(
+        max_length=4, choices=VerbForm.choices, null=True, blank=True, db_index=True
+    )
+    voice = models.CharField(
+        max_length=4, choices=Voice.choices, null=True, blank=True, db_index=True
+    )
 
     def __str__(self):
         return self.token

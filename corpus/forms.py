@@ -1,7 +1,7 @@
 from django import forms
-
-from .models import Document, Author
 from django.utils.translation import gettext_lazy as _
+
+from .models import Document, Author, Token
 
 
 class DocumentForm(forms.ModelForm):
@@ -77,3 +77,105 @@ class FavoriteAuthorForm(forms.Form):
         label=_("Saved authors"),
         widget=forms.Select(attrs={"class": "form-select"}),
     )
+
+
+class TokenSearchForm(forms.ModelForm):
+    GRAM_ERROR_CHOICES = [
+        ("Graph", "Graph"),
+        ("Hyphen", "Hyphen"),
+        ("Space", "Space"),
+        ("Ortho", "Ortho"),
+        ("Translit", "Translit"),
+        ("Misspell", "Misspell"),
+        ("Deriv", "Deriv"),
+        ("Infl", "Infl"),
+        ("Num", "Num"),
+        ("Gender", "Gender"),
+        ("Morph", "Morph"),
+        ("Asp", "Asp"),
+        ("ArgStr", "ArgStr"),
+        ("Passive", "Passive"),
+        ("Refl", "Refl"),
+        ("AgrNum", "AgrNum"),
+        ("AgrCase", "AgrCase"),
+        ("AgrGender", "AgrGender"),
+        ("AgrPers", "AgrPers"),
+        ("AgrGerund", "AgrGerund"),
+        ("Gov", "Gov"),
+        ("Ref", "Ref"),
+        ("Conj", "Conj"),
+        ("WO", "WO"),
+        ("Neg", "Neg"),
+        ("Aux", "Aux"),
+        ("Brev", "Brev"),
+        ("Syntax", "Syntax"),
+        ("Constr", "Constr"),
+        ("Lex", "Lex"),
+        ("CS", "CS"),
+        ("Par", "Par"),
+        ("Idiom", "Idiom"),
+        ("Transfer", "Transfer"),
+        ("Not-clear", "Not-clear"),
+        ("Del", "Del"),
+        ("Insert", "Insert"),
+        ("Transp", "Transp"),
+        ("Subst", "Subst"),
+        ("Altern", "Altern"),
+        ("Tense", "Tense"),
+        ("Mode", "Mode"),
+    ]
+
+    gram_errors = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=GRAM_ERROR_CHOICES,
+    )
+
+    class Meta:
+        model = Token
+        fields = [
+            "lemma",
+            "pos",
+            "animacy",
+            "aspect",
+            "case",
+            "degree",
+            "foreign",
+            "gender",
+            "hyph",
+            "mood",
+            "gram_number",
+            "person",
+            "polarity",
+            "tense",
+            "variant",
+            "verb_form",
+            "voice",
+        ]
+        widgets = {
+            "lemma": forms.TextInput(
+                attrs={"class": "form-control", "maxlength": "200"}
+            ),
+            "pos": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "animacy": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "aspect": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "case": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "degree": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "foreign": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "gender": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "hyph": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "mood": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "gram_number": forms.Select(
+                attrs={"class": "form-select", "maxlength": "200"}
+            ),
+            "person": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "polarity": forms.Select(
+                attrs={"class": "form-select", "maxlength": "200"}
+            ),
+            "tense": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "variant": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+            "verb_form": forms.Select(
+                attrs={"class": "form-select", "maxlength": "200"}
+            ),
+            "voice": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
+        }
