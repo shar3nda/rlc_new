@@ -53,6 +53,10 @@ def documents(request):
     return render(request, "documents.html", context)
 
 
+def get_verbose_name(model, field_name, choice_code):
+    return dict(model._meta.get_field(field_name).flatchoices).get(choice_code)
+
+
 def statistics(request):
     # Aggregate the data
     status_counts = Document.objects.values("status").annotate(count=Count("status"))
@@ -63,42 +67,75 @@ def statistics(request):
     for status_value, status_label in Document.StatusChoices.choices:
         count = int(status_counts.get(status=status_value)["count"])
         text_types.append(count)
-    texts_count = int(Document.objects.all().count())
+    texts_count = int(Document.objects.count())
     colors = ["#8c61ff", "#44c2fd", "#6592fd"]
 
     # Статистика по документам
-    languages_counts = defaultdict(int)
-    gender_counts = defaultdict(
-        int
-    )  # количество текстов с женским авторством, НЕ количество женщин авторов
-    lang_background_counts = defaultdict(int)
-    genre_counts = defaultdict(int)
-    for doc in Document.objects.all():
-        languages_counts[doc.author.get_dominant_language_display()] += 1
-        gender_counts[doc.author.get_gender_display()] += 1
-        lang_background_counts[doc.author.get_language_background_display()] += 1
-        genre_counts[doc.get_genre_display()] += 1
+    languages_counts = Document.objects.values(
+        'author__dominant_language'
+    ).annotate(count=Count('id')).order_by()
+    languages_counts = {
+        get_verbose_name(Author, 'dominant_language', doc['author__dominant_language']): doc['count']
+        for doc in languages_counts
+    }
+
+    gender_counts = Document.objects.values(
+        'author__gender'
+    ).annotate(count=Count('id')).order_by()
+    gender_counts = {
+        get_verbose_name(Author, 'gender', doc['author__gender']): doc['count']
+        for doc in gender_counts
+    }
+
+    lang_background_counts = Document.objects.values(
+        'author__language_background'
+    ).annotate(count=Count('id')).order_by()
+    lang_background_counts = {
+        get_verbose_name(Author, 'language_background', doc['author__language_background']): doc['count']
+        for doc in lang_background_counts
+    }
+
+    genre_counts = Document.objects.values(
+        'genre'
+    ).annotate(count=Count('id')).order_by()
+    genre_counts = {
+        get_verbose_name(Document, 'genre', doc['genre']): doc['count']
+        for doc in genre_counts
+    }
 
     # статистика по предложениям
-    total_sentences = 0
-    lang_sent_counts = defaultdict(int)
-    for sent in Sentence.objects.all():
-        lang_sent_counts[sent.document.author.get_dominant_language_display()] += 1
-        total_sentences += 1
+    lang_sent_counts = Sentence.objects.values(
+        'document__author__dominant_language'
+    ).annotate(count=Count('id')).order_by()
+    lang_sent_counts = {
+        get_verbose_name(Author, 'dominant_language', sent['document__author__dominant_language']): sent['count']
+        for sent in lang_sent_counts
+    }
 
-    total_authors = 0
-    total_fav_authors = 0
-    auth_gender = defaultdict(int)
-    auth_lang_bg_counts = defaultdict(int)
-    auth_lang_counts = defaultdict(int)
     # Статистика по авторам
-    for author in Author.objects.all():
-        total_authors += 1
-        if author.favorite:
-            total_fav_authors += 1
-        auth_gender[author.get_gender_display()] += 1
-        auth_lang_bg_counts[author.get_language_background_display()] += 1
-        auth_lang_counts[author.get_dominant_language_display()] += 1
+    auth_gender = Author.objects.values(
+        'gender'
+    ).annotate(count=Count('id')).order_by()
+    auth_gender = {
+        get_verbose_name(Author, 'gender', auth['gender']): auth['count']
+        for auth in auth_gender
+    }
+
+    auth_lang_bg_counts = Author.objects.values(
+        'language_background'
+    ).annotate(count=Count('id')).order_by()
+    auth_lang_bg_counts = {
+        get_verbose_name(Author, 'language_background', auth['language_background']): auth['count']
+        for auth in auth_lang_bg_counts
+    }
+
+    auth_lang_counts = Author.objects.values(
+        'dominant_language'
+    ).annotate(count=Count('id')).order_by()
+    auth_lang_counts = {
+        get_verbose_name(Author, 'dominant_language', auth['dominant_language']): auth['count']
+        for auth in auth_lang_counts
+    }
 
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
@@ -110,7 +147,14 @@ def statistics(request):
             lang_sent_counts.values(),
         )
     )
-    print(table_data)
+
+    # статистика по предложениям
+    total_sentences = Sentence.objects.count()
+
+    # Статистика по авторам
+    total_authors = Author.objects.count()
+    total_fav_authors = Author.objects.filter(favorite=True).count()
+
     context = {
         "labels": labels,
         "text_types": text_types,
