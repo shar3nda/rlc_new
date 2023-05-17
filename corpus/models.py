@@ -534,8 +534,8 @@ class Annotation(models.Model):
         toks = Token.objects.filter(
             sentence=self.sentence, start__gte=self.start, end__lte=self.end
         )
-        self.tokens.set(toks)
         super().save(*args, **kwargs)
+        self.tokens.set(toks)
 
     def serialize(self):
         result = self.json

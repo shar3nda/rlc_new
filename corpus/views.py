@@ -70,69 +70,87 @@ def statistics(request):
     colors = ["#8c61ff", "#44c2fd", "#6592fd"]
 
     # Статистика по документам
-    languages_counts = Document.objects.values(
-        'author__dominant_language'
-    ).annotate(count=Count('id')).order_by()
+    languages_counts = (
+        Document.objects.values("author__dominant_language")
+        .annotate(count=Count("id"))
+        .order_by()
+    )
     languages_counts = {
-        get_verbose_name(Author, 'dominant_language', doc['author__dominant_language']): doc['count']
+        get_verbose_name(
+            Author, "dominant_language", doc["author__dominant_language"]
+        ): doc["count"]
         for doc in languages_counts
     }
 
-    gender_counts = Document.objects.values(
-        'author__gender'
-    ).annotate(count=Count('id')).order_by()
+    gender_counts = (
+        Document.objects.values("author__gender").annotate(count=Count("id")).order_by()
+    )
     gender_counts = {
-        get_verbose_name(Author, 'gender', doc['author__gender']): doc['count']
+        get_verbose_name(Author, "gender", doc["author__gender"]): doc["count"]
         for doc in gender_counts
     }
 
-    lang_background_counts = Document.objects.values(
-        'author__language_background'
-    ).annotate(count=Count('id')).order_by()
+    lang_background_counts = (
+        Document.objects.values("author__language_background")
+        .annotate(count=Count("id"))
+        .order_by()
+    )
     lang_background_counts = {
-        get_verbose_name(Author, 'language_background', doc['author__language_background']): doc['count']
+        get_verbose_name(
+            Author, "language_background", doc["author__language_background"]
+        ): doc["count"]
         for doc in lang_background_counts
     }
 
-    genre_counts = Document.objects.values(
-        'genre'
-    ).annotate(count=Count('id')).order_by()
+    genre_counts = (
+        Document.objects.values("genre").annotate(count=Count("id")).order_by()
+    )
     genre_counts = {
-        get_verbose_name(Document, 'genre', doc['genre']): doc['count']
+        get_verbose_name(Document, "genre", doc["genre"]): doc["count"]
         for doc in genre_counts
     }
 
     # статистика по предложениям
-    lang_sent_counts = Sentence.objects.values(
-        'document__author__dominant_language'
-    ).annotate(count=Count('id')).order_by()
+    lang_sent_counts = (
+        Sentence.objects.values("document__author__dominant_language")
+        .annotate(count=Count("id"))
+        .order_by()
+    )
     lang_sent_counts = {
-        get_verbose_name(Author, 'dominant_language', sent['document__author__dominant_language']): sent['count']
+        get_verbose_name(
+            Author, "dominant_language", sent["document__author__dominant_language"]
+        ): sent["count"]
         for sent in lang_sent_counts
     }
 
     # Статистика по авторам
-    auth_gender = Author.objects.values(
-        'gender'
-    ).annotate(count=Count('id')).order_by()
+    auth_gender = Author.objects.values("gender").annotate(count=Count("id")).order_by()
     auth_gender = {
-        get_verbose_name(Author, 'gender', auth['gender']): auth['count']
+        get_verbose_name(Author, "gender", auth["gender"]): auth["count"]
         for auth in auth_gender
     }
 
-    auth_lang_bg_counts = Author.objects.values(
-        'language_background'
-    ).annotate(count=Count('id')).order_by()
+    auth_lang_bg_counts = (
+        Author.objects.values("language_background")
+        .annotate(count=Count("id"))
+        .order_by()
+    )
     auth_lang_bg_counts = {
-        get_verbose_name(Author, 'language_background', auth['language_background']): auth['count']
+        get_verbose_name(
+            Author, "language_background", auth["language_background"]
+        ): auth["count"]
         for auth in auth_lang_bg_counts
     }
 
-    auth_lang_counts = Author.objects.values(
-        'dominant_language'
-    ).annotate(count=Count('id')).order_by()
+    auth_lang_counts = (
+        Author.objects.values("dominant_language")
+        .annotate(count=Count("id"))
+        .order_by()
+    )
     auth_lang_counts = {
-        get_verbose_name(Author, 'dominant_language', auth['dominant_language']): auth['count']
+        get_verbose_name(Author, "dominant_language", auth["dominant_language"]): auth[
+            "count"
+        ]
         for auth in auth_lang_counts
     }
 
@@ -394,9 +412,10 @@ def search(request):
         if errors:
             error_queries = [
                 Q(annotation__error_tags__contains=[error])
-                & Q(annotation__orig_text=form.cleaned_data["lemma"])
+                & Q(annotation__tokens__lemma=form.cleaned_data["lemma"])
                 for error in errors
             ]
+
             errors_query = error_queries.pop()
             for error_query in error_queries:
                 errors_query |= error_query  # Combine with OR, not AND
