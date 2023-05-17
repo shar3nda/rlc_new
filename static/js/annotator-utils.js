@@ -179,7 +179,6 @@ function submitCorrectedSentence(sentenceId) {
 
 
 function initRecogito(canAnnotate, isLoggedIn) {
-  console.log(`canAnnotate: ${canAnnotate}, isLoggedIn: ${isLoggedIn}`);
   if (!isLoggedIn) {
     setupRecogito(canAnnotate);
     return;
@@ -201,6 +200,16 @@ function setupRecogito(canAnnotate, data = null) {
   // Get all the elements with the class 'sentence'
   const sentences = document.querySelectorAll('.sentence');
 
+  let widgets = [];
+  if (canAnnotate) {
+    widgets.push(CheckboxWidget);
+  }
+  widgets.push('COMMENT');
+  widgets.push({
+    widget: 'TAG',
+    vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
+  });
+
   // Initialize Recogito for each sentence with the fetched user info
   sentences.forEach((sentence) => {
     // Create a unique ID for each sentence element
@@ -212,14 +221,7 @@ function setupRecogito(canAnnotate, data = null) {
       showTooltip: true,
       selectors: [{type: 'TextQuoteSelector'}],
       locale: 'ru',
-      widgets: [
-        CheckboxWidget,
-        'COMMENT',
-        {
-          widget: 'TAG',
-          vocabulary: ['Graph', 'Hyphen', 'Space', 'Ortho', 'Translit', 'Misspell', 'Deriv', 'Infl', 'Num', 'Gender', 'Morph', 'Asp', 'ArgStr', 'Passive', 'Refl', 'AgrNum', 'AgrCase', 'AgrGender', 'AgrPers', 'AgrGerund', 'Gov', 'Ref', 'Conj', 'WO', 'Neg', 'Aux', 'Brev', 'Syntax', 'Constr', 'Lex', 'CS', 'Par', 'Idiom', 'Transfer', 'Not-clear', 'Del', 'Insert', 'Transp', 'Subst', 'Altern', 'Tense', 'Mode']
-        },
-      ],
+      widgets: widgets,
       mode: 'pre',
       formatter: ColorFormatter
     });

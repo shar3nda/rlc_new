@@ -80,10 +80,60 @@ class FavoriteAuthorForm(forms.Form):
 
 
 class TokenSearchForm(forms.ModelForm):
+    GRAM_ERROR_CHOICES = [
+        ("Graph", "Graph"),
+        ("Hyphen", "Hyphen"),
+        ("Space", "Space"),
+        ("Ortho", "Ortho"),
+        ("Translit", "Translit"),
+        ("Misspell", "Misspell"),
+        ("Deriv", "Deriv"),
+        ("Infl", "Infl"),
+        ("Num", "Num"),
+        ("Gender", "Gender"),
+        ("Morph", "Morph"),
+        ("Asp", "Asp"),
+        ("ArgStr", "ArgStr"),
+        ("Passive", "Passive"),
+        ("Refl", "Refl"),
+        ("AgrNum", "AgrNum"),
+        ("AgrCase", "AgrCase"),
+        ("AgrGender", "AgrGender"),
+        ("AgrPers", "AgrPers"),
+        ("AgrGerund", "AgrGerund"),
+        ("Gov", "Gov"),
+        ("Ref", "Ref"),
+        ("Conj", "Conj"),
+        ("WO", "WO"),
+        ("Neg", "Neg"),
+        ("Aux", "Aux"),
+        ("Brev", "Brev"),
+        ("Syntax", "Syntax"),
+        ("Constr", "Constr"),
+        ("Lex", "Lex"),
+        ("CS", "CS"),
+        ("Par", "Par"),
+        ("Idiom", "Idiom"),
+        ("Transfer", "Transfer"),
+        ("Not-clear", "Not-clear"),
+        ("Del", "Del"),
+        ("Insert", "Insert"),
+        ("Transp", "Transp"),
+        ("Subst", "Subst"),
+        ("Altern", "Altern"),
+        ("Tense", "Tense"),
+        ("Mode", "Mode"),
+    ]
+
+    gram_errors = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=GRAM_ERROR_CHOICES,
+    )
+
     class Meta:
         model = Token
         fields = [
-            "token",
             "lemma",
             "pos",
             "animacy",
@@ -103,9 +153,6 @@ class TokenSearchForm(forms.ModelForm):
             "voice",
         ]
         widgets = {
-            "token": forms.TextInput(
-                attrs={"class": "form-control", "maxlength": "200"}
-            ),
             "lemma": forms.TextInput(
                 attrs={"class": "form-control", "maxlength": "200"}
             ),
@@ -132,7 +179,3 @@ class TokenSearchForm(forms.ModelForm):
             ),
             "voice": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
         }
-
-    def __init__(self, *args, **kwargs):
-        super(TokenSearchForm, self).__init__(*args, **kwargs)
-        self.fields["token"].required = False

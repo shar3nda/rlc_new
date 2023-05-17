@@ -73,7 +73,7 @@ def auto_annotate(request):
         if len(original_tokens) == 0:
             original_tokens = [orig_tokenized.tokens[edit.o_start - 1]]
             edit.o_str = original_tokens[0].text
-            edit.c_str = f'{edit.o_str} {edit.c_str}'
+            edit.c_str = f"{edit.o_str} {edit.c_str}"
         original_start = original_tokens[0].start
         original_end = original_tokens[-1].stop
 

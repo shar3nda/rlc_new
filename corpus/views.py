@@ -319,7 +319,6 @@ def search(request):
     if form.is_valid() and form.cleaned_data:
         # Define the fields to be filtered on and their corresponding lookup types
         filter_fields = (
-            "token",
             "lemma",
             "pos",
             "animacy",
@@ -346,6 +345,19 @@ def search(request):
             if field in form.cleaned_data and form.cleaned_data[field]
         ]
 
+        # Add filter by error tags if the 'errors' field was provided
+        errors = form.cleaned_data.get("gram_errors")
+        if errors:
+            error_queries = [
+                Q(annotation__error_tags__contains=[error])
+                & Q(annotation__orig_text=form.cleaned_data["lemma"])
+                for error in errors
+            ]
+            errors_query = error_queries.pop()
+            for error_query in error_queries:
+                errors_query |= error_query  # Combine with OR, not AND
+            queries.append(errors_query)
+
         # Combine the Q objects with the AND operator
         if queries:
             query = queries.pop()
@@ -354,6 +366,7 @@ def search(request):
 
             # Apply the filter
             results = Document.objects.filter(query).distinct()
+            print(query)
 
     paginator = Paginator(results, 10)  # Show 10 results per page
 

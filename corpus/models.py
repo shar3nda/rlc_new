@@ -2,6 +2,7 @@ import re
 
 from django.apps import apps
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -379,6 +380,21 @@ class Document(models.Model):
         return self.title
 
 
+def get_selectors(annotation_json):
+    selectors = annotation_json["target"]["selector"]
+    text_position_selector = [
+        selector for selector in selectors if selector["type"] == "TextPositionSelector"
+    ][0]
+    text_quote_selector = [
+        selector for selector in selectors if selector["type"] == "TextQuoteSelector"
+    ][0]
+    return (
+        text_position_selector.get("start"),
+        text_position_selector.get("end"),
+        text_quote_selector.get("exact"),
+    )
+
+
 class Sentence(models.Model):
     """
     A sentence is a part of a document.
@@ -417,23 +433,13 @@ class Sentence(models.Model):
                 replacement = ""
             else:
                 replacement = replacement[0]["value"]
-            selectors = annotation.json["target"]["selector"]
-            text_position_selector = [
-                selector
-                for selector in selectors
-                if selector["type"] == "TextPositionSelector"
-            ][0]
-            text_quote_selector = [
-                selector
-                for selector in selectors
-                if selector["type"] == "TextQuoteSelector"
-            ][0]
 
+            start, end, exact = get_selectors(annotation.json)
             corrections.append(
                 {
-                    "start": text_position_selector["start"],
-                    "end": text_position_selector["end"],
-                    "exact": text_quote_selector["exact"],
+                    "start": start,
+                    "end": end,
+                    "exact": exact,
                     "replacement": replacement,
                 }
             )
@@ -472,6 +478,21 @@ class Sentence(models.Model):
         return self.text
 
 
+def get_orig_text(annotation_json):
+    target = annotation_json.get("target", {})
+    _, _, exact = get_selectors(annotation_json)
+    return exact
+
+
+def get_error_tags(annotation_json):
+    body = annotation_json.get("body", [])
+    error_tags = []
+    for body_item in body:
+        if body_item.get("purpose") == "tagging":
+            error_tags.append(body_item.get("value", []))
+    return error_tags
+
+
 class Annotation(models.Model):
     """
     An annotation is a piece of text that is annotated by a user.
@@ -493,6 +514,28 @@ class Annotation(models.Model):
     )
     json = models.JSONField(verbose_name="JSON")
     alt = models.BooleanField(default=False, verbose_name="Альтернативная")
+    orig_text = models.TextField(verbose_name=_("Original text"))
+    start = models.IntegerField(verbose_name=_("Start"))
+    end = models.IntegerField(verbose_name=_("End"))
+    tokens = models.ManyToManyField(
+        to="corpus.Token", verbose_name=_("Tokens"), blank=True
+    )
+    error_tags = ArrayField(
+        models.CharField(max_length=64, blank=True),
+        blank=True,
+        null=True,
+        verbose_name=_("Error tags"),
+    )
+
+    # save and set orig_text and error_tags
+    def save(self, *args, **kwargs):
+        self.start, self.end, self.orig_text = get_selectors(self.json)
+        self.error_tags = get_error_tags(self.json)
+        toks = Token.objects.filter(
+            sentence=self.sentence, start__gte=self.start, end__lte=self.end
+        )
+        self.tokens.set(toks)
+        super().save(*args, **kwargs)
 
     def serialize(self):
         result = self.json
