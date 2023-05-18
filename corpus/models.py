@@ -325,9 +325,13 @@ class Document(models.Model):
             "time_limit": self.time_limit,
             "oral": self.oral,
             "language_level": self.language_level,
-            "annotators": [annotator.username for annotator in self.annotators.all()],
-            "sentences": [sentence.serialize() for sentence in self.sentence_set.all()],
+            "annotators": list(self.annotators.values_list('username', flat=True)),
+            "sentences": self.serialize_sentences(),
         }
+
+    def serialize_sentences(self):
+        sentences = self.sentence_set.all()
+        return [sentence.serialize() for sentence in sentences]
 
     @receiver(post_save)
     def update_document_annotators(sender, instance, created, **kwargs):
@@ -461,10 +465,12 @@ class Sentence(models.Model):
             "text": self.text,
             "markup": self.markup,
             "number": self.number,
-            "annotations": [
-                annotation.serialize() for annotation in self.annotation_set.all()
-            ],
+            "annotations": self.serialize_annotations(),
         }
+
+    def serialize_annotations(self):
+        annotations = self.annotation_set.all()
+        return [annotation.serialize() for annotation in annotations]
 
     @property
     def correction(self):

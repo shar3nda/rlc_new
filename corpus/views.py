@@ -17,14 +17,12 @@ from .models import Document, Sentence, Author
 
 
 def export_documents(request):
-    # Get the current queryset based on the search parameters in the request
-    document_list = Document.objects.all()
+    document_list = Document.objects.select_related('user', 'author').prefetch_related('annotators', 'sentence_set__annotation_set__user')
+
     filter = DocumentFilter(request.GET, queryset=document_list)
 
-    # Serialize the filtered documents to JSON
     data = [document.serialize() for document in filter.qs]
 
-    # Create the JsonResponse object with the appropriate JSON header
     response = JsonResponse(data, safe=False)
     response["Content-Disposition"] = 'attachment; filename="documents.json"'
 
