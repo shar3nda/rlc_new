@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "api.apps.ApiConfig",
     "crispy_forms",
     "crispy_bootstrap5",
+    "rest_framework",
 ]
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
