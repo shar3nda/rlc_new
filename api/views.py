@@ -1,16 +1,15 @@
 import datetime
+import json
 import uuid
 
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, permissions, status
-from rest_framework.exceptions import ValidationError
-from rest_framework.response import Response
+from django.shortcuts import redirect
 
 from auto_annotator.annotator import Annotator
-from corpus.models import Annotation, Sentence, User, Document
-from corpus.serializers import AnnotationSerializer, SentenceSerializer, UserSerializer
+from corpus.models import Annotation, Document, Sentence
+from corpus.views import user_profile
 
 
 def get_word_positions(sentence, words, word_number):
@@ -121,95 +120,166 @@ def auto_annotate(request):
     return JsonResponse({"annotations": annotations})
 
 
-class AnnotationListCreateViewSet(viewsets.ModelViewSet):
-    queryset = Annotation.objects.all()
-    serializer_class = AnnotationSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-        permissions.DjangoModelPermissions,
-    ]
+def get_sentence_annotations(request, sentence_id):
+    """
+    This API endpoint returns all annotations for a specific sentence.
 
-    def create(self, request, *args, **kwargs):
-        data = request.data
-        sentence = get_object_or_404(Sentence, id=data.get("sentence"))
-        document = get_object_or_404(Document, id=data.get("document"))
-        user = get_object_or_404(User, id=data.get("user"))
-        guid = data.get("guid")
-        alt = data.get("alt")
-        body = data.get("body")
+    Method: GET
+    URL: /api/sentence_annotations/{sentence_id}/
 
-        if not (sentence and document and user and guid and alt is not None and body):
-            raise ValidationError("Required fields are missing")
-
-        alt_bool = alt.lower() == "true"  # converting to boolean
-
-        annotation = Annotation.objects.create(
-            sentence=sentence,
-            document=document,
-            user=user,
-            guid=guid,
-            alt=alt_bool,
-            json=body,
+    Response: [{annotation1}, {annotation2}, ...]
+    """
+    if request.method == "GET":
+        sentence_annotations = Annotation.objects.filter(
+            sentence=sentence_id, alt=False
         )
-        return Response({"id": annotation.id}, status=status.HTTP_201_CREATED)
-
-    def list(self, request, sentence_id=None, alt=None):
-        alt_bool = alt.lower() == "true"  # converting to boolean
-        queryset = Annotation.objects.filter(sentence=sentence_id, alt=alt_bool)
-        if sentence_id is not None:
-            # get list of json fields
-            return JsonResponse([a.json for a in queryset], safe=False)
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        data = [annotation.json for annotation in sentence_annotations]
+        return JsonResponse(data, safe=False)
 
 
-class AnnotationRetrieveUpdateDestroyViewSet(viewsets.ModelViewSet):
-    queryset = Annotation.objects.all()
-    serializer_class = AnnotationSerializer
-    permission_classes = [
-        permissions.IsAuthenticated,
-        permissions.DjangoModelPermissions,
-    ]
+def get_alt_sentence_annotations(request, sentence_id):
+    """
+    This API endpoint returns all alternate annotations for a specific sentence.
 
-    def get_object(self):
-        queryset = self.get_queryset()
-        filter_kwargs = {"guid": self.kwargs["guid"]}
-        obj = get_object_or_404(queryset, **filter_kwargs)
-        self.check_object_permissions(self.request, obj)
-        return obj
+    Method: GET
+    URL: /api/alt_sentence_annotations/{sentence_id}/
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.json = request.data.get("body")
-        instance.save()
-        return Response({"id": instance.id})
-
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response({"id": instance.guid})
+    Response: [{annotation1}, {annotation2}, ...]
+    """
+    if request.method == "GET":
+        sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
+        data = [annotation.json for annotation in sentence_annotations]
+        return JsonResponse(data, safe=False)
 
 
-class SentenceViewSet(viewsets.ModelViewSet):
-    queryset = Sentence.objects.all()
-    serializer_class = SentenceSerializer
+@permission_required("corpus.add_annotation", raise_exception=True)
+def create_annotation(request):
+    """
+    This API endpoint creates a new annotation.
 
-    def retrieve(self, request, pk=None):
-        queryset = Sentence.objects.get(id=pk)
-        serializer = self.get_serializer(queryset)
-        return Response(serializer.data)
+    Method: POST
+    URL: /api/annotation/
+
+    Request Body:
+    {
+        "sentence": <sentence_id>,
+        "document": <document_id>,
+        "user": <user_id>,
+        "guid": <guid>,
+        "alt": <true_or_false>,
+        "body": <json_data>,
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
+    if request.method == "POST":
+        data = json.loads(request.body)
+        annotation = Annotation.objects.create(
+            sentence=Sentence.objects.get(id=data["sentence"]),
+            document=Document.objects.get(id=data["document"]),
+            user=User.objects.get(id=data["user"]),
+            guid=data["guid"],
+            alt=True if data["alt"] == "true" else False,
+            json=data["body"],
+        )
+        return JsonResponse({"id": annotation.id})
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+@permission_required("corpus.change_annotation", raise_exception=True)
+def update_annotation(request):
+    """
+    This API endpoint updates an existing annotation.
 
-    def list(self, request):
-        queryset = User.objects.get(id=request.user.id)
-        serializer = self.get_serializer(queryset)
-        return Response(serializer.data)
+    Method: PUT
+    URL: /api/annotation/
 
-    def retrieve(self, request, pk=None):
-        queryset = User.objects.get(id=request.user.id)
-        serializer = self.get_serializer(queryset)
-        return Response(serializer.data)
+    Request Body:
+    {
+        "guid": <guid>,
+        "body": <json_data>,
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        annotation_id = json.loads(request.body)["guid"]
+        annotation = Annotation.objects.get(guid=annotation_id)
+        annotation.json = data["body"]
+        annotation.save()
+        return JsonResponse({"id": annotation.id})
+
+
+@permission_required("corpus.delete_annotation", raise_exception=True)
+def delete_annotation(request):
+    """
+    This API endpoint deletes an existing annotation.
+
+    Method: DELETE
+    URL: /api/annotation/
+
+    Request Body:
+    {
+        "guid": <guid>
+    }
+
+    Response:
+    {
+        "id": <annotation_id>
+    }
+    """
+    if request.method == "DELETE":
+        annotation_id = json.loads(request.body)["guid"]
+        annotation = Annotation.objects.get(guid=annotation_id)
+        annotation.delete()
+        return JsonResponse({"id": annotation_id})
+
+
+def get_sentence_corrections(request, sentence_id):
+    """
+    This API endpoint returns the correction and alternative correction for a specific sentence.
+
+    Method: GET
+    URL: /api/sentence_corrections/{sentence_id}/
+
+    Response:
+    {
+        "correction": <correction>,
+        "alt_correction": <alt_correction>
+    }
+    """
+    if request.method == "GET":
+        sentence = Sentence.objects.get(id=sentence_id)
+        data = {
+            "correction": sentence.correction,
+            "alt_correction": sentence.alt_correction,
+        }
+        return JsonResponse(data)
+
+
+def get_user_info(request):
+    """
+    This API endpoint returns the user's profile and display name.
+
+    Method: GET
+    URL: /api/user_info/
+
+    Response:
+    {
+        "id": <profile_url>,
+        "displayName": <username>
+    }
+    """
+    if request.method == "GET":
+        user = User.objects.get(id=request.user.id)
+        data = {
+            "id": redirect(user_profile).url,
+            "displayName": user.username,
+        }
+        return JsonResponse(data)

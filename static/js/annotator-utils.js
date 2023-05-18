@@ -15,7 +15,7 @@ function getCookie(name) {
 }
 
 async function createAnnotation(documentId, sentenceId, userId, guid, alt, body) {
-  const url = `/api/annotations/${sentenceId}/${alt}/`;
+  const url = '/api/annotations/create/';
   const data = {
     document: documentId, sentence: sentenceId, user: userId, guid: guid, alt: alt, body,
   };
@@ -36,7 +36,7 @@ async function createAnnotation(documentId, sentenceId, userId, guid, alt, body)
 }
 
 async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body) {
-  const url = `/api/annotations/${sentenceId}/${alt}/`;
+  const url = '/api/annotations/update/';
   const data = {
     document: documentId, sentence: sentenceId, user: userId, guid: guid, body
   };
@@ -57,7 +57,7 @@ async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body)
 }
 
 async function deleteAnnotation(guid) {
-  const url = `/api/annotations/${sentenceId}/${alt}/`;
+  const url = '/api/annotations/delete/';
   const data = {guid: guid};
   const response = await fetch(url, {
     method: 'DELETE',
@@ -232,9 +232,9 @@ function setupRecogito(canAnnotate, data = null) {
     }
 
     if (sentence.dataset.alt === 'true') {
-      r.loadAnnotations(`/api/annotations/${sentence.dataset.sentenceId}/true/`);
+      r.loadAnnotations(`/api/annotations/get/alt/${sentence.dataset.sentenceId}/`);
     } else {
-      r.loadAnnotations(`/api/annotations/${sentence.dataset.sentenceId}/false/`);
+      r.loadAnnotations(`/api/annotations/get/${sentence.dataset.sentenceId}/`);
     }
 
     r.on('createAnnotation', async (annotation, overrideId) => {
