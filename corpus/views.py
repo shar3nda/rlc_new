@@ -54,6 +54,11 @@ def get_verbose_name(model, field_name, choice_code):
     return dict(model._meta.get_field(field_name).flatchoices).get(choice_code)
 
 
+def clean_for_js(data):
+    """Transforms None into a value appropriate for JavaScript"""
+    return [item if item is not None else "Unknown" for item in data]
+
+
 def statistics(request):
     # Aggregate the data
     status_counts = Document.objects.values("status").annotate(count=Count("status"))
@@ -175,24 +180,24 @@ def statistics(request):
         "text_types": text_types,
         "colors": colors,
         "texts_count": texts_count,
-        "languages_labels": list(languages_counts.keys()),
+        "languages_labels": clean_for_js(list(languages_counts.keys())),
         "languages_counts": list(languages_counts.values()),
-        "gender_labels": list(gender_counts.keys()),
+        "gender_labels": clean_for_js(list(gender_counts.keys())),
         "gender_counts": list(gender_counts.values()),
-        "lang_background_labels": list(lang_background_counts.keys()),
+        "lang_background_labels": clean_for_js(list(lang_background_counts.keys())),
         "lang_background_counts": list(lang_background_counts.values()),
-        "genre_labels": list(genre_counts.keys()),
+        "genre_labels": clean_for_js(list(genre_counts.keys())),
         "genre_counts": list(genre_counts.values()),
         "total_sentences": total_sentences,
-        "lang_sent_labels": list(lang_sent_counts.keys()),
+        "lang_sent_labels": clean_for_js(list(lang_sent_counts.keys())),
         "lang_sent_counts": list(lang_sent_counts.values()),
         "total_authors": total_authors,
         "total_fav_authors": total_fav_authors,
-        "auth_gender_labels": list(auth_gender.keys()),
+        "auth_gender_labels": clean_for_js(list(auth_gender.keys())),
         "auth_gender_counts": list(auth_gender.values()),
-        "auth_lang_bg_labels": list(auth_lang_bg_counts.keys()),
+        "auth_lang_bg_labels": clean_for_js(list(auth_lang_bg_counts.keys())),
         "auth_lang_bg_counts": list(auth_lang_bg_counts.values()),
-        "auth_lang_labels": list(auth_lang_counts.keys()),
+        "auth_lang_labels": clean_for_js(list(auth_lang_counts.keys())),
         "auth_lang_counts": list(auth_lang_counts.values()),
         "table_data": table_data,
     }
