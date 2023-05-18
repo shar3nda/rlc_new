@@ -36,7 +36,7 @@ async function createAnnotation(documentId, sentenceId, userId, guid, alt, body)
 }
 
 async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body) {
-  const url = `/api/annotations/${sentenceId}/${alt}/`;
+  const url = `/api/annotations/`;
   const data = {
     document: documentId, sentence: sentenceId, user: userId, guid: guid, body
   };
@@ -57,7 +57,7 @@ async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body)
 }
 
 async function deleteAnnotation(guid) {
-  const url = `/api/annotations/${sentenceId}/${alt}/`;
+  const url = `/api/annotations`;
   const data = {guid: guid};
   const response = await fetch(url, {
     method: 'DELETE',
