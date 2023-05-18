@@ -1,10 +1,8 @@
 import datetime
 import uuid
-from urllib.parse import unquote
 
 from django.contrib.auth.decorators import permission_required
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, status
 from rest_framework.exceptions import ValidationError
@@ -165,11 +163,7 @@ class AnnotationListCreateViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-from rest_framework import mixins, viewsets
-
-
-class AnnotationRetrieveUpdateDestroyViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
-                                             mixins.DestroyModelMixin, viewsets.GenericViewSet):
+class AnnotationRetrieveUpdateDestroyViewSet(viewsets.ModelViewSet):
     queryset = Annotation.objects.all()
     serializer_class = AnnotationSerializer
     permission_classes = [
@@ -179,11 +173,8 @@ class AnnotationRetrieveUpdateDestroyViewSet(mixins.RetrieveModelMixin, mixins.U
 
     def get_object(self):
         queryset = self.get_queryset()
-        guid = urllib.parse.unquote(self.kwargs['guid'])
-        try:
-            obj = queryset.get(guid=guid)
-        except ObjectDoesNotExist:
-            raise Http404("No Annotation matches the given query.")
+        filter_kwargs = {"guid": self.kwargs["guid"]}
+        obj = get_object_or_404(queryset, **filter_kwargs)
         self.check_object_permissions(self.request, obj)
         return obj
 
