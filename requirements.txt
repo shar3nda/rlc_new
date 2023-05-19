@@ -10,3 +10,4 @@ tqdm
 Levenshtein
 nltk
 gunicorn
+pyenchant

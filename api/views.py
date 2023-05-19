@@ -10,6 +10,8 @@ from django.shortcuts import redirect
 from auto_annotator.annotator import Annotator
 from corpus.models import Annotation, Document, Sentence
 from corpus.views import user_profile
+import enchant
+
 
 
 def get_word_positions(sentence, words, word_number):
@@ -283,3 +285,18 @@ def get_user_info(request):
             "displayName": user.username,
         }
         return JsonResponse(data)
+
+
+def get_sentence_errors(request, sentence_id):
+    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+    if request.method == "GET":
+        sentence = Sentence.objects.get(id=sentence_id)
+        dictionary = enchant.Dict("en_US")
+
+        words = sentence.text.split(' ')
+        errors = []
+        for word in words:
+            if not dictionary.check(word):
+                errors.append(word)
+
+        return JsonResponse({'errors': errors})

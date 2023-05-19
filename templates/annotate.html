@@ -97,5 +97,32 @@
         {% if user.is_authenticated %}true{% else %}false{% endif %}
       );
     });
+
+
+
+
+ function getSentenceErrors(sentence_id) {
+    const url = `/api/get_sentence_errors/${sentence_id}`;
+
+    $.ajax({
+    type: "GET",
+        url: url,
+       dataType: 'json',
+      success: function (data) {
+        var errors = data.errors;
+        // Log each error word to console
+        for (var i = 0; i < errors.length; i++) {
+          var errorWord = errors[i];
+          console.log("Misspelled word: " + errorWord);
+        }
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    {% for sentence in sentences %}
+      getSentenceErrors({{ sentence.id }});
+    {% endfor %}
+  });
   </script>
 {% endblock %}
