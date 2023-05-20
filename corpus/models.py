@@ -325,7 +325,7 @@ class Document(models.Model):
             "time_limit": self.time_limit,
             "oral": self.oral,
             "language_level": self.language_level,
-            "annotators": list(self.annotators.values_list('username', flat=True)),
+            "annotators": list(self.annotators.values_list("username", flat=True)),
             "sentences": self.serialize_sentences(),
         }
 

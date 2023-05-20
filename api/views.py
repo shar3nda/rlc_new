@@ -2,16 +2,15 @@ import datetime
 import json
 import uuid
 
+import enchant
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect
 
 from auto_annotator.annotator import Annotator
-from corpus.models import Annotation, Document, Sentence
+from corpus.models import Annotation, Document, Sentence, Token
 from corpus.views import user_profile
-import enchant
-
 
 
 def get_word_positions(sentence, words, word_number):
@@ -287,15 +286,14 @@ def get_user_info(request):
         return JsonResponse(data)
 
 
+_DICTIONARY = enchant.Dict("ru_RU")
+
+
 def get_sentence_errors(request, sentence_id):
     if request.method == "GET":
         sentence = Sentence.objects.get(id=sentence_id)
-        dictionary = enchant.Dict("ru_RU")
 
-        words = sentence.text.split(' ')
-        errors = []
-        for word in words:
-            if not dictionary.check(word):
-                errors.append(word)
+        words = Token.objects.filter(sentence=sentence).values_list("token", flat=True)
+        errors = [word for word in words if not _DICTIONARY.check(word)]
 
-        return JsonResponse({'errors': errors})
+        return JsonResponse({"errors": errors})
