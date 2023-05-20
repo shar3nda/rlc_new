@@ -101,23 +101,29 @@
 
 
 
- function getSentenceErrors(sentence_id) {
+function getSentenceErrors(sentence_id) {
     const url = `/api/get_sentence_errors/${sentence_id}`;
 
     $.ajax({
-    type: "GET",
+        type: "GET",
         url: url,
-       dataType: 'json',
-      success: function (data) {
-        var errors = data.errors;
-        // Log each error word to console
-        for (var i = 0; i < errors.length; i++) {
-          var errorWord = errors[i];
-          console.log("Misspelled word: " + errorWord);
+        dataType: 'json',
+        success: function (data) {
+            var errors = data.errors;
+
+            // Correctly define sentenceElement here before using it
+            var sentenceElement = document.getElementById('sentence-' + sentence_id);
+            var wordSpans = sentenceElement.getElementsByTagName('span');
+            for (var i = 0; i < wordSpans.length; i++) {
+                // If the span's text is in the errors array, add the "error" class
+                if (errors.includes(wordSpans[i].innerText)) {
+                    wordSpans[i].classList.add('error');
+                }
+            }
         }
-      }
     });
-  }
+}
+
 
   $(document).ready(function() {
     {% for sentence in sentences %}

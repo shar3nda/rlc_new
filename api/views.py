@@ -288,10 +288,9 @@ def get_user_info(request):
 
 
 def get_sentence_errors(request, sentence_id):
-    print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
     if request.method == "GET":
         sentence = Sentence.objects.get(id=sentence_id)
-        dictionary = enchant.Dict("en_US")
+        dictionary = enchant.Dict("ru_RU")
 
         words = sentence.text.split(' ')
         errors = []
