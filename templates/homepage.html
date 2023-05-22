@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <div class="list-group position-sticky" style="top: 4rem;">
+        <div class="list-group position-sticky" style="top: 3rem;">
           {% for section in sections %}
             <a href="#section{{ section.number }}" class="list-group-item list-group-item-action text-left" style="font-size: 18px;">{{ section.header_rus }}</a>
           {% endfor %}
@@ -14,12 +14,24 @@
       </div>
       <div class="col-md-9">
         {% for section in sections %}
-          <div id="section{{ section.number }}" class="my-5">
-            <h2 class="text-left mb-3" style="font-size: 24px;">{{ section.header_rus }}</h2>
+          <div id="section{{ section.number }}" class="my-4">
+            <h2 class="text-left mb-2" style="font-size: 22px;">
+              {% if LANGUAGE_CODE == 'ru' %}
+                {{ section.header_rus|safe }}
+              {% else %}
+                {{ section.header_eng|safe }}
+              {% endif %}
+            </h2>
             <div class="card-deck">
               <div class="card border-0">
                 <div class="card-body">
-                  <p class="card-text text-left">{{ section.text_rus|safe }}</p>
+                  <p class="card-text text-left" style="margin-bottom: 0;">
+                    {% if LANGUAGE_CODE == 'ru' %}
+                      {{ section.text_rus|safe }}
+                    {% else %}
+                      {{ section.text_eng|safe }}
+                    {% endif %}
+                  </p>
                 </div>
               </div>
             </div>
