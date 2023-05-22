@@ -15,7 +15,7 @@
       <div class="col-md-9">
         {% for section in sections %}
           <div id="section{{ section.number }}" class="my-4">
-            <h2 class="text-left mb-2" style="font-size: 22px;">
+            <h2 class="text-left" style="font-size: 22px; margin-left: 15px;">
               {% if LANGUAGE_CODE == 'ru' %}
                 {{ section.header_rus|safe }}
               {% else %}
