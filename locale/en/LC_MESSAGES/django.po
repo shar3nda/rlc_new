@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-22 17:20+0300\n"
+"POT-Creation-Date: 2023-05-22 22:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -780,46 +780,50 @@ msgid "Main"
 msgstr ""
 
 #: .\templates\base.html:47
-msgid "News"
+msgid "Search"
 msgstr ""
 
 #: .\templates\base.html:50
-msgid "Help"
+msgid "News"
 msgstr ""
 
 #: .\templates\base.html:53
+msgid "Help"
+msgstr ""
+
+#: .\templates\base.html:56
 msgid "Statics"
 msgstr "Statistics"
 
-#: .\templates\base.html:60
+#: .\templates\base.html:63
 msgid "Dark Mode"
 msgstr ""
 
-#: .\templates\base.html:86
+#: .\templates\base.html:89
 msgid "New document"
 msgstr ""
 
-#: .\templates\base.html:90
+#: .\templates\base.html:93
 msgid "All documents"
 msgstr ""
 
-#: .\templates\base.html:94
+#: .\templates\base.html:97
 msgid "Admin panel"
 msgstr ""
 
-#: .\templates\base.html:104
+#: .\templates\base.html:107
 msgid "Profile"
 msgstr ""
 
-#: .\templates\base.html:105
+#: .\templates\base.html:108
 msgid "Log out"
 msgstr ""
 
-#: .\templates\base.html:110
+#: .\templates\base.html:113
 msgid "Log in"
 msgstr ""
 
-#: .\templates\base.html:126
+#: .\templates\base.html:129
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr ""
 
@@ -901,7 +905,7 @@ msgstr ""
 msgid "Edit document"
 msgstr ""
 
-#: .\templates\homepage.html:31
+#: .\templates\homepage.html:41
 msgid "Back to Top"
 msgstr ""
 
