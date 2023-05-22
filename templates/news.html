@@ -12,17 +12,17 @@
       <h2>{{ article.date }}</h2>
       <div class="card border-1">
         <div class="card-body position-relative" style="padding-right: 50px;">
-          {% if perms.content.delete_article %}
-            <a href="#" class="btn btn-danger position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ forloop.counter }}" role="button" aria-pressed="true">
-              <i class="fas fa-trash"></i>
-            </a>
-          {% endif %}
           {% if LANGUAGE_CODE == 'ru' %}
             {{ article.text_rus|safe }}
           {% else %}
             {{ article.text_eng|safe }}
           {% endif %}
-        </div>
+          {% if perms.content.delete_article %}
+            <a href="#" class="btn btn-danger position-absolute bottom-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ forloop.counter }}" role="button" aria-pressed="true">
+              <i class="fas fa-trash"></i>
+            </a>
+          {% endif %}
+        </div>        
       </div>
     </div>
 
