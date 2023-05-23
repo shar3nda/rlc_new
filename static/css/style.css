@@ -277,11 +277,36 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 /* Style the links in the sidebar */
 #sidebar a {
   display: block;
-  color: #000;
   padding: 10px;
   text-decoration: none;
 }
 
+/* Стили для светлой темы */
+.light-theme #sidebar a {
+  color: #ccc;
+}
+
+/* Стили для темной темы */
+.dark-theme #sidebar a {
+  color: #333;
+}
+
+.section-border {
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* Стили для светлой темы */
+.light-theme .section-border {
+  border: 2px solid #ccc;
+}
+
+/* Стили для темной темы */
+.dark-theme .section-border {
+  border: 2px solid #333;
+}
 
 .error {
     text-decoration: underline;
