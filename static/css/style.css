@@ -250,11 +250,7 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 }
 
 
-.error {
-    text-decoration: underline;
-    text-decoration-color: red
-}
-
+/* Style the sidebar */
 #sidebar {
   margin: 0;
   padding: 0;
@@ -269,6 +265,7 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   display: block;
   color: black;
   padding: 16px;
+  color: #18BC9C;
   text-decoration: none;
 }
 
@@ -288,6 +285,32 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 #help_content {
   margin-left: 200px;
   padding: 1px 16px;
+/* Стили для светлой темы */
+.light-theme #sidebar a {
+  color: #ccc;
+}
+
+/* Стили для темной темы */
+.dark-theme #sidebar a {
+  color: #333;
+}
+
+.section-border {
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+/* Стили для светлой темы */
+.light-theme .section-border {
+  border: 2px solid #ccc;
+}
+
+/* Стили для темной темы */
+.dark-theme .section-border {
+  border: 2px solid #333;
+}
 
 }
 
