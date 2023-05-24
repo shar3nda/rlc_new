@@ -6,66 +6,102 @@
 {% load templatetags %}
 <!-- Template -->
 
+<style>
+  ul {
+    list-style-type: circle;
+  }
+</style>
 
   <body>
-    <div class="header help_header" id="help_header_">
-      <h1>Help Page</h1>
-    </div>
     <div class="wrapper">
       <aside class="sidebar" id="sidebar">
         <ul>
-          <li class="active"><a href="#getting-started">Getting Started</a></li>
-          <li><a href="#account-settings">Немного о корпусе</a></li>
+          <li class="active"><a href="#getting-started">Регистрация</a></li>
+          <li><a href="#account-settings">Создание и разметка текстов</a></li>
           <li><a href="#billing">Как размечать?</a></li>
           <li><a href="#support">Регистрация и авторизация</a></li>
         </ul>
       </aside>
-      <main class="content" id="content">
+      <main class="content" id="content"> 
         <section class="section" id="getting-started">
-          <h2>Немного о корпусе</h2>
-          <p>
-            Добро пожаловать в Русский Учебный Корпус!
-            Наш ресурс - это коллекция текстов, написанных иностранцами на русском языке.
-            Мы собираем всю возможную информацию об этих текстах, а также об их авторах,
-            чтобы предоставить как можно более полезную и актуальную информацию.
-            Каждый текст, добавленный в наш корпус, проходит тщательную проверку на наличие ошибок.
-            Разметчики исправляют все найденные ошибки и присваивают тексту соответствующие теги.
-            После этого текст проходит дополнительную проверку экспертом.
-            Мы разделяем все тексты на три категории: "Не анотированно", "Анотированно" и "Проверено".
-
-          </p>
-
+          <h1 class="mb-4"> Регистрация </h1>
+          <div class="section-border">
+            <h2>Что дает регистрация в корпусе:</h2>
+            <p>
+              Зарегистрировавшись в корпусе, вы сможете:
+            </p>
+            <ul>
+              <li>Добавлять в корпус новые тексты и информацию об авторах;</li>
+              <li>Добавлять тэги / комментарии / исправления к текстам;</li>
+              <li>Редактировать существующую разметку;</li>
+            </ul>
+          </div>
+          <div class="section-border">
+            <h2>Как получить доступ:</h2>
+            <p>
+              На сайте нет привычной саморегистрации, когда пользователь сам вводит свои логин и пароль. 
+              Для этого необходимо обратиться к администрации, отправив письмо на адрес small.corpora@gmail.com с темой "Регистрация в RLC", 
+              не забыв при этом указать причины необходимости использования прав зарегистрированного пользователя. 
+              В течение нескольких дней вы получите ответ с вашим персональным логином и паролем.
+            </p>
+          </div>
+          <div class="section-border">
+            <h2>Что делать, если я забыл пароль?</h2>
+            <p>
+              Если вы забыли пароль, отправьте письмо на адрес small.corpora@gmail.com с темой "Восстановление пароля в RLC". 
+              Пожалуйста, укажите в письме ваш логин. Если вы также не помните логин, достаточно просто написать нам с того же электронного адреса, 
+              с которым вы были зарегистрированы. В течение нескольких дней ваш пароль будет сброшен, и вы получите письмо с новым паролем.
+            </p>
+          </div>
         </section>
         <section class="section" id="account-settings">
-          <h2>Account Settings</h2>
-          <p>Here's how you can update your account settings:</p>
-          <ol>
-            <li>Go to the "Settings" page.</li>
-            <li>Update your profile information.</li>
-            <li>Change your password.</li>
-          </ol>
+          <h1 class="mb-4"> Создание и разметка текстов </h1>
+          <div class="section-border">
+            <h2>Прежде всего</h2>
+            <p>
+              Данный функционал недоступен незарегистрированным пользователям, 
+              поэтому сперва следует войти в свою учетную запись, нажав на кнопку “Войти” правом углу хэдера.
+            </p>
+            <p>
+              Если у вас нет своей учетной записи, то необходимо зарегистрироваться, в этом вам поможет раздел “Регистрация”.
+            </p>
+          </div>
+          <div class="section-border">
+            <h2>Добавление документа</h2>
+            <p>
+              После регистрации ваш хэдер измениться и появиться интересующая нас кнопка “Новый документ” / ”New Document”.
+            </p>
+            <p>
+              При нажатии кнопки открывается меню добавления текста. 
+              Обязательными для заполнения являются следующие поля: Название текста, сам текст, а также полная информация об авторе 
+              (Имя, программа, пол, тип носителя, источник, доминантный язык, уровень знания языка автором).
+              Поля: дата написания и жанр текста могут не заполняться. Помимо вышеперечисленных полей, корпус 
+              также хранит информацию о том, какой из пользователей добавил текст. Если сотрудник понимает, 
+              что не хочет самостоятельно вбивать данные одного и того же автора, то можно воспользоваться функцией автоматического заполнения. 
+              Для этого описанного автора необходимо внести в систему, поставив галочку в поле “Добавить в сохраненные” / “Add to favourites”. 
+              После сотрудник может перейти во вкладку сохраненных авторов и, введя имя интересующего автора, автоматически заполнить соответствующую информацию о нем.
+            </p>
+          </div>
         </section>
         <section class="section" id="billing">
-          <h2>Billing</h2>
-          <p>Here's how you can manage your billing information:</p>
-          <ol>
-            <li>Go to the "Billing" page.</li>
-            <li>Add or remove a payment method.</li>
-            <li>View your payment history.</li>
-            <li>Update your billing information.</li>
-          </ol>
+          <div class="section-border">
+            <h2>Billing</h2>
+            <p>Here's how you can manage your billing information:</p>
+            <ol>
+              <li>Go to the "Billing" page.</li>
+              <li>Add or remove a payment method.</li>
+              <li>View your payment history.</li>
+              <li>Update your billing information.</li>
+            </ol>
+          </div>
         </section>
         <section class="section" id="support">
-          <h2>Support</h2>
-          <p>If you need any help, please contact us at support@mywebsite.com.</p>
+          <div class="section-border">
+            <h2>Support</h2>
+            <p>If you need any help, please contact us at support@mywebsite.com.</p>
+          </div>
         </section>
       </main>
     </div>
-  </body>
-
-
-
-
-
 
 {% endblock %}

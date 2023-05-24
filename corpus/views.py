@@ -11,6 +11,7 @@ from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchF
 from .models import Document, Sentence, Author
 
 
+
 def export_documents(request):
     document_list = Document.objects.select_related("user", "author").prefetch_related(
         "annotators", "sentence_set__annotation_set__user"

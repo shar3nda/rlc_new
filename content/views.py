@@ -4,7 +4,6 @@ from django.views import View
 from .forms import ArticleForm
 from .models import Section, Article
 
-
 class HomepageView(View):
     @staticmethod
     def get(request):
@@ -16,7 +15,7 @@ class HomepageView(View):
 class NewsView(View):
     @staticmethod
     def get(request):
-        articles_list = Article.objects.order_by("date")
+        articles_list = Article.objects.order_by("-date")
         page = "news.html"
         return render(request, page, {"articles": articles_list})
 
@@ -39,3 +38,5 @@ def delete_article(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
     return redirect("news")
+
+
