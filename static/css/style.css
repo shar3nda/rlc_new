@@ -252,36 +252,39 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 
 /* Style the sidebar */
 #sidebar {
-  float: left;
-  width: 210px;
-  padding: 20px;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 200px;
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 100;
-
+  height: 100%;
+  overflow: auto;
 }
 
-/* Style the content */
-#content {
-  margin-left: 220px;
-  padding: 20px;
-}
-
-/* Style the sections */
-.section {
-  margin-bottom: 40px;
-}
-
-/* Style the links in the sidebar */
+/* Sidebar links */
 #sidebar a {
   display: block;
-  padding: 10px;
+  color: black;
+  padding: 16px;
   color: #18BC9C;
   text-decoration: none;
 }
 
+/* Active/current link */
+#sidebar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+/* Links on mouse-over */
+#sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+#help_content {
+  margin-left: 200px;
+  padding: 1px 16px;
 /* Стили для светлой темы */
 .light-theme #sidebar a {
   color: #ccc;
@@ -309,7 +312,27 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   border: 2px solid #333;
 }
 
-.error {
-    text-decoration: underline;
-    text-decoration-color: red
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  #sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  #sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+html {
+    scroll-behavior: smooth;
 }
