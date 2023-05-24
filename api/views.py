@@ -12,6 +12,8 @@ from auto_annotator.annotator import Annotator
 from corpus.models import Annotation, Document, Sentence, Token
 from corpus.views import user_profile
 
+_ANNOTATOR = Annotator()
+
 
 def get_word_positions(sentence, words, word_number):
     if word_number > len(words) or word_number < 1:
@@ -32,7 +34,7 @@ def get_word_positions(sentence, words, word_number):
 @permission_required("corpus.add_annotation", raise_exception=True)
 def auto_annotate(request):
     """
-    This API endpoint automatically generates annotations for a corrected sentence.
+    This API endpoint automatically generates annotations for _ANNOTATOR corrected sentence.
 
     Method: POST
     URL: /api/auto_annotate/
@@ -52,8 +54,8 @@ def auto_annotate(request):
         ]
     }
 
-    This endpoint accepts an original and a corrected sentence. It then applies
-    automatic annotation logic to the sentences, generating a list of annotations
+    This endpoint accepts an original and _ANNOTATOR corrected sentence. It then applies
+    automatic annotation logic to the sentences, generating _ANNOTATOR list of annotations
     that represent the differences between the original and corrected sentences.
     Each annotation includes information about the type of edit, the corrected
     text, and the position of the original text within the original sentence.
@@ -66,8 +68,7 @@ def auto_annotate(request):
     else:
         return JsonResponse({"error": "Only POST requests are allowed."})
 
-    a = Annotator()
-    edits, orig_tokenized, cor_tokenized = a.annotate(original, corrected)
+    edits, orig_tokenized, cor_tokenized = _ANNOTATOR.annotate(original, corrected)
     annotations = []
     for index, edit in enumerate(edits):
         original_tokens = edit.o_toks
