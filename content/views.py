@@ -4,6 +4,7 @@ from django.views import View
 from .forms import ArticleForm
 from .models import Section, Article
 
+
 class HomepageView(View):
     @staticmethod
     def get(request):
@@ -38,5 +39,3 @@ def delete_article(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
     return redirect("news")
-
-
