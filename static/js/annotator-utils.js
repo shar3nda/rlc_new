@@ -147,18 +147,22 @@ function submitCorrectedSentence(sentenceId) {
   const originalSentence = $(`#sentence-${sentenceId}`).text();
   const correctedSentence = $(`#corrected-sentence-input-${sentenceId}`).val();
 
-  // API request to auto_annotate
+
   $.ajax({
     url: '/api/auto_annotate/',
-    type: 'post',
-    data: {
+    type: 'POST',
+    data: JSON.stringify({
       original_sentence: originalSentence,
-      corrected_sentence: correctedSentence,
-      csrfmiddlewaretoken: getCSRFToken(),
+      corrected_sentence: correctedSentence
+    }),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    headers: {
+      'X-CSRFToken': getCSRFToken(),
     },
     success: function (response) {
       // Create new annotations
-      response.annotations.forEach((annotation) => {
+      response.forEach((annotation) => {
         const sentence = document.getElementById(`sentence-${sentenceId}`);
         const guid = annotation.guid;
         const documentId = sentence.dataset.documentId;

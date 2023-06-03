@@ -11,3 +11,4 @@ Levenshtein
 nltk
 gunicorn
 pyenchant
+django-ninja
