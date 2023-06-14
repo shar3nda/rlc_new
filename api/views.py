@@ -121,17 +121,8 @@ def auto_annotate(request, annotate_data: AnnotateRequest):
     return annotations
 
 
-@api.get(
-    "/annotations/get/{sentence_id}/",
-    response={200: List[Dict], 403: None},
-    auth=django_auth,
-)
+@api.get("/annotations/get/{sentence_id}/", response=List[Dict])
 def get_sentence_annotations(request, sentence_id: int):
-    perm = request.auth.has_perm("corpus.view_annotation")
-
-    if not perm:
-        raise HttpError(403, "Permission denied")
-
     sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=False)
     data = [annotation.json for annotation in sentence_annotations]
     return data
@@ -139,15 +130,9 @@ def get_sentence_annotations(request, sentence_id: int):
 
 @api.get(
     "/annotations/get/alt/{sentence_id}/",
-    response={200: List[Dict], 403: None},
-    auth=django_auth,
+    response=List[Dict],
 )
 def get_alt_sentence_annotations(request, sentence_id: int):
-    perm = request.auth.has_perm("corpus.view_annotation")
-
-    if not perm:
-        raise HttpError(403, "Permission denied")
-
     sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
     data = [annotation.json for annotation in sentence_annotations]
     return data
@@ -199,15 +184,9 @@ def delete_annotation(request, annotation_data: AnnotationSchema):
 
 @api.get(
     "/get_corrections/{sentence_id}/",
-    response={200: CorrectionsSchema, 403: None},
-    auth=django_auth,
+    response=CorrectionsSchema,
 )
 def get_sentence_corrections(request, sentence_id: int):
-    perm = request.auth.has_perm("corpus.view_sentence")
-
-    if not perm:
-        raise HttpError(403, "Permission denied")
-
     sentence = Sentence.objects.get(id=sentence_id)
     data = {
         "correction": sentence.correction,
@@ -216,13 +195,8 @@ def get_sentence_corrections(request, sentence_id: int):
     return data
 
 
-@api.get("/get_user_info/", response={200: UserSchema, 403: None}, auth=django_auth)
+@api.get("/get_user_info/", response=UserSchema, auth=django_auth)
 def get_user_info(request):
-    perm = request.auth.has_perm("auth.view_user")
-
-    if not perm:
-        raise HttpError(403, "Permission denied")
-
     user = User.objects.get(id=request.user.id)
     data = {
         "id": redirect(user_profile).url,
@@ -233,15 +207,9 @@ def get_user_info(request):
 
 @api.get(
     "/get_sentence_errors/{sentence_id}/",
-    response={200: SentenceErrorSchema, 403: None},
-    auth=django_auth,
+    response=SentenceErrorSchema,
 )
 def get_sentence_errors(request, sentence_id: int):
-    perm = request.auth.has_perm("corpus.view_sentence")
-
-    if not perm:
-        raise HttpError(403, "Permission denied")
-
     sentence = Sentence.objects.get(id=sentence_id)
     words = Token.objects.filter(sentence=sentence).values_list("token", flat=True)
     errors = [word for word in words if not _DICTIONARY.check(word)]
