@@ -11,4 +11,4 @@ Levenshtein
 nltk
 gunicorn
 pyenchant
-django-ninja~=0.22.1
+django-ninja~=0.22.2
