@@ -89,7 +89,7 @@
       <div>
         {% if perms.corpus.change_document %}
           <a href="{% url 'edit_document' document_id=document.id %}"
-             class="btn btn-edit border-0 shadow-none">
+             class="btn btn-secondary border-0 shadow-none">
             <i class="fas fa-edit"></i> {% trans "Edit" %}
           </a>
         {% endif %}
