@@ -22,7 +22,7 @@ $colors: (
 // Import bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-// Mixin for buttons
+/// Mixin for buttons
 @mixin button-variant($color-name, $color-value) {
   .btn-#{$color-name} {
     background-color: $color-value;
@@ -35,7 +35,9 @@ $colors: (
       border-color: darken($color-value, 15%);
     }
 
-    &:active {
+    &:active,
+    &.active, // add this for clicked state
+    &:focus:active { // add this for focus and active states
       background-color: darken($color-value, 10%);
       border-color: darken($color-value, 20%);
     }
