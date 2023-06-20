@@ -29,6 +29,10 @@ class AnnotationSchema(Schema):
     body: dict
 
 
+class AnnotationDeleteSchema(Schema):
+    guid: str
+
+
 class CorrectionsSchema(Schema):
     correction: str
     alt_correction: str
@@ -171,7 +175,7 @@ def update_annotation(request, annotation_data: AnnotationSchema):
 
 
 @api.delete("/annotations/delete/", response={200: Dict, 403: None}, auth=django_auth)
-def delete_annotation(request, annotation_data: AnnotationSchema):
+def delete_annotation(request, annotation_data: AnnotationDeleteSchema):
     perm = request.auth.has_perm("corpus.delete_annotation")
 
     if not perm:
