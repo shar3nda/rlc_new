@@ -76,6 +76,7 @@ class FavoriteAuthorForm(forms.Form):
         queryset=Author.objects.filter(favorite=True),
         label=_("Saved authors"),
         widget=forms.Select(attrs={"class": "form-select"}),
+        required=False,
     )
 
 

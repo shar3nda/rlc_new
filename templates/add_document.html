@@ -78,8 +78,7 @@
           <div class="tab-content mb-4">
             {% include 'author_card.html' %}
             <div class="form-group tab-pane fade" id="favorite-authors">
-              <label
-                  for="{{ favorite_author_form.selected_author.auto_id }}">{{ favorite_author_form.selected_author.label }}</label>
+              <label for="search-author">{{ favorite_author_form.selected_author.label }}</label>
               <input type="text" class="form-control" id="search-author"
                      placeholder="{% trans "Search for saved authors..." %}">
               {{ favorite_author_form.selected_author.as_hidden }}
