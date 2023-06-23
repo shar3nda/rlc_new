@@ -1,20 +1,14 @@
-from collections import defaultdict
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.forms import UserCreationForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views import generic
-from django.db.models import Q
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchForm
 from .models import Document, Sentence, Author
-
 
 
 def export_documents(request):
@@ -290,15 +284,9 @@ def edit_document(request, document_id):
 
         if form.is_valid():
             form.save(commit=False)
-            if favorite_author_form.is_valid():
+            if favorite_author_form.is_valid() and favorite_author_form.cleaned_data['selected_author'] is not None:
                 document.author = favorite_author_form.cleaned_data["selected_author"]
-                document.save()
-            else:
-                messages.error(
-                    request,
-                    "Не удалось сохранить автора. Пожалуйста, проверьте форму и попробуйте снова.",
-                )
-                return redirect("edit_document", document_id=document_id)
+            document.save()
             return redirect("annotate", document_id=document.id)
         else:
             messages.error(
@@ -326,7 +314,8 @@ def edit_document(request, document_id):
     )
 
 
-@login_required
+
+@permission_required("corpus.change_document")
 def edit_author(request, author_id, document_id):
     author = get_object_or_404(Author, id=author_id)
     if request.method == "POST":
@@ -356,6 +345,7 @@ def edit_author(request, author_id, document_id):
     )
 
 
+@permission_required("corpus.delete_document")
 def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     document.delete()
@@ -363,6 +353,7 @@ def delete_document(request, document_id):
     return redirect("documents")
 
 
+@permission_required("corpus.change_document")
 def update_document_status(request, document_id):
     if request.method == "POST":
         status = request.POST.get("status")
@@ -435,7 +426,6 @@ def search(request):
 
             # Apply the filter
             results = Document.objects.filter(query).distinct()
-            print(query)
 
     paginator = Paginator(results, 10)  # Show 10 results per page
 

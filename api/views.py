@@ -1,73 +1,77 @@
-import datetime
-import json
-import uuid
+from datetime import datetime
+from typing import List, Dict
+from uuid import uuid4
 
-import enchant
-from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
-from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
+from enchant import Dict as EnchantDict
+from ninja.errors import HttpError
 
 from auto_annotator.annotator import Annotator
-from corpus.models import Annotation, Document, Sentence, Token
+
+_ANNOTATOR = Annotator()
+_DICTIONARY = EnchantDict("ru_RU")
+
+from ninja import Schema, NinjaAPI
+from ninja.security import django_auth
+
+from corpus.models import Annotation, Sentence, Document, User, Token
 from corpus.views import user_profile
 
-
-def get_word_positions(sentence, words, word_number):
-    if word_number > len(words) or word_number < 1:
-        raise ValueError(
-            f"Word number is out of range (len={len(words)}, number={word_number})"
-        )
-
-    target_word = words[word_number - 1]
-    start_position = sentence.find(target_word)
-
-    if start_position == -1:
-        raise ValueError(f"Word '{target_word}' not found in sentence '{sentence}'")
-
-    end_position = start_position + len(target_word) - 1
-    return start_position, end_position
+api = NinjaAPI(csrf=True)
 
 
-@permission_required("corpus.add_annotation", raise_exception=True)
-def auto_annotate(request):
-    """
-    This API endpoint automatically generates annotations for a corrected sentence.
+class AnnotationSchema(Schema):
+    sentence: int
+    document: int
+    user: int
+    guid: str
+    alt: str
+    body: dict
 
-    Method: POST
-    URL: /api/auto_annotate/
 
-    Request Body:
-    {
-        "original_sentence": <original_sentence>,
-        "corrected_sentence": <corrected_sentence>
-    }
+class AnnotationDeleteSchema(Schema):
+    guid: str
 
-    Response:
-    {
-        "annotations": [
-            <annotation 1 in W3C format>,
-            <annotation 2 in W3C format>,
-            ...
-        ]
-    }
 
-    This endpoint accepts an original and a corrected sentence. It then applies
-    automatic annotation logic to the sentences, generating a list of annotations
-    that represent the differences between the original and corrected sentences.
-    Each annotation includes information about the type of edit, the corrected
-    text, and the position of the original text within the original sentence.
+class CorrectionsSchema(Schema):
+    correction: str
+    alt_correction: str
 
-    If the request method is not POST, an error message is returned.
-    """
-    if request.method == "POST":
-        original = request.POST["original_sentence"]
-        corrected = request.POST["corrected_sentence"]
-    else:
-        return JsonResponse({"error": "Only POST requests are allowed."})
 
-    a = Annotator()
-    edits, orig_tokenized, cor_tokenized = a.annotate(original, corrected)
+class UserSchema(Schema):
+    id: str
+    displayName: str
+
+
+class SentenceErrorSchema(Schema):
+    errors: List[str]
+
+
+class AnnotateRequest(Schema):
+    original_sentence: str
+    corrected_sentence: str
+
+
+class AnnotationResponse(Schema):
+    guid: str
+    body: dict
+
+
+@api.post(
+    "/auto_annotate/",
+    response={200: List[AnnotationResponse], 403: None},
+    auth=django_auth,
+)
+def auto_annotate(request, annotate_data: AnnotateRequest):
+    perm = request.auth.has_perm("corpus.add_annotation")
+
+    if not perm:
+        raise HttpError(403, "Permission denied")
+
+    original = annotate_data.original_sentence
+    corrected = annotate_data.corrected_sentence
+
+    edits, orig_tokenized, cor_tokenized = _ANNOTATOR.annotate(original, corrected)
     annotations = []
     for index, edit in enumerate(edits):
         original_tokens = edit.o_toks
@@ -78,7 +82,7 @@ def auto_annotate(request):
         original_start = original_tokens[0].start
         original_end = original_tokens[-1].stop
 
-        guid = uuid.uuid4()
+        guid = uuid4()
         annotation = {
             "guid": f"#{guid}",
             "body": {
@@ -87,14 +91,14 @@ def auto_annotate(request):
                     {
                         "type": "TextualBody",
                         "value": edit.type,
-                        "created": datetime.datetime.now().isoformat(),
+                        "created": datetime.now().isoformat(),
                         "creator": {"id": "/corpus/user_profile/", "name": "auto"},
                         "purpose": "tagging",
                     },
                     {
                         "type": "TextualBody",
                         "value": edit.c_str,
-                        "created": datetime.datetime.now().isoformat(),
+                        "created": datetime.now().isoformat(),
                         "creator": {"id": "/corpus/user_profile/", "name": "auto"},
                         "purpose": "commenting",
                     },
@@ -118,182 +122,99 @@ def auto_annotate(request):
         }
         annotations.append(annotation)
 
-    return JsonResponse({"annotations": annotations})
+    return annotations
 
 
-def get_sentence_annotations(request, sentence_id):
-    """
-    This API endpoint returns all annotations for a specific sentence.
-
-    Method: GET
-    URL: /api/sentence_annotations/{sentence_id}/
-
-    Response: [{annotation1}, {annotation2}, ...]
-    """
-    if request.method == "GET":
-        sentence_annotations = Annotation.objects.filter(
-            sentence=sentence_id, alt=False
-        )
-        data = [annotation.json for annotation in sentence_annotations]
-        return JsonResponse(data, safe=False)
+@api.get("/annotations/get/{sentence_id}/", response=List[Dict])
+def get_sentence_annotations(request, sentence_id: int):
+    sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=False)
+    data = [annotation.json for annotation in sentence_annotations]
+    return data
 
 
-def get_alt_sentence_annotations(request, sentence_id):
-    """
-    This API endpoint returns all alternate annotations for a specific sentence.
-
-    Method: GET
-    URL: /api/alt_sentence_annotations/{sentence_id}/
-
-    Response: [{annotation1}, {annotation2}, ...]
-    """
-    if request.method == "GET":
-        sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
-        data = [annotation.json for annotation in sentence_annotations]
-        return JsonResponse(data, safe=False)
+@api.get(
+    "/annotations/get/alt/{sentence_id}/",
+    response=List[Dict],
+)
+def get_alt_sentence_annotations(request, sentence_id: int):
+    sentence_annotations = Annotation.objects.filter(sentence=sentence_id, alt=True)
+    data = [annotation.json for annotation in sentence_annotations]
+    return data
 
 
-@permission_required("corpus.add_annotation", raise_exception=True)
-def create_annotation(request):
-    """
-    This API endpoint creates a new annotation.
+@api.post("/annotations/create/", response={201: Dict, 403: None}, auth=django_auth)
+def create_annotation(request, annotation_data: AnnotationSchema):
+    perm = request.auth.has_perm("corpus.add_annotation")
 
-    Method: POST
-    URL: /api/annotation/
+    if not perm:
+        raise HttpError(403, "Permission denied")
 
-    Request Body:
-    {
-        "sentence": <sentence_id>,
-        "document": <document_id>,
-        "user": <user_id>,
-        "guid": <guid>,
-        "alt": <true_or_false>,
-        "body": <json_data>,
+    annotation = Annotation.objects.create(
+        sentence=Sentence.objects.get(id=annotation_data.sentence),
+        document=Document.objects.get(id=annotation_data.document),
+        user=User.objects.get(id=annotation_data.user),
+        guid=annotation_data.guid,
+        alt=True if annotation_data.alt == "true" else False,
+        json=annotation_data.body,
+    )
+
+    return {"id": annotation.guid}
+
+
+@api.put("/annotations/update/", response={200: Dict, 403: None}, auth=django_auth)
+def update_annotation(request, annotation_data: AnnotationSchema):
+    perm = request.auth.has_perm("corpus.change_annotation")
+
+    if not perm:
+        raise HttpError(403, "Permission denied")
+
+    annotation = get_object_or_404(Annotation, guid=annotation_data.guid)
+    annotation.json = annotation_data.body
+    annotation.save()
+    return {"id": annotation.guid}
+
+
+@api.delete("/annotations/delete/", response={200: Dict, 403: None}, auth=django_auth)
+def delete_annotation(request, annotation_data: AnnotationDeleteSchema):
+    perm = request.auth.has_perm("corpus.delete_annotation")
+
+    if not perm:
+        raise HttpError(403, "Permission denied")
+
+    annotation = Annotation.objects.get(guid=annotation_data.guid)
+    annotation.delete()
+    return {"id": annotation.guid}
+
+
+@api.get(
+    "/get_corrections/{sentence_id}/",
+    response=CorrectionsSchema,
+)
+def get_sentence_corrections(request, sentence_id: int):
+    sentence = Sentence.objects.get(id=sentence_id)
+    data = {
+        "correction": sentence.correction,
+        "alt_correction": sentence.alt_correction,
     }
-
-    Response:
-    {
-        "id": <annotation_id>
-    }
-    """
-    if request.method == "POST":
-        data = json.loads(request.body)
-        annotation = Annotation.objects.create(
-            sentence=Sentence.objects.get(id=data["sentence"]),
-            document=Document.objects.get(id=data["document"]),
-            user=User.objects.get(id=data["user"]),
-            guid=data["guid"],
-            alt=True if data["alt"] == "true" else False,
-            json=data["body"],
-        )
-        return JsonResponse({"id": annotation.id})
+    return data
 
 
-@permission_required("corpus.change_annotation", raise_exception=True)
-def update_annotation(request):
-    """
-    This API endpoint updates an existing annotation.
-
-    Method: PUT
-    URL: /api/annotation/
-
-    Request Body:
-    {
-        "guid": <guid>,
-        "body": <json_data>,
-    }
-
-    Response:
-    {
-        "id": <annotation_id>
-    }
-    """
-    if request.method == "PUT":
-        data = json.loads(request.body)
-        annotation_id = json.loads(request.body)["guid"]
-        annotation = Annotation.objects.get(guid=annotation_id)
-        annotation.json = data["body"]
-        annotation.save()
-        return JsonResponse({"id": annotation.id})
-
-
-@permission_required("corpus.delete_annotation", raise_exception=True)
-def delete_annotation(request):
-    """
-    This API endpoint deletes an existing annotation.
-
-    Method: DELETE
-    URL: /api/annotation/
-
-    Request Body:
-    {
-        "guid": <guid>
-    }
-
-    Response:
-    {
-        "id": <annotation_id>
-    }
-    """
-    if request.method == "DELETE":
-        annotation_id = json.loads(request.body)["guid"]
-        annotation = Annotation.objects.get(guid=annotation_id)
-        annotation.delete()
-        return JsonResponse({"id": annotation_id})
-
-
-def get_sentence_corrections(request, sentence_id):
-    """
-    This API endpoint returns the correction and alternative correction for a specific sentence.
-
-    Method: GET
-    URL: /api/sentence_corrections/{sentence_id}/
-
-    Response:
-    {
-        "correction": <correction>,
-        "alt_correction": <alt_correction>
-    }
-    """
-    if request.method == "GET":
-        sentence = Sentence.objects.get(id=sentence_id)
-        data = {
-            "correction": sentence.correction,
-            "alt_correction": sentence.alt_correction,
-        }
-        return JsonResponse(data)
-
-
+@api.get("/get_user_info/", response=UserSchema, auth=django_auth)
 def get_user_info(request):
-    """
-    This API endpoint returns the user's profile and display name.
-
-    Method: GET
-    URL: /api/user_info/
-
-    Response:
-    {
-        "id": <profile_url>,
-        "displayName": <username>
+    user = User.objects.get(id=request.user.id)
+    data = {
+        "id": redirect(user_profile).url,
+        "displayName": user.username,
     }
-    """
-    if request.method == "GET":
-        user = User.objects.get(id=request.user.id)
-        data = {
-            "id": redirect(user_profile).url,
-            "displayName": user.username,
-        }
-        return JsonResponse(data)
+    return data
 
 
-_DICTIONARY = enchant.Dict("ru_RU")
-
-
-def get_sentence_errors(request, sentence_id):
-    if request.method == "GET":
-        sentence = Sentence.objects.get(id=sentence_id)
-
-        words = Token.objects.filter(sentence=sentence).values_list("token", flat=True)
-        errors = [word for word in words if not _DICTIONARY.check(word)]
-
-        return JsonResponse({"errors": errors})
+@api.get(
+    "/get_sentence_errors/{sentence_id}/",
+    response=SentenceErrorSchema,
+)
+def get_sentence_errors(request, sentence_id: int):
+    sentence = Sentence.objects.get(id=sentence_id)
+    words = Token.objects.filter(sentence=sentence).values_list("token", flat=True)
+    errors = [word for word in words if not _DICTIONARY.check(word)]
+    return {"errors": errors}

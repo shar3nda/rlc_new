@@ -335,11 +335,13 @@ class Document(models.Model):
 
     @receiver(post_save)
     def update_document_annotators(sender, instance, created, **kwargs):
-        Annotation = apps.get_model("corpus", "Annotation")
-        if created and sender == Annotation:
-            instance.document.annotators.add(instance.user)
+        # Check for the signal_sender argument
+        if kwargs.get("signal_sender", True):
+            Annotation = apps.get_model("corpus", "Annotation")
+            if created and sender == Annotation:
+                instance.document.annotators.add(instance.user)
 
-    def save(self, *args, **kwargs):
+    def save(self, signal_sender=True, *args, **kwargs):
         """
         This method overrides the default save method of the model.
         It is used to create Sentence objects for each sentence in the document.
@@ -354,9 +356,17 @@ class Document(models.Model):
         else:
             body_changed = True
 
-        super().save(*args, **kwargs)
+        super(Document, self).save(*args, **kwargs)
 
-        if body_changed:
+        # Add signal_sender argument to post_save signal
+        post_save.send(
+            sender=self.__class__,
+            instance=self,
+            created=not bool(self.pk),
+            signal_sender=signal_sender,
+        )
+
+        if body_changed and signal_sender:  # Check for the signal_sender argument
             Sentence.objects.filter(document=self).delete()
             Annotation.objects.filter(document=self).delete()
 

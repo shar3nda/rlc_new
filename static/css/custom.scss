@@ -1,0 +1,60 @@
+$white: #ffffff;
+
+// Variables for the theme colors
+$colors: (
+  "light": #c6dce2,
+  "dark": #171343,
+  "primary": #273d6f,
+  "secondary": #a95b66,
+  "info": #c76d5e,
+  "success": #2f9c60,
+  "warning": #dfc931,
+  "danger": #af2c40,
+);
+
+// Transform the map of colors into CSS variables
+:root {
+  @each $color, $value in $colors {
+    --color-#{$color}: #{$value};
+  }
+}
+
+// Import bootstrap
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+/// Mixin for buttons
+@mixin button-variant($color-name, $color-value) {
+  .btn-#{$color-name} {
+    background-color: $color-value;
+    border-color: darken($color-value, 10%);
+    color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: darken($color-value, 5%);
+      border-color: darken($color-value, 15%);
+    }
+
+    &:active,
+    &.active, // add this for clicked state
+    &:focus:active { // add this for focus and active states
+      background-color: darken($color-value, 10%);
+      border-color: darken($color-value, 20%);
+    }
+  }
+}
+
+// Application of the mixin for each color
+@each $color, $value in $colors {
+  @include button-variant($color, $value);
+}
+
+// General button styling
+.btn {
+  border-radius: 5px;
+  transition: all 0.1s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}

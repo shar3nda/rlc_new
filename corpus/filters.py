@@ -1,6 +1,5 @@
 import django_filters
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 from .models import Document, Author, Token
