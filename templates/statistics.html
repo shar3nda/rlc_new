@@ -107,9 +107,11 @@
           <h1 style="font-size: 8rem; margin-bottom: 2rem;" id="total-docs-counter">{{ texts_count }}</h1>
         </div>
         <div style="display: flex; justify-content: center;">
+          {% if user.is_authenticated %}
           <div style="width: 60%; margin-right: 2rem;">
             <canvas id="text_types_chart"></canvas>
           </div>
+          {% endif %}
           <div style="width: 40%;">
             <canvas id="gender_chart"></canvas>
           </div>
@@ -151,7 +153,6 @@
               <canvas id="lang_sent_chart"></canvas>
             </div>
           </div>
-          <!-- Your sentence statistics and charts go here -->
         </div>
       </div>
     </div>
