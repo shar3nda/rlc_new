@@ -135,11 +135,25 @@ def make_sentence(self, sentence, sentence_num):
     if hasattr(sentence.tokens[0], "start"):
         offset = sentence.tokens[0].start
     for token in sentence.tokens:
+        feats_markup = '\n'.join([f'<div class=\'col-6\'><strong>{key}:</strong></div><div class=\'col-6\'>{value}</div>' for key, value in token.feats.items()])
+
         replacements.append(
             (
                 getattr(token, "start", 1) - offset,
                 getattr(token, "end", token.start + len(token.text)) - offset,
-                f'<span data-toggle="tooltip" title="Lemma: {token.lemma} POS: {token.pos} Morph: {token.feats}">{token.text}</span>',
+                f"""<span data-toggle="tooltip" data-bs-html="true" data-bs-original-title="
+    <div class='row'>
+        <div class='col-6'><strong>Lemma:</strong></div>
+        <div class='col-6'>{token.lemma}</div>
+    </div>
+    <div class='row'>
+        <div class='col-6'><strong>POS:</strong></div>
+        <div class='col-6'>{token.pos}</div>
+    </div>
+    <div class='row'>
+        {feats_markup}
+    </div>
+">{token.text}</span>""",
             )
         )
     replacements.sort(key=lambda x: x[1], reverse=True)

@@ -284,7 +284,10 @@ def edit_document(request, document_id):
 
         if form.is_valid():
             form.save(commit=False)
-            if favorite_author_form.is_valid() and favorite_author_form.cleaned_data['selected_author'] is not None:
+            if (
+                favorite_author_form.is_valid()
+                and favorite_author_form.cleaned_data["selected_author"] is not None
+            ):
                 document.author = favorite_author_form.cleaned_data["selected_author"]
             document.save()
             return redirect("annotate", document_id=document.id)
@@ -312,7 +315,6 @@ def edit_document(request, document_id):
             "favorite_author_form": favorite_author_form,
         },
     )
-
 
 
 @permission_required("corpus.change_document")

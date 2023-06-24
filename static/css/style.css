@@ -79,7 +79,7 @@ body {
 .logout-item:hover,
 .logout-item:focus {
   background-color: red;
-  color: #fff; 
+  color: #fff;
   outline: none;
 }
 
@@ -189,6 +189,7 @@ body[data-bs-theme="dark"] .r6o-widget.comment .r6o-comment-dropdown-menu li {
   color: var(--bs-light);
   border-color: var(--bs-secondary);
 }
+
 body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   background-color: var(--bs-dark);
   color: var(--bs-light);
@@ -276,6 +277,7 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   margin-left: 200px;
   padding: 1px 16px;
 }
+
 /* Стили для светлой темы */
 .light-theme #sidebar a {
   color: #ccc;
@@ -304,7 +306,6 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 }
 
 
-
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 700px) {
   #sidebar {
@@ -312,8 +313,14 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
     height: auto;
     position: relative;
   }
-  #sidebar a {float: left;}
-  div.content {margin-left: 0;}
+
+  #sidebar a {
+    float: left;
+  }
+
+  div.content {
+    margin-left: 0;
+  }
 }
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
@@ -325,5 +332,5 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
