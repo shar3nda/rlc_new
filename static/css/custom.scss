@@ -19,6 +19,8 @@ $colors: (
   }
 }
 
+$tooltip-max-width: 250px;
+$tooltip-opacity: 0.8;
 // Import bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
