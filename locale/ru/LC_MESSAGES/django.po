@@ -106,7 +106,7 @@ msgstr "Тип носителя"
 #: .\corpus\filters.py:43 .\corpus\models.py:107
 #: .\templates\document_card.html:53 .\templates\edit_document.html:68
 msgid "Dominant language"
-msgstr "Родной язык"
+msgstr "Доминантный язык"
 
 #: .\corpus\filters.py:46 .\corpus\models.py:191
 msgid "Title"
@@ -1006,7 +1006,7 @@ msgstr "из них отмечены как сохранённые"
 
 #: .\templates\statistics.html:185
 msgid "Authors by dominant languages"
-msgstr "Родной язык авторов"
+msgstr "Доминантный язык авторов"
 
 #: .\templates\statistics.html:273
 msgid " \"Texts annotated:\" "

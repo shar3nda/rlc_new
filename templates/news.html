@@ -3,9 +3,11 @@
 {% load i18n %}
 
 {% block content %}
+  {% if user.is_authenticated %}
   <a href="{% url 'create_article' %}" class="btn btn-primary btn-lg active mb-4" role="button" aria-pressed="true">
     {% trans "Add article" %}
   </a>
+  {% endif %}
 
   {% for article in articles %}
     <div id="section{{ forloop.counter }}" class="mb-5 font-size: 18px;">

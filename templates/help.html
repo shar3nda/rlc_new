@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% include 'sidebar.html' %}
+
 {% block content %}
 {% load templatetags %}
 <!-- Template -->
@@ -13,17 +15,8 @@
 </style>
 
   <body>
-    <div class="wrapper">
-      <aside class="sidebar" id="sidebar">
-        <ul>
-          <li class="active"><a href="#getting-started">Регистрация</a></li>
-          <li><a href="#account-settings">Создание и разметка текстов</a></li>
-          <li><a href="#billing">Как размечать?</a></li>
-          <li><a href="#support">Регистрация и авторизация</a></li>
-        </ul>
-      </aside>
-      <main class="content" id="content"> 
-        <section class="section" id="getting-started">
+    <div id="help_content">
+        <section class="section" id="section 1">
           <h1 class="mb-4"> Регистрация </h1>
           <div class="section-border">
             <h2>Что дает регистрация в корпусе:</h2>
@@ -85,23 +78,12 @@
         </section>
         <section class="section" id="billing">
           <div class="section-border">
-            <h2>Billing</h2>
-            <p>Here's how you can manage your billing information:</p>
-            <ol>
-              <li>Go to the "Billing" page.</li>
-              <li>Add or remove a payment method.</li>
-              <li>View your payment history.</li>
-              <li>Update your billing information.</li>
-            </ol>
           </div>
         </section>
         <section class="section" id="support">
           <div class="section-border">
-            <h2>Support</h2>
-            <p>If you need any help, please contact us at support@mywebsite.com.</p>
           </div>
         </section>
-      </main>
     </div>
 
 {% endblock %}
