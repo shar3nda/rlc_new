@@ -19,77 +19,57 @@
         <div class="container">
           <form method="get" class="mb-5 lexgram-form">
             <div class="row">
-              <div class="form-group col-md-8">
-                {{ form.lemma.label_tag }} {{ form.lemma }}
+              <div class="col-sm-3">
+                <label>
+                  Словоформа<input class="form-control input-sm" type="text" name="wordform[]"
+                                   placeholder="Словоформа"></label>
               </div>
-              <div class="form-group col-md-4">
-                {{ form.pos.label_tag }} {{ form.pos }}
+
+              {% include 'partials/lex_select.html' %}
+              <script>
+                function getLex() {
+                  $('#lexModal').modal('show');
+                }
+              </script>
+
+              <div class="col-sm-3">
+                <label>
+                  <a onclick="getLex()"><span class="fa fa-th-list"></span></a>
+                  Часть речи<input class="form-control input-sm" type="text" id="lex" name="lex[]"
+                                   placeholder="Часть речи"></label>
               </div>
+
+              {% include 'partials/gram_select.html' %}
+              <script>
+                function getGram() {
+                  $('#gramModal').modal('show');
+                }
+              </script>
+
+              <div class="col-sm-3">
+                <label>
+                  <a onclick="getGram()"><span class="fa fa-th-list"></span></a>
+                  Грамматика<input class="form-control input-sm" type="text" id="gram" name="grammar[]"
+                                   placeholder="Грамматические характеристики"></label>
+              </div>
+
+              {% include 'partials/err_select.html' %}
+              <script>
+                function getErr() {
+                  $('#errModal').modal('show');
+                }
+              </script>
+
+              <div class="col-sm-3">
+                <label>
+                  <a onclick="getErr()"><span class="fa fa-th-list"></span></a>
+                  Ошибки<input class="form-control input-sm" type="text" id="err" name="errors[]"
+                               placeholder="Тэги ошибок"></label>
+              </div>
+
+
             </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                {{ form.animacy.label_tag }} {{ form.animacy }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.aspect.label_tag }} {{ form.aspect }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.case.label_tag }} {{ form.case }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                {{ form.degree.label_tag }} {{ form.degree }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.foreign.label_tag }} {{ form.foreign }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.gender.label_tag }} {{ form.gender }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                {{ form.hyph.label_tag }} {{ form.hyph }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.mood.label_tag }} {{ form.mood }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.gram_number.label_tag }} {{ form.gram_number }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                {{ form.person.label_tag }} {{ form.person }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.polarity.label_tag }} {{ form.polarity }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.tense.label_tag }} {{ form.tense }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-4">
-                {{ form.verb_form.label_tag }} {{ form.verb_form }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.voice.label_tag }} {{ form.voice }}
-              </div>
-              <div class="form-group col-md-4">
-                {{ form.variant.label_tag }} {{ form.variant }}
-              </div>
-            </div>
-            <div class="checkbox-group mt-4">
-              {{ form.gram_errors.label_tag }}
-              {% for choice in form.gram_errors %}
-                <label>{{ choice.choice_label }}
-                  <input type="checkbox" name="{{ choice.name }}" value="{{ choice.choice_value }}">
-                </label>
-              {% endfor %}
-            </div>
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            <button type="submit" class="btn btn-primary mt-2">{% trans "Submit" %}</button>
           </form>
         </div>
 
@@ -106,4 +86,8 @@
       </div>
     </div>
   </div>
+
+  <script>
+
+  </script>
 {% endblock %}
