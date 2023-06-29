@@ -43,5 +43,15 @@
              name="errors[]"
              placeholder="Тэги ошибок">
     </label>
+    <button class="btn btn-danger btn-sm" onclick="removeContainer('{{ block_id }}')">
+      -
+    </button>
   </div>
 </div>
+
+<script>
+  function removeContainer(blockId) {
+    var container = document.querySelector('[data-block-id="' + blockId + '"]');
+    container.remove();
+  }
+</script>
