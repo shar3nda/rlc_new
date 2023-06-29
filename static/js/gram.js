@@ -17,48 +17,41 @@ const gramFeatures = {
 };
 
 function generateGramCheckboxes(block_id) {
-  const container = document.getElementById(`gramFeaturesContainer-${block_id}`);
-  container.innerHTML = '';
+  const container = $(`#gramFeaturesContainer-${block_id}`);
+  container.empty();
 
-  const row = document.createElement('div');
-  row.className = 'row';
+  const row = $('<div>').addClass('row');
 
-  for (const column in gramFeatures) {
-    const col = document.createElement('div');
-    col.className = 'col';
+  for (const [column, features] of Object.entries(gramFeatures)) {
+    const col = $('<div>').addClass('col');
+    const header = $('<h6>').text(column);
+    col.append(header);
 
-    const header = document.createElement('h6');
-    header.innerText = column;
-    col.appendChild(header);
+    for (const feature of features) {
+      const id = `gramFeature${feature}-${block_id}`;
 
-    for (const feature of gramFeatures[column]) {
-      const formCheck = document.createElement('div');
-      formCheck.className = 'form-check';
+      const input = $('<input>', {
+        class: 'form-check-input', type: 'checkbox', id, value: feature
+      });
 
-      const input = document.createElement('input');
-      input.className = 'form-check-input';
-      input.type = 'checkbox';
-      input.id = `gramFeature${feature}-${block_id}`;
-      input.value = feature;
-      formCheck.appendChild(input);
+      const label = $('<label>', {
+        class: 'form-check-label', text: feature, for: id
+      });
 
-      const label = document.createElement('label');
-      label.className = 'form-check-label';
-      label.innerText = feature;
-      label.htmlFor = `gramFeature${feature}-${block_id}`;
-      formCheck.appendChild(label);
+      const formCheck = $('<div>').addClass('form-check');
+      formCheck.append(input, label);
 
-      col.appendChild(formCheck);
+      col.append(formCheck);
     }
 
-    row.appendChild(col);
+    row.append(col);
   }
 
-  container.appendChild(row);
+  container.append(row);
 }
 
 function selectGramFeatures(block_id) {
-  const selectedFeatures = Array.from(document.getElementById(`gramModal-${block_id}`).querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+  const selectedFeatures = $(`#gramModal-${block_id} input[type="checkbox"]:checked`).map((_, input) => input.value).get();
 
   let gramInput = '';
   if (selectedFeatures.length === 1) {
@@ -72,7 +65,6 @@ function selectGramFeatures(block_id) {
   $(`#gramModal-${block_id}`).modal('hide');
 }
 
-function clearGramFeatures() {
-  const modal = $(`#gramModal-${block_id}`);
-  modal.find('input[type="checkbox"]').prop('checked', false);
+function clearGramFeatures(block_id) {
+  $(`#gramModal-${block_id} input[type="checkbox"]`).prop('checked', false);
 }

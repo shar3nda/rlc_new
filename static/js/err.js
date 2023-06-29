@@ -1,63 +1,51 @@
 function generateErrCheckboxes(block_id) {
-  const container = document.getElementById(`errFeaturesContainer-${block_id}`);
-  container.innerHTML = '';
+  const container = $(`#errFeaturesContainer-${block_id}`);
+  container.empty();
 
-  const row = document.createElement('div');
-  row.className = 'row';
+  const row = $('<div>').addClass('row');
 
-  for (const section in errFeatures) {
-    const col = document.createElement('div');
-    col.className = 'col';
+  for (const [section, subsections] of Object.entries(errFeatures)) {
+    const col = $('<div>').addClass('col');
+    const header = $('<h6>').text(section);
+    col.append(header);
 
-    const header = document.createElement('h6');
-    header.innerText = section;
-    col.appendChild(header);
+    const subsectionList = $('<ul>');
 
-    const subsectionList = document.createElement('ul');
+    for (const [subsection, tooltipText] of Object.entries(subsections)) {
+      const id = `errFeature${subsection}`;
 
-    for (const subsection in errFeatures[section]) {
-      const subsectionItem = document.createElement('li');
-      subsectionItem.className = 'form-check';
+      const checkbox = $('<input>', {
+        class: 'form-check-input', type: 'checkbox', id, value: subsection
+      });
 
-      const checkbox = document.createElement('input');
-      checkbox.className = 'form-check-input';
-      checkbox.type = 'checkbox';
-      checkbox.id = `errFeature${subsection}`;
-      checkbox.value = subsection;
-      subsectionItem.appendChild(checkbox);
+      const label = $('<label>', {
+        class: 'form-check-label', text: subsection, for: id
+      });
 
-      const label = document.createElement('label');
-      label.className = 'form-check-label';
-      label.htmlFor = `errFeature${subsection}`;
-      label.innerText = subsection;
-      subsectionItem.appendChild(label);
+      const tooltipLink = $('<a>', {
+        href: '#', class: 'ms-1', 'data-toggle': 'tooltip', title: tooltipText
+      }).html('<i class="fas fa-question"></i>');
 
-      const tooltipLink = document.createElement('a');
-      tooltipLink.href = '#';
-      tooltipLink.className = 'ms-1';
-      tooltipLink.dataset.toggle = 'tooltip';
-      tooltipLink.title = errFeatures[section][subsection];
-      tooltipLink.innerHTML = '<i class="fas fa-question"></i>';
-      subsectionItem.appendChild(tooltipLink);
+      const subsectionItem = $('<li>').addClass('form-check');
+      subsectionItem.append(checkbox, label, tooltipLink);
 
-      subsectionList.appendChild(subsectionItem);
+      subsectionList.append(subsectionItem);
     }
 
-    col.appendChild(subsectionList);
-    row.appendChild(col);
+    col.append(subsectionList);
+    row.append(col);
   }
 
-  container.appendChild(row);
+  container.append(row);
 
   // Initialize tooltips
-  const tooltips = container.querySelectorAll('[data-toggle="tooltip"]');
-  tooltips.forEach((tooltip) => {
-    new bootstrap.Tooltip(tooltip);
+  container.find('[data-toggle="tooltip"]').each(function () {
+    new bootstrap.Tooltip(this);
   });
 }
 
 function selectErrFeatures(block_id) {
-  const selectedFeatures = Array.from(document.getElementById(`errModal-${block_id}`).querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+  const selectedFeatures = $(`#errModal-${block_id} input[type="checkbox"]:checked`).map((_, input) => input.value).get();
 
   let errInput = '';
   if (selectedFeatures.length === 1) {
@@ -71,7 +59,6 @@ function selectErrFeatures(block_id) {
   $(`#errModal-${block_id}`).modal('hide');
 }
 
-function clearErrFeatures() {
-  const modal = $(`#errModal-${block_id}`);
-  modal.find('input[type="checkbox"]').prop('checked', false);
+function clearErrFeatures(block_id) {
+  $(`#errModal-${block_id} input[type="checkbox"]`).prop('checked', false);
 }
