@@ -33,7 +33,7 @@
     </label>
   </div>
   {% include 'partials/err_select.html' %}
-  <div class="col-sm-3">
+  <div class="col-sm-2 align-self-center">
     <label>
       <a onclick="getErr('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
       Ошибки
@@ -43,11 +43,19 @@
              name="errors[]"
              placeholder="Тэги ошибок">
     </label>
-    <button class="btn btn-danger btn-sm" onclick="removeContainer('{{ block_id }}')">
-      -
+  </div>
+  <div class="col-sm-1 align-self-center mt-3">
+    <button class="btn btn-danger btn-sm rounded-circle float-end" onclick="removeContainer('{{ block_id }}')">
+      &times;
     </button>
   </div>
 </div>
+
+<style>
+  .rounded-circle {
+    border-radius: 50%;
+  }
+</style>
 
 <script>
   function removeContainer(blockId) {
