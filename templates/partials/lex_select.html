@@ -1,19 +1,19 @@
-<div class="modal fade" id="lexModal" tabindex="-1" role="dialog" aria-labelledby="lexModalLabel" aria-hidden="true">
+<div class="modal fade" id="lexModal-{{ block_id }}" tabindex="-1" role="dialog" aria-labelledby="lexModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="lexModalLabel">Select Lexical Features</h5>
+        <h5 class="modal-title" id="lexModalLabel-{{ block_id }}">Select Lexical Features</h5>
         <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
           <i class="fas fa-xmark"></i>
         </button>
       </div>
       <div class="modal-body">
-        <div id="lexFeaturesContainer"></div>
+        <div id="lexFeaturesContainer-{{ block_id }}"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="selectLexFeatures()">OK</button>
-        <button type="button" class="btn btn-link" onclick="clearLexFeatures()">Clear</button>
+        <button type="button" class="btn btn-primary" onclick="selectLexFeatures('{{ block_id }}')">OK</button>
+        <button type="button" class="btn btn-link" onclick="clearLexFeatures('{{ block_id }}')">Clear</button>
       </div>
     </div>
   </div>
@@ -21,75 +21,5 @@
 
 
 <script>
-  const lexFeatures = [
-    'ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM', 'PART',
-    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X'
-  ];
-
-  function generateLexCheckboxes() {
-    const container = document.getElementById('lexFeaturesContainer');
-    container.innerHTML = '';
-
-    const numColumns = 4;
-    const columnSize = Math.ceil(lexFeatures.length / numColumns);
-
-    const row = document.createElement('div');
-    row.className = 'row';
-
-    for (let i = 0; i < numColumns; i++) {
-      const column = document.createElement('div');
-      column.className = 'col';
-
-      for (let j = i * columnSize; j < (i + 1) * columnSize && j < lexFeatures.length; j++) {
-        const feature = lexFeatures[j];
-
-        const div = document.createElement('div');
-        div.className = 'form-check';
-
-        const input = document.createElement('input');
-        input.className = 'form-check-input';
-        input.type = 'checkbox';
-        input.id = `lexFeature${feature}`;
-        input.value = feature;
-
-        const label = document.createElement('label');
-        label.className = 'form-check-label';
-        label.htmlFor = `lexFeature${feature}`;
-        label.textContent = feature;
-
-        div.appendChild(input);
-        div.appendChild(label);
-        column.appendChild(div);
-      }
-
-      row.appendChild(column);
-    }
-
-    container.appendChild(row);
-  }
-
-  generateLexCheckboxes();
-
-  function getLex() {
-    $('#lexModal').modal('show');
-  }
-
-  function selectLexFeatures() {
-    const selectedFeatures = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
-
-    let lexInput = '';
-    if (selectedFeatures.length === 1) {
-      lexInput = selectedFeatures[0];
-    } else if (selectedFeatures.length > 1) {
-      lexInput = `(${selectedFeatures.join('|')})`;
-    }
-
-    $('#lex').val(lexInput);
-
-    $('#lexModal').modal('hide');
-  }
-
-  function clearLexFeatures() {
-    $('input[type="checkbox"]').prop('checked', false);
-  }
+  generateLexCheckboxes('{{ block_id }}');
 </script>

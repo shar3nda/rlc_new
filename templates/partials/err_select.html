@@ -1,107 +1,25 @@
 {% load static %}
-<div class="modal fade" id="errModal" tabindex="-1" role="dialog" aria-labelledby="errModalLabel" aria-hidden="true">
+<div class="modal fade" id="errModal-{{ block_id }}" tabindex="-1" role="dialog" aria-labelledby="errModalLabel-{{ block_id }}" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="errModalLabel">Select Errors</h5>
+        <h5 class="modal-title" id="errModalLabel-{{ block_id }}">Select Errors</h5>
         <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
           <i class="fas fa-xmark"></i>
         </button>
       </div>
       <div class="modal-body">
-        <div id="errFeaturesContainer"></div>
+        <div id="errFeaturesContainer-{{ block_id }}"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="selectErrFeatures()">OK</button>
-        <button type="button" class="btn btn-link" onclick="clearErrFeatures()">Clear</button>
+        <button type="button" class="btn btn-primary" onclick="selectErrFeatures('{{ block_id }}')">OK</button>
+        <button type="button" class="btn btn-link" onclick="clearErrFeatures('{{ block_id }}')">Clear</button>
       </div>
     </div>
   </div>
 </div>
 
-<script src="{% static 'js/err_features.js' %}"></script>
 <script>
-  function generateErrCheckboxes() {
-    const container = document.getElementById('errFeaturesContainer');
-    container.innerHTML = '';
-
-    const row = document.createElement('div');
-    row.className = 'row';
-
-    for (const section in errFeatures) {
-      const col = document.createElement('div');
-      col.className = 'col';
-
-      const header = document.createElement('h6');
-      header.innerText = section;
-      col.appendChild(header);
-
-      const subsectionList = document.createElement('ul');
-
-      for (const subsection in errFeatures[section]) {
-        const subsectionItem = document.createElement('li');
-        subsectionItem.className = 'form-check';
-
-        const checkbox = document.createElement('input');
-        checkbox.className = 'form-check-input';
-        checkbox.type = 'checkbox';
-        checkbox.id = `errFeature${subsection}`;
-        checkbox.value = subsection;
-        subsectionItem.appendChild(checkbox);
-
-        const label = document.createElement('label');
-        label.className = 'form-check-label';
-        label.htmlFor = `errFeature${subsection}`;
-        label.innerText = subsection;
-        subsectionItem.appendChild(label);
-
-        const tooltipLink = document.createElement('a');
-        tooltipLink.href = '#';
-        tooltipLink.className = 'ms-1';
-        tooltipLink.dataset.toggle = 'tooltip';
-        tooltipLink.title = errFeatures[section][subsection];
-        tooltipLink.innerHTML = '<i class="fas fa-question"></i>';
-        subsectionItem.appendChild(tooltipLink);
-
-        subsectionList.appendChild(subsectionItem);
-      }
-
-      col.appendChild(subsectionList);
-      row.appendChild(col);
-    }
-
-    container.appendChild(row);
-
-    // Initialize tooltips
-    const tooltips = container.querySelectorAll('[data-toggle="tooltip"]');
-    tooltips.forEach((tooltip) => {
-      new bootstrap.Tooltip(tooltip);
-    });
-  }
-
-
-  generateErrCheckboxes();
-
-  function selectErrFeatures() {
-    const selectedFeatures = [];
-    $('input[type="checkbox"]:checked').each(function () {
-      selectedFeatures.push($(this).val());
-    });
-
-    let errInput = '';
-    if (selectedFeatures.length === 1) {
-      errInput = selectedFeatures[0];
-    } else if (selectedFeatures.length > 1) {
-      errInput = `(${selectedFeatures.join('|')})`;
-    }
-
-    $('#err').val(errInput);
-
-    $('#errModal').modal('hide');
-  }
-
-  function clearErrFeatures() {
-    $('input[type="checkbox"]').prop('checked', false);
-  }
+  generateErrCheckboxes('{{ block_id }}');
 </script>

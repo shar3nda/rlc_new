@@ -1,9 +1,11 @@
+import uuid
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import DocumentFilter
@@ -374,64 +376,14 @@ def user_profile(request):
 
 
 def search(request):
-    form = TokenSearchForm(request.GET)
-    results = Document.objects.none()  # No results initially
+    return render(request, "lexgram_search.html")
 
-    if form.is_valid() and form.cleaned_data:
-        # Define the fields to be filtered on and their corresponding lookup types
-        filter_fields = (
-            "lemma",
-            "pos",
-            "animacy",
-            "aspect",
-            "case",
-            "degree",
-            "foreign",
-            "gender",
-            "hyph",
-            "mood",
-            "gram_number",
-            "person",
-            "polarity",
-            "tense",
-            "variant",
-            "verb_form",
-            "voice",
-        )
 
-        # Create Q objects for each filter, if a value was provided
-        queries = [
-            Q(**{f"token__{field}": form.cleaned_data[field]})
-            for field in filter_fields
-            if field in form.cleaned_data and form.cleaned_data[field]
-        ]
+def get_search(request):
+    if request.method == "POST":
+        # TODO: implement search
+        return
 
-        # Add filter by error tags if the 'errors' field was provided
-        errors = form.cleaned_data.get("gram_errors")
-        if errors:
-            error_queries = [
-                Q(annotation__error_tags__contains=[error])
-                & Q(annotation__tokens__lemma=form.cleaned_data["lemma"])
-                for error in errors
-            ]
-
-            errors_query = error_queries.pop()
-            for error_query in error_queries:
-                errors_query |= error_query  # Combine with OR, not AND
-            queries.append(errors_query)
-
-        # Combine the Q objects with the AND operator
-        if queries:
-            query = queries.pop()
-            for item in queries:
-                query &= item
-
-            # Apply the filter
-            results = Document.objects.filter(query).distinct()
-
-    paginator = Paginator(results, 10)  # Show 10 results per page
-
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    return render(request, "lexgram_search.html", {"form": form, "page_obj": page_obj})
+    return render(
+        request, "partials/lexgram_form_contents.html", {"block_id": uuid.uuid4()}
+    )

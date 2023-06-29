@@ -135,7 +135,12 @@ def make_sentence(self, sentence, sentence_num):
     if hasattr(sentence.tokens[0], "start"):
         offset = sentence.tokens[0].start
     for token in sentence.tokens:
-        feats_markup = '\n'.join([f'<div class=\'col-6\'><strong>{key}:</strong></div><div class=\'col-6\'>{value}</div>' for key, value in token.feats.items()])
+        feats_markup = "\n".join(
+            [
+                f"<div class='col-6'><strong>{key}:</strong></div><div class='col-6'>{value}</div>"
+                for key, value in token.feats.items()
+            ]
+        )
 
         replacements.append(
             (

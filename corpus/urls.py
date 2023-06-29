@@ -31,4 +31,5 @@ urlpatterns = [
     path("help/", views.help, name="help"),
     path("export_documents/", views.export_documents, name="export_documents"),
     path("search/", views.search, name="search"),
+    path("get_search", views.get_search, name="get_search"),
 ]

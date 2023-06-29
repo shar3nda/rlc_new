@@ -1,78 +1,41 @@
-<!-- search.html -->
 {% extends "base.html" %}
 {% load static %}
 {% load i18n %}
-{% load templatetags %} <!-- load your pagination tags -->
+{% load templatetags %}
+{% block head %}<script src="https://unpkg.com/htmx.org@latest/dist/htmx.min.js"></script>{% endblock %}
 {% block content %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/lexgram.css' %}">
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
         {% if form.errors %}
           <div class="alert alert-danger">
-            {% for error in form.errors %}
-              {{ error }}
-            {% endfor %}
+            {% for error in form.errors %}{{ error }}{% endfor %}
           </div>
         {% endif %}
         <div class="container">
+          <script>
+            function getLex(id) {
+              $(`#lexModal-${id}`).modal('show');
+            }
+
+            function getGram(id) {
+              $(`#gramModal-${id}`).modal('show');
+            }
+
+            function getErr(id) {
+              $(`#errModal-${id}`).modal('show');
+            }
+          </script>
           <form method="get" class="mb-5 lexgram-form">
-            <div class="row">
-              <div class="col-sm-3">
-                <label>
-                  Словоформа<input class="form-control input-sm" type="text" name="wordform[]"
-                                   placeholder="Словоформа"></label>
-              </div>
-
-              {% include 'partials/lex_select.html' %}
-              <script>
-                function getLex() {
-                  $('#lexModal').modal('show');
-                }
-              </script>
-
-              <div class="col-sm-3">
-                <label>
-                  <a onclick="getLex()"><span class="fa fa-th-list"></span></a>
-                  Часть речи<input class="form-control input-sm" type="text" id="lex" name="lex[]"
-                                   placeholder="Часть речи"></label>
-              </div>
-
-              {% include 'partials/gram_select.html' %}
-              <script>
-                function getGram() {
-                  $('#gramModal').modal('show');
-                }
-              </script>
-
-              <div class="col-sm-3">
-                <label>
-                  <a onclick="getGram()"><span class="fa fa-th-list"></span></a>
-                  Грамматика<input class="form-control input-sm" type="text" id="gram" name="grammar[]"
-                                   placeholder="Грамматические характеристики"></label>
-              </div>
-
-              {% include 'partials/err_select.html' %}
-              <script>
-                function getErr() {
-                  $('#errModal').modal('show');
-                }
-              </script>
-
-              <div class="col-sm-3">
-                <label>
-                  <a onclick="getErr()"><span class="fa fa-th-list"></span></a>
-                  Ошибки<input class="form-control input-sm" type="text" id="err" name="errors[]"
-                               placeholder="Тэги ошибок"></label>
-              </div>
-
-
-            </div>
+            <div id="token-forms"></div>
+            <button class="btn btn-success me-2" id="add-token-form" hx-get="{% url 'get_search' %}"
+                    hx-target="#token-forms" hx-swap="beforeend">
+              + Add Token
+            </button>
             <button type="submit" class="btn btn-primary mt-2">{% trans "Submit" %}</button>
           </form>
         </div>
-
         {% if page_obj %}
           <h2>{% trans "Search results" %}</h2>
           <ul>
@@ -80,14 +43,294 @@
               {% include 'document_card.html' %}
             {% endfor %}
           </ul>
-
           {% paginator page_obj request %}
         {% endif %}
       </div>
     </div>
   </div>
-
+  <script src="{% static 'js/err_features.js' %}"></script>
   <script>
+  const lexFeatures = [
+    'ADJ', 'ADP', 'ADV', 'AUX', 'CCONJ', 'DET', 'INTJ', 'NOUN', 'NUM', 'PART',
+    'PRON', 'PROPN', 'PUNCT', 'SCONJ', 'SYM', 'VERB', 'X'
+  ];
 
-  </script>
+  function generateLexCheckboxes(block_id) {
+    const container = document.getElementById(`lexFeaturesContainer-${block_id}`);
+    container.innerHTML = '';
+
+    const numColumns = 4;
+    const columnSize = Math.ceil(lexFeatures.length / numColumns);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    for (let i = 0; i < numColumns; i++) {
+      const column = document.createElement('div');
+      column.className = 'col';
+
+      for (let j = i * columnSize; j < (i + 1) * columnSize && j < lexFeatures.length; j++) {
+        const feature = lexFeatures[j];
+
+        const div = document.createElement('div');
+        div.className = 'form-check';
+
+        const input = document.createElement('input');
+        input.className = 'form-check-input';
+        input.type = 'checkbox';
+        input.id = `lexFeature${feature}-{{ block_id }}`;
+        input.value = feature;
+
+        const label = document.createElement('label');
+        label.className = 'form-check-label';
+        label.htmlFor = `lexFeature${feature}-{{ block_id }}`;
+        label.textContent = feature;
+
+        div.appendChild(input);
+        div.appendChild(label);
+        column.appendChild(div);
+      }
+
+      row.appendChild(column);
+    }
+
+    container.appendChild(row);
+  }
+
+  function selectLexFeatures(block_id) {
+    const selectedFeatures = Array.from(document.getElementById(`lexModal-${block_id}`).querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+
+    let lexInput = '';
+    if (selectedFeatures.length === 1) {
+      lexInput = selectedFeatures[0];
+    } else if (selectedFeatures.length > 1) {
+      lexInput = `(${selectedFeatures.join('|')})`;
+    }
+
+    document.getElementById(`lex-${block_id}`).value = lexInput;
+    $(`#lexModal-${block_id}`).modal('hide');
+  }
+
+  function clearLexFeatures(block_id) {
+    // uncheck all checkboxes in modal
+    const modal = $(`#lexModal-${block_id}`);
+    modal.find('input[type="checkbox"]').prop('checked', false);
+  }
+
+  // ---------------------------------------------
+
+  const gramFeatures = {
+    'Animacy': [
+      'Anim',
+      'Inan'
+    ],
+    'Aspect': [
+      'Imp',
+      'Perf',
+    ],
+    'Case': [
+      'Acc',
+      'Dat',
+      'Gen',
+      'Ins',
+      'Loc',
+      'Nom',
+      'Par',
+      'Voc',
+    ],
+    'Degree': [
+      'Cmp',
+      'Pos',
+      'Sup',
+    ],
+    'Foreign': [
+      'Foreign',
+    ],
+    'Gender': [
+      'Fem',
+      'Masc',
+      'Neut',
+    ],
+    'Hyph': [
+      'Hyphen',
+    ],
+    'Mood': [
+      'Cnd',
+      'Imp',
+      'Ind',
+    ],
+    'Number': [
+      'Plur',
+      'Sing',
+    ],
+    'Person': [
+      '1',
+      '2',
+      '3',
+    ],
+    'Polarity': [
+      'Neg',
+    ],
+    'Tense': [
+      'Fut',
+      'Past',
+      'Pres',
+    ],
+    'Variant': [
+      'Short',
+    ],
+    'VerbForm': [
+      'Conv',
+      'Fin',
+      'Inf',
+      'Part',
+    ],
+    'Voice': [
+      'Act',
+      'Mid',
+      'Pass',
+    ],
+  };
+
+  function generateGramCheckboxes(block_id) {
+    const container = document.getElementById(`gramFeaturesContainer-${block_id}`);
+    container.innerHTML = '';
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    for (const column in gramFeatures) {
+      const col = document.createElement('div');
+      col.className = 'col';
+
+      const header = document.createElement('h6');
+      header.innerText = column;
+      col.appendChild(header);
+
+      for (const feature of gramFeatures[column]) {
+        const formCheck = document.createElement('div');
+        formCheck.className = 'form-check';
+
+        const input = document.createElement('input');
+        input.className = 'form-check-input';
+        input.type = 'checkbox';
+        input.id = `gramFeature${feature}-${block_id}`;
+        input.value = feature;
+        formCheck.appendChild(input);
+
+        const label = document.createElement('label');
+        label.className = 'form-check-label';
+        label.innerText = feature;
+        label.htmlFor = `gramFeature${feature}-${block_id}`;
+        formCheck.appendChild(label);
+
+        col.appendChild(formCheck);
+      }
+
+      row.appendChild(col);
+    }
+
+    container.appendChild(row);
+  }
+
+  function selectGramFeatures(block_id) {
+    const selectedFeatures = Array.from(document.getElementById(`gramModal-${block_id}`).querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+
+    let gramInput = '';
+    if (selectedFeatures.length === 1) {
+      gramInput = selectedFeatures[0];
+    } else if (selectedFeatures.length > 1) {
+      gramInput = `(${selectedFeatures.join('|')})`;
+    }
+
+    $(`#gram-${block_id}`).val(gramInput);
+
+    $(`#gramModal-${block_id}`).modal('hide');
+  }
+
+  function clearGramFeatures() {
+    const modal = $(`#gramModal-${block_id}`);
+    modal.find('input[type="checkbox"]').prop('checked', false);
+  }
+
+  // ---------------------------------------------
+
+  function generateErrCheckboxes(block_id) {
+    const container = document.getElementById(`errFeaturesContainer-${block_id}`);
+    container.innerHTML = '';
+
+    const row = document.createElement('div');
+    row.className = 'row';
+
+    for (const section in errFeatures) {
+      const col = document.createElement('div');
+      col.className = 'col';
+
+      const header = document.createElement('h6');
+      header.innerText = section;
+      col.appendChild(header);
+
+      const subsectionList = document.createElement('ul');
+
+      for (const subsection in errFeatures[section]) {
+        const subsectionItem = document.createElement('li');
+        subsectionItem.className = 'form-check';
+
+        const checkbox = document.createElement('input');
+        checkbox.className = 'form-check-input';
+        checkbox.type = 'checkbox';
+        checkbox.id = `errFeature${subsection}`;
+        checkbox.value = subsection;
+        subsectionItem.appendChild(checkbox);
+
+        const label = document.createElement('label');
+        label.className = 'form-check-label';
+        label.htmlFor = `errFeature${subsection}`;
+        label.innerText = subsection;
+        subsectionItem.appendChild(label);
+
+        const tooltipLink = document.createElement('a');
+        tooltipLink.href = '#';
+        tooltipLink.className = 'ms-1';
+        tooltipLink.dataset.toggle = 'tooltip';
+        tooltipLink.title = errFeatures[section][subsection];
+        tooltipLink.innerHTML = '<i class="fas fa-question"></i>';
+        subsectionItem.appendChild(tooltipLink);
+
+        subsectionList.appendChild(subsectionItem);
+      }
+
+      col.appendChild(subsectionList);
+      row.appendChild(col);
+    }
+
+    container.appendChild(row);
+
+    // Initialize tooltips
+    const tooltips = container.querySelectorAll('[data-toggle="tooltip"]');
+    tooltips.forEach((tooltip) => {
+      new bootstrap.Tooltip(tooltip);
+    });
+  }
+
+  function selectErrFeatures(block_id) {
+    const selectedFeatures = Array.from(document.getElementById(`errModal-${block_id}`).querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+
+    let errInput = '';
+    if (selectedFeatures.length === 1) {
+      errInput = selectedFeatures[0];
+    } else if (selectedFeatures.length > 1) {
+      errInput = `(${selectedFeatures.join('|')})`;
+    }
+
+    $(`#err-${block_id}`).val(errInput);
+
+    $(`#errModal-${block_id}`).modal('hide');
+  }
+
+  function clearErrFeatures() {
+    const modal = $(`#errModal-${block_id}`);
+    modal.find('input[type="checkbox"]').prop('checked', false);
+  }
+</script>
 {% endblock %}
