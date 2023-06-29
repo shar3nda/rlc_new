@@ -1,74 +1,19 @@
 const gramFeatures = {
-  'Animacy': [
-    'Anim',
-    'Inan'
-  ],
-  'Aspect': [
-    'Imp',
-    'Perf',
-  ],
-  'Case': [
-    'Acc',
-    'Dat',
-    'Gen',
-    'Ins',
-    'Loc',
-    'Nom',
-    'Par',
-    'Voc',
-  ],
-  'Degree': [
-    'Cmp',
-    'Pos',
-    'Sup',
-  ],
-  'Foreign': [
-    'Foreign',
-  ],
-  'Gender': [
-    'Fem',
-    'Masc',
-    'Neut',
-  ],
-  'Hyph': [
-    'Hyphen',
-  ],
-  'Mood': [
-    'Cnd',
-    'Imp',
-    'Ind',
-  ],
-  'Number': [
-    'Plur',
-    'Sing',
-  ],
-  'Person': [
-    '1',
-    '2',
-    '3',
-  ],
-  'Polarity': [
-    'Neg',
-  ],
-  'Tense': [
-    'Fut',
-    'Past',
-    'Pres',
-  ],
-  'Variant': [
-    'Short',
-  ],
-  'VerbForm': [
-    'Conv',
-    'Fin',
-    'Inf',
-    'Part',
-  ],
-  'Voice': [
-    'Act',
-    'Mid',
-    'Pass',
-  ],
+  'Animacy': ['Anim', 'Inan'],
+  'Aspect': ['Imp', 'Perf',],
+  'Case': ['Acc', 'Dat', 'Gen', 'Ins', 'Loc', 'Nom', 'Par', 'Voc',],
+  'Degree': ['Cmp', 'Pos', 'Sup',],
+  'Foreign': ['Foreign',],
+  'Gender': ['Fem', 'Masc', 'Neut',],
+  'Hyph': ['Hyphen',],
+  'Mood': ['Cnd', 'Imp', 'Ind',],
+  'Number': ['Plur', 'Sing',],
+  'Person': ['1', '2', '3',],
+  'Polarity': ['Neg',],
+  'Tense': ['Fut', 'Past', 'Pres',],
+  'Variant': ['Short',],
+  'VerbForm': ['Conv', 'Fin', 'Inf', 'Part',],
+  'Voice': ['Act', 'Mid', 'Pass',],
 };
 
 function generateGramCheckboxes(block_id) {
