@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-22 22:18+0300\n"
+"POT-Creation-Date: 2023-06-28 14:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,52 +78,52 @@ msgstr ""
 msgid "sections"
 msgstr ""
 
-#: .\corpus\filters.py:19 .\corpus\filters.py:50 .\corpus\models.py:299
+#: .\corpus\filters.py:18 .\corpus\filters.py:49 .\corpus\models.py:313
 #: .\templates\document_card.html:47 .\templates\edit_document.html:62
 msgid "Author"
 msgstr ""
 
-#: .\corpus\filters.py:23
+#: .\corpus\filters.py:22
 msgid "Author search"
 msgstr ""
 
-#: .\corpus\filters.py:27 .\corpus\filters.py:59
+#: .\corpus\filters.py:26 .\corpus\filters.py:58
 #: .\templates\document_card.html:41
 msgid "Owner"
 msgstr ""
 
-#: .\corpus\filters.py:31
+#: .\corpus\filters.py:30
 msgid "Owner search"
 msgstr ""
 
-#: .\corpus\filters.py:37 .\corpus\models.py:42
+#: .\corpus\filters.py:36 .\corpus\models.py:42
 #: .\templates\document_card.html:59 .\templates\edit_document.html:74
 msgid "Language background"
 msgstr ""
 
-#: .\corpus\filters.py:43 .\corpus\models.py:107
+#: .\corpus\filters.py:42 .\corpus\models.py:107
 #: .\templates\document_card.html:53 .\templates\edit_document.html:68
 msgid "Dominant language"
 msgstr ""
 
-#: .\corpus\filters.py:46 .\corpus\models.py:191
+#: .\corpus\filters.py:45 .\corpus\models.py:205
 msgid "Title"
 msgstr ""
 
-#: .\corpus\filters.py:48 .\corpus\models.py:282 .\corpus\models.py:410
+#: .\corpus\filters.py:47 .\corpus\models.py:296 .\corpus\models.py:434
 msgid "Text"
 msgstr ""
 
-#: .\corpus\filters.py:56 .\corpus\models.py:258
+#: .\corpus\filters.py:55 .\corpus\models.py:272
 #: .\templates\document_card.html:35
 msgid "Language level"
 msgstr ""
 
-#: .\corpus\filters.py:65
+#: .\corpus\filters.py:64
 msgid "Annotator"
 msgstr ""
 
-#: .\corpus\filters.py:72 .\corpus\models.py:291
+#: .\corpus\filters.py:71 .\corpus\models.py:305
 #: .\templates\document_card.html:38
 msgid "Status"
 msgstr ""
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Female"
 msgstr ""
 
-#: .\corpus\models.py:27 .\corpus\models.py:37 .\corpus\models.py:219
+#: .\corpus\models.py:27 .\corpus\models.py:37 .\corpus\models.py:233
 msgid "Other"
 msgstr ""
 
@@ -391,359 +391,359 @@ msgstr ""
 msgid "Source"
 msgstr ""
 
-#: .\corpus\models.py:198 .\corpus\models.py:513
+#: .\corpus\models.py:212 .\corpus\models.py:537
 msgid "User"
 msgstr ""
 
-#: .\corpus\models.py:201
+#: .\corpus\models.py:215
 msgid "Created on"
 msgstr ""
 
-#: .\corpus\models.py:204
+#: .\corpus\models.py:218
 msgid "Written in"
 msgstr ""
 
-#: .\corpus\models.py:208
+#: .\corpus\models.py:222
 msgid "Answers to questions"
 msgstr ""
 
-#: .\corpus\models.py:209
+#: .\corpus\models.py:223
 msgid "Non–academic essay"
 msgstr ""
 
-#: .\corpus\models.py:210
+#: .\corpus\models.py:224
 msgid "Academic essay"
 msgstr ""
 
-#: .\corpus\models.py:211
+#: .\corpus\models.py:225
 msgid "Blog"
 msgstr ""
 
-#: .\corpus\models.py:212
+#: .\corpus\models.py:226
 msgid "Letter"
 msgstr ""
 
-#: .\corpus\models.py:213
+#: .\corpus\models.py:227
 msgid "Story"
 msgstr ""
 
-#: .\corpus\models.py:214
+#: .\corpus\models.py:228
 msgid "Paraphrase"
 msgstr ""
 
-#: .\corpus\models.py:215
+#: .\corpus\models.py:229
 msgid "Definition"
 msgstr ""
 
-#: .\corpus\models.py:216
+#: .\corpus\models.py:230
 msgid "Biography"
 msgstr ""
 
-#: .\corpus\models.py:217
+#: .\corpus\models.py:231
 msgid "Description"
 msgstr ""
 
-#: .\corpus\models.py:218
+#: .\corpus\models.py:232
 msgid "Summary"
 msgstr ""
 
-#: .\corpus\models.py:226 .\templates\document_card.html:29
+#: .\corpus\models.py:240 .\templates\document_card.html:29
 msgid "Genre"
 msgstr ""
 
-#: .\corpus\models.py:278 .\templates\document_card.html:32
+#: .\corpus\models.py:292 .\templates\document_card.html:32
 msgid "Subcorpus"
 msgstr ""
 
-#: .\corpus\models.py:285
+#: .\corpus\models.py:299
 msgid "New"
 msgstr ""
 
-#: .\corpus\models.py:286 .\templates\annotate.html:18
+#: .\corpus\models.py:300 .\templates\annotate.html:19
 msgid "Annotated"
 msgstr ""
 
-#: .\corpus\models.py:287 .\templates\annotate.html:19
+#: .\corpus\models.py:301 .\templates\annotate.html:20
 msgid "Checked"
 msgstr ""
 
-#: .\corpus\models.py:302
+#: .\corpus\models.py:316
 msgid "Time limit"
 msgstr ""
 
-#: .\corpus\models.py:304
+#: .\corpus\models.py:318
 msgid "Oral"
 msgstr ""
 
-#: .\corpus\models.py:310
+#: .\corpus\models.py:324
 msgid "Annotators"
 msgstr ""
 
-#: .\corpus\models.py:408 .\corpus\models.py:508
+#: .\corpus\models.py:432 .\corpus\models.py:532
 msgid "Document"
 msgstr ""
 
-#: .\corpus\models.py:411
+#: .\corpus\models.py:435
 msgid "Markup"
 msgstr ""
 
-#: .\corpus\models.py:412
+#: .\corpus\models.py:436
 msgid "Position in text"
 msgstr ""
 
-#: .\corpus\models.py:511
+#: .\corpus\models.py:535
 msgid "Sentence"
 msgstr ""
 
-#: .\corpus\models.py:519
+#: .\corpus\models.py:543
 msgid "GUID"
 msgstr ""
 
-#: .\corpus\models.py:523
+#: .\corpus\models.py:547
 msgid "Original text"
 msgstr ""
 
-#: .\corpus\models.py:524
+#: .\corpus\models.py:548
 msgid "Start"
 msgstr ""
 
-#: .\corpus\models.py:525
+#: .\corpus\models.py:549
 msgid "End"
 msgstr ""
 
-#: .\corpus\models.py:527
+#: .\corpus\models.py:551
 msgid "Tokens"
 msgstr ""
 
-#: .\corpus\models.py:533
+#: .\corpus\models.py:557
 msgid "Error tags"
 msgstr ""
 
-#: .\corpus\models.py:558
+#: .\corpus\models.py:582
 msgid "ADJ"
 msgstr ""
 
-#: .\corpus\models.py:559
+#: .\corpus\models.py:583
 msgid "ADP"
 msgstr ""
 
-#: .\corpus\models.py:560
+#: .\corpus\models.py:584
 msgid "ADV"
 msgstr ""
 
-#: .\corpus\models.py:561
+#: .\corpus\models.py:585
 msgid "AUX"
 msgstr ""
 
-#: .\corpus\models.py:562
+#: .\corpus\models.py:586
 msgid "CCONJ"
 msgstr ""
 
-#: .\corpus\models.py:563
+#: .\corpus\models.py:587
 msgid "DET"
 msgstr ""
 
-#: .\corpus\models.py:564
+#: .\corpus\models.py:588
 msgid "INTJ"
 msgstr ""
 
-#: .\corpus\models.py:565
+#: .\corpus\models.py:589
 msgid "NOUN"
 msgstr ""
 
-#: .\corpus\models.py:566
+#: .\corpus\models.py:590
 msgid "NUM"
 msgstr ""
 
-#: .\corpus\models.py:567
+#: .\corpus\models.py:591
 msgid "PART"
 msgstr ""
 
-#: .\corpus\models.py:568
+#: .\corpus\models.py:592
 msgid "PRON"
 msgstr ""
 
-#: .\corpus\models.py:569
+#: .\corpus\models.py:593
 msgid "PROPN"
 msgstr ""
 
-#: .\corpus\models.py:570
+#: .\corpus\models.py:594
 msgid "PUNCT"
 msgstr ""
 
-#: .\corpus\models.py:571
+#: .\corpus\models.py:595
 msgid "SCONJ"
 msgstr ""
 
-#: .\corpus\models.py:572
+#: .\corpus\models.py:596
 msgid "SYM"
 msgstr ""
 
-#: .\corpus\models.py:573
+#: .\corpus\models.py:597
 msgid "VERB"
 msgstr ""
 
-#: .\corpus\models.py:574
+#: .\corpus\models.py:598
 msgid "X"
 msgstr ""
 
-#: .\corpus\models.py:577
+#: .\corpus\models.py:601
 msgid "Anim"
 msgstr ""
 
-#: .\corpus\models.py:578
+#: .\corpus\models.py:602
 msgid "Inan"
 msgstr ""
 
-#: .\corpus\models.py:581 .\corpus\models.py:612
+#: .\corpus\models.py:605 .\corpus\models.py:636
 msgid "Imp"
 msgstr ""
 
-#: .\corpus\models.py:582
+#: .\corpus\models.py:606
 msgid "Perf"
 msgstr ""
 
-#: .\corpus\models.py:585
+#: .\corpus\models.py:609
 msgid "Acc"
 msgstr ""
 
-#: .\corpus\models.py:586
+#: .\corpus\models.py:610
 msgid "Dat"
 msgstr ""
 
-#: .\corpus\models.py:587
+#: .\corpus\models.py:611
 msgid "Gen"
 msgstr ""
 
-#: .\corpus\models.py:588
+#: .\corpus\models.py:612
 msgid "Ins"
 msgstr ""
 
-#: .\corpus\models.py:589
+#: .\corpus\models.py:613
 msgid "Loc"
 msgstr ""
 
-#: .\corpus\models.py:590
+#: .\corpus\models.py:614
 msgid "Nom"
 msgstr ""
 
-#: .\corpus\models.py:591
+#: .\corpus\models.py:615
 msgid "Par"
 msgstr ""
 
-#: .\corpus\models.py:592
+#: .\corpus\models.py:616
 msgid "Voc"
 msgstr ""
 
-#: .\corpus\models.py:595
+#: .\corpus\models.py:619
 msgid "Cmp"
 msgstr ""
 
-#: .\corpus\models.py:596
+#: .\corpus\models.py:620
 msgid "Pos"
 msgstr ""
 
-#: .\corpus\models.py:597
+#: .\corpus\models.py:621
 msgid "Sup"
 msgstr ""
 
-#: .\corpus\models.py:600 .\corpus\models.py:608
+#: .\corpus\models.py:624 .\corpus\models.py:632
 msgid "Yes"
 msgstr ""
 
-#: .\corpus\models.py:603
+#: .\corpus\models.py:627
 msgid "Fem"
 msgstr ""
 
-#: .\corpus\models.py:604
+#: .\corpus\models.py:628
 msgid "Masc"
 msgstr ""
 
-#: .\corpus\models.py:605
+#: .\corpus\models.py:629
 msgid "Neut"
 msgstr ""
 
-#: .\corpus\models.py:611
+#: .\corpus\models.py:635
 msgid "Cnd"
 msgstr ""
 
-#: .\corpus\models.py:613
+#: .\corpus\models.py:637
 msgid "Ind"
 msgstr ""
 
-#: .\corpus\models.py:616
+#: .\corpus\models.py:640
 msgid "Plur"
 msgstr ""
 
-#: .\corpus\models.py:617
+#: .\corpus\models.py:641
 msgid "Sing"
 msgstr ""
 
-#: .\corpus\models.py:620
+#: .\corpus\models.py:644
 msgid "1"
 msgstr ""
 
-#: .\corpus\models.py:621
+#: .\corpus\models.py:645
 msgid "2"
 msgstr ""
 
-#: .\corpus\models.py:622
+#: .\corpus\models.py:646
 msgid "3"
 msgstr ""
 
-#: .\corpus\models.py:625
+#: .\corpus\models.py:649
 msgid "Neg"
 msgstr ""
 
-#: .\corpus\models.py:628
+#: .\corpus\models.py:652
 msgid "Fut"
 msgstr ""
 
-#: .\corpus\models.py:629
+#: .\corpus\models.py:653
 msgid "Past"
 msgstr ""
 
-#: .\corpus\models.py:630
+#: .\corpus\models.py:654
 msgid "Pres"
 msgstr ""
 
-#: .\corpus\models.py:633
+#: .\corpus\models.py:657
 msgid "Short"
 msgstr ""
 
-#: .\corpus\models.py:636
+#: .\corpus\models.py:660
 msgid "Conv"
 msgstr ""
 
-#: .\corpus\models.py:637
+#: .\corpus\models.py:661
 msgid "Fin"
 msgstr ""
 
-#: .\corpus\models.py:638
+#: .\corpus\models.py:662
 msgid "Inf"
 msgstr ""
 
-#: .\corpus\models.py:639
+#: .\corpus\models.py:663
 msgid "Part"
 msgstr ""
 
-#: .\corpus\models.py:642
+#: .\corpus\models.py:666
 msgid "Act"
 msgstr ""
 
-#: .\corpus\models.py:643
+#: .\corpus\models.py:667
 msgid "Mid"
 msgstr ""
 
-#: .\corpus\models.py:644
+#: .\corpus\models.py:668
 msgid "Pass"
 msgstr ""
 
-#: .\corpus\models.py:706
+#: .\corpus\models.py:730
 msgid "token"
 msgstr ""
 
-#: .\corpus\models.py:707
+#: .\corpus\models.py:731
 msgid "tokens"
 msgstr ""
 
@@ -759,11 +759,11 @@ msgstr ""
 msgid "Saved author"
 msgstr ""
 
-#: .\templates\add_document.html:84
+#: .\templates\add_document.html:83
 msgid "Search for saved authors..."
 msgstr ""
 
-#: .\templates\add_document.html:93
+#: .\templates\add_document.html:92
 msgid "Add"
 msgstr ""
 
@@ -771,59 +771,59 @@ msgstr ""
 msgid "Document status"
 msgstr ""
 
-#: .\templates\annotate.html:17
+#: .\templates\annotate.html:18
 msgid "Not annotated"
 msgstr ""
 
-#: .\templates\base.html:44
+#: .\templates\base.html:46
 msgid "Main"
 msgstr ""
 
-#: .\templates\base.html:47
+#: .\templates\base.html:49
 msgid "Search"
 msgstr ""
 
-#: .\templates\base.html:50
+#: .\templates\base.html:52
 msgid "News"
 msgstr ""
 
-#: .\templates\base.html:53
+#: .\templates\base.html:55
 msgid "Help"
 msgstr ""
 
-#: .\templates\base.html:56
+#: .\templates\base.html:58
 msgid "Statics"
 msgstr "Statistics"
 
-#: .\templates\base.html:63
+#: .\templates\base.html:65
 msgid "Dark Mode"
 msgstr ""
 
-#: .\templates\base.html:89
+#: .\templates\base.html:91
 msgid "New document"
 msgstr ""
 
-#: .\templates\base.html:93
+#: .\templates\base.html:95
 msgid "All documents"
 msgstr ""
 
-#: .\templates\base.html:97
+#: .\templates\base.html:99
 msgid "Admin panel"
 msgstr ""
 
-#: .\templates\base.html:107
+#: .\templates\base.html:109
 msgid "Profile"
 msgstr ""
 
-#: .\templates\base.html:108
+#: .\templates\base.html:110
 msgid "Log out"
 msgstr ""
 
-#: .\templates\base.html:113
+#: .\templates\base.html:115
 msgid "Log in"
 msgstr ""
 
-#: .\templates\base.html:129
+#: .\templates\base.html:131
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr ""
 
@@ -839,7 +839,7 @@ msgstr ""
 msgid "Text in English:"
 msgstr ""
 
-#: .\templates\create_article.html:43 .\templates\lexgram_search.html:21
+#: .\templates\create_article.html:43 .\templates\lexgram_search.html:72
 #: .\templates\sentence_card.html:19
 msgid "Submit"
 msgstr ""
@@ -861,7 +861,7 @@ msgid "Edit"
 msgstr ""
 
 #: .\templates\document_card.html:99 .\templates\document_card.html:114
-#: .\templates\news.html:42
+#: .\templates\news.html:44
 msgid "Delete"
 msgstr ""
 
@@ -873,7 +873,7 @@ msgstr ""
 msgid "Are you sure you want to delete this document?"
 msgstr ""
 
-#: .\templates\document_card.html:113 .\templates\news.html:41
+#: .\templates\document_card.html:113 .\templates\news.html:43
 msgid "Cancel"
 msgstr ""
 
@@ -913,19 +913,19 @@ msgstr ""
 msgid "Lexico-grammatical search"
 msgstr ""
 
-#: .\templates\lexgram_search.html:25
+#: .\templates\lexgram_search.html:77
 msgid "Search results"
 msgstr ""
 
-#: .\templates\news.html:7
+#: .\templates\news.html:8
 msgid "Add article"
 msgstr ""
 
-#: .\templates\news.html:34
+#: .\templates\news.html:36
 msgid "Confirm Delete"
 msgstr ""
 
-#: .\templates\news.html:38
+#: .\templates\news.html:40
 msgid "Are you sure you want to delete this article?"
 msgstr ""
 
@@ -976,67 +976,67 @@ msgstr "Document statistics"
 msgid "Total Documents"
 msgstr ""
 
-#: .\templates\statistics.html:126
+#: .\templates\statistics.html:128
 msgid "Documents written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:140
+#: .\templates\statistics.html:142
 msgid "Sentence static"
 msgstr "Sentence statistics"
 
-#: .\templates\statistics.html:146
+#: .\templates\statistics.html:148
 msgid "Total sentences"
 msgstr ""
 
-#: .\templates\statistics.html:149
+#: .\templates\statistics.html:151
 msgid "Sentences written by authors with dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:166
+#: .\templates\statistics.html:167
 msgid "Author statistics"
 msgstr ""
 
-#: .\templates\statistics.html:172
+#: .\templates\statistics.html:173
 msgid "Total authors"
 msgstr ""
 
-#: .\templates\statistics.html:174
+#: .\templates\statistics.html:175
 msgid "of which are favorited"
 msgstr ""
 
-#: .\templates\statistics.html:185
+#: .\templates\statistics.html:186
 msgid "Authors by dominant languages"
 msgstr ""
 
-#: .\templates\statistics.html:273
+#: .\templates\statistics.html:274
 msgid " \"Texts annotated:\" "
 msgstr ""
 
-#: .\templates\statistics.html:307 .\templates\statistics.html:460
+#: .\templates\statistics.html:308 .\templates\statistics.html:461
 msgid " \"Gender ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:335
+#: .\templates\statistics.html:336
 msgid " \"Genre ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:364 .\templates\statistics.html:519
+#: .\templates\statistics.html:365 .\templates\statistics.html:520
 msgid " \"Language background ratio\" "
 msgstr ""
 
-#: .\templates\statistics.html:378
+#: .\templates\statistics.html:379
 msgid "\"Texts\""
 msgstr ""
 
-#: .\templates\statistics.html:398
+#: .\templates\statistics.html:399
 msgid " \"Language ratio:\" "
 msgstr ""
 
-#: .\templates\statistics.html:411
+#: .\templates\statistics.html:412
 msgid " \"Sentences\" "
 msgstr ""
 
-#: .\templates\statistics.html:473
+#: .\templates\statistics.html:474
 msgid " \"Authors\" "
 msgstr ""
 
