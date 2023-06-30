@@ -1,3 +1,4 @@
+import json
 import uuid
 
 from django.contrib import messages
@@ -376,14 +377,16 @@ def user_profile(request):
 
 
 def search(request):
-    return render(request, "lexgram_search.html")
+    if request.method == "GET":
+        return render(request, "lexgram_search.html")
+
+    if request.method == "POST":
+        data = request.POST
+        print(data)
+        return JsonResponse({"status": "success"})
 
 
 def get_search(request):
-    if request.method == "POST":
-        # TODO: implement search
-        return
-
     return render(
         request, "partials/lexgram_form_contents.html", {"block_id": uuid.uuid4()}
     )

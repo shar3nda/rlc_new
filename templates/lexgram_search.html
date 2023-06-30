@@ -6,7 +6,7 @@
 {% block content %}
   <div class="container mt-5">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
         {% if form.errors %}
           <div class="alert alert-danger">
@@ -27,7 +27,8 @@
               $(`#errModal-${id}`).modal('show');
             }
           </script>
-          <form method="get" class="mb-5 lexgram-form">
+          <form method="post" class="mb-5 lexgram-form">
+            {% csrf_token %}
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
                     hx-target="#token-forms" hx-swap="beforeend">
