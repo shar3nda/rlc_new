@@ -8,7 +8,6 @@
     <div class="row">
       <div class="col-md-12">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
-        {% include 'partials/lexgram_subcorpus_form.html' %}
         <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#subcorpus">{% trans "Specify Subcorpus" %}</button>
         {% if form.errors %}
           <div class="alert alert-danger">
@@ -31,6 +30,7 @@
           </script>
           <form method="post" class="mb-5 lexgram-form">
             {% csrf_token %}
+            {% include 'partials/lexgram_subcorpus_form.html' %}
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
                     hx-target="#token-forms" hx-swap="beforeend">

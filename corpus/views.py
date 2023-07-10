@@ -382,8 +382,7 @@ def search(request):
 
     if request.method == "POST":
         data = request.POST
-        print(data)
-        return JsonResponse({"status": "success"})
+        return JsonResponse({"form data": data})
 
 
 def get_search(request):
