@@ -8,6 +8,8 @@
     <div class="row">
       <div class="col-md-12">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
+        {% include 'partials/lexgram_subcorpus_form.html' %}
+        <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#subcorpus">{% trans "Specify Subcorpus" %}</button>
         {% if form.errors %}
           <div class="alert alert-danger">
             {% for error in form.errors %}{{ error }}{% endfor %}
