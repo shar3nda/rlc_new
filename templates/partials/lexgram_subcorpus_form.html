@@ -3,101 +3,115 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
+        <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">
+            <i class="fa fa-times"></i>
+        </span></button>
         <h4 class="modal-title" id="subcorpusLabel"> {% trans "Subcorpus" %}</h4>
       </div>
       <div class="modal-body">
 
         <div class="row">
-          <div class="col-sm-6">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"> {% trans "Period" %}</h3>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{% trans "Period" %}</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
                 <div class="row">
-                  <div class="col-xs-2">
-                    <label for="ex1"> {% trans "from" %}</label>
+                  <div class="col-2">
+                    <label for="ex1">{% trans "from" %}</label>
                   </div>
-                  <div class="col-xs-4">
+                  <div class="col-4">
                     <input class="form-control" name="date1" id="ex1" type="text" placeholder="2014">
                   </div>
-                  <div class="col-xs-2">
-                    <label for="ex2"> {% trans "to" %}</label>
+                  <div class="col-2">
+                    <label for="ex2">{% trans "to" %}</label>
                   </div>
-                  <div class="col-xs-4">
+                  <div class="col-4">
                     <input class="form-control" name="date2" id="ex2" type="text" placeholder="2015">
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
 
-          <div class="col-sm-6">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"> {% trans "Gender of author" %}</h3>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{% trans "Gender of author" %}</h3>
               </div>
-              <div class="panel-body">
-                <div class="radio">
-                  <label class="radio-inline"><input type="radio" name="gender" value="м"> {% trans "m" %}</label>
-                  <label class="radio-inline"><input type="radio" name="gender" value="ж"> {% trans "f" %}</label>
-                  <label class="radio-inline"><input type="radio" name="gender" value="any" checked> {% trans "any" %}
-                  </label>
+              <div class="card-body">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender1" value="м">
+                  <label class="form-check-label" for="gender1">{% trans "m" %}</label>
                 </div>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"> {% trans "Text mode" %}</h3>
-              </div>
-              <div class="panel-body">
-                <div class="radio">
-                  <label class="radio-inline"><input type="radio" name="mode" value="у" disabled> {% trans "oral" %}
-                  </label>
-                  <label class="radio-inline"><input type="radio" name="mode" value="п"> {% trans "written" %}</label>
-                  <label class="radio-inline"><input type="radio" name="mode" value="any" checked> {% trans "any" %}
-                  </label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender2" value="ж">
+                  <label class="form-check-label" for="gender2">{% trans "f" %}</label>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"> {% trans "Language background" %}</h3>
-              </div>
-              <div class="panel-body">
-                <div class="radio">
-                  <label class="radio-inline"><input type="radio" name="background" value="FL"> {% trans "foreign" %}
-                  </label>
-                  <label class="radio-inline"><input type="radio" name="background" value="HL"> {% trans "heritage" %}
-                  </label>
-                  <label class="radio-inline"><input type="radio" name="background" value="any"
-                                                     checked> {% trans "any" %}</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender3" value="any" checked>
+                  <label class="form-check-label" for="gender3">{% trans "any" %}</label>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"> {% trans "Dominant language" %}</h3>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{% trans "Text mode" %}</h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mode" id="mode1" value="у" disabled>
+                  <label class="form-check-label" for="mode1">{% trans "oral" %}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mode" id="mode2" value="п">
+                  <label class="form-check-label" for="mode2">{% trans "written" %}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mode" id="mode3" value="any" checked>
+                  <label class="form-check-label" for="mode3">{% trans "any" %}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{% trans "Language background" %}</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="background" id="background1" value="FL">
+                  <label class="form-check-label" for="background1">{% trans "foreign" %}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="background" id="background2" value="HL">
+                  <label class="form-check-label" for="background2">{% trans "heritage" %}</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="background" id="background3" value="any" checked>
+                  <label class="form-check-label" for="background3">{% trans "any" %}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"> {% trans "Dominant language" %}</h3>
+              </div>
+              <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-6">
+                  <div class="col-6">
                     <div class="checkbox"><label><input type="checkbox" class="check"
                                                         id="checkAll"> {% trans "Check All" %}</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="abk"
@@ -151,7 +165,7 @@
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="lao"
                                                         class="check"> {% trans "Lao" %}</label></div>
                   </div>
-                  <div class="col-sm-6">
+                  <div class="col-6">
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="mac"
                                                         class="check"> {% trans "Macedonian" %}</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="mon"
@@ -213,15 +227,15 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">{% trans "Level" %} <a href="#" data-toggle="tooltip"
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">{% trans "Level" %} <a href="#" data-toggle="tooltip"
                                                                title="{% trans "Each text in the corpus is attributed to one of the general levels: Beginner, Intermediate, Advanced. At the same time, some of these texts have a corresponding CEFR or ACTFL level." %}"
                                                                style="color:lightgrey"><span
-                    class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></h3>
+                    class="fas fa-question" aria-hidden="true"></span></a></h3>
               </div>
-              <div class="panel-body">
+              <div class="card-body">
                 <div class="row">
                   <table class="table">
                     <tr>
@@ -300,13 +314,7 @@
 
 
       <div class="modal-footer">
-        <div class="col-xs-6 text-left">
-          <div class="checkbox"><label><input type="checkbox" name="rulec" value=""> {% trans "Search only in RULEC" %}
-          </label></div>
-        </div>
-        <div class="col-xs-6">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">OK</button>
-        </div>
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
