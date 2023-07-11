@@ -5,7 +5,7 @@ $(document).ready(function () {
     var formData = {};
     $(this).serializeArray().map(function (item) {
       var value = item.value;
-      if (item.name !== 'language[]' && item.name.endsWith('[]')) {
+      if (!(item.name in ['language[]', 'level[]', 'generallevel[]']) && item.name.endsWith('[]')) {
         value = item.value.split('|');
       }
       if (formData[item.name]) {
