@@ -4,13 +4,18 @@ $(document).ready(function() {
 
         var formData = {};
         $(this).serializeArray().map(function(item) {
+            var value = item.value;
+            if (item.name.endsWith('[]')) {
+                value = item.value.split('|');
+            }
             if (formData[item.name]) {
-                if (typeof(formData[item.name]) === "string") {
-                    formData[item.name] = [formData[item.name]];
+                if (Array.isArray(formData[item.name])) {
+                    formData[item.name].push(value);
+                } else {
+                    formData[item.name] = [formData[item.name], value];
                 }
-                formData[item.name].push(item.value);
             } else {
-                formData[item.name] = item.value;
+                formData[item.name] = value;
             }
         });
 
