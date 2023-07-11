@@ -19,6 +19,21 @@ $(document).ready(function () {
       }
     });
 
-    console.log(JSON.stringify(formData));
+    var $form = $('<form/>', {
+      'action': this.action,
+      'method': 'post',
+      'style': 'display:none;'
+    });
+
+    $.each(formData, function(name, value) {
+      $form.append($('<input/>', {
+        'type': 'hidden',
+        'name': name,
+        'value': value
+      }));
+    });
+
+    $('body').append($form);
+    $form.submit();
   });
 });
