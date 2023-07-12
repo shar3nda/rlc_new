@@ -5,7 +5,7 @@ $(document).ready(function () {
     var formData = {};
     $(this).serializeArray().map(function (item) {
       var value = item.value;
-      if (item.name !== 'language[]' && item.name.endsWith('[]')) {
+      if (!(item.name in ['language[]', 'level[]', 'generallevel[]']) && item.name.endsWith('[]')) {
         value = item.value.split('|');
       }
       if (formData[item.name]) {
@@ -19,6 +19,21 @@ $(document).ready(function () {
       }
     });
 
-    console.log(JSON.stringify(formData));
+    var $form = $('<form/>', {
+      'action': this.action,
+      'method': 'post',
+      'style': 'display:none;'
+    });
+
+    $.each(formData, function(name, value) {
+      $form.append($('<input/>', {
+        'type': 'hidden',
+        'name': name,
+        'value': value
+      }));
+    });
+
+    $('body').append($form);
+    $form.submit();
   });
 });
