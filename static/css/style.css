@@ -78,7 +78,7 @@ body {
 
 .logout-item:hover,
 .logout-item:focus {
-  background-color: red;
+  background-color: #e74645;
   color: #fff;
   outline: none;
 }
@@ -256,7 +256,6 @@ body[data-bs-theme="dark"] .r6o-widget.r6o-tag ul.r6o-taglist li {
   display: block;
   color: black;
   padding: 16px;
-  color: #18BC9C;
   text-decoration: none;
 }
 

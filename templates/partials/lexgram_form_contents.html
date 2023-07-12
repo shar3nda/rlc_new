@@ -45,15 +45,15 @@
     </label>
   </div>
   <div class="col align-self-end">
-    <button class="btn btn-danger" onclick="removeContainer('{{ block_id }}')">
-      <i class="fa fa-trash"></i>
+    <button class="btn btn-danger delete-btn" onclick="removeContainer('{{ block_id }}')">
+     <i class="fa-solid fa-minus"></i>
     </button>
   </div>
 </div>
 
 <script>
   function removeContainer(blockId) {
-    var container = document.querySelector('[data-block-id="' + blockId + '"]');
+    const container = document.querySelector('[data-block-id="' + blockId + '"]');
     container.remove();
   }
 </script>
