@@ -1,3 +1,18 @@
+<style>
+    .delete-row-button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: #e74645;
+      cursor: pointer;
+      font-size: 24px;
+    }
+
+    .delete-row-button:hover {
+      color: darkred;
+    }
+  </style>
+
 <div class="row" data-block-id="{{ block_id }}">
   <div class="col">
     <label>
@@ -45,15 +60,15 @@
     </label>
   </div>
   <div class="col align-self-end">
-    <button class="btn btn-danger" onclick="removeContainer('{{ block_id }}')">
-      <i class="fa fa-trash"></i>
+    <button class="delete-row-button" onclick="removeContainer('{{ block_id }}')">
+      <i class="bi bi-x"></i>
     </button>
   </div>
 </div>
 
 <script>
   function removeContainer(blockId) {
-    var container = document.querySelector('[data-block-id="' + blockId + '"]');
+    const container = document.querySelector('[data-block-id="' + blockId + '"]');
     container.remove();
   }
 </script>
