@@ -45,11 +45,24 @@
     </label>
   </div>
   <div class="col align-self-end">
-    <button class="btn btn-danger" onclick="removeContainer('{{ block_id }}')">
-      &#10006;
+    <button class="btn btn-danger delete-btn" onclick="removeContainer('{{ block_id }}')">
+      <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
 </div>
+
+<style>
+  .delete-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
 
 <script>
   function removeContainer(blockId) {
