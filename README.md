@@ -1,1 +1,1 @@
-a pitiful attempt to rewrite the Russian Learner Corpus from scratch
+a glorious attempt to rewrite the Russian Learner Corpus from scratch
