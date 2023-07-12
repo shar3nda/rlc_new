@@ -922,10 +922,8 @@ msgid "Lexico-grammatical search"
 msgstr "Лексико-грамматический поиск"
 
 #: .\templates\lexgram_search.html:13
-#, fuzzy
-#| msgid "Subcorpus"
 msgid "Specify Subcorpus"
-msgstr "Подкорпус"
+msgstr "Поиск по подкорпусу"
 
 #: .\templates\lexgram_search.html:45
 msgid "Search results"
@@ -974,54 +972,38 @@ msgid "any"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:66
-#, fuzzy
-#| msgid "Text"
 msgid "Text mode"
-msgstr "Текст"
+msgstr "Тип текста"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:71
 msgid "oral"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:75
-#, fuzzy
-#| msgid "Written in"
 msgid "written"
 msgstr "Год написания"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:92
-#, fuzzy
-#| msgid "Foreign"
 msgid "foreign"
 msgstr "Иностранный"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:96
-#, fuzzy
-#| msgid "Heritage"
 msgid "heritage"
 msgstr "Эритажный"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:118
-#, fuzzy
-#| msgid "Checked"
 msgid "Check All"
-msgstr "Проверен"
+msgstr "Проверить"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:120
-#, fuzzy
-#| msgid "Abkhazian"
 msgid "Abkhaz"
 msgstr "Абхазский"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:146
-#, fuzzy
-#| msgid "Daghestanian"
 msgid "Dagestanian"
 msgstr "Дагестанский"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:196
-#, fuzzy
-#| msgid "Slovenian"
 msgid "Slovene"
 msgstr "Словенский"
 
@@ -1654,10 +1636,8 @@ msgstr[3] ""
 #: .\venv\Lib\site-packages\django\core\validators.py:461
 #: .\venv\Lib\site-packages\django\forms\fields.py:347
 #: .\venv\Lib\site-packages\django\forms\fields.py:386
-#, fuzzy
-#| msgid "entry number"
 msgid "Enter a number."
-msgstr "Номер записи"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\core\validators.py:463
 #, python-format
@@ -1701,10 +1681,8 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\base.py:1423
 #: .\venv\Lib\site-packages\django\forms\models.py:893
-#, fuzzy
-#| msgid "End"
 msgid "and"
-msgstr "Конец"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\base.py:1425
 #, python-format
@@ -1817,10 +1795,8 @@ msgid "“%(value)s” value must be a decimal number."
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1628
-#, fuzzy
-#| msgid "entry number"
 msgid "Decimal number"
-msgstr "Номер записи"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1789
 #, python-format
@@ -1830,10 +1806,8 @@ msgid ""
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1793
-#, fuzzy
-#| msgid "Description"
 msgid "Duration"
-msgstr "Описание"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1845
 msgid "Email address"
@@ -1888,16 +1862,12 @@ msgid "Boolean (Either True, False or None)"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2291
-#, fuzzy
-#| msgid "Position in text"
 msgid "Positive big integer"
-msgstr "Номер в тексте"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2306
-#, fuzzy
-#| msgid "Position in text"
 msgid "Positive integer"
-msgstr "Номер в тексте"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2321
 msgid "Positive small integer"
@@ -1997,10 +1967,8 @@ msgid "This field is required."
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:298
-#, fuzzy
-#| msgid "entry number"
 msgid "Enter a whole number."
-msgstr "Номер записи"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:467
 #: .\venv\Lib\site-packages\django\forms\fields.py:1241
@@ -2281,10 +2249,8 @@ msgid "Mon"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:17
-#, fuzzy
-#| msgid "Turkmen"
 msgid "Tue"
-msgstr "Туркменский"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:18
 msgid "Wed"
@@ -2295,16 +2261,12 @@ msgid "Thu"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
-#, fuzzy
-#| msgid "Farsi"
 msgid "Fri"
-msgstr "Фарси"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:21
-#, fuzzy
-#| msgid "Start"
 msgid "Sat"
-msgstr "Начало"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:22
 msgid "Sun"
@@ -2319,10 +2281,8 @@ msgid "February"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:27
-#, fuzzy
-#| msgid "Search"
 msgid "March"
-msgstr "Поиск"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:28
 msgid "April"
@@ -2369,20 +2329,16 @@ msgid "feb"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:41
-#, fuzzy
-#| msgid "Amharic"
 msgid "mar"
-msgstr "Амхарский"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:42
 msgid "apr"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:43
-#, fuzzy
-#| msgid "Summary"
 msgid "may"
-msgstr "Изложение"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:44
 msgid "jun"
@@ -2423,11 +2379,9 @@ msgid "Feb."
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:55
-#, fuzzy
-#| msgid "Search"
 msgctxt "abbrev. month"
 msgid "March"
-msgstr "Поиск"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:56
 msgctxt "abbrev. month"
@@ -2485,11 +2439,9 @@ msgid "February"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:69
-#, fuzzy
-#| msgid "Search"
 msgctxt "alt. month"
 msgid "March"
-msgstr "Поиск"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:70
 msgctxt "alt. month"
@@ -2754,10 +2706,8 @@ msgid ""
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:229
-#, fuzzy
-#| msgid "Document static"
 msgid "Django Documentation"
-msgstr "Статистика по документам"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
 msgid "Topics, references, &amp; how-to’s"
