@@ -1,39 +1,3 @@
-  <style>
-    .delete-row-button {
-      position: relative;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      padding: 0;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
-
-    .delete-row-button::before, .delete-row-button::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: red;
-      height: 2px;
-      width: 100%;
-    }
-
-    .delete-row-button::before {
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .delete-row-button::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .delete-row-button:hover::before, .delete-row-button:hover::after {
-      background-color: darkred;
-    }
-  </style>
-
 <div class="row" data-block-id="{{ block_id }}">
   <div class="col">
     <label>
@@ -81,8 +45,8 @@
     </label>
   </div>
   <div class="col align-self-end">
-    <button class="delete-row-button" onclick="removeContainer('{{ block_id }}')">
-      <i class="bi bi-x"></i>
+    <button class="btn btn-danger" onclick="removeContainer('{{ block_id }}')">
+      &#9773;
     </button>
   </div>
 </div>
