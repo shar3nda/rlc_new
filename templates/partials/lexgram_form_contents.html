@@ -1,15 +1,36 @@
-<style>
+  <style>
     .delete-row-button {
+      position: relative;
       background-color: transparent;
       border: none;
       outline: none;
-      color: #e74645;
+      padding: 0;
+      width: 30px;
+      height: 30px;
       cursor: pointer;
-      font-size: 24px;
     }
 
-    .delete-row-button:hover {
-      color: darkred;
+    .delete-row-button::before, .delete-row-button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: red;
+      height: 2px;
+      width: 100%;
+    }
+
+    .delete-row-button::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .delete-row-button::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .delete-row-button:hover::before, .delete-row-button:hover::after {
+      background-color: darkred;
     }
   </style>
 
