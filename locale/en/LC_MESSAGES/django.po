@@ -1131,10 +1131,8 @@ msgid "Texts Count"
 msgstr ""
 
 #: .\templates\statistics.html:79
-#, fuzzy
-#| msgid "Sentence static"
 msgid "Sentences Count"
-msgstr "Sentence statistics"
+msgstr ""
 
 #: .\templates\statistics.html:100
 msgid "Document static"
@@ -1497,10 +1495,8 @@ msgid "Site Maps"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
-#, fuzzy
-#| msgid "Statics"
 msgid "Static Files"
-msgstr "Statistics"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
 msgid "Syndication"
@@ -2233,10 +2229,8 @@ msgid "Fri"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:21
-#, fuzzy
-#| msgid "Statics"
 msgid "Sat"
-msgstr "Statistics"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:22
 msgid "Sun"
@@ -2664,10 +2658,8 @@ msgid ""
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:229
-#, fuzzy
-#| msgid "Document static"
 msgid "Django Documentation"
-msgstr "Document statistics"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
 msgid "Topics, references, &amp; how-to’s"
