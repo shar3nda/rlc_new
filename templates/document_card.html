@@ -90,10 +90,9 @@
           </div>
         {% endif %}
       {% endif %}
-      <div>
+      <div class="d-flex">
         {% if perms.corpus.change_document %}
-          <a href="{% url 'edit_document' document_id=document.id %}"
-             class="btn btn-secondary border-0 shadow-none">
+          <a href="{% url 'edit_document' document_id=document.id %}" class="btn btn-secondary border-0 shadow-none">
             <i class="fas fa-edit"></i> {% trans "Edit" %}
           </a>
         {% endif %}
@@ -130,7 +129,8 @@
             });
           </script>
         {% endif %}
-        <h5 class="text-muted mt-3 ms-3 mb-0 id-style text-end" style="font-size: 12px; font-style: italic;">ID: {{ document.id }}</h5>
+        <h5 class="text-muted mt-3 ms-3 mb-0 id-style text-end" style="font-size: 12px; font-style: italic;">
+          ID: {{ document.id }}</h5>
       </div>
     </div>
   </div>
