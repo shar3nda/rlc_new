@@ -81,7 +81,6 @@
             // Обработка нажатия на кнопку
             $('#hideIdsButton').click(function () {
               $('.id-style').toggle();
-              $('.id-style').toggleClass('show');
               const currentText = $(this).text();
               const buttonIcon = $('#buttonIcon');
 
@@ -94,6 +93,13 @@
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
               }
+            });
+          });
+        </script>
+        <script>
+          $(document).ready(function () {
+            $('#hideIdsButton').click(function () {
+              $('.id-style').toggleClass('hide');
             });
           });
         </script>
