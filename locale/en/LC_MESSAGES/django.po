@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 15:37+0300\n"
+"POT-Creation-Date: 2023-07-13 20:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -808,27 +808,27 @@ msgstr ""
 msgid "New document"
 msgstr ""
 
-#: .\templates\base.html:97
+#: .\templates\base.html:96
 msgid "All documents"
 msgstr ""
 
-#: .\templates\base.html:101
+#: .\templates\base.html:99
 msgid "Admin panel"
 msgstr ""
 
-#: .\templates\base.html:111
+#: .\templates\base.html:109
 msgid "Profile"
 msgstr ""
 
-#: .\templates\base.html:112
+#: .\templates\base.html:110
 msgid "Log out"
 msgstr ""
 
-#: .\templates\base.html:117
+#: .\templates\base.html:115
 msgid "Log in"
 msgstr ""
 
-#: .\templates\base.html:133
+#: .\templates\base.html:131
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr ""
 
@@ -850,36 +850,36 @@ msgid "Submit"
 msgstr ""
 
 #: .\templates\document_card.html:26
-msgid "Added"
+msgid "Addead"
 msgstr ""
 
-#: .\templates\document_card.html:83
+#: .\templates\document_card.html:84
 msgid "Annotate"
 msgstr ""
 
-#: .\templates\document_card.html:86
+#: .\templates\document_card.html:89
 msgid "View"
 msgstr ""
 
-#: .\templates\document_card.html:93
+#: .\templates\document_card.html:96
 msgid "Edit"
 msgstr ""
 
-#: .\templates\document_card.html:99 .\templates\document_card.html:114
+#: .\templates\document_card.html:102 .\templates\document_card.html:117
 #: .\templates\news.html:45
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499
 msgid "Delete"
 msgstr ""
 
-#: .\templates\document_card.html:106
+#: .\templates\document_card.html:109
 msgid "Confirm deletion"
 msgstr ""
 
-#: .\templates\document_card.html:110
+#: .\templates\document_card.html:113
 msgid "Are you sure you want to delete this document?"
 msgstr ""
 
-#: .\templates\document_card.html:113 .\templates\news.html:44
+#: .\templates\document_card.html:116 .\templates\news.html:44
 msgid "Cancel"
 msgstr ""
 
@@ -895,8 +895,16 @@ msgstr ""
 msgid "Export Found Documents"
 msgstr ""
 
-#: .\templates\documents.html:67
+#: .\templates\documents.html:70
 msgid "Filter"
+msgstr ""
+
+#: .\templates\documents.html:88
+msgid "Show IDs"
+msgstr ""
+
+#: .\templates\documents.html:101 .\templates\documents.html:103
+msgid "Hide IDs"
 msgstr ""
 
 #: .\templates\edit_author.html:6 .\templates\edit_document.html:82

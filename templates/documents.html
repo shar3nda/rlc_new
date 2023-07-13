@@ -73,16 +73,24 @@
         <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
         <script>
           $(document).ready(function () {
+            const buttonText = $('#hideIdsButton').attr('data-trans');
+
+            // Перевод текста кнопки
+            $('#hideIdsButton').text(buttonText);
+
+            // Обработка нажатия на кнопку
             $('#hideIdsButton').click(function () {
-              $('.id-style').toggle(); // Скрыть или показать элементы с классом 'id-style'
-              const buttonText = $('#buttonText');
+              $('.id-style').toggle();
+              $('.id-style').toggleClass('show');
+              const currentText = $(this).text();
               const buttonIcon = $('#buttonIcon');
-              if (buttonText.text() === 'Hide ID') {
-                buttonText.text('Show ID');
+
+              if (currentText === buttonText) {
+                $(this).text('{% trans "Show IDs" %}');
                 buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
               } else {
-                buttonText.text('Hide ID');
+                $(this).text(buttonText);
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
               }
@@ -91,10 +99,12 @@
         </script>
 
 
-        <button id="hideIdsButton" class="btn btn-primary mb-3">
+        <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
           <i id="buttonIcon" class="fa fa-eye-slash"></i>
-          <span id="buttonText">Hide ID</span>
+          <span id="buttonText">{% trans 'Hide IDs' %}</span>
         </button>
+
+
 
         {% for document in documents %}
           {% include 'document_card.html' %}

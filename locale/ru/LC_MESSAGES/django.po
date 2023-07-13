@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 15:27+0300\n"
+"POT-Creation-Date: 2023-07-13 20:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -810,27 +810,27 @@ msgstr "Тёмный режим"
 msgid "New document"
 msgstr "Новый документ"
 
-#: .\templates\base.html:97
+#: .\templates\base.html:96
 msgid "All documents"
 msgstr "Все документы"
 
-#: .\templates\base.html:101
+#: .\templates\base.html:99
 msgid "Admin panel"
 msgstr "Администрирование"
 
-#: .\templates\base.html:111
+#: .\templates\base.html:109
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\base.html:112
+#: .\templates\base.html:110
 msgid "Log out"
 msgstr "Выйти"
 
-#: .\templates\base.html:117
+#: .\templates\base.html:115
 msgid "Log in"
 msgstr "Войти"
 
-#: .\templates\base.html:133
+#: .\templates\base.html:131
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr "Школа лингвистики ВШЭ. Все права защищены"
 
@@ -852,36 +852,38 @@ msgid "Submit"
 msgstr "Применить"
 
 #: .\templates\document_card.html:26
-msgid "Added"
+#, fuzzy
+#| msgid "Added"
+msgid "Addead"
 msgstr "Добавлено"
 
-#: .\templates\document_card.html:83
+#: .\templates\document_card.html:84
 msgid "Annotate"
 msgstr "Аннотировать"
 
-#: .\templates\document_card.html:86
+#: .\templates\document_card.html:89
 msgid "View"
 msgstr "Просмотреть"
 
-#: .\templates\document_card.html:93
+#: .\templates\document_card.html:96
 msgid "Edit"
 msgstr "Изменить"
 
-#: .\templates\document_card.html:99 .\templates\document_card.html:114
-#: .\templates\news.html:44
+#: .\templates\document_card.html:102 .\templates\document_card.html:117
+#: .\templates\news.html:45
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499
 msgid "Delete"
 msgstr "Удалить"
 
-#: .\templates\document_card.html:106
+#: .\templates\document_card.html:109
 msgid "Confirm deletion"
 msgstr "Подтвердите удаление"
 
-#: .\templates\document_card.html:110
+#: .\templates\document_card.html:113
 msgid "Are you sure you want to delete this document?"
 msgstr "Вы уверены, что хотите удалить документ?"
 
-#: .\templates\document_card.html:113 .\templates\news.html:43
+#: .\templates\document_card.html:116 .\templates\news.html:44
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -897,9 +899,17 @@ msgstr "Создать документ"
 msgid "Export Found Documents"
 msgstr "Экспортировать"
 
-#: .\templates\documents.html:67
+#: .\templates\documents.html:70
 msgid "Filter"
 msgstr "Фильтровать"
+
+#: .\templates\documents.html:88
+msgid "Show IDs"
+msgstr "Показать ID"
+
+#: .\templates\documents.html:101 .\templates\documents.html:103
+msgid "Hide IDs"
+msgstr "Скрыть ID"
 
 #: .\templates\edit_author.html:6 .\templates\edit_document.html:82
 msgid "Edit author"
@@ -929,15 +939,15 @@ msgstr "Поиск по подкорпусу"
 msgid "Search results"
 msgstr "Результаты поиска"
 
-#: .\templates\news.html:8
+#: .\templates\news.html:9
 msgid "Add news"
 msgstr "Добавить новость"
 
-#: .\templates\news.html:36
+#: .\templates\news.html:37
 msgid "Confirm Delete"
 msgstr "Подтвердите удаление"
 
-#: .\templates\news.html:40
+#: .\templates\news.html:41
 msgid "Are you sure you want to delete this article?"
 msgstr "Вы уверены, что хотите удалить статью?"
 
@@ -1018,8 +1028,8 @@ msgid ""
 "Beginner, Intermediate, Advanced. At the same time, some of these texts have "
 "a corresponding CEFR or ACTFL level."
 msgstr ""
-"Каждому тексту в корпусе присваивается один из общих уровней: "
-"Beginner, Intermediate, Advanced. В то же время, у некоторых из этих текстов имеется  "
+"Каждому тексту в корпусе присваивается один из общих уровней: Beginner, "
+"Intermediate, Advanced. В то же время, у некоторых из этих текстов имеется  "
 "соответствующий уровень CEFR или ACTFL."
 
 #: .\templates\partials\lexgram_subcorpus_form.html:246
@@ -1307,6 +1317,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\click\exceptions.py:44
 #: .\venv\Lib\site-packages\click\exceptions.py:80
+#, python-brace-format
 msgid "Error: {message}"
 msgstr ""
 

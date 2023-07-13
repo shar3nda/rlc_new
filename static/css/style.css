@@ -337,3 +337,13 @@ html {
 .custom-nav > li {
   margin-right: 10px; /* Adjust the value to increase or decrease the spacing */
 }
+
+/* Стили для анимации */
+  .id-style {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .id-style.show {
+    opacity: 1;
+  }
