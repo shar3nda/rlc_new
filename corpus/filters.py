@@ -71,7 +71,9 @@ class DocumentFilter(django_filters.FilterSet):
         label=_("Status"),
     )
 
-    id = django_filters.NumberFilter()  # this line ensures that the filter includes the id field
+    id = (
+        django_filters.NumberFilter()
+    )  # this line ensures that the filter includes the id field
 
     class Meta:
         model = Document
