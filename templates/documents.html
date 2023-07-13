@@ -57,15 +57,44 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
               {{ filter.form.title|as_crispy_field }}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
               {{ filter.form.body|as_crispy_field }}
+            </div>
+            <div class="col-md-2">
+              {{ filter.form.id|as_crispy_field }}
             </div>
           </div>
           <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> {% trans "Filter" %}</button>
         </form>
+
+        <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+        <script>
+          $(document).ready(function () {
+            $('#hideIdsButton').click(function () {
+              $('.id-style').toggle(); // Скрыть или показать элементы с классом 'id-style'
+              const buttonText = $('#buttonText');
+              const buttonIcon = $('#buttonIcon');
+              if (buttonText.text() === 'Hide ID') {
+                buttonText.text('Show ID');
+                buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                $(this).removeClass('btn-primary').addClass('btn-secondary');
+              } else {
+                buttonText.text('Hide ID');
+                buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                $(this).removeClass('btn-secondary').addClass('btn-primary');
+              }
+            });
+          });
+        </script>
+
+
+        <button id="hideIdsButton" class="btn btn-primary mb-3">
+          <i id="buttonIcon" class="fa fa-eye-slash"></i>
+          <span id="buttonText">Hide ID</span>
+        </button>
 
         {% for document in documents %}
           {% include 'document_card.html' %}

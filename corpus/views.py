@@ -31,7 +31,6 @@ def export_documents(request):
 def documents(request):
     document_filter = DocumentFilter(request.GET, queryset=Document.objects.all())
     paginator = Paginator(document_filter.qs, 10)  # Show 10 documents per page.
-
     page = request.GET.get("page")
     try:
         docs = paginator.page(page)
@@ -39,7 +38,6 @@ def documents(request):
         docs = paginator.page(1)
     except EmptyPage:
         docs = paginator.page(paginator.num_pages)
-
     context = {
         "documents": docs,
         "filter": document_filter,

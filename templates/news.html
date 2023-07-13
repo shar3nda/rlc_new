@@ -4,8 +4,9 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-  <a href="{% url 'create_article' %}" class="btn btn-primary btn-lg active mb-4" role="button" aria-pressed="true">
-    {% trans "Add article" %}
+  <a href="{% url 'create_article' %}" class="btn btn-secondary btn-lg active mb-4" role="button" aria-pressed="true">
+    <i class="fa-regular fa-pen-to-square"></i>
+    {% trans "Add news" %}
   </a>
   {% endif %}
 
