@@ -339,11 +339,11 @@ html {
 }
 
 /* Стили для анимации */
-/*  .id-style {*/
-/*    opacity: 0;*/
-/*    transition: opacity 0.3s ease-in-out;*/
-/*  }*/
+.id-style {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
 
-/*  .id-style.show {*/
-/*    opacity: 1;*/
-/*  }*/
+.id-style.hide {
+  opacity: 0;
+}
