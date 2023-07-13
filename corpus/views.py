@@ -1,16 +1,15 @@
-import json
 import uuid
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.postgres.aggregates import StringAgg
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count
-from django.db.models import Q
-from django.http import JsonResponse, HttpResponse
+from django.db.models import Count, F
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import DocumentFilter
-from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm, TokenSearchForm
+from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author
 
 
@@ -375,12 +374,31 @@ def user_profile(request):
 
 
 def search(request):
-    if request.method == "GET":
-        return render(request, "lexgram_search.html")
+    return render(request, "lexgram_search.html")
 
-    if request.method == "POST":
-        data = request.POST
-        return JsonResponse({"form data": data})
+
+def search_sentences(tokens_list):
+    sentences = Sentence.objects.filter(lemmas__contains=tokens_list)
+    matching_sentences = []
+
+    for sentence in sentences:
+        tokens = sentence.lemmas
+        for i in range(len(tokens)):
+            if tokens[i:i + len(tokens_list)] == tokens_list:
+                matching_sentences.append(sentence)
+                break
+
+    return matching_sentences
+
+
+def search_results(request):
+    tokens_list = request.GET.get("wordform[]").split(",")
+
+    return render(
+        request,
+        "lexgram_search_results.html",
+        {"sentences": search_sentences(tokens_list)},
+    )
 
 
 def get_search(request):

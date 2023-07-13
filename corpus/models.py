@@ -8,6 +8,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
+from psycopg import transaction
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 _RE_SPAN_PATTERN = re.compile(r"<span>.*?</span>")
@@ -169,6 +170,7 @@ def make_sentence(self, sentence, sentence_num):
     )
 
     tokens = []
+    lemmas = []
     for token_num, token in enumerate(sentence.tokens):
         feats = token.feats or {}
         tokens.append(
@@ -198,7 +200,11 @@ def make_sentence(self, sentence, sentence_num):
                 voice=feats.get("Voice"),
             )
         )
+        lemmas.append(token.lemma)
     Token.objects.bulk_create(tokens)
+
+    new_sentence.lemmas = lemmas
+    new_sentence.save()
 
 
 class Document(models.Model):
@@ -439,6 +445,7 @@ class Sentence(models.Model):
     text = models.TextField(verbose_name=_("Text"))
     markup = models.TextField(null=True, blank=True, verbose_name=_("Markup"))
     number = models.IntegerField(verbose_name=_("Position in text"))
+    lemmas = ArrayField(models.CharField(max_length=200), default=list)
 
     def get_correction(self, alt=False):
         """
