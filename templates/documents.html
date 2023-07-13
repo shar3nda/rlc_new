@@ -74,30 +74,23 @@
             const buttonText = $('#hideIdsButton').attr('data-trans');
 
             // Перевод текста кнопки
-            $('#hideIdsButton').text(buttonText);
+            $('#buttonText').text(buttonText);
 
             // Обработка нажатия на кнопку
             $('#hideIdsButton').click(function () {
               $('.id-style').toggle();
-              const currentText = $(this).text();
+              const currentText = $('#buttonText').text();
               const buttonIcon = $('#buttonIcon');
 
               if (currentText === buttonText) {
-                $(this).text('{% trans "Show IDs" %}');
+                $('#buttonText').text('{% trans "Show IDs" %}');
                 buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
               } else {
-                $(this).text(buttonText);
+                $('#buttonText').text(buttonText);
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
               }
-            });
-          });
-        </script>
-        <script>
-          $(document).ready(function () {
-            $('#hideIdsButton').click(function () {
-              $('.id-style').toggleClass('hide');
             });
           });
         </script>
@@ -106,6 +99,7 @@
           <i id="buttonIcon" class="fa fa-eye-slash"></i>
           <span id="buttonText">{% trans 'Hide IDs' %}</span>
         </button>
+
 
         {% for document in documents %}
           {% include 'document_card.html' %}
