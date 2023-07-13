@@ -23,7 +23,7 @@
             <div class="row">
               <div class="col-md-5 mb-3">
                 <dl class="row">
-                  <dt class="col-sm-5">{% trans "Added" %}:</dt>
+                  <dt class="col-sm-5">{% trans "Addead" %}:</dt>
                   <dd class="col-sm-7">{{ document.created_on }}</dd>
 
                   <dt class="col-sm-5">{% trans "Genre" %}:</dt>
@@ -82,13 +82,11 @@
           <div class="d-flex align-items-center">
             <a href="{% url 'annotate' document.id %}" class="btn btn-primary"><i
                 class="fas fa-asterisk"></i> {% trans "Annotate" %}</a>
-            <h5 class="text-muted ms-3 id-style">ID: {{ document.id }}</h5>
           </div>
         {% else %}
           <div class="d-flex align-items-center">
             <a href="{% url 'annotate' document.id %}" class="btn btn-primary"><i
                 class="fas fa-eye"></i> {% trans "View" %}</a>
-            <h5 class="text-muted ms-3 id-style">ID: {{ document.id }}</h5>
           </div>
         {% endif %}
       {% endif %}
@@ -132,6 +130,7 @@
             });
           </script>
         {% endif %}
+        <h5 class="text-muted mt-3 ms-3 id-style text-end" style="font-size: 12px; font-style: italic;">ID: {{ document.id }}</h5>
       </div>
     </div>
   </div>
