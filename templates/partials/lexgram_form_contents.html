@@ -1,29 +1,31 @@
-<div class="col-md-3">
-  <div class="form-group">
-    <label class="sr-only" for="from">От</label>
-    <label class="sr-only" for="to">до</label>
-    <div class="input-group input-group-sm">
-      <div class="input-group-prepend">
-        <span class="input-group-text">От</span>
+<div class="row mb-3" data-block-id="{{ block_id }}">
+  <div class="col-md-3">
+    <div class="form-group">
+      <label class="sr-only" for="from">От</label>
+      <label class="sr-only" for="to">до</label>
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text bg-secondary text-white">От</span>
+        </div>
+        <input type="text" class="form-control" id="from" placeholder="1" name="from[]" value="1">
+        <div class="input-group-prepend">
+          <span class="input-group-text bg-secondary text-white">до</span>
+        </div>
+        <input type="text" class="form-control" id="to" placeholder="1" name="to[]" value="1">
       </div>
-      <input type="text" class="form-control" id="from" placeholder="1" name="from[]" value="1">
-      <div class="input-group-prepend">
-        <span class="input-group-text">до</span>
-      </div>
-      <input type="text" class="form-control" id="to" placeholder="1" name="to[]" value="1">
+    </div>
+  </div>
+
+  <div class="row">
+    {% include 'partials/lexgram_form_content_based.html' %}
+    <div class="col align-self-end">
+      <button class="btn btn-danger delete-btn" onclick="removeContainer('{{ block_id }}')">
+        <i class="fa-solid fa-minus"></i>
+      </button>
     </div>
   </div>
 </div>
 
-
-<div class="row" data-block-id="{{ block_id }}">
-  {% include 'partials/lexgram_form_content_based.html' %}
-    <div class="col align-self-end">
-    <button class="btn btn-danger delete-btn" onclick="removeContainer('{{ block_id }}')">
-     <i class="fa-solid fa-minus"></i>
-    </button>
-  </div>
-</div>
 
 <script>
   function removeContainer(blockId) {

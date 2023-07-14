@@ -30,7 +30,7 @@
           <form method="post" class="mb-5 lexgram-form">
             {% csrf_token %}
             {% include 'partials/lexgram_subcorpus_form.html' %}
-            <div class="row" data-block-id="{{ block_id }}">
+            <div class="row mb-3" data-block-id="{{ block_id }}">
               {% include 'partials/lexgram_form_content_based.html' %}
             </div>
             <div id="token-forms"></div>
