@@ -2,8 +2,11 @@
 {% load static %}
 {% load i18n %}
 {% load templatetags %}
-{% block head %}<script src="https://unpkg.com/htmx.org@latest/dist/htmx.min.js"></script>
+
+{% block head %}
+  <script src="https://unpkg.com/htmx.org@latest/dist/htmx.min.js"></script>
 {% endblock %}
+
 {% block content %}
   <div class="container mt-5">
     <div class="row">
@@ -28,13 +31,58 @@
             function getErr(id) {
               $(`#errModal-${id}`).modal('show');
             }
+
+            function addTokenForm(event) {
+              event.preventDefault();
+              var tokenForm = `
+                <div class="row">
+                  <div class="col-xs-3">
+                    <div class="form-group">
+                      <label class="sr-only" for="from">От</label>
+                      <label class="sr-only" for="to">до</label>
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-addon">От</div>
+                        <input type="text" class="form-control" id="from" placeholder="1" name="from[]" value="1">
+                        <div class="input-group-addon">до</div>
+                        <input type="text" class="form-control" id="to" placeholder="1" name="to[]" value="1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+              var addButton = event.target;
+              var tokenFormContainer = addButton.parentElement.previousElementSibling;
+              tokenFormContainer.insertAdjacentHTML('afterend', tokenForm);
+            }
+
+            window.addEventListener('DOMContentLoaded', function() {
+              var addButton = document.getElementById('add-token-form');
+              addButton.addEventListener('click', addTokenForm);
+            });
           </script>
           <form method="post" class="mb-5 lexgram-form">
             {% csrf_token %}
             {% include 'partials/lexgram_subcorpus_form.html' %}
-            <div id="token-forms"></div>
+            <div id="token-forms">
+              <!-- Default token form -->
+              <div class="row">
+                <div class="col-xs-3">
+                  <div class="form-group">
+                    <label class="sr-only" for="from">От</label>
+                    <label class="sr-only" for="to">до</label>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-addon">От</div>
+                      <input type="text" class="form-control" id="from" placeholder="1" name="from[]" value="1">
+                      <div class="input-group-addon">до</div>
+                      <input type="text" class="form-control" id="to" placeholder="1" name="to[]" value="1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End of default token form -->
+            </div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
-                    hx-target="#token-forms" hx-swap="beforeend">
+                    hx-indicator="spinner">
               <i class="fa-solid fa-plus"></i> Add Token
             </button>
             <button type="submit" class="btn btn-secondary mt-2">{% trans "Submit" %}</button>
@@ -57,5 +105,4 @@
   <script src="{% static 'js/gram.js' %}"></script>
   <script src="{% static 'js/err.js' %}"></script>
   <script src="{% static 'js/jquery_JSON.js' %}"></script>
-
 {% endblock %}
