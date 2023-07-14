@@ -971,7 +971,7 @@ msgstr ""
 
 #: .\templates\partials\lexgram_form_content_based.html:39
 msgid "Mistakes"
-msgstr ""
+msgstr "Errors"
 
 #: .\templates\partials\lexgram_form_content_based.html:44
 msgid "Tags"
