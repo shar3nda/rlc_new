@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.postgres.aggregates import StringAgg
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -377,6 +377,33 @@ def search(request):
     return render(request, "lexgram_search.html")
 
 
+always_true = ~Q(pk__in=[])
+
+
+def search_subcorpus(filters):
+    sentences = Sentence.objects.filter(
+        Q(document__date__gte=filters.date_from, document__date__lte=filters.date_to)
+        & (
+            always_true
+            if filters.gender == "any"
+            else Q(document__author__gender=filters.gender)
+        )
+        & (
+            always_true
+            if filters.oral == "any"
+            else Q(document__oral=(filters.oral == "true"))
+        )
+        & (
+            always_true
+            if filters.language_background == "any"
+            else Q(document__author__language_background=filters.language_background)
+        )
+        & Q(document__author__dominant_language__in=filters.dominant_languages)
+    )
+
+    return sentences
+
+
 def search_sentences(tokens_list):
     sentences = Sentence.objects.filter(lemmas__contains=tokens_list)
     matching_sentences = []
@@ -384,7 +411,7 @@ def search_sentences(tokens_list):
     for sentence in sentences:
         tokens = sentence.lemmas
         for i in range(len(tokens)):
-            if tokens[i:i + len(tokens_list)] == tokens_list:
+            if tokens[i : i + len(tokens_list)] == tokens_list:
                 matching_sentences.append(sentence)
                 break
 
