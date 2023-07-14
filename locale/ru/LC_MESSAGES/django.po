@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 19:46+0300\n"
+"POT-Creation-Date: 2023-07-14 19:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -954,10 +954,12 @@ msgid "Are you sure you want to delete this article?"
 msgstr "Вы уверены, что хотите удалить статью?"
 
 #: .\templates\partials\lexgram_form_content_based.html:4
+#: .\templates\partials\lexgram_form_content_based.html:8
 msgid "Wordform"
 msgstr "Словоформа"
 
 #: .\templates\partials\lexgram_form_content_based.html:15
+#: .\templates\partials\lexgram_form_content_based.html:20
 msgid "Part of speech"
 msgstr "Часть речи"
 
@@ -965,9 +967,17 @@ msgstr "Часть речи"
 msgid "Grammar"
 msgstr "Грамматика"
 
+#: .\templates\partials\lexgram_form_content_based.html:32
+msgid "Grammar characteristics"
+msgstr "Грамматические характеристики"
+
 #: .\templates\partials\lexgram_form_content_based.html:39
 msgid "Mistakes"
-msgstr "Ошмбки"
+msgstr "Ошибки"
+
+#: .\templates\partials\lexgram_form_content_based.html:44
+msgid "Tags"
+msgstr "Тэги ошибок"
 
 #: .\templates\partials\lexgram_form_contents.html:5
 #: .\templates\partials\lexgram_form_contents.html:9
@@ -1499,15 +1509,15 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\click\types.py:822
 msgid "file"
-msgstr ""
+msgstr "файл"
 
 #: .\venv\Lib\site-packages\click\types.py:824
 msgid "directory"
-msgstr ""
+msgstr "директория"
 
 #: .\venv\Lib\site-packages\click\types.py:826
 msgid "path"
-msgstr ""
+msgstr "путь"
 
 #: .\venv\Lib\site-packages\click\types.py:877
 msgid "{name} {filename!r} does not exist."

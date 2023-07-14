@@ -5,7 +5,7 @@
       <input class="form-control input-sm"
              type="text"
              name="wordform[]"
-             placeholder="Словоформа">
+             placeholder="{% trans "Wordform" %}">
     </label>
   </div>
   {% include 'partials/lex_select.html' %}
@@ -17,7 +17,7 @@
              type="text"
              id="lex-{{ block_id }}"
              name="lex[]"
-             placeholder="Часть речи">
+             placeholder="{% trans "Part of speech" %}">
     </label>
   </div>
   {% include 'partials/gram_select.html' %}
@@ -29,7 +29,7 @@
              type="text"
              id="gram-{{ block_id }}"
              name="grammar[]"
-             placeholder="Грамматические характеристики">
+             placeholder="{% trans "Grammar characteristics" %}">
     </label>
   </div>
   {% include 'partials/err_select.html' %}
@@ -41,6 +41,6 @@
              type="text"
              id="err-{{ block_id }}"
              name="errors[]"
-             placeholder="Тэги ошибок">
+             placeholder="{% trans "Tags" %}">
     </label>
   </div>
