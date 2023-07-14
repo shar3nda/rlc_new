@@ -30,7 +30,9 @@
           <form method="post" class="mb-5 lexgram-form">
             {% csrf_token %}
             {% include 'partials/lexgram_subcorpus_form.html' %}
-            {% include 'partials/lexgram_form_contents.html' %}
+            <div class="row" data-block-id="{{ block_id }}">
+              {% include 'partials/lexgram_form_content_based.html' %}
+            </div>
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
                     hx-target="#token-forms" hx-swap="beforeend">

@@ -1,0 +1,45 @@
+<div class="col-md-2">
+    <label>
+      Словоформа
+      <input class="form-control input-sm"
+             type="text"
+             name="wordform[]"
+             placeholder="Словоформа">
+    </label>
+  </div>
+  {% include 'partials/lex_select.html' %}
+  <div class="col-md-2">
+    <label>
+      <a onclick="getLex('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+      Часть речи
+      <input class="form-control input-sm"
+             type="text"
+             id="lex-{{ block_id }}"
+             name="lex[]"
+             placeholder="Часть речи">
+    </label>
+  </div>
+  {% include 'partials/gram_select.html' %}
+  <div class="col-md-2">
+    <label>
+      <a onclick="getGram('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+      Грамматика
+      <input class="form-control input-sm"
+             type="text"
+             id="gram-{{ block_id }}"
+             name="grammar[]"
+             placeholder="Грамматические характеристики">
+    </label>
+  </div>
+  {% include 'partials/err_select.html' %}
+  <div class="col-md-2">
+    <label>
+      <a onclick="getErr('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+      Ошибки
+      <input class="form-control input-sm"
+             type="text"
+             id="err-{{ block_id }}"
+             name="errors[]"
+             placeholder="Тэги ошибок">
+    </label>
+  </div>
