@@ -1,3 +1,16 @@
+<div class="col-xs-3">
+  <div class="form-group">
+    <label class="sr-only" for="from">От</label>
+    <label class="sr-only" for="to">до</label>
+    <div class="input-group input-group-sm">
+      <div class="input-group-addon">От</div>
+      <input type="text" class="form-control" id="from" placeholder="1" name="from[]" value='1'>
+      <div class="input-group-addon">до</div>
+      <input type="text" class="form-control" id="to" placeholder="1" name="to[]" value="1">
+    </div>
+  </div>
+</div>
+
 <div class="row" data-block-id="{{ block_id }}">
   {% include 'partials/lexgram_form_content_based.html' %}
     <div class="col align-self-end">
