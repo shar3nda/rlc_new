@@ -741,3 +741,15 @@ class Token(models.Model):
     class Meta:
         verbose_name = _("token")
         verbose_name_plural = _("tokens")
+
+
+class Filter:
+    def __init__(
+        self, date_from, date_to, gender, oral, language_background, dominant_languages
+    ):
+        self.date_from = int(date_from)
+        self.date_to = int(date_to)
+        self.gender = gender
+        self.oral = oral
+        self.language_background = language_background
+        self.dominant_languages = dominant_languages
