@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-md-12">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subcorpus">{% trans "Specify Subcorpus" %}</button>
+        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#subcorpus">{% trans "Specify Subcorpus" %}</button>
         {% if form.errors %}
           <div class="alert alert-danger">
             {% for error in form.errors %}{{ error }}{% endfor %}
@@ -36,7 +36,7 @@
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
                     hx-target="#token-forms" hx-swap="beforeend">
-              <i class="fa-solid fa-plus"></i> Add Token
+              <i class="fa-solid fa-plus"></i> {%  trans "Add Wordform" %}
             </button>
             <button type="submit" class="btn btn-secondary mt-2">{% trans "Submit" %}</button>
           </form>
