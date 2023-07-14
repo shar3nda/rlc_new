@@ -747,7 +747,11 @@ class Filter:
     def __init__(
         self, date_from, date_to, gender, oral, language_background, dominant_languages
     ):
+        if not date_from:
+            date_from = 0
         self.date_from = int(date_from)
+        if not date_to:
+            date_to = 9999
         self.date_to = int(date_to)
         self.gender = gender
         self.oral = oral
