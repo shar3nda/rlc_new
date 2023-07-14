@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
-from .models import Document, Sentence, Author
+from .models import Document, Sentence, Author, Filter
 
 
 def export_documents(request):
@@ -404,8 +404,9 @@ def search_subcorpus(filters):
     return sentences
 
 
-def search_sentences(tokens_list):
-    sentences = Sentence.objects.filter(lemmas__contains=tokens_list)
+def search_sentences(tokens_list, filters):
+    sentences = search_subcorpus(filters)
+    sentences = sentences.filter(lemmas__contains=tokens_list)
     matching_sentences = []
 
     for sentence in sentences:
@@ -420,11 +421,19 @@ def search_sentences(tokens_list):
 
 def search_results(request):
     tokens_list = request.GET.get("wordform[]").split(",")
+    filters = Filter(
+        request.GET.get("date1"),
+        request.GET.get("date2"),
+        request.GET.get("gender"),
+        request.GET.get("mode"),
+        request.GET.get("background"),
+        request.GET.get("language[]").split(","),
+    )
 
     return render(
         request,
         "lexgram_search_results.html",
-        {"sentences": search_sentences(tokens_list)},
+        {"sentences": search_sentences(tokens_list, filters)},
     )
 
 
