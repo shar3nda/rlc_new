@@ -4,14 +4,14 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-  <a href="{% url 'create_article' %}" class="btn btn-secondary btn-lg active mb-4" role="button" aria-pressed="true">
-    <i class="fa-regular fa-pen-to-square"></i>
-    {% trans "Add news" %}
-  </a>
+    <a href="{% url 'create_article' %}" class="btn btn-secondary btn-lg active mb-4" role="button" aria-pressed="true">
+      <i class="far fa-pen-to-square"></i>
+      {% trans "Add news" %}
+    </a>
   {% endif %}
 
   {% for article in articles %}
-    <div id="section{{ forloop.counter }}" class="mb-5 font-size: 18px;">
+    <div id="section{{ forloop.counter }}" class="mb-5">
       <h2>{{ article.date }}</h2>
       <div class="card border-1">
         <div class="card-body position-relative" style="padding-right: 50px;">
@@ -25,7 +25,7 @@
               <i class="fas fa-trash"></i>
             </a>
           {% endif %}
-        </div>        
+        </div>
       </div>
     </div>
 
@@ -50,3 +50,4 @@
   {% endfor %}
 
 {% endblock content %}
+

@@ -40,26 +40,30 @@
         <button id="back-to-top" class="btn btn-primary my-4" style="position: fixed; bottom: 20px; right: 20px; display: none;">
           {{ _("Back to Top") }}
         </button>
-
-        <script>
-          // Get the back-to-top button
-          const backToTopBtn = document.getElementById('back-to-top');
-
-          // Show or hide the back-to-top button when scrolling
-          window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-              backToTopBtn.style.display = 'block';
-            } else {
-              backToTopBtn.style.display = 'none';
-            }
-          });
-
-          // Scroll to the top of the page when the button is clicked
-          backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-          });
-        </script>
       </div>
     </div>
   </div>
 {% endblock content %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script>
+    // Get the back-to-top button
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    // Show or hide the back-to-top button when scrolling
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+
+    // Scroll to the top of the page when the button is clicked
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+  </script>
+{% endblock scripts %}
+
