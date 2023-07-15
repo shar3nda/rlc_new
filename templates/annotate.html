@@ -25,11 +25,29 @@
                 </button>
               </div>
             {% else %}
-              <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
+              <button id="hideIdsButton" class="btn mb-3" data-trans="{% trans 'Hide IDs' %}">
                 <i id="buttonIcon" class="fa fa-eye-slash"></i>
                 <span id="buttonText">{% trans 'Hide IDs' %}</span>
               </button>
             {% endif %}
+
+            <style>
+              /* Add custom CSS for the Hide IDs button */
+              #hideIdsButton {
+                background-color: transparent;
+                border: none;
+                border-color: inherit; /* Set the border color to match its parent element */
+                color: inherit; /* Inherit the color from its parent element */
+                padding: 0; /* Remove padding to make the button compact */
+              }
+
+              #hideIdsButton:hover {
+                background-color: transparent;
+                color: inherit; /* Inherit the color from its parent element on hover */
+                border-color: inherit; /* Set the border color to match its parent element on hover */
+              }
+            </style>
+
             <script>
               $(document).ready(function () {
                 const buttonText = $('#hideIdsButton').attr('data-trans');
@@ -48,11 +66,11 @@
                     if (currentText === buttonText) {
                       $('#buttonText').text('{% trans "Show IDs" %}');
                       buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
-                      $(this).removeClass('btn-primary').addClass('btn-secondary');
+                      //$(this).removeClass('btn-primary').addClass('btn-secondary');
                     } else {
                       $('#buttonText').text(buttonText);
                       buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
-                      $(this).removeClass('btn-secondary').addClass('btn-primary');
+                      //$(this).removeClass('btn-secondary').addClass('btn-primary');
                     }
                   }
                 });
