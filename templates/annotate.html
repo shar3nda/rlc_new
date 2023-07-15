@@ -14,14 +14,53 @@
                 <div class="form-group mb-0">
                   <label for="document-status" class="me-2">{% trans "Document status" %}</label>
                   <select class="form-select form-select-sm d-inline-block" id="document-status" style="width: auto;">
-                    <option value="0"
-                            {% if document.status == 0 %}selected{% endif %}>{% trans "Not annotated" %}</option>
+                    <option value="0" {% if document.status == 0 %}selected{% endif %}>{% trans "Not annotated" %}</option>
                     <option value="1" {% if document.status == 1 %}selected{% endif %}>{% trans "Annotated" %}</option>
                     <option value="2" {% if document.status == 2 %}selected{% endif %}>{% trans "Checked" %}</option>
                   </select>
                 </div>
-              </div>
+                <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
+                  <i id="buttonIcon" class="fa fa-eye-slash"></i>
+                  <span id="buttonText">{% trans 'Hide IDs' %}</span>
+                </button>
+            {% else %}
+              <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
+                <i id="buttonIcon" class="fa fa-eye-slash"></i>
+                <span id="buttonText">{% trans 'Hide IDs' %}</span>
+              </button>
             {% endif %}
+            <script>
+          $(document).ready(function () {
+            const buttonText = $('#hideIdsButton').attr('data-trans');
+
+            // Перевод текста кнопки
+            $('#buttonText').text(buttonText);
+
+            // Обработка нажатия на кнопку
+            $('#hideIdsButton').click(function () {
+              $('.id-style').toggle();
+              const currentText = $('#buttonText').text();
+              const buttonIcon = $('#buttonIcon');
+
+              if (currentText === buttonText) {
+                $('#buttonText').text('{% trans "Show IDs" %}');
+                buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                $(this).removeClass('btn-primary').addClass('btn-secondary');
+              } else {
+                $('#buttonText').text(buttonText);
+                buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                $(this).removeClass('btn-secondary').addClass('btn-primary');
+              }
+            });
+          });
+        </script>
+        <script>
+          $(document).ready(function () {
+            $('#hideIdsButton').click(function () {
+              $('.id-style').toggleClass('hide');
+            });
+          });
+        </script>
             {% include 'document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
               {% include 'sentence_card.html' with sentence=sentence %}
