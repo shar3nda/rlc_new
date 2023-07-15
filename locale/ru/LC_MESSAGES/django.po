@@ -1025,11 +1025,11 @@ msgstr "Тип текста"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:71
 msgid "oral"
-msgstr ""
+msgstr "Устный"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:75
 msgid "written"
-msgstr "Год написания"
+msgstr "Письменный"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:92
 msgid "foreign"
@@ -1262,21 +1262,21 @@ msgstr " \"Авторы\" "
 #: .\venv\Lib\site-packages\click\_termui_impl.py:518
 #, python-brace-format
 msgid "{editor}: Editing failed"
-msgstr ""
+msgstr "{editor}: Редактирование не удалось"
 
 #: .\venv\Lib\site-packages\click\_termui_impl.py:522
 #, python-brace-format
 msgid "{editor}: Editing failed: {e}"
-msgstr ""
+msgstr "{editor}: Редактирование не удалось: {e}"
 
 #: .\venv\Lib\site-packages\click\core.py:1120
 msgid "Aborted!"
-msgstr ""
+msgstr "Прервано!"
 
 #: .\venv\Lib\site-packages\click\core.py:1309
 #: .\venv\Lib\site-packages\click\decorators.py:568
 msgid "Show this message and exit."
-msgstr ""
+msgstr "Показать это сообщение и выйти"
 
 #: .\venv\Lib\site-packages\click\core.py:1340
 #: .\venv\Lib\site-packages\click\core.py:1370
@@ -1303,7 +1303,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\click\core.py:1636
 msgid "Commands"
-msgstr ""
+msgstr "Команды"
 
 #: .\venv\Lib\site-packages\click\core.py:1668
 msgid "Missing command."
