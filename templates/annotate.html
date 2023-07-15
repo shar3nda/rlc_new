@@ -23,6 +23,7 @@
                   <i id="buttonIcon" class="fa fa-eye-slash"></i>
                   <span id="buttonText">{% trans 'Hide IDs' %}</span>
                 </button>
+              </div>
             {% else %}
               <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
                 <i id="buttonIcon" class="fa fa-eye-slash"></i>
@@ -30,37 +31,33 @@
               </button>
             {% endif %}
             <script>
-          $(document).ready(function () {
-            const buttonText = $('#hideIdsButton').attr('data-trans');
+              $(document).ready(function () {
+                const buttonText = $('#hideIdsButton').attr('data-trans');
 
-            // Перевод текста кнопки
-            $('#buttonText').text(buttonText);
-
-            // Обработка нажатия на кнопку
-            $('#hideIdsButton').click(function () {
-              $('.id-style').toggle();
-              const currentText = $('#buttonText').text();
-              const buttonIcon = $('#buttonIcon');
-
-              if (currentText === buttonText) {
-                $('#buttonText').text('{% trans "Show IDs" %}');
-                buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
-                $(this).removeClass('btn-primary').addClass('btn-secondary');
-              } else {
+                // Перевод текста кнопки
                 $('#buttonText').text(buttonText);
-                buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
-                $(this).removeClass('btn-secondary').addClass('btn-primary');
-              }
-            });
-          });
-        </script>
-        <script>
-          $(document).ready(function () {
-            $('#hideIdsButton').click(function () {
-              $('.id-style').toggleClass('hide');
-            });
-          });
-        </script>
+
+                // Обработка нажатия на кнопку
+                $('#hideIdsButton').click(function () {
+                  // Check if elements with class 'id-style' exist before toggling their visibility
+                  if ($('.id-style').length) {
+                    $('.id-style').toggle();
+                    const currentText = $('#buttonText').text();
+                    const buttonIcon = $('#buttonIcon');
+
+                    if (currentText === buttonText) {
+                      $('#buttonText').text('{% trans "Show IDs" %}');
+                      buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                      $(this).removeClass('btn-primary').addClass('btn-secondary');
+                    } else {
+                      $('#buttonText').text(buttonText);
+                      buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                      $(this).removeClass('btn-secondary').addClass('btn-primary');
+                    }
+                  }
+                });
+              });
+            </script>
             {% include 'document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
               {% include 'sentence_card.html' with sentence=sentence %}
