@@ -76,6 +76,13 @@
                 });
               });
             </script>
+            <script>
+              $(document).ready(function () {
+                $('#hideIdsButton').click(function () {
+                  $('.id-style').toggleClass('hide');
+                });
+              });
+            </script>
             {% include 'document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
               {% include 'sentence_card.html' with sentence=sentence %}
