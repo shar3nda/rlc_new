@@ -71,10 +71,15 @@
         </form>
         <script>
           $(document).ready(function () {
+            // Function to toggle the visibility of elements with class "id-style"
             function toggleIdsVisibility() {
               $('.id-style').toggle();
             }
-            $('#hideIdsButton').click(function () {
+
+            // Event listener to handle button click
+            $('#hideIdsButton').click(function (event) {
+              event.preventDefault(); // Prevent default form submission behavior
+
               toggleIdsVisibility();
 
               const currentText = $('#buttonText').text();
@@ -84,14 +89,18 @@
                 $('#buttonText').text('{% trans "Show IDs" %}');
                 buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
+                // Save the state to localStorage when hiding IDs
                 localStorage.setItem('hideIdsStatus', 'hidden');
               } else {
                 $('#buttonText').text('{% trans "Hide IDs" %}');
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
+                // Save the state to localStorage when showing IDs
                 localStorage.setItem('hideIdsStatus', 'shown');
               }
             });
+
+            // Function to apply saved visibility state on page load
             function applySavedVisibilityState() {
               const status = localStorage.getItem('hideIdsStatus');
 
@@ -101,7 +110,10 @@
                 $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
                 $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
               }
+              // No need to handle the 'shown' state, as elements with class "id-style" are shown by default
             }
+
+            // Call the function to apply the saved state on page load
             applySavedVisibilityState();
           });
         </script>
