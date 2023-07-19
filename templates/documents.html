@@ -71,12 +71,17 @@
         </form>
         <script>
           $(document).ready(function () {
-            const buttonText = $('#hideIdsButton').attr('data-trans');
+            // Check if the 'hideIdsButton' status is stored in localStorage
+            const hideIdsStatus = localStorage.getItem('hideIdsStatus');
 
-            // Перевод текста кнопки
-            $('#buttonText').text(buttonText);
+            // Apply the stored status (if available)
+            if (hideIdsStatus === 'hidden') {
+              $('.id-style').hide(); // Hide IDs initially
+              $('#buttonText').text('{% trans "Show IDs" %}');
+              $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+              $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
+            }
 
-            // Обработка нажатия на кнопку
             $('#hideIdsButton').click(function () {
               $('.id-style').toggle();
               const currentText = $('#buttonText').text();
@@ -86,10 +91,16 @@
                 $('#buttonText').text('{% trans "Show IDs" %}');
                 buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
+
+                // Store the status in localStorage when the button is clicked
+                localStorage.setItem('hideIdsStatus', 'hidden');
               } else {
                 $('#buttonText').text(buttonText);
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
+
+                // Remove the stored status when the button is clicked again (to show IDs)
+                localStorage.removeItem('hideIdsStatus');
               }
             });
           });
