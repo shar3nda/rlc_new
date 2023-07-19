@@ -71,38 +71,38 @@
         </form>
         <script>
           $(document).ready(function () {
-            // Check if the 'hideIdsButton' status is stored in localStorage
-            const hideIdsStatus = localStorage.getItem('hideIdsStatus');
-
-            // Apply the stored status (if available)
-            if (hideIdsStatus === 'hidden') {
-              $('.id-style').hide(); // Hide IDs initially
-              $('#buttonText').text('{% trans "Show IDs" %}');
-              $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
-              $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
-            }
-
-            $('#hideIdsButton').click(function () {
+            function toggleIdsVisibility() {
               $('.id-style').toggle();
+            }
+            $('#hideIdsButton').click(function () {
+              toggleIdsVisibility();
+
               const currentText = $('#buttonText').text();
               const buttonIcon = $('#buttonIcon');
 
-              if (currentText === buttonText) {
+              if (currentText === '{% trans "Hide IDs" %}') {
                 $('#buttonText').text('{% trans "Show IDs" %}');
                 buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
-
-                // Store the status in localStorage when the button is clicked
                 localStorage.setItem('hideIdsStatus', 'hidden');
               } else {
-                $('#buttonText').text(buttonText);
+                $('#buttonText').text('{% trans "Hide IDs" %}');
                 buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
-
-                // Remove the stored status when the button is clicked again (to show IDs)
-                localStorage.removeItem('hideIdsStatus');
+                localStorage.setItem('hideIdsStatus', 'shown');
               }
             });
+            function applySavedVisibilityState() {
+              const status = localStorage.getItem('hideIdsStatus');
+
+              if (status === 'hidden') {
+                toggleIdsVisibility();
+                $('#buttonText').text('{% trans "Show IDs" %}');
+                $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
+              }
+            }
+            applySavedVisibilityState();
           });
         </script>
         <script>
