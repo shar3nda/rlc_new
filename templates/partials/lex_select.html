@@ -1,3 +1,40 @@
+<style>
+  /* Add a line below the "Select All" button */
+  .form-check-divider {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  /* Style the "Select All" button */
+  .form-check-input[type="checkbox"]#selectAllCheckbox-{{ block_id }}+label::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    border: 2px solid #007bff; /* You can change the border color to your preference */
+    border-radius: 3px;
+    background-color: #fff; /* You can change the background color to your preference */
+  }
+
+  .form-check-input[type="checkbox"]#selectAllCheckbox-{{ block_id }}:checked+label::before {
+    background-color: #007bff; /* You can change the background color to your preference */
+  }
+
+  .form-check-input[type="checkbox"]#selectAllCheckbox-{{ block_id }}:checked+label::after {
+    content: "\f00c"; /* FontAwesome checkmark icon */
+    display: inline-block;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    color: #fff; /* You can change the color to your preference */
+    position: absolute;
+    left: 4px;
+    top: 2px;
+  }
+</style>
+
 <div class="modal fade" id="lexModal-{{ block_id }}" tabindex="-1" role="dialog" aria-labelledby="lexModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
