@@ -745,7 +745,7 @@ class Token(models.Model):
 
 class Filter:
     def __init__(
-        self, date_from, date_to, gender, oral, language_background, dominant_languages
+        self, date_from, date_to, gender, oral, language_background, dominant_languages, language_level
     ):
         if not date_from:
             date_from = 0
@@ -757,3 +757,4 @@ class Filter:
         self.oral = oral
         self.language_background = language_background
         self.dominant_languages = dominant_languages
+        self.language_level = language_level

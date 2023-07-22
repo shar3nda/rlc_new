@@ -399,6 +399,7 @@ def search_subcorpus(filters):
             else Q(document__author__language_background=filters.language_background)
         )
         & Q(document__author__dominant_language__in=filters.dominant_languages)
+        & Q(document__language_level__in=filters.language_level)
     )
 
     return sentences
@@ -428,6 +429,7 @@ def search_results(request):
         request.GET.get("mode"),
         request.GET.get("background"),
         request.GET.get("language[]").split(","),
+        request.GET.get("level[]").split(","),
     )
 
     return render(
