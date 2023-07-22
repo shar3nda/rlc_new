@@ -26,13 +26,25 @@
 <script>
   generateLexCheckboxes('{{ block_id }}');
 
-  function toggleSelectAll(blockId) {
-    const checkboxes = document.querySelectorAll(`#lexFeaturesContainer-${blockId} input[type="checkbox"]`);
-    const selectAllCheckbox = document.getElementById(`selectAllCheckbox-${blockId}`);
-    const isChecked = selectAllCheckbox.checked;
+  // Add an event listener to the "Select All" checkbox
+  document.getElementById(`selectAllCheckbox-{{ block_id }}`).addEventListener('change', function () {
+    const checkboxes = document.querySelectorAll(`#lexFeaturesContainer-{{ block_id }} input[type="checkbox"]`);
+    const isChecked = this.checked;
 
     checkboxes.forEach(checkbox => {
       checkbox.checked = isChecked;
     });
-  }
+  });
+
+  // Add an event listener to the individual checkboxes
+  const individualCheckboxes = document.querySelectorAll(`#lexFeaturesContainer-{{ block_id }} input[type="checkbox"]`);
+  individualCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      const selectAllCheckbox = document.getElementById(`selectAllCheckbox-{{ block_id }}`);
+      selectAllCheckbox.checked = Array.from(individualCheckboxes).every(checkbox => checkbox.checked);
+    });
+  });
 </script>
+
+
+
