@@ -10,6 +10,10 @@
       <div class="modal-body">
         <div id="lexFeaturesContainer-{{ block_id }}"></div>
       </div>
+      <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="selectAllCheckbox-{{ block_id }}" onclick="toggleSelectAll('{{ block_id }}')">
+          <label class="form-check-label" for="selectAllCheckbox-{{ block_id }}">Select All</label>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" onclick="selectLexFeatures('{{ block_id }}')">OK</button>
@@ -19,7 +23,16 @@
   </div>
 </div>
 
-
 <script>
   generateLexCheckboxes('{{ block_id }}');
+
+  function toggleSelectAll(blockId) {
+    const checkboxes = document.querySelectorAll(`#lexFeaturesContainer-${blockId} input[type="checkbox"]`);
+    const selectAllCheckbox = document.getElementById(`selectAllCheckbox-${blockId}`);
+    const isChecked = selectAllCheckbox.checked;
+
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = isChecked;
+    });
+  }
 </script>
