@@ -743,6 +743,14 @@ class Token(models.Model):
         verbose_name_plural = _("tokens")
 
 
+class Token_list:
+    def __init__(
+        self, wordform, begin, end
+    ):
+        self.wordform = wordform
+        self.begin = begin
+        self.end = end
+
 class Filter:
     def __init__(
         self, date_from, date_to, gender, oral, language_background, dominant_languages, language_level

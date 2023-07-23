@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
-from .models import Document, Sentence, Author, Filter
+from .models import Document, Sentence, Author, Filter, Token_list
 
 
 def export_documents(request):
@@ -407,21 +407,43 @@ def search_subcorpus(filters):
 
 def search_sentences(tokens_list, filters):
     sentences = search_subcorpus(filters)
-    sentences = sentences.filter(lemmas__contains=tokens_list)
+    for i in range(len(tokens_list.wordform)):
+        tokens_list.wordform[i] = tokens_list.wordform[i].lower()
+    sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
     matching_sentences = []
 
     for sentence in sentences:
         tokens = sentence.lemmas
         for i in range(len(tokens)):
-            if tokens[i : i + len(tokens_list)] == tokens_list:
-                matching_sentences.append(sentence)
-                break
+            if tokens[i] == tokens_list.wordform[0]:
+                flag = True
+                for j in range(1, len(tokens_list.wordform)):
+                    if flag:
+                        flag = False
+                        for k in range(int(tokens_list.begin[j - 1]), int(tokens_list.end[j - 1]) + 1):
+                            if tokens[i + k] == tokens_list.wordform[j]:
+                                flag = True
+                                break
+                    else:
+                        break
+                if flag:
+                    matching_sentences.append(sentence)
 
     return matching_sentences
 
 
 def search_results(request):
-    tokens_list = request.GET.get("wordform[]").split(",")
+    begin = request.GET.get("from[]")
+    end = request.GET.get("to[]")
+    if begin is not None:
+        begin = begin.split(",")
+    if end is not None:
+        end = end.split(",")
+    tokens_list = Token_list(
+        request.GET.get("wordform[]").split(","),
+        begin,
+        end,
+    )
     filters = Filter(
         request.GET.get("date1"),
         request.GET.get("date2"),
