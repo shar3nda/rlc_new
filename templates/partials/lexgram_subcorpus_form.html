@@ -321,20 +321,16 @@
 </div>
 
 <script>
-    document.getElementById('checkAll').addEventListener('change', function () {
-        const checkboxes = document.querySelectorAll('input[type="checkbox"].check');
-        const isChecked = this.checked;
+  $(document).ready(function () {
+    $("#checkAll").on("click", function () {
+      const selectAllChecked = $(this).prop("checked");
 
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = isChecked;
-        });
+      $(".check").prop("checked", selectAllChecked);
     });
 
-    const individualCheckboxes = document.querySelectorAll('input[type="checkbox"].check');
-    individualCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-            const selectAllCheckbox = document.getElementById('checkAll');
-            selectAllCheckbox.checked = Array.from(individualCheckboxes).every(checkbox => checkbox.checked);
-        });
+    $(".check").on("click", function () {
+      const allLanguagesChecked = $(".check").length === $(".check:checked").length;
+      $("#checkAll").prop("checked", allLanguagesChecked);
     });
+  });
 </script>
