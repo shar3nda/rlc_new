@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 19:55+0300\n"
+"POT-Creation-Date: 2023-07-24 19:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,13 +98,13 @@ msgstr ""
 
 #: .\corpus\filters.py:36 .\corpus\models.py:43
 #: .\templates\document_card.html:59 .\templates\edit_document.html:74
-#: .\templates\partials\lexgram_subcorpus_form.html:87
+#: .\templates\partials\lexgram_subcorpus_form.html:86
 msgid "Language background"
 msgstr ""
 
 #: .\corpus\filters.py:42 .\corpus\models.py:108
 #: .\templates\document_card.html:53 .\templates\edit_document.html:68
-#: .\templates\partials\lexgram_subcorpus_form.html:112
+#: .\templates\partials\lexgram_subcorpus_form.html:111
 msgid "Dominant language"
 msgstr ""
 
@@ -177,55 +177,55 @@ msgstr ""
 msgid "Abkhazian"
 msgstr ""
 
-#: .\corpus\models.py:48 .\templates\partials\lexgram_subcorpus_form.html:122
+#: .\corpus\models.py:48 .\templates\partials\lexgram_subcorpus_form.html:119
 msgid "Azerbaijani"
 msgstr ""
 
-#: .\corpus\models.py:49 .\templates\partials\lexgram_subcorpus_form.html:124
+#: .\corpus\models.py:49 .\templates\partials\lexgram_subcorpus_form.html:121
 msgid "Albanian"
 msgstr ""
 
-#: .\corpus\models.py:50 .\templates\partials\lexgram_subcorpus_form.html:128
+#: .\corpus\models.py:50 .\templates\partials\lexgram_subcorpus_form.html:125
 msgid "Amharic"
 msgstr ""
 
-#: .\corpus\models.py:51 .\templates\partials\lexgram_subcorpus_form.html:130
+#: .\corpus\models.py:51 .\templates\partials\lexgram_subcorpus_form.html:127
 msgid "English"
 msgstr ""
 
-#: .\corpus\models.py:52 .\templates\partials\lexgram_subcorpus_form.html:132
+#: .\corpus\models.py:52 .\templates\partials\lexgram_subcorpus_form.html:129
 msgid "Arabic"
 msgstr ""
 
-#: .\corpus\models.py:53 .\templates\partials\lexgram_subcorpus_form.html:126
+#: .\corpus\models.py:53 .\templates\partials\lexgram_subcorpus_form.html:123
 msgid "Armenian"
 msgstr ""
 
-#: .\corpus\models.py:54 .\templates\partials\lexgram_subcorpus_form.html:134
+#: .\corpus\models.py:54 .\templates\partials\lexgram_subcorpus_form.html:131
 msgid "Bengali"
 msgstr ""
 
-#: .\corpus\models.py:55 .\templates\partials\lexgram_subcorpus_form.html:136
+#: .\corpus\models.py:55 .\templates\partials\lexgram_subcorpus_form.html:133
 msgid "Bulgarian"
 msgstr ""
 
-#: .\corpus\models.py:56 .\templates\partials\lexgram_subcorpus_form.html:138
+#: .\corpus\models.py:56 .\templates\partials\lexgram_subcorpus_form.html:135
 msgid "Hungarian"
 msgstr ""
 
-#: .\corpus\models.py:57 .\templates\partials\lexgram_subcorpus_form.html:140
+#: .\corpus\models.py:57 .\templates\partials\lexgram_subcorpus_form.html:137
 msgid "Vietnamese"
 msgstr ""
 
-#: .\corpus\models.py:58 .\templates\partials\lexgram_subcorpus_form.html:180
+#: .\corpus\models.py:58 .\templates\partials\lexgram_subcorpus_form.html:177
 msgid "Dutch"
 msgstr ""
 
-#: .\corpus\models.py:59 .\templates\partials\lexgram_subcorpus_form.html:142
+#: .\corpus\models.py:59 .\templates\partials\lexgram_subcorpus_form.html:139
 msgid "Greek"
 msgstr ""
 
-#: .\corpus\models.py:60 .\templates\partials\lexgram_subcorpus_form.html:144
+#: .\corpus\models.py:60 .\templates\partials\lexgram_subcorpus_form.html:141
 msgid "Georgian"
 msgstr ""
 
@@ -233,87 +233,87 @@ msgstr ""
 msgid "Daghestanian"
 msgstr ""
 
-#: .\corpus\models.py:62 .\templates\partials\lexgram_subcorpus_form.html:148
+#: .\corpus\models.py:62 .\templates\partials\lexgram_subcorpus_form.html:145
 msgid "Dari"
 msgstr ""
 
-#: .\corpus\models.py:63 .\templates\partials\lexgram_subcorpus_form.html:150
+#: .\corpus\models.py:63 .\templates\partials\lexgram_subcorpus_form.html:147
 msgid "Hebrew"
 msgstr ""
 
-#: .\corpus\models.py:64 .\templates\partials\lexgram_subcorpus_form.html:152
+#: .\corpus\models.py:64 .\templates\partials\lexgram_subcorpus_form.html:149
 msgid "Indonesian"
 msgstr ""
 
-#: .\corpus\models.py:65 .\templates\partials\lexgram_subcorpus_form.html:154
+#: .\corpus\models.py:65 .\templates\partials\lexgram_subcorpus_form.html:151
 msgid "Spanish"
 msgstr ""
 
-#: .\corpus\models.py:66 .\templates\partials\lexgram_subcorpus_form.html:156
+#: .\corpus\models.py:66 .\templates\partials\lexgram_subcorpus_form.html:153
 msgid "Italian"
 msgstr ""
 
-#: .\corpus\models.py:67 .\templates\partials\lexgram_subcorpus_form.html:158
+#: .\corpus\models.py:67 .\templates\partials\lexgram_subcorpus_form.html:155
 msgid "Kazakh"
 msgstr ""
 
-#: .\corpus\models.py:68 .\templates\partials\lexgram_subcorpus_form.html:160
+#: .\corpus\models.py:68 .\templates\partials\lexgram_subcorpus_form.html:157
 msgid "Chinese"
 msgstr ""
 
-#: .\corpus\models.py:69 .\templates\partials\lexgram_subcorpus_form.html:162
+#: .\corpus\models.py:69 .\templates\partials\lexgram_subcorpus_form.html:159
 msgid "Korean"
 msgstr ""
 
-#: .\corpus\models.py:70 .\templates\partials\lexgram_subcorpus_form.html:164
+#: .\corpus\models.py:70 .\templates\partials\lexgram_subcorpus_form.html:161
 msgid "Kurdish"
 msgstr ""
 
-#: .\corpus\models.py:71 .\templates\partials\lexgram_subcorpus_form.html:166
+#: .\corpus\models.py:71 .\templates\partials\lexgram_subcorpus_form.html:163
 msgid "Khmer"
 msgstr ""
 
-#: .\corpus\models.py:72 .\templates\partials\lexgram_subcorpus_form.html:168
+#: .\corpus\models.py:72 .\templates\partials\lexgram_subcorpus_form.html:165
 msgid "Lao"
 msgstr ""
 
-#: .\corpus\models.py:73 .\templates\partials\lexgram_subcorpus_form.html:172
+#: .\corpus\models.py:73 .\templates\partials\lexgram_subcorpus_form.html:169
 msgid "Macedonian"
 msgstr ""
 
-#: .\corpus\models.py:74 .\templates\partials\lexgram_subcorpus_form.html:174
+#: .\corpus\models.py:74 .\templates\partials\lexgram_subcorpus_form.html:171
 msgid "Mongolian"
 msgstr ""
 
-#: .\corpus\models.py:75 .\templates\partials\lexgram_subcorpus_form.html:176
+#: .\corpus\models.py:75 .\templates\partials\lexgram_subcorpus_form.html:173
 msgid "German"
 msgstr ""
 
-#: .\corpus\models.py:76 .\templates\partials\lexgram_subcorpus_form.html:178
+#: .\corpus\models.py:76 .\templates\partials\lexgram_subcorpus_form.html:175
 msgid "Nepali"
 msgstr ""
 
-#: .\corpus\models.py:77 .\templates\partials\lexgram_subcorpus_form.html:182
+#: .\corpus\models.py:77 .\templates\partials\lexgram_subcorpus_form.html:179
 msgid "Norwegian"
 msgstr ""
 
-#: .\corpus\models.py:78 .\templates\partials\lexgram_subcorpus_form.html:186
+#: .\corpus\models.py:78 .\templates\partials\lexgram_subcorpus_form.html:183
 msgid "Portuguese"
 msgstr ""
 
-#: .\corpus\models.py:79 .\templates\partials\lexgram_subcorpus_form.html:188
+#: .\corpus\models.py:79 .\templates\partials\lexgram_subcorpus_form.html:185
 msgid "Pashto"
 msgstr ""
 
-#: .\corpus\models.py:80 .\templates\partials\lexgram_subcorpus_form.html:190
+#: .\corpus\models.py:80 .\templates\partials\lexgram_subcorpus_form.html:187
 msgid "Romanian"
 msgstr ""
 
-#: .\corpus\models.py:81 .\templates\partials\lexgram_subcorpus_form.html:192
+#: .\corpus\models.py:81 .\templates\partials\lexgram_subcorpus_form.html:189
 msgid "Serbian"
 msgstr ""
 
-#: .\corpus\models.py:82 .\templates\partials\lexgram_subcorpus_form.html:194
+#: .\corpus\models.py:82 .\templates\partials\lexgram_subcorpus_form.html:191
 msgid "Slovak"
 msgstr ""
 
@@ -321,55 +321,55 @@ msgstr ""
 msgid "Slovenian"
 msgstr ""
 
-#: .\corpus\models.py:84 .\templates\partials\lexgram_subcorpus_form.html:198
+#: .\corpus\models.py:84 .\templates\partials\lexgram_subcorpus_form.html:195
 msgid "Tajik"
 msgstr ""
 
-#: .\corpus\models.py:85 .\templates\partials\lexgram_subcorpus_form.html:200
+#: .\corpus\models.py:85 .\templates\partials\lexgram_subcorpus_form.html:197
 msgid "Thai"
 msgstr ""
 
-#: .\corpus\models.py:86 .\templates\partials\lexgram_subcorpus_form.html:202
+#: .\corpus\models.py:86 .\templates\partials\lexgram_subcorpus_form.html:199
 msgid "Turkish"
 msgstr ""
 
-#: .\corpus\models.py:87 .\templates\partials\lexgram_subcorpus_form.html:204
+#: .\corpus\models.py:87 .\templates\partials\lexgram_subcorpus_form.html:201
 msgid "Turkmen"
 msgstr ""
 
-#: .\corpus\models.py:88 .\templates\partials\lexgram_subcorpus_form.html:206
+#: .\corpus\models.py:88 .\templates\partials\lexgram_subcorpus_form.html:203
 msgid "Uzbek"
 msgstr ""
 
-#: .\corpus\models.py:89 .\templates\partials\lexgram_subcorpus_form.html:208
+#: .\corpus\models.py:89 .\templates\partials\lexgram_subcorpus_form.html:205
 msgid "Urdu"
 msgstr ""
 
-#: .\corpus\models.py:90 .\templates\partials\lexgram_subcorpus_form.html:184
+#: .\corpus\models.py:90 .\templates\partials\lexgram_subcorpus_form.html:181
 msgid "Farsi"
 msgstr ""
 
-#: .\corpus\models.py:91 .\templates\partials\lexgram_subcorpus_form.html:210
+#: .\corpus\models.py:91 .\templates\partials\lexgram_subcorpus_form.html:207
 msgid "Finnish"
 msgstr ""
 
-#: .\corpus\models.py:92 .\templates\partials\lexgram_subcorpus_form.html:212
+#: .\corpus\models.py:92 .\templates\partials\lexgram_subcorpus_form.html:209
 msgid "French"
 msgstr ""
 
-#: .\corpus\models.py:93 .\templates\partials\lexgram_subcorpus_form.html:214
+#: .\corpus\models.py:93 .\templates\partials\lexgram_subcorpus_form.html:211
 msgid "Hindi"
 msgstr ""
 
-#: .\corpus\models.py:94 .\templates\partials\lexgram_subcorpus_form.html:216
+#: .\corpus\models.py:94 .\templates\partials\lexgram_subcorpus_form.html:213
 msgid "Croatian"
 msgstr ""
 
-#: .\corpus\models.py:95 .\templates\partials\lexgram_subcorpus_form.html:218
+#: .\corpus\models.py:95 .\templates\partials\lexgram_subcorpus_form.html:215
 msgid "Czech"
 msgstr ""
 
-#: .\corpus\models.py:96 .\templates\partials\lexgram_subcorpus_form.html:220
+#: .\corpus\models.py:96 .\templates\partials\lexgram_subcorpus_form.html:217
 msgid "Swedish"
 msgstr ""
 
@@ -377,11 +377,11 @@ msgstr ""
 msgid "Shona"
 msgstr ""
 
-#: .\corpus\models.py:98 .\templates\partials\lexgram_subcorpus_form.html:222
+#: .\corpus\models.py:98 .\templates\partials\lexgram_subcorpus_form.html:219
 msgid "Estonian"
 msgstr ""
 
-#: .\corpus\models.py:99 .\templates\partials\lexgram_subcorpus_form.html:224
+#: .\corpus\models.py:99 .\templates\partials\lexgram_subcorpus_form.html:221
 msgid "Japanese"
 msgstr ""
 
@@ -463,11 +463,11 @@ msgstr ""
 msgid "New"
 msgstr ""
 
-#: .\corpus\models.py:311 .\templates\annotate.html:19
+#: .\corpus\models.py:311 .\templates\annotate.html:18
 msgid "Annotated"
 msgstr ""
 
-#: .\corpus\models.py:312 .\templates\annotate.html:20
+#: .\corpus\models.py:312 .\templates\annotate.html:19
 msgid "Checked"
 msgstr ""
 
@@ -776,8 +776,21 @@ msgstr ""
 msgid "Document status"
 msgstr ""
 
-#: .\templates\annotate.html:18
+#: .\templates\annotate.html:17
 msgid "Not annotated"
+msgstr ""
+
+#: .\templates\annotate.html:22 .\templates\annotate.html:24
+#: .\templates\annotate.html:28 .\templates\annotate.html:30
+#: .\templates\annotate.html:63 .\templates\annotate.html:69
+#: .\templates\documents.html:88 .\templates\documents.html:95
+#: .\templates\documents.html:128 .\templates\documents.html:130
+msgid "Hide IDs"
+msgstr ""
+
+#: .\templates\annotate.html:64 .\templates\annotate.html:79
+#: .\templates\documents.html:89 .\templates\documents.html:109
+msgid "Show IDs"
 msgstr ""
 
 #: .\templates\base.html:48
@@ -844,7 +857,7 @@ msgstr ""
 msgid "Text in English:"
 msgstr ""
 
-#: .\templates\create_article.html:43 .\templates\lexgram_search.html:41
+#: .\templates\create_article.html:43 .\templates\lexgram_search.html:50
 #: .\templates\sentence_card.html:19
 msgid "Submit"
 msgstr ""
@@ -899,14 +912,6 @@ msgstr ""
 msgid "Filter"
 msgstr ""
 
-#: .\templates\documents.html:86
-msgid "Show IDs"
-msgstr ""
-
-#: .\templates\documents.html:105 .\templates\documents.html:107
-msgid "Hide IDs"
-msgstr ""
-
 #: .\templates\edit_author.html:6 .\templates\edit_document.html:82
 msgid "Edit author"
 msgstr ""
@@ -923,19 +928,19 @@ msgstr ""
 msgid "Back to Top"
 msgstr ""
 
-#: .\templates\lexgram_search.html:11
+#: .\templates\lexgram_search.html:17
 msgid "Lexico-grammatical search"
 msgstr ""
 
-#: .\templates\lexgram_search.html:12
+#: .\templates\lexgram_search.html:20
 msgid "Specify Subcorpus"
 msgstr ""
 
-#: .\templates\lexgram_search.html:39
+#: .\templates\lexgram_search.html:48
 msgid "Add Wordform"
 msgstr ""
 
-#: .\templates\lexgram_search.html:45
+#: .\templates\lexgram_search.html:54
 msgid "Search results"
 msgstr ""
 
@@ -987,70 +992,70 @@ msgstr "From"
 msgid "to_"
 msgstr "to"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:18
+#: .\templates\partials\lexgram_subcorpus_form.html:17
 msgid "Period"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:23
+#: .\templates\partials\lexgram_subcorpus_form.html:22
 msgid "from"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:29
+#: .\templates\partials\lexgram_subcorpus_form.html:28
 msgid "to"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:42
+#: .\templates\partials\lexgram_subcorpus_form.html:41
 msgid "Gender of author"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:47
+#: .\templates\partials\lexgram_subcorpus_form.html:46
 msgid "m"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:51
+#: .\templates\partials\lexgram_subcorpus_form.html:50
 msgid "f"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:55
-#: .\templates\partials\lexgram_subcorpus_form.html:79
-#: .\templates\partials\lexgram_subcorpus_form.html:100
+#: .\templates\partials\lexgram_subcorpus_form.html:54
+#: .\templates\partials\lexgram_subcorpus_form.html:78
+#: .\templates\partials\lexgram_subcorpus_form.html:99
 msgid "any"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:66
+#: .\templates\partials\lexgram_subcorpus_form.html:65
 msgid "Text mode"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:71
+#: .\templates\partials\lexgram_subcorpus_form.html:70
 msgid "oral"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:75
+#: .\templates\partials\lexgram_subcorpus_form.html:74
 msgid "written"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:92
+#: .\templates\partials\lexgram_subcorpus_form.html:91
 msgid "foreign"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:96
+#: .\templates\partials\lexgram_subcorpus_form.html:95
 msgid "heritage"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:118
-msgid "Check All"
-msgstr ""
-
-#: .\templates\partials\lexgram_subcorpus_form.html:120
+#: .\templates\partials\lexgram_subcorpus_form.html:117
 msgid "Abkhaz"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:146
+#: .\templates\partials\lexgram_subcorpus_form.html:143
 msgid "Dagestanian"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:196
+#: .\templates\partials\lexgram_subcorpus_form.html:193
 msgid "Slovene"
+msgstr ""
+
+#: .\templates\partials\lexgram_subcorpus_form.html:224
+msgid "Select All"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:236
@@ -1074,7 +1079,7 @@ msgid "ACTFL"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:252
-msgid "Beginner"
+msgid "Novice"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:256
