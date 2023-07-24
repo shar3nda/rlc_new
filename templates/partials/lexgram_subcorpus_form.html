@@ -113,8 +113,6 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
-                    <div class="checkbox"><label><input type="checkbox" class="check"
-                                                        id="checkAll"> {% trans "Check All" %}</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="abk"
                                                         class="check"> {% trans "Abkhaz" %}</label></div>
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="aze"
@@ -222,6 +220,9 @@
                     <div class="checkbox"><label><input type="checkbox" name="language[]" value="jap"
                                                         class="check"> {% trans "Japanese" %}</label></div>
                   </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" class="check" id="checkAll"> {% trans "Select All" %}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -233,8 +234,8 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{% trans "Level" %} <a href="#" data-toggle="tooltip"
-                                                               title="{% trans "Each text in the corpus is attributed to one of the general levels: Beginner, Intermediate, Advanced. At the same time, some of these texts have a corresponding CEFR or ACTFL level." %}"
-                                                               style="color:lightgrey"><span
+                                                              title="{% trans "Each text in the corpus is attributed to one of the general levels: Beginner, Intermediate, Advanced. At the same time, some of these texts have a corresponding CEFR or ACTFL level." %}"
+                                                              style="color:lightgrey"><span
                     class="fas fa-question" aria-hidden="true"></span></a></h3>
               </div>
               <div class="card-body">
@@ -318,3 +319,22 @@
     </div>
   </div>
 </div>
+
+<script>
+    document.getElementById('checkAll').addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"].check');
+        const isChecked = this.checked;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+    });
+
+    const individualCheckboxes = document.querySelectorAll('input[type="checkbox"].check');
+    individualCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            const selectAllCheckbox = document.getElementById('checkAll');
+            selectAllCheckbox.checked = Array.from(individualCheckboxes).every(checkbox => checkbox.checked);
+        });
+    });
+</script>
