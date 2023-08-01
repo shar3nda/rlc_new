@@ -23,8 +23,11 @@
             <div class="row">
               <div class="col-md-5 mb-3">
                 <dl class="row">
-                  <dt class="col-sm-5">{% trans "Addead" %}:</dt>
+                  <dt class="col-sm-5">{% trans "Added" %}:</dt>
                   <dd class="col-sm-7">{{ document.created_on }}</dd>
+
+                  <dt class="col-sm-5">{% trans "Written in" %}:</dt>
+                  <dd class="col-sm-7">{{ document.date }}</dd>
 
                   <dt class="col-sm-5">{% trans "Genre" %}:</dt>
                   <dd class="col-sm-7">{{ document.get_genre_display }}</dd>
