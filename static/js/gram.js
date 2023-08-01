@@ -21,11 +21,14 @@ function generateGramCheckboxes(block_id) {
   container.empty();
 
   const row = $('<div>').addClass('row');
+  const columns = [];
 
   for (const [column, features] of Object.entries(gramFeatures)) {
     const col = $('<div>').addClass('col');
-    const header = $('<h6>').text(column);
+    const header = $('<h6>').text(column).addClass('gram-link');
     col.append(header);
+
+    const checkboxes = [];
 
     for (const feature of features) {
       const id = `gramFeature${feature}-${block_id}`;
@@ -42,13 +45,23 @@ function generateGramCheckboxes(block_id) {
       formCheck.append(input, label);
 
       col.append(formCheck);
+      checkboxes.push(input);
     }
 
+    columns.push(checkboxes);
     row.append(col);
   }
 
   container.append(row);
+
+  // Add click event listener to each header to check corresponding checkboxes
+  container.find('h6.gram-link').click(function() {
+    const columnIndex = container.find('h6.gram-link').index(this);
+    const columnCheckboxes = columns[columnIndex];
+    columnCheckboxes.forEach(checkbox => checkbox.prop('checked', true));
+  });
 }
+
 
 function selectGramFeatures(block_id) {
   const selectedFeatures = $(`#gramModal-${block_id} input[type="checkbox"]:checked`).map((_, input) => input.value).get();

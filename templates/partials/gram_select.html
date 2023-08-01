@@ -1,4 +1,5 @@
-<div class="modal fade" id="gramModal-{{ block_id }}" tabindex="-1" role="dialog" aria-labelledby="gramModalLabel-{{ block_id }}" aria-hidden="true">
+<div class="modal fade" id="gramModal-{{ block_id }}" tabindex="-1" role="dialog"
+     aria-labelledby="gramModalLabel-{{ block_id }}" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,9 +12,11 @@
         <div id="gramFeaturesContainer-{{ block_id }}"></div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <div class="me-auto">
+          <button type="button" class="btn btn-link" onclick="clearGramFeatures('{{ block_id }}')">Clear</button>
+        </div>
         <button type="button" class="btn btn-primary" onclick="selectGramFeatures('{{ block_id }}')">OK</button>
-        <button type="button" class="btn btn-link" onclick="clearGramFeatures('{{ block_id }}')">Clear</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

@@ -4,12 +4,21 @@ function generateLexCheckboxes(block_id) {
   const container = $(`#lexFeaturesContainer-${block_id}`);
   container.empty();
 
+  const header = $('<h6>').text('Part of speech').addClass('lex-link');
+  container.append(header);
+
+  header.click(function() {
+    // Iterate over all columns in the current container and check all the checkboxes
+    $(`#lexFeaturesContainer-${block_id} input[type="checkbox"]`).prop('checked', true);
+  });
+
   const numColumns = 4;
   const columnSize = Math.ceil(lexFeatures.length / numColumns);
 
   const row = $('<div>').addClass('row');
 
   Array(numColumns).fill().forEach((_, i) => {
+
     const col = $('<div>').addClass('col');
 
     lexFeatures.slice(i * columnSize, (i + 1) * columnSize).forEach(feature => {
