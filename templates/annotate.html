@@ -32,19 +32,17 @@
             {% endif %}
 
             <style>
-              /* Add custom CSS for the Hide IDs button */
-              #hideIdsButton {
+                #hideIdsButton {
                 background-color: transparent;
-                border: none;
-                border-color: inherit; /* Set the border color to match its parent element */
-                color: inherit; /* Inherit the color from its parent element */
-                padding: 0; /* Remove padding to make the button compact */
+                border: none inherit;
+                color: inherit;
+                padding: 0;
               }
 
               #hideIdsButton:hover {
                 background-color: transparent;
-                color: inherit; /* Inherit the color from its parent element on hover */
-                border-color: inherit; /* Set the border color to match its parent element on hover */
+                color: inherit;
+                border-color: inherit;
               }
             </style>
           <script>
@@ -132,9 +130,9 @@
   </div>
   <script>
     $("#document-status").change(function () {
-      var status = $(this).val();
-      var documentId = "{{ document.id }}";
-      var csrfToken = getCSRFToken();
+      let status = $(this).val();
+      let documentId = "{{ document.id }}";
+      let csrfToken = getCSRFToken();
 
       $.ajax({
         url: "{% url 'update_document_status' document.id %}",
@@ -205,12 +203,12 @@
         url: url,
         dataType: 'json',
         success: function (data) {
-          var errors = data.errors;
+          const errors = data.errors;
 
           // Correctly define sentenceElement here before using it
-          var sentenceElement = document.getElementById('sentence-' + sentence_id);
-          var wordSpans = sentenceElement.getElementsByTagName('span');
-          for (var i = 0; i < wordSpans.length; i++) {
+          const sentenceElement = document.getElementById('sentence-' + sentence_id);
+          const wordSpans = sentenceElement.getElementsByTagName('span');
+          for (let i = 0; i < wordSpans.length; i++) {
             // If the span's text is in the errors array, add the "error" class
             if (errors.includes(wordSpans[i].innerText)) {
               wordSpans[i].classList.add('error');

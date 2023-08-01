@@ -36,7 +36,7 @@
               $(`#errModal-${id}`).modal('show');
             }
           </script>
-          <form method="post" class="mb-5 lexgram-form">
+          <form method="post" id="lexgram-form" class="mb-5 lexgram-form">
             {% csrf_token %}
             {% include 'partials/lexgram_subcorpus_form.html' %}
             <div class="row mb-3" data-block-id="{{ block_id }}">
@@ -64,3 +64,45 @@
   </div>
 
 {% endblock %}
+
+<script>
+  // Function to save the form state in the local storage
+  function saveFormState() {
+    const forms = document.querySelectorAll('.lexgram-form');
+    const formState = [];
+
+    forms.forEach((form) => {
+      const formData = new FormData(form);
+      const formDataObject = {};
+      for (const [key, value] of formData.entries()) {
+        formDataObject[key] = value;
+      }
+      formState.push(formDataObject);
+    });
+
+    localStorage.setItem('lexgram-form-state', JSON.stringify(formState));
+  }
+
+  function restoreFormState() {
+    const formState = localStorage.getItem('lexgr am-form-state');
+    if (formState) {
+      const formData = JSON.parse(formState);
+      const forms = document.querySelectorAll('.lexgram-form');
+
+      forms.forEach((form, index) => {
+        const formDataObject = formData[index];
+        for (const key in formDataObject) {
+          const input = form.querySelector(`[name="${key}"]`);
+          if (input) {
+            input.value = formDataObject[key];
+          }
+        }
+      });
+    }
+  }
+
+  window.addEventListener('load', restoreFormState);
+
+  document.addEventListener('submit', saveFormState);
+  document.getElementById('add-token-form').addEventListener('click', saveFormState);
+</script>

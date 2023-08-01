@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 19:55+0300\n"
+"POT-Creation-Date: 2023-07-24 19:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,13 +100,13 @@ msgstr "Поиск создателя"
 
 #: .\corpus\filters.py:36 .\corpus\models.py:43
 #: .\templates\document_card.html:59 .\templates\edit_document.html:74
-#: .\templates\partials\lexgram_subcorpus_form.html:87
+#: .\templates\partials\lexgram_subcorpus_form.html:86
 msgid "Language background"
 msgstr "Тип носителя"
 
 #: .\corpus\filters.py:42 .\corpus\models.py:108
 #: .\templates\document_card.html:53 .\templates\edit_document.html:68
-#: .\templates\partials\lexgram_subcorpus_form.html:112
+#: .\templates\partials\lexgram_subcorpus_form.html:111
 msgid "Dominant language"
 msgstr "Доминантный язык"
 
@@ -179,55 +179,55 @@ msgstr "Иностранный"
 msgid "Abkhazian"
 msgstr "Абхазский"
 
-#: .\corpus\models.py:48 .\templates\partials\lexgram_subcorpus_form.html:122
+#: .\corpus\models.py:48 .\templates\partials\lexgram_subcorpus_form.html:119
 msgid "Azerbaijani"
 msgstr "Азербайджанский"
 
-#: .\corpus\models.py:49 .\templates\partials\lexgram_subcorpus_form.html:124
+#: .\corpus\models.py:49 .\templates\partials\lexgram_subcorpus_form.html:121
 msgid "Albanian"
 msgstr "Албанский"
 
-#: .\corpus\models.py:50 .\templates\partials\lexgram_subcorpus_form.html:128
+#: .\corpus\models.py:50 .\templates\partials\lexgram_subcorpus_form.html:125
 msgid "Amharic"
 msgstr "Амхарский"
 
-#: .\corpus\models.py:51 .\templates\partials\lexgram_subcorpus_form.html:130
+#: .\corpus\models.py:51 .\templates\partials\lexgram_subcorpus_form.html:127
 msgid "English"
 msgstr "Английский"
 
-#: .\corpus\models.py:52 .\templates\partials\lexgram_subcorpus_form.html:132
+#: .\corpus\models.py:52 .\templates\partials\lexgram_subcorpus_form.html:129
 msgid "Arabic"
 msgstr "Арабский"
 
-#: .\corpus\models.py:53 .\templates\partials\lexgram_subcorpus_form.html:126
+#: .\corpus\models.py:53 .\templates\partials\lexgram_subcorpus_form.html:123
 msgid "Armenian"
 msgstr "Армянский"
 
-#: .\corpus\models.py:54 .\templates\partials\lexgram_subcorpus_form.html:134
+#: .\corpus\models.py:54 .\templates\partials\lexgram_subcorpus_form.html:131
 msgid "Bengali"
 msgstr "Бенгальский"
 
-#: .\corpus\models.py:55 .\templates\partials\lexgram_subcorpus_form.html:136
+#: .\corpus\models.py:55 .\templates\partials\lexgram_subcorpus_form.html:133
 msgid "Bulgarian"
 msgstr "Болгарский"
 
-#: .\corpus\models.py:56 .\templates\partials\lexgram_subcorpus_form.html:138
+#: .\corpus\models.py:56 .\templates\partials\lexgram_subcorpus_form.html:135
 msgid "Hungarian"
 msgstr "Венгерский"
 
-#: .\corpus\models.py:57 .\templates\partials\lexgram_subcorpus_form.html:140
+#: .\corpus\models.py:57 .\templates\partials\lexgram_subcorpus_form.html:137
 msgid "Vietnamese"
 msgstr "Вьетнамский"
 
-#: .\corpus\models.py:58 .\templates\partials\lexgram_subcorpus_form.html:180
+#: .\corpus\models.py:58 .\templates\partials\lexgram_subcorpus_form.html:177
 msgid "Dutch"
 msgstr "Голландский"
 
-#: .\corpus\models.py:59 .\templates\partials\lexgram_subcorpus_form.html:142
+#: .\corpus\models.py:59 .\templates\partials\lexgram_subcorpus_form.html:139
 msgid "Greek"
 msgstr "Греческий"
 
-#: .\corpus\models.py:60 .\templates\partials\lexgram_subcorpus_form.html:144
+#: .\corpus\models.py:60 .\templates\partials\lexgram_subcorpus_form.html:141
 msgid "Georgian"
 msgstr "Грузинский"
 
@@ -235,87 +235,87 @@ msgstr "Грузинский"
 msgid "Daghestanian"
 msgstr "Дагестанский"
 
-#: .\corpus\models.py:62 .\templates\partials\lexgram_subcorpus_form.html:148
+#: .\corpus\models.py:62 .\templates\partials\lexgram_subcorpus_form.html:145
 msgid "Dari"
 msgstr "Дари"
 
-#: .\corpus\models.py:63 .\templates\partials\lexgram_subcorpus_form.html:150
+#: .\corpus\models.py:63 .\templates\partials\lexgram_subcorpus_form.html:147
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: .\corpus\models.py:64 .\templates\partials\lexgram_subcorpus_form.html:152
+#: .\corpus\models.py:64 .\templates\partials\lexgram_subcorpus_form.html:149
 msgid "Indonesian"
 msgstr "Индонезийский"
 
-#: .\corpus\models.py:65 .\templates\partials\lexgram_subcorpus_form.html:154
+#: .\corpus\models.py:65 .\templates\partials\lexgram_subcorpus_form.html:151
 msgid "Spanish"
 msgstr "Испанский"
 
-#: .\corpus\models.py:66 .\templates\partials\lexgram_subcorpus_form.html:156
+#: .\corpus\models.py:66 .\templates\partials\lexgram_subcorpus_form.html:153
 msgid "Italian"
 msgstr "Итальянский"
 
-#: .\corpus\models.py:67 .\templates\partials\lexgram_subcorpus_form.html:158
+#: .\corpus\models.py:67 .\templates\partials\lexgram_subcorpus_form.html:155
 msgid "Kazakh"
 msgstr "Казахский"
 
-#: .\corpus\models.py:68 .\templates\partials\lexgram_subcorpus_form.html:160
+#: .\corpus\models.py:68 .\templates\partials\lexgram_subcorpus_form.html:157
 msgid "Chinese"
 msgstr "Китайский"
 
-#: .\corpus\models.py:69 .\templates\partials\lexgram_subcorpus_form.html:162
+#: .\corpus\models.py:69 .\templates\partials\lexgram_subcorpus_form.html:159
 msgid "Korean"
 msgstr "Корейский"
 
-#: .\corpus\models.py:70 .\templates\partials\lexgram_subcorpus_form.html:164
+#: .\corpus\models.py:70 .\templates\partials\lexgram_subcorpus_form.html:161
 msgid "Kurdish"
 msgstr "Курдский"
 
-#: .\corpus\models.py:71 .\templates\partials\lexgram_subcorpus_form.html:166
+#: .\corpus\models.py:71 .\templates\partials\lexgram_subcorpus_form.html:163
 msgid "Khmer"
 msgstr "Кхмерский"
 
-#: .\corpus\models.py:72 .\templates\partials\lexgram_subcorpus_form.html:168
+#: .\corpus\models.py:72 .\templates\partials\lexgram_subcorpus_form.html:165
 msgid "Lao"
 msgstr "Лаосский"
 
-#: .\corpus\models.py:73 .\templates\partials\lexgram_subcorpus_form.html:172
+#: .\corpus\models.py:73 .\templates\partials\lexgram_subcorpus_form.html:169
 msgid "Macedonian"
 msgstr "Македонский"
 
-#: .\corpus\models.py:74 .\templates\partials\lexgram_subcorpus_form.html:174
+#: .\corpus\models.py:74 .\templates\partials\lexgram_subcorpus_form.html:171
 msgid "Mongolian"
 msgstr "Монгольский"
 
-#: .\corpus\models.py:75 .\templates\partials\lexgram_subcorpus_form.html:176
+#: .\corpus\models.py:75 .\templates\partials\lexgram_subcorpus_form.html:173
 msgid "German"
 msgstr "Немецкий"
 
-#: .\corpus\models.py:76 .\templates\partials\lexgram_subcorpus_form.html:178
+#: .\corpus\models.py:76 .\templates\partials\lexgram_subcorpus_form.html:175
 msgid "Nepali"
 msgstr "Непальский"
 
-#: .\corpus\models.py:77 .\templates\partials\lexgram_subcorpus_form.html:182
+#: .\corpus\models.py:77 .\templates\partials\lexgram_subcorpus_form.html:179
 msgid "Norwegian"
 msgstr "Норвежский"
 
-#: .\corpus\models.py:78 .\templates\partials\lexgram_subcorpus_form.html:186
+#: .\corpus\models.py:78 .\templates\partials\lexgram_subcorpus_form.html:183
 msgid "Portuguese"
 msgstr "Португальский"
 
-#: .\corpus\models.py:79 .\templates\partials\lexgram_subcorpus_form.html:188
+#: .\corpus\models.py:79 .\templates\partials\lexgram_subcorpus_form.html:185
 msgid "Pashto"
 msgstr "Пушту"
 
-#: .\corpus\models.py:80 .\templates\partials\lexgram_subcorpus_form.html:190
+#: .\corpus\models.py:80 .\templates\partials\lexgram_subcorpus_form.html:187
 msgid "Romanian"
 msgstr "Румынский"
 
-#: .\corpus\models.py:81 .\templates\partials\lexgram_subcorpus_form.html:192
+#: .\corpus\models.py:81 .\templates\partials\lexgram_subcorpus_form.html:189
 msgid "Serbian"
 msgstr "Сербский"
 
-#: .\corpus\models.py:82 .\templates\partials\lexgram_subcorpus_form.html:194
+#: .\corpus\models.py:82 .\templates\partials\lexgram_subcorpus_form.html:191
 msgid "Slovak"
 msgstr "Словацкий"
 
@@ -323,55 +323,55 @@ msgstr "Словацкий"
 msgid "Slovenian"
 msgstr "Словенский"
 
-#: .\corpus\models.py:84 .\templates\partials\lexgram_subcorpus_form.html:198
+#: .\corpus\models.py:84 .\templates\partials\lexgram_subcorpus_form.html:195
 msgid "Tajik"
 msgstr "Таджикский"
 
-#: .\corpus\models.py:85 .\templates\partials\lexgram_subcorpus_form.html:200
+#: .\corpus\models.py:85 .\templates\partials\lexgram_subcorpus_form.html:197
 msgid "Thai"
 msgstr "Тайский"
 
-#: .\corpus\models.py:86 .\templates\partials\lexgram_subcorpus_form.html:202
+#: .\corpus\models.py:86 .\templates\partials\lexgram_subcorpus_form.html:199
 msgid "Turkish"
 msgstr "Турецкий"
 
-#: .\corpus\models.py:87 .\templates\partials\lexgram_subcorpus_form.html:204
+#: .\corpus\models.py:87 .\templates\partials\lexgram_subcorpus_form.html:201
 msgid "Turkmen"
 msgstr "Туркменский"
 
-#: .\corpus\models.py:88 .\templates\partials\lexgram_subcorpus_form.html:206
+#: .\corpus\models.py:88 .\templates\partials\lexgram_subcorpus_form.html:203
 msgid "Uzbek"
 msgstr "Узбекский"
 
-#: .\corpus\models.py:89 .\templates\partials\lexgram_subcorpus_form.html:208
+#: .\corpus\models.py:89 .\templates\partials\lexgram_subcorpus_form.html:205
 msgid "Urdu"
 msgstr "Урду"
 
-#: .\corpus\models.py:90 .\templates\partials\lexgram_subcorpus_form.html:184
+#: .\corpus\models.py:90 .\templates\partials\lexgram_subcorpus_form.html:181
 msgid "Farsi"
 msgstr "Фарси"
 
-#: .\corpus\models.py:91 .\templates\partials\lexgram_subcorpus_form.html:210
+#: .\corpus\models.py:91 .\templates\partials\lexgram_subcorpus_form.html:207
 msgid "Finnish"
 msgstr "Финский"
 
-#: .\corpus\models.py:92 .\templates\partials\lexgram_subcorpus_form.html:212
+#: .\corpus\models.py:92 .\templates\partials\lexgram_subcorpus_form.html:209
 msgid "French"
 msgstr "Французский"
 
-#: .\corpus\models.py:93 .\templates\partials\lexgram_subcorpus_form.html:214
+#: .\corpus\models.py:93 .\templates\partials\lexgram_subcorpus_form.html:211
 msgid "Hindi"
 msgstr "Хинди"
 
-#: .\corpus\models.py:94 .\templates\partials\lexgram_subcorpus_form.html:216
+#: .\corpus\models.py:94 .\templates\partials\lexgram_subcorpus_form.html:213
 msgid "Croatian"
 msgstr "Хорватский"
 
-#: .\corpus\models.py:95 .\templates\partials\lexgram_subcorpus_form.html:218
+#: .\corpus\models.py:95 .\templates\partials\lexgram_subcorpus_form.html:215
 msgid "Czech"
 msgstr "Чешский"
 
-#: .\corpus\models.py:96 .\templates\partials\lexgram_subcorpus_form.html:220
+#: .\corpus\models.py:96 .\templates\partials\lexgram_subcorpus_form.html:217
 msgid "Swedish"
 msgstr "Шведский"
 
@@ -379,11 +379,11 @@ msgstr "Шведский"
 msgid "Shona"
 msgstr "Шона"
 
-#: .\corpus\models.py:98 .\templates\partials\lexgram_subcorpus_form.html:222
+#: .\corpus\models.py:98 .\templates\partials\lexgram_subcorpus_form.html:219
 msgid "Estonian"
 msgstr "Эстонский"
 
-#: .\corpus\models.py:99 .\templates\partials\lexgram_subcorpus_form.html:224
+#: .\corpus\models.py:99 .\templates\partials\lexgram_subcorpus_form.html:221
 msgid "Japanese"
 msgstr "Японский"
 
@@ -465,11 +465,11 @@ msgstr "Подкорпус"
 msgid "New"
 msgstr "Новый"
 
-#: .\corpus\models.py:311 .\templates\annotate.html:19
+#: .\corpus\models.py:311 .\templates\annotate.html:18
 msgid "Annotated"
 msgstr "Аннотирован"
 
-#: .\corpus\models.py:312 .\templates\annotate.html:20
+#: .\corpus\models.py:312 .\templates\annotate.html:19
 msgid "Checked"
 msgstr "Проверен"
 
@@ -778,9 +778,22 @@ msgstr "Добавить"
 msgid "Document status"
 msgstr "Статус документа"
 
-#: .\templates\annotate.html:18
+#: .\templates\annotate.html:17
 msgid "Not annotated"
 msgstr "Не аннотирован"
+
+#: .\templates\annotate.html:22 .\templates\annotate.html:24
+#: .\templates\annotate.html:28 .\templates\annotate.html:30
+#: .\templates\annotate.html:63 .\templates\annotate.html:69
+#: .\templates\documents.html:88 .\templates\documents.html:95
+#: .\templates\documents.html:128 .\templates\documents.html:130
+msgid "Hide IDs"
+msgstr "Скрыть ID"
+
+#: .\templates\annotate.html:64 .\templates\annotate.html:79
+#: .\templates\documents.html:89 .\templates\documents.html:109
+msgid "Show IDs"
+msgstr "Показать ID"
 
 #: .\templates\base.html:48
 msgid "Main"
@@ -846,7 +859,7 @@ msgstr "Текст на русском языке"
 msgid "Text in English:"
 msgstr "Текст на английском языке"
 
-#: .\templates\create_article.html:43 .\templates\lexgram_search.html:41
+#: .\templates\create_article.html:43 .\templates\lexgram_search.html:50
 #: .\templates\sentence_card.html:19
 msgid "Submit"
 msgstr "Применить"
@@ -901,14 +914,6 @@ msgstr "Экспортировать"
 msgid "Filter"
 msgstr "Фильтровать"
 
-#: .\templates\documents.html:86
-msgid "Show IDs"
-msgstr "Показать ID"
-
-#: .\templates\documents.html:105 .\templates\documents.html:107
-msgid "Hide IDs"
-msgstr "Скрыть ID"
-
 #: .\templates\edit_author.html:6 .\templates\edit_document.html:82
 msgid "Edit author"
 msgstr "Редактировать автора"
@@ -925,19 +930,19 @@ msgstr "Изменить документ"
 msgid "Back to Top"
 msgstr "Вернуться наверх"
 
-#: .\templates\lexgram_search.html:11
+#: .\templates\lexgram_search.html:17
 msgid "Lexico-grammatical search"
 msgstr "Лексико-грамматический поиск"
 
-#: .\templates\lexgram_search.html:12
+#: .\templates\lexgram_search.html:20
 msgid "Specify Subcorpus"
 msgstr "Поиск по подкорпусу"
 
-#: .\templates\lexgram_search.html:39
+#: .\templates\lexgram_search.html:48
 msgid "Add Wordform"
 msgstr "Добавить словоформу"
 
-#: .\templates\lexgram_search.html:45
+#: .\templates\lexgram_search.html:54
 msgid "Search results"
 msgstr "Результаты поиска"
 
@@ -989,71 +994,71 @@ msgstr "От"
 msgid "to_"
 msgstr "До"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:18
+#: .\templates\partials\lexgram_subcorpus_form.html:17
 msgid "Period"
 msgstr "Промежуток"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:23
+#: .\templates\partials\lexgram_subcorpus_form.html:22
 msgid "from"
 msgstr "с"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:29
+#: .\templates\partials\lexgram_subcorpus_form.html:28
 msgid "to"
 msgstr "по"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:42
+#: .\templates\partials\lexgram_subcorpus_form.html:41
 msgid "Gender of author"
 msgstr "Пол автора"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:47
+#: .\templates\partials\lexgram_subcorpus_form.html:46
 msgid "m"
 msgstr "м"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:51
+#: .\templates\partials\lexgram_subcorpus_form.html:50
 msgid "f"
 msgstr "ж"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:55
-#: .\templates\partials\lexgram_subcorpus_form.html:79
-#: .\templates\partials\lexgram_subcorpus_form.html:100
+#: .\templates\partials\lexgram_subcorpus_form.html:54
+#: .\templates\partials\lexgram_subcorpus_form.html:78
+#: .\templates\partials\lexgram_subcorpus_form.html:99
 msgid "any"
 msgstr "неизв."
 
-#: .\templates\partials\lexgram_subcorpus_form.html:66
+#: .\templates\partials\lexgram_subcorpus_form.html:65
 msgid "Text mode"
 msgstr "Тип текста"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:71
+#: .\templates\partials\lexgram_subcorpus_form.html:70
 msgid "oral"
 msgstr "Устный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:75
+#: .\templates\partials\lexgram_subcorpus_form.html:74
 msgid "written"
 msgstr "Письменный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:92
+#: .\templates\partials\lexgram_subcorpus_form.html:91
 msgid "foreign"
 msgstr "Иностранный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:96
+#: .\templates\partials\lexgram_subcorpus_form.html:95
 msgid "heritage"
 msgstr "Эритажный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:118
-msgid "Check All"
-msgstr "Проверить"
-
-#: .\templates\partials\lexgram_subcorpus_form.html:120
+#: .\templates\partials\lexgram_subcorpus_form.html:117
 msgid "Abkhaz"
 msgstr "Абхазский"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:146
+#: .\templates\partials\lexgram_subcorpus_form.html:143
 msgid "Dagestanian"
 msgstr "Дагестанский"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:196
+#: .\templates\partials\lexgram_subcorpus_form.html:193
 msgid "Slovene"
 msgstr "Словенский"
+
+#: .\templates\partials\lexgram_subcorpus_form.html:224
+msgid "Select All"
+msgstr "Выбрать всё"
 
 #: .\templates\partials\lexgram_subcorpus_form.html:236
 #: .\templates\partials\lexgram_subcorpus_form.html:245
@@ -1079,7 +1084,7 @@ msgid "ACTFL"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:252
-msgid "Beginner"
+msgid "Novice"
 msgstr ""
 
 #: .\templates\partials\lexgram_subcorpus_form.html:256
@@ -1731,7 +1736,7 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\db\models\base.py:1423
 #: .\venv\Lib\site-packages\django\forms\models.py:893
 msgid "and"
-msgstr ""
+msgstr "и"
 
 #: .\venv\Lib\site-packages\django\db\models\base.py:1425
 #, python-format
@@ -1750,11 +1755,11 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:129
 msgid "This field cannot be null."
-msgstr ""
+msgstr "Поле не может быть null"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:130
 msgid "This field cannot be blank."
-msgstr ""
+msgstr "Поле не может быть пустым"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:131
 #, python-format
@@ -2243,299 +2248,299 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:73
 msgid "p.m."
-msgstr ""
+msgstr "вечера"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:74
 msgid "a.m."
-msgstr ""
+msgstr "утра"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:79
 msgid "PM"
-msgstr ""
+msgstr "вечера"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:80
 msgid "AM"
-msgstr ""
+msgstr "утра"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:152
 msgid "midnight"
-msgstr ""
+msgstr "полночь"
 
 #: .\venv\Lib\site-packages\django\utils\dateformat.py:154
 msgid "noon"
-msgstr ""
+msgstr "полдень"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:7
 msgid "Monday"
-msgstr ""
+msgstr "Понедельник"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:8
 msgid "Tuesday"
-msgstr ""
+msgstr "Вторник"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:9
 msgid "Wednesday"
-msgstr ""
+msgstr "Среда"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thursday"
-msgstr ""
+msgstr "Четверг"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Friday"
-msgstr ""
+msgstr "Пятница"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:12
 msgid "Saturday"
-msgstr ""
+msgstr "Суббота"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:13
 msgid "Sunday"
-msgstr ""
+msgstr "Воскресенье"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:16
 msgid "Mon"
-msgstr ""
+msgstr "Пн"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:17
 msgid "Tue"
-msgstr ""
+msgstr "Вт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:18
 msgid "Wed"
-msgstr ""
+msgstr "Ср"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:19
 msgid "Thu"
-msgstr ""
+msgstr "Чт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:20
 msgid "Fri"
-msgstr ""
+msgstr "Пт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:21
 msgid "Sat"
-msgstr ""
+msgstr "Сб"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:22
 msgid "Sun"
-msgstr ""
+msgstr "Вс"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:25
 msgid "January"
-msgstr ""
+msgstr "Январь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:26
 msgid "February"
-msgstr ""
+msgstr "Февраль"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:27
 msgid "March"
-msgstr ""
+msgstr "Март"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:28
 msgid "April"
-msgstr ""
+msgstr "Апрель"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:29
 msgid "May"
-msgstr ""
+msgstr "Май"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:30
 msgid "June"
-msgstr ""
+msgstr "Июнь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:31
 msgid "July"
-msgstr ""
+msgstr "Июль"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:32
 msgid "August"
-msgstr ""
+msgstr "Август"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:33
 msgid "September"
-msgstr ""
+msgstr "Сентябрь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:34
 msgid "October"
-msgstr ""
+msgstr "Октябрь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:35
 msgid "November"
-msgstr ""
+msgstr "Ноябрь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:36
 msgid "December"
-msgstr ""
+msgstr "Декабрь"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:39
 msgid "jan"
-msgstr ""
+msgstr "янв"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:40
 msgid "feb"
-msgstr ""
+msgstr "фев"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:41
 msgid "mar"
-msgstr ""
+msgstr "мар"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:42
 msgid "apr"
-msgstr ""
+msgstr "апр"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:43
 msgid "may"
-msgstr ""
+msgstr "май"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:44
 msgid "jun"
-msgstr ""
+msgstr "июн"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:45
 msgid "jul"
-msgstr ""
+msgstr "июл"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:46
 msgid "aug"
-msgstr ""
+msgstr "аве"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:47
 msgid "sep"
-msgstr ""
+msgstr "сен"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:48
 msgid "oct"
-msgstr ""
+msgstr "окт"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:49
 msgid "nov"
-msgstr ""
+msgstr "ноя"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:50
 msgid "dec"
-msgstr ""
+msgstr "дек"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:53
 msgctxt "abbrev. month"
 msgid "Jan."
-msgstr ""
+msgstr "Янв."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:54
 msgctxt "abbrev. month"
 msgid "Feb."
-msgstr ""
+msgstr "Фев."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:55
 msgctxt "abbrev. month"
 msgid "March"
-msgstr ""
+msgstr "Мар."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:56
 msgctxt "abbrev. month"
 msgid "April"
-msgstr ""
+msgstr "Апр."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:57
 msgctxt "abbrev. month"
 msgid "May"
-msgstr ""
+msgstr "Мая"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:58
 msgctxt "abbrev. month"
 msgid "June"
-msgstr ""
+msgstr "Июн."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:59
 msgctxt "abbrev. month"
 msgid "July"
-msgstr ""
+msgstr "Июл."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:60
 msgctxt "abbrev. month"
 msgid "Aug."
-msgstr ""
+msgstr "Авг."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:61
 msgctxt "abbrev. month"
 msgid "Sept."
-msgstr ""
+msgstr "Сен."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:62
 msgctxt "abbrev. month"
 msgid "Oct."
-msgstr ""
+msgstr "Окт."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:63
 msgctxt "abbrev. month"
 msgid "Nov."
-msgstr ""
+msgstr "Ноя."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:64
 msgctxt "abbrev. month"
 msgid "Dec."
-msgstr ""
+msgstr "Дек."
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:67
 msgctxt "alt. month"
 msgid "January"
-msgstr ""
+msgstr "Января"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:68
 msgctxt "alt. month"
 msgid "February"
-msgstr ""
+msgstr "Февраля"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:69
 msgctxt "alt. month"
 msgid "March"
-msgstr ""
+msgstr "Марта"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:70
 msgctxt "alt. month"
 msgid "April"
-msgstr ""
+msgstr "Апреля"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:71
 msgctxt "alt. month"
 msgid "May"
-msgstr ""
+msgstr "Мая"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:72
 msgctxt "alt. month"
 msgid "June"
-msgstr ""
+msgstr "Июня"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:73
 msgctxt "alt. month"
 msgid "July"
-msgstr ""
+msgstr "Июля"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:74
 msgctxt "alt. month"
 msgid "August"
-msgstr ""
+msgstr "Августа"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:75
 msgctxt "alt. month"
 msgid "September"
-msgstr ""
+msgstr "Сентября"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:76
 msgctxt "alt. month"
 msgid "October"
-msgstr ""
+msgstr "Октября"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:77
 msgctxt "alt. month"
 msgid "November"
-msgstr ""
+msgstr "Ноября"
 
 #: .\venv\Lib\site-packages\django\utils\dates.py:78
 msgctxt "alt. month"
 msgid "December"
-msgstr ""
+msgstr "Декабря"
 
 #: .\venv\Lib\site-packages\django\utils\ipv6.py:8
 msgid "This is not a valid IPv6 address."
@@ -2549,13 +2554,13 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\utils\text.py:254
 msgid "or"
-msgstr ""
+msgstr "или"
 
 #. Translators: This string is used as a separator between list elements
 #: .\venv\Lib\site-packages\django\utils\text.py:273
 #: .\venv\Lib\site-packages\django\utils\timesince.py:135
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #: .\venv\Lib\site-packages\django\utils\timesince.py:8
 #, python-format
