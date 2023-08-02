@@ -380,46 +380,41 @@ always_true = ~Q(pk__in=[])
 
 
 def search_subcorpus(filters):
-    sentences = Sentence.objects.filter(
-        Q(document__date__gte=filters.date_from, document__date__lte=filters.date_to)
-        & (
-            always_true
-            if filters.gender == "any"
-            else Q(document__author__gender=filters.gender)
-        )
-        & (
-            always_true
-            if filters.oral == "any"
-            else Q(document__oral=(filters.oral == "true"))
-        )
+    subcorpus = Document.objects.filter(
+        Q(date__gte=filters.date_from, date__lte=filters.date_to)
+        & (always_true if filters.gender == "any" else Q(author__gender=filters.gender))
+        & (always_true if filters.oral == "any" else Q(oral=(filters.oral == "true")))
         & (
             always_true
             if filters.language_background == "any"
-            else Q(document__author__language_background=filters.language_background)
+            else Q(author__language_background=filters.language_background)
         )
         & (
             always_true
             if filters.dominant_languages == [""]
-            else Q(document__author__dominant_language__in=filters.dominant_languages)
+            else Q(author__dominant_language__in=filters.dominant_languages)
         )
         & (
             always_true
             if filters.language_level == [""]
-            else Q(document__language_level__in=filters.language_level)
+            else Q(language_level__in=filters.language_level)
         )
     )
 
-    return sentences
+    subcorpus_stats = {
+        "documents": subcorpus.count(),
+        "sentences": Sentence.objects.filter(document__in=subcorpus).count(),
+        "tokens": Token.objects.filter(document__in=subcorpus).count(),
+    }
+
+    # get all sentences in subcorpus
+    sentences = Sentence.objects.filter(document__in=subcorpus)
+
+    return sentences, subcorpus_stats
 
 
 def search_sentences(tokens_list, filters):
-    sentences = search_subcorpus(filters)
-
-    subcorpus_stats = {
-        "documents": sentences.values("document").distinct().count(),
-        "sentences": sentences.count(),
-        "tokens": Token.objects.filter(sentence__in=sentences).count(),
-    }
+    sentences, subcorpus_stats = search_subcorpus(filters)
 
     tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
 
