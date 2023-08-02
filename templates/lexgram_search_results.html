@@ -1,3 +1,7 @@
+{% for key, value in stats.items %}
+  <p>{{ key }}: {{ value }}</p>
+{% endfor %}
+<br>
 {% for sentence in sentences %}
   <p>{{ sentence }}</p>
 {% endfor %}

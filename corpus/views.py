@@ -2,15 +2,14 @@ import uuid
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.postgres.aggregates import StringAgg
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count, F, Q
+from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
-from .models import Document, Sentence, Author, Filter, Token_list
+from .models import Document, Sentence, Author, Filter, Token_list, Token
 
 
 def export_documents(request):
@@ -415,11 +414,18 @@ def search_subcorpus(filters):
 
 def search_sentences(tokens_list, filters):
     sentences = search_subcorpus(filters)
-    for i in range(len(tokens_list.wordform)):
-        tokens_list.wordform[i] = tokens_list.wordform[i].lower()
-    sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
-    matching_sentences = []
 
+    subcorpus_stats = {
+        "documents": sentences.values("document").distinct().count(),
+        "sentences": sentences.count(),
+        "tokens": Token.objects.filter(sentence__in=sentences).count(),
+    }
+
+    tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
+
+    sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
+
+    matching_sentence_pks = []
     for sentence in sentences:
         tokens = sentence.lemmas
         for i in range(len(tokens)):
@@ -427,20 +433,55 @@ def search_sentences(tokens_list, filters):
                 flag = True
                 for j in range(1, len(tokens_list.wordform)):
                     if flag:
-                        flag = False
-                        for k in range(
-                            int(tokens_list.begin[j - 1]),
-                            int(tokens_list.end[j - 1]) + 1,
-                        ):
-                            if tokens[i + k] == tokens_list.wordform[j]:
-                                flag = True
-                                break
+                        flag = any(
+                            tokens[i + k] == tokens_list.wordform[j]
+                            for k in range(
+                                int(tokens_list.begin[j - 1]),
+                                int(tokens_list.end[j - 1]) + 1,
+                            )
+                        )
                     else:
                         break
                 if flag:
-                    matching_sentences.append(sentence)
+                    matching_sentence_pks.append(sentence.pk)
 
-    return matching_sentences
+    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
+    return matching_sentences, subcorpus_stats
+
+
+def get_search_stats(sentences, subcorpus_stats):
+    """
+    A function that returns statistics for the search results.
+    For example:
+    Corpus total: 11758 documents, 190394 sentences, 2284839 words.
+    Search executed in a user-defined subcorpus of 11758 documents, 190311 sentences, 2284975 words.
+    Found: 0 documents, 0 contexts.
+    :param sentences: found sentences
+    :param subcorpus_stats: stats for the subcorpus
+    :return: dict with stats
+    """
+
+    total_documents = Document.objects.count()
+    total_sentences = Sentence.objects.count()
+    total_tokens = Token.objects.count()
+
+    found_documents = Document.objects.filter(
+        id__in=sentences.values_list("document_id", flat=True).distinct()
+    ).count()
+    found_sentences = sentences.count()
+    found_tokens = Token.objects.filter(sentence__in=sentences).count()
+
+    return {
+        "total_documents": total_documents,
+        "total_sentences": total_sentences,
+        "total_tokens": total_tokens,
+        "subcorpus_documents": subcorpus_stats["documents"],
+        "subcorpus_sentences": subcorpus_stats["sentences"],
+        "subcorpus_tokens": subcorpus_stats["tokens"],
+        "found_documents": found_documents,
+        "found_sentences": found_sentences,
+        "found_tokens": found_tokens,
+    }
 
 
 def search_results(request):
@@ -465,11 +506,13 @@ def search_results(request):
         request.GET.get("level[]", "").split(","),
     )
 
-    sentences = search_sentences(tokens_list, filters)
+    sentences, subcorpus_stats = search_sentences(tokens_list, filters)
+    stats = get_search_stats(sentences, subcorpus_stats)
+
     return render(
         request,
         "lexgram_search_results.html",
-        {"sentences": sentences},
+        {"sentences": sentences, "stats": stats},
     )
 
 
