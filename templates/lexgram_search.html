@@ -36,8 +36,7 @@
               $(`#errModal-${id}`).modal('show');
             }
           </script>
-          <form method="post" id="lexgram-form" class="mb-5 lexgram-form">
-            {% csrf_token %}
+          <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
             {% include 'partials/lexgram_subcorpus_form.html' %}
             <div class="row mb-3" data-block-id="{{ block_id }}">
               {% include 'partials/lexgram_form_content_based.html' %}

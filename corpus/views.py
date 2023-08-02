@@ -420,7 +420,10 @@ def search_sentences(tokens_list, filters):
                 for j in range(1, len(tokens_list.wordform)):
                     if flag:
                         flag = False
-                        for k in range(int(tokens_list.begin[j - 1]), int(tokens_list.end[j - 1]) + 1):
+                        for k in range(
+                            int(tokens_list.begin[j - 1]),
+                            int(tokens_list.end[j - 1]) + 1,
+                        ):
                             if tokens[i + k] == tokens_list.wordform[j]:
                                 flag = True
                                 break
@@ -454,10 +457,11 @@ def search_results(request):
         request.GET.get("level[]").split(","),
     )
 
+    sentences = search_sentences(tokens_list, filters)
     return render(
         request,
         "lexgram_search_results.html",
-        {"sentences": search_sentences(tokens_list, filters)},
+        {"sentences": sentences},
     )
 
 
