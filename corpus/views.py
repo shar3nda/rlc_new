@@ -398,8 +398,16 @@ def search_subcorpus(filters):
             if filters.language_background == "any"
             else Q(document__author__language_background=filters.language_background)
         )
-        & Q(document__author__dominant_language__in=filters.dominant_languages)
-        & Q(document__language_level__in=filters.language_level)
+        & (
+            always_true
+            if filters.dominant_languages == [""]
+            else Q(document__author__dominant_language__in=filters.dominant_languages)
+        )
+        & (
+            always_true
+            if filters.language_level == [""]
+            else Q(document__language_level__in=filters.language_level)
+        )
     )
 
     return sentences
@@ -453,8 +461,8 @@ def search_results(request):
         request.GET.get("gender"),
         request.GET.get("mode"),
         request.GET.get("background"),
-        request.GET.get("language[]").split(","),
-        request.GET.get("level[]").split(","),
+        request.GET.get("language[]", "").split(","),
+        request.GET.get("level[]", "").split(","),
     )
 
     sentences = search_sentences(tokens_list, filters)
