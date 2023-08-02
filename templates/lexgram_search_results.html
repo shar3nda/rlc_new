@@ -8,8 +8,18 @@
   {% endfor %}
   <br>
   {% for sentence in sentences %}
-    <p>{{ sentence }}</p>
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="d-inline-block mb-0">{{ sentence.document.title }}</h5>
+        <small class="text-muted fs-6"> (ID: {{ sentence.document.id }})</small>
+      </div>
+      <div class="card-body">
+        <p class="card-text">{{ sentence.text }}</p>
+        <div class="btn-group" role="group">
+          <a href="{# add the URL to show context here #}" class="btn btn-outline-secondary btn-sm">Показать контекст</a>
+          <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-secondary btn-sm">Перейти к документу</a>
+        </div>
+      </div>
+    </div>
   {% endfor %}
-
 {% endblock content %}
-
