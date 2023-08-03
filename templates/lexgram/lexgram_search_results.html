@@ -39,7 +39,7 @@
         </button>
 
         {% if user.is_authenticated %}
-          <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-secondary btn-sm">Перейти к документу</a>
+          <a href="/corpus/annotate/{{ sentence.document.id }}/" class="btn btn-outline-secondary btn-sm">Перейти к документу</a>
         {% endif %}
       </div>
     </div>
