@@ -71,7 +71,7 @@ for _ in tqdm(range(num_authors), desc="Creating authors"):
 authors = Author.objects.all()
 
 # Create some fake documents
-num_documents = 200
+num_documents = 1000
 for _ in tqdm(range(num_documents), desc="Creating documents"):
     Document.objects.create(
         title=fake.sentence(),
