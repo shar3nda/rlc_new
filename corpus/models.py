@@ -4,11 +4,11 @@ from django.apps import apps
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from natasha import Segmenter, Doc, MorphVocab, NewsEmbedding, NewsMorphTagger
-from psycopg import transaction
 
 _RE_COMBINE_WHITESPACE = re.compile(r"\s+")
 _RE_SPAN_PATTERN = re.compile(r"<span>.*?</span>")
@@ -126,85 +126,6 @@ class Author(models.Model):
             "dominant_language": self.dominant_language,
             "source": self.source,
         }
-
-
-def make_sentence(self, sentence, sentence_num):
-    text = sentence.text
-    markup = sentence.text
-    replacements = []
-    offset = 0
-    if hasattr(sentence.tokens[0], "start"):
-        offset = sentence.tokens[0].start
-    for token in sentence.tokens:
-        feats_markup = "\n".join(
-            [
-                f"<div class='col-6'><strong>{key}:</strong></div><div class='col-6'>{value}</div>"
-                for key, value in token.feats.items()
-            ]
-        )
-
-        replacements.append(
-            (
-                getattr(token, "start", 1) - offset,
-                getattr(token, "end", token.start + len(token.text)) - offset,
-                f"""<span data-toggle="tooltip" data-bs-html="true" data-bs-original-title="
-    <div class='row'>
-        <div class='col-6'><strong>Lemma:</strong></div>
-        <div class='col-6'>{token.lemma}</div>
-    </div>
-    <div class='row'>
-        <div class='col-6'><strong>POS:</strong></div>
-        <div class='col-6'>{token.pos}</div>
-    </div>
-    <div class='row'>
-        {feats_markup}
-    </div>
-">{token.text}</span>""",
-            )
-        )
-    replacements.sort(key=lambda x: x[1], reverse=True)
-    for start, end, replacement in replacements:
-        markup = markup[:start] + replacement + markup[end:]
-    new_sentence = Sentence.objects.create(
-        document=self, text=text, markup=markup, number=sentence_num
-    )
-
-    tokens = []
-    lemmas = []
-    for token_num, token in enumerate(sentence.tokens):
-        feats = token.feats or {}
-        tokens.append(
-            Token(
-                document=self,
-                sentence=new_sentence,
-                number=token_num + 1,
-                start=getattr(token, "start", 1),
-                end=getattr(token, "end", token.start + len(token.text)),
-                token=token.text if token.text else 1,
-                lemma=token.lemma,
-                pos=token.pos,
-                animacy=feats.get("Animacy"),
-                aspect=feats.get("Aspect"),
-                case=feats.get("Case"),
-                degree=feats.get("Degree"),
-                foreign=feats.get("Foreign"),
-                gender=feats.get("Gender"),
-                hyph=feats.get("Hyph"),
-                mood=feats.get("Mood"),
-                gram_number=feats.get("Number"),
-                person=feats.get("Person"),
-                polarity=feats.get("Polarity"),
-                tense=feats.get("Tense"),
-                variant=feats.get("Variant"),
-                verb_form=feats.get("VerbForm"),
-                voice=feats.get("Voice"),
-            )
-        )
-        lemmas.append(token.lemma)
-    Token.objects.bulk_create(tokens)
-
-    new_sentence.lemmas = lemmas
-    new_sentence.save()
 
 
 class Document(models.Model):
@@ -366,15 +287,8 @@ class Document(models.Model):
             if created and sender == Annotation:
                 instance.document.annotators.add(instance.user)
 
+    @transaction.atomic
     def save(self, signal_sender=True, *args, **kwargs):
-        """
-        This method overrides the default save method of the model.
-        It is used to create Sentence objects for each sentence in the document.
-        """
-
-        body_changed = False
-
-        # Check if the document exists and the body has changed
         if self.pk:
             old_document = Document.objects.only("body").get(pk=self.pk)
             body_changed = old_document.body != self.body
@@ -383,7 +297,6 @@ class Document(models.Model):
 
         super(Document, self).save(*args, **kwargs)
 
-        # Add signal_sender argument to post_save signal
         post_save.send(
             sender=self.__class__,
             instance=self,
@@ -391,26 +304,102 @@ class Document(models.Model):
             signal_sender=signal_sender,
         )
 
-        if body_changed and signal_sender:  # Check for the signal_sender argument
-            Sentence.objects.filter(document=self).delete()
-            Annotation.objects.filter(document=self).delete()
-
+        if body_changed and signal_sender:
             self.body = _RE_COMBINE_WHITESPACE.sub(" ", self.body).strip()
             doc = Doc(self.body)
-
-            # tokenize the text
             doc.segment(_SEGMENTER)
-
-            # tag morphology
             doc.tag_morph(_MORPH_TAGGER)
 
             # lemmatize all tokens
             for token in doc.tokens:
                 token.lemmatize(_MORPH_VOCAB)
 
-            # create Sentence objects
+            # Create Sentence objects
+            sentences_bulk = []
+            tokens_bulk = []
+
             for sentence_num, sentence in enumerate(doc.sents):
-                make_sentence(self, sentence, sentence_num)
+                text = sentence.text
+                markup = sentence.text
+                replacements = []
+                offset = 0
+                if hasattr(sentence.tokens[0], "start"):
+                    offset = sentence.tokens[0].start
+
+                for token in sentence.tokens:
+                    feats_markup = "\n".join(
+                        [
+                            f"<div class='col-6'><strong>{key}:</strong></div><div class='col-6'>{value}</div>"
+                            for key, value in token.feats.items()
+                        ]
+                    )
+
+                    replacements.append(
+                        (
+                            getattr(token, "start", 1) - offset,
+                            getattr(token, "end", token.start + len(token.text))
+                            - offset,
+                            f"""<span data-toggle="tooltip" data-bs-html="true" data-bs-original-title="
+                            <div class='row'>
+                                <div class='col-6'><strong>Lemma:</strong></div>
+                                <div class='col-6'>{token.lemma}</div>
+                            </div>
+                            <div class='row'>
+                                <div class='col-6'><strong>POS:</strong></div>
+                                <div class='col-6'>{token.pos}</div>
+                            </div>
+                            <div class='row'>
+                                {feats_markup}
+                            </div>
+                        ">{token.text}</span>""",
+                        )
+                    )
+
+                replacements.sort(key=lambda x: x[1], reverse=True)
+                for start, end, replacement in replacements:
+                    markup = markup[:start] + replacement + markup[end:]
+
+                sentences_bulk.append(
+                    Sentence(
+                        document=self, text=text, markup=markup, number=sentence_num
+                    )
+                )
+
+                lemmas = []
+                for token_num, token in enumerate(sentence.tokens):
+                    feats = token.feats or {}
+                    tokens_bulk.append(
+                        Token(
+                            document=self,
+                            sentence_num=sentence_num,
+                            sentence=sentences_bulk[-1],
+                            token_num=token_num + 1,
+                            token=token.text if token.text else 1,
+                            lemma=token.lemma,
+                            pos=token.pos,
+                            animacy=feats.get("Animacy"),
+                            aspect=feats.get("Aspect"),
+                            case=feats.get("Case"),
+                            degree=feats.get("Degree"),
+                            foreign=feats.get("Foreign"),
+                            gender=feats.get("Gender"),
+                            hyph=feats.get("Hyph"),
+                            mood=feats.get("Mood"),
+                            gram_number=feats.get("Number"),
+                            person=feats.get("Person"),
+                            polarity=feats.get("Polarity"),
+                            tense=feats.get("Tense"),
+                            variant=feats.get("Variant"),
+                            verb_form=feats.get("VerbForm"),
+                            voice=feats.get("Voice"),
+                        )
+                    )
+                    lemmas.append(token.lemma)
+
+                sentences_bulk[-1].lemmas = lemmas
+
+            Sentence.objects.bulk_create(sentences_bulk)
+            Token.objects.bulk_create(tokens_bulk)
 
     class Meta:
         ordering = ["-created_on"]
@@ -734,6 +723,8 @@ class Token(models.Model):
     voice = models.CharField(
         max_length=4, choices=Voice.choices, null=True, blank=True, db_index=True
     )
+    sentence_num = models.IntegerField(null=True, blank=True)
+    token_num = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.token
