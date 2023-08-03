@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import gettext_lazy as _
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
@@ -503,11 +504,25 @@ def search_results(request):
 
     sentences, subcorpus_stats = search_sentences(tokens_list, filters)
     stats = get_search_stats(sentences, subcorpus_stats)
+    stat_names = {
+        "total_documents": _("Total Documents"),
+        "total_sentences": _("Total Sentences"),
+        "total_tokens": _("Total Tokens"),
+        "subcorpus_documents": _("Subcorpus Documents"),
+        "subcorpus_sentences": _("Subcorpus Sentences"),
+        "subcorpus_tokens": _("Subcorpus Tokens"),
+        "found_documents": _("Found Documents"),
+        "found_sentences": _("Found Sentences"),
+        "found_tokens": _("Found Tokens"),
+    }
+
+    # replace keys in the stats variable with translated values
+    stats = {stat_names[key]: value for key, value in stats.items()}
 
     return render(
         request,
         "lexgram_search_results.html",
-        {"sentences": sentences, "stats": stats},
+        {"sentences": sentences, "stats": stats, "stat_names": stat_names},
     )
 
 

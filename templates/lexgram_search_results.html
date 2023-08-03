@@ -3,9 +3,21 @@
 {% load i18n %}
 
 {% block content %}
-  {% for key, value in stats.items %}
-    <p>{{ key }}: {{ value }}</p>
-  {% endfor %}
+  <div class="container">
+    <h3>{% trans 'Subcorpus stats:' %}</h3>
+    <div class="row">
+      <div class="col-md-4">
+        <ul class="list-group">
+          {% for key, value in stats.items %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ key }}
+              <span class="badge bg-primary rounded-pill">{{ value }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
   <br>
   {% for sentence in sentences %}
     <div class="card mb-3">
@@ -16,8 +28,10 @@
       <div class="card-body">
         <p class="card-text">{{ sentence.text }}</p>
         <div class="btn-group" role="group">
-          <a href="{# add the URL to show context here #}" class="btn btn-outline-secondary btn-sm">Показать контекст</a>
-          <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-secondary btn-sm">Перейти к документу</a>
+          <a href="{# add the URL to show context here #}" class="btn btn-outline-secondary btn-sm">Показать
+            контекст</a>
+          <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-secondary btn-sm">Перейти
+            к документу</a>
         </div>
       </div>
     </div>
