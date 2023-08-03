@@ -47,6 +47,17 @@ class SentenceErrorSchema(Schema):
     errors: List[str]
 
 
+class SentenceContextIn(Schema):
+    sentence_id: int
+
+
+class SentenceContextOut(Schema):
+    current: str
+    document_title: str
+    previous: str = None
+    next: str = None
+
+
 class AnnotateRequest(Schema):
     original_sentence: str
     corrected_sentence: str
@@ -218,3 +229,22 @@ def get_sentence_errors(request, sentence_id: int):
     words = Token.objects.filter(sentence=sentence).values_list("token", flat=True)
     errors = [word for word in words if not _DICTIONARY.check(word)]
     return {"errors": errors}
+
+
+@api.get("/get_sentence_context", response= SentenceContextOut)
+def get_sentence_context(request, sentence_id: int):
+    sentence = Sentence.objects.get(pk=sentence_id)
+
+    prev_sentence = Sentence.objects.filter(document=sentence.document, number=sentence.number - 1).first()
+    next_sentence = Sentence.objects.filter(document=sentence.document, number=sentence.number + 1).first()
+
+    context = {
+        'current': sentence.text,
+        'document_title': sentence.document.title,
+    }
+    if prev_sentence:
+        context['previous'] = prev_sentence.text
+    if next_sentence:
+        context['next'] = next_sentence.text
+
+    return context

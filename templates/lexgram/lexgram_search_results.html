@@ -25,7 +25,7 @@
   </div>
 
   <br>
-  {% for sentence in sentences %}
+{% for sentence in sentences %}
     <div class="card mb-3">
       <div class="card-header">
         <h5 class="d-inline-block mb-0">{{ sentence.document.title }}</h5>
@@ -34,12 +34,64 @@
       <div class="card-body">
         <p class="card-text">{{ sentence.text }}</p>
         <div class="btn-group" role="group">
-          <a href="{# add the URL to show context here #}" class="btn btn-outline-secondary btn-sm">Показать
-            контекст</a>
-          <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-secondary btn-sm">Перейти
-            к документу</a>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#contextModal" data-sentence-id="{{ sentence.id }}">
+            Показать контекст
+          </button>
+
+          {% if user.is_authenticated %}
+            <a href="{# add the URL to navigate to the document here #}" class="btn btn-outline-primary btn-sm">Перейти к документу</a>
+          {% endif %}
         </div>
       </div>
     </div>
-  {% endfor %}
+{% endfor %}
+
+<!-- Modal -->
+<div class="modal fade" id="contextModal" tabindex="-1" aria-labelledby="contextModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contextModalLabel">Sentence Context</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="contextModalBody">
+        <!-- Context will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('#contextModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      var sentenceId = button.data('sentence-id') // Extract info from data-* attributes
+
+      // AJAX call to your Django view to get the context
+      $.ajax({
+        url: "/api/get_sentence_context", // Replace with the URL of your Django view that returns the context
+        data: {
+          'sentence_id': sentenceId
+        },
+        success: function(data) {
+          var context = ''
+          if (data.previous) {
+            context += data.previous + '<br><br>'
+          }
+          context += '<strong>' + data.current + '</strong>'
+          if (data.next) {
+            context += '<br><br>' + data.next
+          }
+          $('#contextModalBody').html(context);
+          $('#contextModalLabel').html(data.document_title);
+        }
+      });
+    })
+})
+
+</script>
 {% endblock content %}
