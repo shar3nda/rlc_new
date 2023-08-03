@@ -212,7 +212,7 @@ def annotate(request, document_id):
         "document": doc,
         "sentences": Sentence.objects.filter(document=doc).order_by("number"),
     }
-    return render(request, "annotate.html", context)
+    return render(request, "document/annotate.html", context)
 
 
 @permission_required("annotator.change_document")
@@ -264,7 +264,7 @@ def add_document(request):
 
     return render(
         request,
-        "add_document.html",
+        "document/add_document.html",
         {
             "form": form,
             "author_form": author_form,
@@ -308,7 +308,7 @@ def edit_document(request, document_id):
 
     return render(
         request,
-        "edit_document.html",
+        "document/edit_document.html",
         {
             "form": form,
             "document": document,
@@ -338,7 +338,7 @@ def edit_author(request, author_id, document_id):
 
     return render(
         request,
-        "edit_author.html",
+        "document/edit_author.html",
         {
             "author_form": form,
             "author": author,
@@ -374,7 +374,7 @@ def user_profile(request):
 
 
 def search(request):
-    return render(request, "lexgram_search.html")
+    return render(request, "lexgram/lexgram_search.html")
 
 
 always_true = ~Q(pk__in=[])
@@ -521,12 +521,14 @@ def search_results(request):
 
     return render(
         request,
-        "lexgram_search_results.html",
+        "lexgram/lexgram_search_results.html",
         {"sentences": sentences, "stats": stats},
     )
 
 
 def get_search(request):
     return render(
-        request, "partials/lexgram_form_contents.html", {"block_id": uuid.uuid4()}
+        request,
+        "partials/lexgram/lexgram_form_contents.html",
+        {"block_id": uuid.uuid4()},
     )

@@ -33,7 +33,7 @@ def zip_lists(a, b):
     return zip(a, b)
 
 
-@register.inclusion_tag("paginator.html")
+@register.inclusion_tag("utils/paginator.html")
 def paginator(page_obj, request):
     query_dict = request.GET.copy()
     if "page" in query_dict:

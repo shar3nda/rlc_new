@@ -132,7 +132,7 @@
 
 
         {% for document in documents %}
-          {% include 'document_card.html' %}
+          {% include 'partials/document/document_card.html' %}
         {% endfor %}
 
         {% paginator documents request %}

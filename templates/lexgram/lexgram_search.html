@@ -37,9 +37,9 @@
             }
           </script>
           <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
-            {% include 'partials/lexgram_subcorpus_form.html' %}
+            {% include 'partials/lexgram/lexgram_subcorpus_form.html' %}
             <div class="row mb-3" data-block-id="{{ block_id }}">
-              {% include 'partials/lexgram_form_content_based.html' %}
+              {% include 'partials/lexgram/lexgram_form_content_based.html' %}
             </div>
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
@@ -53,7 +53,7 @@
           <h2>{% trans "Search results" %}</h2>
           <ul>
             {% for document in page_obj %}
-              {% include 'document_card.html' %}
+              {% include 'partials/document/document_card.html' %}
             {% endfor %}
           </ul>
           {% paginator page_obj request %}

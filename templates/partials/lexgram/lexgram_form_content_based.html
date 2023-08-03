@@ -8,7 +8,7 @@
              placeholder="{% trans "Wordform" %}">
     </label>
   </div>
-  {% include 'partials/lex_select.html' %}
+  {% include 'partials/lexgram/lex_select.html' %}
   <div class="col-md-2">
     <label>
       <a onclick="getLex('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
@@ -20,7 +20,7 @@
              placeholder="{% trans "Part of speech" %}">
     </label>
   </div>
-  {% include 'partials/gram_select.html' %}
+  {% include 'partials/lexgram/gram_select.html' %}
   <div class="col-md-2">
     <label>
       <a onclick="getGram('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
@@ -32,7 +32,7 @@
              placeholder="{% trans "Grammar characteristics" %}">
     </label>
   </div>
-  {% include 'partials/err_select.html' %}
+  {% include 'partials/lexgram/err_select.html' %}
   <div class="col-md-2">
     <label>
       <a onclick="getErr('{{ block_id }}')"><span class="fa fa-th-list"></span></a>

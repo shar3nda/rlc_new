@@ -85,9 +85,9 @@
           });
         </script>
 
-            {% include 'document_card.html' with annotate_view=True %}
+            {% include 'partials/document/document_card.html' with annotate_view=True %}
             {% for sentence in sentences %}
-              {% include 'sentence_card.html' with sentence=sentence %}
+              {% include 'partials/document/sentence_card.html' with sentence=sentence %}
             {% endfor %}
             <p class="card-text"><small class="text-muted">{{ document.created_on }}</small></p>
           </div>

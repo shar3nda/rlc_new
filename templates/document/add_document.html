@@ -76,7 +76,7 @@
           <input type="hidden" id="author-selection-method" name="author_selection_method" value="manual">
 
           <div class="tab-content mb-4">
-            {% include 'author_card.html' %}
+            {% include 'partials/document/author_card.html' %}
             <div class="form-group tab-pane fade" id="favorite-authors">
               <label for="search-author">{{ favorite_author_form.selected_author.label }}</label>
               <input type="text" class="form-control" id="search-author"
