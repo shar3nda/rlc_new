@@ -381,21 +381,34 @@ always_true = ~Q(pk__in=[])
 
 
 def search_subcorpus(filters):
-    subcorpus = Document.objects.filter(
-        Q(date__gte=filters.date_from, date__lte=filters.date_to)
-        & (always_true if filters.gender == "any" else Q(author__gender=filters.gender))
-        & (always_true if filters.oral == "any" else Q(oral=(filters.oral == "true")))
-        & (
+    date_from_specified = filters.date_from != 0
+    date_to_specified = filters.date_to != 9999
+
+    if date_from_specified or date_to_specified:
+        # Exclude documents with unspecified dates if at least one date filter is specified
+        subcorpus = Document.objects.filter(
+            Q(date__gte=filters.date_from, date__lte=filters.date_to)
+            & ~Q(date=None)  # Exclude documents with date=None
+        )
+    else:
+        # Include all documents if both date filters are not specified
+        subcorpus = Document.objects.all()
+
+    # Apply other filters
+    subcorpus = subcorpus.filter(
+        Q(always_true if filters.gender == "any" else Q(author__gender=filters.gender))
+        & Q(always_true if filters.oral == "any" else Q(oral=(filters.oral == "true")))
+        & Q(
             always_true
             if filters.language_background == "any"
             else Q(author__language_background=filters.language_background)
         )
-        & (
+        & Q(
             always_true
             if filters.dominant_languages == [""]
             else Q(author__dominant_language__in=filters.dominant_languages)
         )
-        & (
+        & Q(
             always_true
             if filters.language_level == [""]
             else Q(language_level__in=filters.language_level)
