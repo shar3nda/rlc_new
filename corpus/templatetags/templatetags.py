@@ -54,3 +54,12 @@ def split_dict_items(dictionary):
     items = list(dictionary.items())
     chunk_size = (len(items) + 2) // 3  # Round up to the nearest integer division
     return [items[i : i + chunk_size] for i in range(0, len(items), chunk_size)]
+
+
+@register.filter
+def highlight(text, search):
+    """Replace all occurrences of search string with equivalent html bold tags"""
+    highlighted = text
+    for word in search:
+        highlighted = re.sub(rf'\b({word})\b', r'<strong>\1</strong>', highlighted, flags=re.I)
+    return mark_safe(highlighted)

@@ -435,8 +435,10 @@ def search_sentences(tokens_list, filters):
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
 
     matching_sentence_pks = []
+    matching_words = []
     for sentence in sentences:
         tokens = sentence.lemmas
+        words = sentence.words
         for i in range(len(tokens)):
             if tokens[i] == tokens_list.wordform[0]:
                 flag = True
@@ -453,9 +455,12 @@ def search_sentences(tokens_list, filters):
                         break
                 if flag:
                     matching_sentence_pks.append(sentence.pk)
+                    # Adding all the matching sequence words to the matching_words list
+                    matching_words.extend(words[i:i+len(tokens_list.wordform)])
 
     matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
-    return matching_sentences, subcorpus_stats
+    return matching_sentences, matching_words, subcorpus_stats
+
 
 
 def get_search_stats(sentences, subcorpus_stats):
@@ -515,7 +520,7 @@ def search_results(request):
         request.GET.get("level[]", "").split(","),
     )
 
-    sentences, subcorpus_stats = search_sentences(tokens_list, filters)
+    sentences, words, subcorpus_stats = search_sentences(tokens_list, filters)
     stats = get_search_stats(sentences, subcorpus_stats)
     stat_names = {
         "total_documents": _("Total Documents"),
@@ -535,7 +540,7 @@ def search_results(request):
     return render(
         request,
         "lexgram/lexgram_search_results.html",
-        {"sentences": sentences, "stats": stats},
+        {"sentences": sentences, "stats": stats, "tokens_list": words},
     )
 
 
