@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="card-body">
-      <p class="card-text">{{ sentence.text }}</p>
+       <p class="card-text">{{ sentence.text|highlight:tokens_list }}</p>
     </div>
   </div>
 {% endfor %}

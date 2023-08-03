@@ -365,6 +365,7 @@ class Document(models.Model):
                     )
                 )
 
+                words = []
                 lemmas = []
                 for token_num, token in enumerate(sentence.tokens):
                     feats = token.feats or {}
@@ -374,7 +375,7 @@ class Document(models.Model):
                             sentence_num=sentence_num,
                             sentence=sentences_bulk[-1],
                             token_num=token_num + 1,
-                            token=token.text if token.text else 1,
+                            token=token.text if token.text else "",
                             lemma=token.lemma,
                             pos=token.pos,
                             animacy=feats.get("Animacy"),
@@ -395,8 +396,10 @@ class Document(models.Model):
                         )
                     )
                     lemmas.append(token.lemma)
+                    words.append(token.text if token.text else "")
 
                 sentences_bulk[-1].lemmas = lemmas
+                sentences_bulk[-1].words = words
 
             Sentence.objects.bulk_create(sentences_bulk)
             Token.objects.bulk_create(tokens_bulk)
@@ -435,6 +438,7 @@ class Sentence(models.Model):
     markup = models.TextField(null=True, blank=True, verbose_name=_("Markup"))
     number = models.IntegerField(verbose_name=_("Position in text"))
     lemmas = ArrayField(models.CharField(max_length=200), default=list)
+    words = ArrayField(models.CharField(max_length=200), default=list)
 
     def get_correction(self, alt=False):
         """
