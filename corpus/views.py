@@ -522,7 +522,7 @@ def search_results(request):
     return render(
         request,
         "lexgram_search_results.html",
-        {"sentences": sentences, "stats": stats, "stat_names": stat_names},
+        {"sentences": sentences, "stats": stats},
     )
 
 

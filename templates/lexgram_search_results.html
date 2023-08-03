@@ -1,23 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load templatetags %}
 
 {% block content %}
   <div class="container">
     <h3>{% trans 'Subcorpus stats:' %}</h3>
     <div class="row">
-      <div class="col-md-4">
-        <ul class="list-group">
-          {% for key, value in stats.items %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              {{ key }}
-              <span class="badge bg-primary rounded-pill">{{ value }}</span>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
+      {% with stats|split_dict_items as stats_chunks %}
+        {% for chunk in stats_chunks %}
+          <div class="col-md-4">
+            <ul class="list-group">
+              {% for key, value in chunk %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ key }}
+                  <span class="badge bg-primary rounded-pill">{{ value }}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      {% endwith %}
     </div>
   </div>
+
   <br>
   {% for sentence in sentences %}
     <div class="card mb-3">

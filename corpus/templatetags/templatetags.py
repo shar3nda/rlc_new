@@ -1,8 +1,8 @@
 import re
+from urllib.parse import urlencode
 
 from django import template
 from django.http import QueryDict
-from urllib.parse import urlencode
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -47,3 +47,10 @@ def paginator(page_obj, request):
         "base_url": base_url,
         "query_string": query_string,
     }
+
+
+@register.filter
+def split_dict_items(dictionary):
+    items = list(dictionary.items())
+    chunk_size = (len(items) + 2) // 3  # Round up to the nearest integer division
+    return [items[i : i + chunk_size] for i in range(0, len(items), chunk_size)]
