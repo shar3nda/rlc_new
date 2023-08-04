@@ -422,10 +422,11 @@ def search_sentences(tokens_list, filters):
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
 
     matching_sentence_pks = []
-    matching_words = []
+    matching_words = set()
     for sentence in sentences:
         tokens = sentence.lemmas
         words = sentence.words
+        tokens_with_positions = [(token, i) for i, token in enumerate(tokens)]
         for i in range(len(tokens)):
             if tokens[i] == tokens_list.wordform[0]:
                 flag = True
@@ -442,11 +443,15 @@ def search_sentences(tokens_list, filters):
                         break
                 if flag:
                     matching_sentence_pks.append(sentence.pk)
-                    # Adding all the matching sequence words to the matching_words list
-                    matching_words.extend(words[i:i+len(tokens_list.wordform)])
-
+                    # Adding only the matching sequence words to the matching_words list
     matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
+    for sentence in matching_sentences:
+        for i in range(len(sentence.lemmas)):
+            if sentence.lemmas[i] in tokens_list.wordform:
+                matching_words.add(sentence.words[i])
+    print(matching_words)
     return matching_sentences, matching_words, subcorpus_stats
+
 
 
 
