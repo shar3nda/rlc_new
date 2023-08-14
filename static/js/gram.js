@@ -1,6 +1,6 @@
 const gramFeatures = {
   'Animacy': ['Anim', 'Inan'],
-  'Aspect': ['Imp', 'Perf',],
+  'Aspect': ['AspectImp', 'Perf',],
   'Case': ['Acc', 'Dat', 'Gen', 'Ins', 'Loc', 'Nom', 'Par', 'Voc',],
   'Degree': ['Cmp', 'Pos', 'Sup',],
   'Foreign': ['ForeignYes',],
