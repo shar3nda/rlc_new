@@ -427,6 +427,24 @@ def search_subcorpus(filters):
     return sentences, subcorpus_stats
 
 
+def exact_search_sentences(exact_forms, filters):
+    sentences = search_subcorpus(filters)
+    matching_sentences = []
+    for sentence in sentences:
+        for i in range(len(sentence.words)):
+            if sentence.words[i] == exact_forms[0]:
+                ii = i
+                flag = True
+                for j in range(1, len(exact_forms)):
+                    ii += 1
+                    if exact_forms[j] != sentence.words[ii]:
+                        flag = False
+                        break
+                if flag:
+                    matching_sentences.append(sentence)
+    return matching_sentences
+
+
 def search_sentences(tokens_list, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
 
@@ -439,7 +457,6 @@ def search_sentences(tokens_list, filters):
     for sentence in sentences:
         tokens = sentence.lemmas
         words = sentence.words
-        tokens_with_positions = [(token, i) for i, token in enumerate(tokens)]
         for i in range(len(tokens)):
             if tokens[i] == tokens_list.wordform[0]:
                 flag = True
@@ -462,7 +479,6 @@ def search_sentences(tokens_list, filters):
         for i in range(len(sentence.lemmas)):
             if sentence.lemmas[i] in tokens_list.wordform:
                 matching_words.add(sentence.words[i])
-    print(matching_words)
     return matching_sentences, matching_words, subcorpus_stats
 
 
@@ -510,10 +526,18 @@ def search_results(request):
         begin = begin.split(",")
     if end is not None:
         end = end.split(",")
+    lex = request.GET.get("lex[]").split(",")
+    for j in range(len(lex)):
+        lex[j] = lex[j].strip("()").split("|")
+    grammar = request.GET.get("grammar[]").split(",")
+    for j in range(len(grammar)):
+        grammar[j] = grammar[j].strip("()").split("|")
     tokens_list = Token_list(
         request.GET.get("wordform[]").split(","),
         begin,
         end,
+        lex,
+        grammar,
     )
     filters = Filter(
         request.GET.get("date1"),

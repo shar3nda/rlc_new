@@ -739,10 +739,12 @@ class Token(models.Model):
 
 
 class Token_list:
-    def __init__(self, wordform, begin, end):
+    def __init__(self, wordform, begin, end, lex, grammar):
         self.wordform = wordform
         self.begin = begin
         self.end = end
+        self.lex = lex
+        self.grammar = grammar
 
 
 class Filter:
