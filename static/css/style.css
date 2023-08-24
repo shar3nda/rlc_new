@@ -368,6 +368,15 @@ html {
     left: 0;
     height: 100vh; /* 100% of the viewport height */
    width: 200px;
+   z-index: 999;
     overflow-y: auto; /* Enable vertical scroll */
 }
+/* Footer style */
+.footer-over-content {
+  position: relative; /* or 'absolute' if you prefer */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Higher than sidebar's z-index */
 
+}

@@ -127,13 +127,13 @@
 </div>
 
 {% block footer %}
-  <footer class="bg-dark text-light py-2 mt-4">
+  <footer class="bg-dark text-light py-2 mt-4 footer-over-content">
     <div class="container-fluid">
-
       <p class="mb-0">&copy; {% trans "HSE School of Linguistics. All rights reserved." %}</p>
     </div>
   </footer>
 {% endblock %}
+
 {% if messages %}
   <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
     {% for message in messages %}
