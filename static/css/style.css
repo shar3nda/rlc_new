@@ -1,5 +1,5 @@
 body {
-  padding-top: 70px;
+  padding-top: 56px;
 }
 
 .sentence {
@@ -346,5 +346,28 @@ html {
 
 .id-style.hide {
   opacity: 0;
+}
+
+.sidebar-container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+.sidebar-navbar {
+    padding-left: 0;
+    padding-right: 0;
+}
+.sticky-sidebar {
+    position: sticky;
+    top: 0;
+}
+.fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh; /* 100% of the viewport height */
+   width: 200px;
+    overflow-y: auto; /* Enable vertical scroll */
 }
 

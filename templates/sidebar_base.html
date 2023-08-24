@@ -1,0 +1,199 @@
+{% load static %}
+
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="{{ language_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}RLC{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <script src="{% static 'js/recogito.min.js' %}"></script>
+  <script src="{% static 'js/fontawesome-all.min.js' %}"></script>
+  <script src="{% static 'js/annotator-utils.js' %}"></script>
+  <script src="{% static 'dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+
+  {% block head %}{% endblock %}
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+{% block navbar %}
+
+  {% get_current_language as LANGUAGE_CODE %}
+
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top sidebar-navbar">
+      <a class="navbar-brand" href="{% url 'homepage' %}">
+        <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="28"
+             width="80" style="margin-left: 25px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'homepage' %}">  {% trans "Main" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'search' %}">{% trans "Search" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'news' %}">{% trans "News" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'help' %}">{% trans "Help" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'statistics' %}">{% trans "Statics" %}</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item d-flex align-items-center">
+            <button id="darkModeSwitch" class="btn btn-sm btn-outline-light">
+              <i class="fas fa-moon" aria-hidden="true"></i>
+              <span class="ms-2">{% trans "Dark Mode" %}</span>
+            </button>
+          </li>
+          <li class="nav-item ms-2 d-flex align-items-center">
+            <form action="{% url 'set_language' %}" method="post" class="d-inline-block">{% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}">
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="languageDropdown"
+                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE == 'en' %}
+                  English (en)
+                {% elif LANGUAGE_CODE == 'ru' %}
+                  Русский (ru)
+                {% endif %}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                <button class="dropdown-item" type="submit" name="language" value="en">English (en)</button>
+                <button class="dropdown-item" type="submit" name="language" value="ru">Русский (ru)</button>
+              </div>
+            </div>
+          </form>
+          </li>
+
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_document' %}">{% trans "New document" %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'documents' %}">{% trans "All documents" %}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">{% trans "Admin panel" %}</a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                 aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+                {{ user.username }}
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'user_profile' %}">{% trans "Profile" %}</a>
+                <a class="dropdown-item logout-item" href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              </div>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}" style="margin-right: 10px;">{% trans "Log in" %}</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+{% endblock %}
+
+<div class="container-fluid flex-grow-1 sidebar-container-fluid">
+
+  {% block content %}{% endblock %}
+</div>
+
+{% block footer %}
+  <footer class="bg-dark text-light py-2 mt-4">
+    <div class="container-fluid">
+
+      <p class="mb-0">&copy; {% trans "HSE School of Linguistics. All rights reserved." %}</p>
+    </div>
+  </footer>
+{% endblock %}
+{% if messages %}
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+    {% for message in messages %}
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
+           data-bs-delay="{% if message.tags == 'error' %}0{% else %}3000{% endif %}">
+        <div class="toast-header">
+          <strong class="me-auto">{{ message.tags|title }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+    var toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl, {autohide: true}).show();
+    });
+    var darkModeSwitch = document.querySelector('#darkModeSwitch');
+    var body = document.querySelector('body');
+
+    // Load the user's preference from localStorage
+    var darkModeEnabled = localStorage.getItem('darkModeEnabled') === 'true';
+
+    // Apply the user's preference
+    darkModeSwitch.checked = darkModeEnabled;
+    if (darkModeEnabled) {
+      body.setAttribute('data-bs-theme', 'dark');
+    } else {
+      body.removeAttribute('data-bs-theme');
+    }
+
+    // Save the user's preference and update the theme when the switch is toggled
+    darkModeSwitch.addEventListener('click', function () {
+      if (body.getAttribute('data-bs-theme') === 'dark') {
+        body.removeAttribute('data-bs-theme');
+        darkModeSwitch.removeAttribute('data-bs-theme');
+        localStorage.setItem('darkModeEnabled', 'false');
+      } else {
+        body.setAttribute('data-bs-theme', 'dark');
+        darkModeSwitch.setAttribute('data-bs-theme', 'dark');
+        localStorage.setItem('darkModeEnabled', 'true');
+      }
+    });
+  });
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+  // Add this code for toggling the input container
+  $(document).on('click', '[id^=auto-annotate-btn-]', function() {
+    const sentenceId = $(this).attr('id').split('-')[3];
+    const inputContainer = $(`#corrected-sentence-container-${sentenceId}`);
+    inputContainer.toggle();
+  });
+</script>
+</body>
+</html>
