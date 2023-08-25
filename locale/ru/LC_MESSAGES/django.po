@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-24 19:48+0300\n"
+"POT-Creation-Date: 2023-08-26 00:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,8 +80,9 @@ msgstr "Раздел"
 msgid "sections"
 msgstr "Разделы"
 
-#: .\corpus\filters.py:18 .\corpus\filters.py:49 .\corpus\models.py:324
-#: .\templates\document_card.html:47 .\templates\edit_document.html:62
+#: .\corpus\filters.py:18 .\corpus\filters.py:49 .\corpus\models.py:245
+#: .\templates\document\edit_document.html:62
+#: .\templates\partials\document\document_card.html:50
 msgid "Author"
 msgstr "Автор"
 
@@ -90,7 +91,7 @@ msgid "Author search"
 msgstr "Поиск автора"
 
 #: .\corpus\filters.py:26 .\corpus\filters.py:58
-#: .\templates\document_card.html:41
+#: .\templates\partials\document\document_card.html:44
 msgid "Owner"
 msgstr "Создатель"
 
@@ -99,28 +100,29 @@ msgid "Owner search"
 msgstr "Поиск создателя"
 
 #: .\corpus\filters.py:36 .\corpus\models.py:43
-#: .\templates\document_card.html:59 .\templates\edit_document.html:74
-#: .\templates\partials\lexgram_subcorpus_form.html:86
+#: .\templates\document\edit_document.html:74
+#: .\templates\partials\document\document_card.html:62
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:86
 msgid "Language background"
 msgstr "Тип носителя"
 
 #: .\corpus\filters.py:42 .\corpus\models.py:108
-#: .\templates\document_card.html:53 .\templates\edit_document.html:68
-#: .\templates\partials\lexgram_subcorpus_form.html:111
+#: .\templates\document\edit_document.html:68
+#: .\templates\partials\document\document_card.html:56
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:111
 msgid "Dominant language"
 msgstr "Доминантный язык"
 
-#: .\corpus\filters.py:45 .\corpus\models.py:216
+#: .\corpus\filters.py:45 .\corpus\models.py:137
 msgid "Title"
 msgstr "Название"
 
-#: .\corpus\filters.py:47 .\corpus\models.py:307 .\corpus\models.py:445
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2373
+#: .\corpus\filters.py:47 .\corpus\models.py:228 .\corpus\models.py:437
 msgid "Text"
 msgstr "Текст"
 
-#: .\corpus\filters.py:55 .\corpus\models.py:283
-#: .\templates\document_card.html:35
+#: .\corpus\filters.py:55 .\corpus\models.py:204
+#: .\templates\partials\document\document_card.html:38
 msgid "Language level"
 msgstr "Уровень языка"
 
@@ -128,8 +130,8 @@ msgstr "Уровень языка"
 msgid "Annotator"
 msgstr "Разметчик"
 
-#: .\corpus\filters.py:71 .\corpus\models.py:316
-#: .\templates\document_card.html:38
+#: .\corpus\filters.py:71 .\corpus\models.py:237
+#: .\templates\partials\document\document_card.html:41
 msgid "Status"
 msgstr "Статус"
 
@@ -153,17 +155,17 @@ msgstr "Мужской"
 msgid "Female"
 msgstr "Женский"
 
-#: .\corpus\models.py:28 .\corpus\models.py:38 .\corpus\models.py:244
+#: .\corpus\models.py:28 .\corpus\models.py:38 .\corpus\models.py:165
 msgid "Other"
 msgstr "Другое"
 
-#: .\corpus\models.py:31 .\templates\document_card.html:50
-#: .\templates\edit_document.html:65
+#: .\corpus\models.py:31 .\templates\document\edit_document.html:65
+#: .\templates\partials\document\document_card.html:53
 msgid "Gender"
 msgstr "Пол"
 
-#: .\corpus\models.py:33 .\templates\document_card.html:62
-#: .\templates\edit_document.html:77
+#: .\corpus\models.py:33 .\templates\document\edit_document.html:77
+#: .\templates\partials\document\document_card.html:65
 msgid "Program"
 msgstr "Программа"
 
@@ -179,55 +181,68 @@ msgstr "Иностранный"
 msgid "Abkhazian"
 msgstr "Абхазский"
 
-#: .\corpus\models.py:48 .\templates\partials\lexgram_subcorpus_form.html:119
+#: .\corpus\models.py:48
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:119
 msgid "Azerbaijani"
 msgstr "Азербайджанский"
 
-#: .\corpus\models.py:49 .\templates\partials\lexgram_subcorpus_form.html:121
+#: .\corpus\models.py:49
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:121
 msgid "Albanian"
 msgstr "Албанский"
 
-#: .\corpus\models.py:50 .\templates\partials\lexgram_subcorpus_form.html:125
+#: .\corpus\models.py:50
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:125
 msgid "Amharic"
 msgstr "Амхарский"
 
-#: .\corpus\models.py:51 .\templates\partials\lexgram_subcorpus_form.html:127
+#: .\corpus\models.py:51
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:127
 msgid "English"
 msgstr "Английский"
 
-#: .\corpus\models.py:52 .\templates\partials\lexgram_subcorpus_form.html:129
+#: .\corpus\models.py:52
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:129
 msgid "Arabic"
 msgstr "Арабский"
 
-#: .\corpus\models.py:53 .\templates\partials\lexgram_subcorpus_form.html:123
+#: .\corpus\models.py:53
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:123
 msgid "Armenian"
 msgstr "Армянский"
 
-#: .\corpus\models.py:54 .\templates\partials\lexgram_subcorpus_form.html:131
+#: .\corpus\models.py:54
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:131
 msgid "Bengali"
 msgstr "Бенгальский"
 
-#: .\corpus\models.py:55 .\templates\partials\lexgram_subcorpus_form.html:133
+#: .\corpus\models.py:55
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:133
 msgid "Bulgarian"
 msgstr "Болгарский"
 
-#: .\corpus\models.py:56 .\templates\partials\lexgram_subcorpus_form.html:135
+#: .\corpus\models.py:56
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:135
 msgid "Hungarian"
 msgstr "Венгерский"
 
-#: .\corpus\models.py:57 .\templates\partials\lexgram_subcorpus_form.html:137
+#: .\corpus\models.py:57
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:137
 msgid "Vietnamese"
 msgstr "Вьетнамский"
 
-#: .\corpus\models.py:58 .\templates\partials\lexgram_subcorpus_form.html:177
+#: .\corpus\models.py:58
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:177
 msgid "Dutch"
 msgstr "Голландский"
 
-#: .\corpus\models.py:59 .\templates\partials\lexgram_subcorpus_form.html:139
+#: .\corpus\models.py:59
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:139
 msgid "Greek"
 msgstr "Греческий"
 
-#: .\corpus\models.py:60 .\templates\partials\lexgram_subcorpus_form.html:141
+#: .\corpus\models.py:60
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:141
 msgid "Georgian"
 msgstr "Грузинский"
 
@@ -235,87 +250,108 @@ msgstr "Грузинский"
 msgid "Daghestanian"
 msgstr "Дагестанский"
 
-#: .\corpus\models.py:62 .\templates\partials\lexgram_subcorpus_form.html:145
+#: .\corpus\models.py:62
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:145
 msgid "Dari"
 msgstr "Дари"
 
-#: .\corpus\models.py:63 .\templates\partials\lexgram_subcorpus_form.html:147
+#: .\corpus\models.py:63
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:147
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: .\corpus\models.py:64 .\templates\partials\lexgram_subcorpus_form.html:149
+#: .\corpus\models.py:64
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:149
 msgid "Indonesian"
 msgstr "Индонезийский"
 
-#: .\corpus\models.py:65 .\templates\partials\lexgram_subcorpus_form.html:151
+#: .\corpus\models.py:65
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:151
 msgid "Spanish"
 msgstr "Испанский"
 
-#: .\corpus\models.py:66 .\templates\partials\lexgram_subcorpus_form.html:153
+#: .\corpus\models.py:66
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:153
 msgid "Italian"
 msgstr "Итальянский"
 
-#: .\corpus\models.py:67 .\templates\partials\lexgram_subcorpus_form.html:155
+#: .\corpus\models.py:67
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:155
 msgid "Kazakh"
 msgstr "Казахский"
 
-#: .\corpus\models.py:68 .\templates\partials\lexgram_subcorpus_form.html:157
+#: .\corpus\models.py:68
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:157
 msgid "Chinese"
 msgstr "Китайский"
 
-#: .\corpus\models.py:69 .\templates\partials\lexgram_subcorpus_form.html:159
+#: .\corpus\models.py:69
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:159
 msgid "Korean"
 msgstr "Корейский"
 
-#: .\corpus\models.py:70 .\templates\partials\lexgram_subcorpus_form.html:161
+#: .\corpus\models.py:70
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:161
 msgid "Kurdish"
 msgstr "Курдский"
 
-#: .\corpus\models.py:71 .\templates\partials\lexgram_subcorpus_form.html:163
+#: .\corpus\models.py:71
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:163
 msgid "Khmer"
 msgstr "Кхмерский"
 
-#: .\corpus\models.py:72 .\templates\partials\lexgram_subcorpus_form.html:165
+#: .\corpus\models.py:72
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:165
 msgid "Lao"
 msgstr "Лаосский"
 
-#: .\corpus\models.py:73 .\templates\partials\lexgram_subcorpus_form.html:169
+#: .\corpus\models.py:73
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:169
 msgid "Macedonian"
 msgstr "Македонский"
 
-#: .\corpus\models.py:74 .\templates\partials\lexgram_subcorpus_form.html:171
+#: .\corpus\models.py:74
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:171
 msgid "Mongolian"
 msgstr "Монгольский"
 
-#: .\corpus\models.py:75 .\templates\partials\lexgram_subcorpus_form.html:173
+#: .\corpus\models.py:75
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:173
 msgid "German"
 msgstr "Немецкий"
 
-#: .\corpus\models.py:76 .\templates\partials\lexgram_subcorpus_form.html:175
+#: .\corpus\models.py:76
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:175
 msgid "Nepali"
 msgstr "Непальский"
 
-#: .\corpus\models.py:77 .\templates\partials\lexgram_subcorpus_form.html:179
+#: .\corpus\models.py:77
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:179
 msgid "Norwegian"
 msgstr "Норвежский"
 
-#: .\corpus\models.py:78 .\templates\partials\lexgram_subcorpus_form.html:183
+#: .\corpus\models.py:78
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:183
 msgid "Portuguese"
 msgstr "Португальский"
 
-#: .\corpus\models.py:79 .\templates\partials\lexgram_subcorpus_form.html:185
+#: .\corpus\models.py:79
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:185
 msgid "Pashto"
 msgstr "Пушту"
 
-#: .\corpus\models.py:80 .\templates\partials\lexgram_subcorpus_form.html:187
+#: .\corpus\models.py:80
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:187
 msgid "Romanian"
 msgstr "Румынский"
 
-#: .\corpus\models.py:81 .\templates\partials\lexgram_subcorpus_form.html:189
+#: .\corpus\models.py:81
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:189
 msgid "Serbian"
 msgstr "Сербский"
 
-#: .\corpus\models.py:82 .\templates\partials\lexgram_subcorpus_form.html:191
+#: .\corpus\models.py:82
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:191
 msgid "Slovak"
 msgstr "Словацкий"
 
@@ -323,55 +359,68 @@ msgstr "Словацкий"
 msgid "Slovenian"
 msgstr "Словенский"
 
-#: .\corpus\models.py:84 .\templates\partials\lexgram_subcorpus_form.html:195
+#: .\corpus\models.py:84
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:195
 msgid "Tajik"
 msgstr "Таджикский"
 
-#: .\corpus\models.py:85 .\templates\partials\lexgram_subcorpus_form.html:197
+#: .\corpus\models.py:85
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:197
 msgid "Thai"
 msgstr "Тайский"
 
-#: .\corpus\models.py:86 .\templates\partials\lexgram_subcorpus_form.html:199
+#: .\corpus\models.py:86
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:199
 msgid "Turkish"
 msgstr "Турецкий"
 
-#: .\corpus\models.py:87 .\templates\partials\lexgram_subcorpus_form.html:201
+#: .\corpus\models.py:87
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:201
 msgid "Turkmen"
 msgstr "Туркменский"
 
-#: .\corpus\models.py:88 .\templates\partials\lexgram_subcorpus_form.html:203
+#: .\corpus\models.py:88
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:203
 msgid "Uzbek"
 msgstr "Узбекский"
 
-#: .\corpus\models.py:89 .\templates\partials\lexgram_subcorpus_form.html:205
+#: .\corpus\models.py:89
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:205
 msgid "Urdu"
 msgstr "Урду"
 
-#: .\corpus\models.py:90 .\templates\partials\lexgram_subcorpus_form.html:181
+#: .\corpus\models.py:90
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:181
 msgid "Farsi"
 msgstr "Фарси"
 
-#: .\corpus\models.py:91 .\templates\partials\lexgram_subcorpus_form.html:207
+#: .\corpus\models.py:91
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:207
 msgid "Finnish"
 msgstr "Финский"
 
-#: .\corpus\models.py:92 .\templates\partials\lexgram_subcorpus_form.html:209
+#: .\corpus\models.py:92
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:209
 msgid "French"
 msgstr "Французский"
 
-#: .\corpus\models.py:93 .\templates\partials\lexgram_subcorpus_form.html:211
+#: .\corpus\models.py:93
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:211
 msgid "Hindi"
 msgstr "Хинди"
 
-#: .\corpus\models.py:94 .\templates\partials\lexgram_subcorpus_form.html:213
+#: .\corpus\models.py:94
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:213
 msgid "Croatian"
 msgstr "Хорватский"
 
-#: .\corpus\models.py:95 .\templates\partials\lexgram_subcorpus_form.html:215
+#: .\corpus\models.py:95
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:215
 msgid "Czech"
 msgstr "Чешский"
 
-#: .\corpus\models.py:96 .\templates\partials\lexgram_subcorpus_form.html:217
+#: .\corpus\models.py:96
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:217
 msgid "Swedish"
 msgstr "Шведский"
 
@@ -379,11 +428,13 @@ msgstr "Шведский"
 msgid "Shona"
 msgstr "Шона"
 
-#: .\corpus\models.py:98 .\templates\partials\lexgram_subcorpus_form.html:219
+#: .\corpus\models.py:98
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:219
 msgid "Estonian"
 msgstr "Эстонский"
 
-#: .\corpus\models.py:99 .\templates\partials\lexgram_subcorpus_form.html:221
+#: .\corpus\models.py:99
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:221
 msgid "Japanese"
 msgstr "Японский"
 
@@ -391,459 +442,470 @@ msgstr "Японский"
 msgid "Favourites"
 msgstr "Избранные"
 
-#: .\corpus\models.py:114 .\templates\document_card.html:56
-#: .\templates\edit_document.html:71
+#: .\corpus\models.py:114 .\templates\document\edit_document.html:71
+#: .\templates\partials\document\document_card.html:59
 msgid "Source"
 msgstr "Источник"
 
-#: .\corpus\models.py:223 .\corpus\models.py:549
+#: .\corpus\models.py:144 .\corpus\models.py:542
 msgid "User"
 msgstr "Пользователь"
 
-#: .\corpus\models.py:226
+#: .\corpus\models.py:147
 msgid "Created on"
 msgstr "Дата создания"
 
-#: .\corpus\models.py:229
+#: .\corpus\models.py:150 .\templates\partials\document\document_card.html:29
 msgid "Written in"
 msgstr "Год написания"
 
-#: .\corpus\models.py:233
+#: .\corpus\models.py:154
 msgid "Answers to questions"
 msgstr "Ответы на вопросы"
 
-#: .\corpus\models.py:234
+#: .\corpus\models.py:155
 msgid "Non–academic essay"
 msgstr "Неакадемическое эссе"
 
-#: .\corpus\models.py:235
+#: .\corpus\models.py:156
 msgid "Academic essay"
 msgstr "Академическое эссе"
 
-#: .\corpus\models.py:236
+#: .\corpus\models.py:157
 msgid "Blog"
 msgstr "Блог"
 
-#: .\corpus\models.py:237
+#: .\corpus\models.py:158
 msgid "Letter"
 msgstr "Письмо"
 
-#: .\corpus\models.py:238
+#: .\corpus\models.py:159
 msgid "Story"
 msgstr "История"
 
-#: .\corpus\models.py:239
+#: .\corpus\models.py:160
 msgid "Paraphrase"
 msgstr "Пересказ"
 
-#: .\corpus\models.py:240
+#: .\corpus\models.py:161
 msgid "Definition"
 msgstr "Определение"
 
-#: .\corpus\models.py:241
+#: .\corpus\models.py:162
 msgid "Biography"
 msgstr "Биография"
 
-#: .\corpus\models.py:242
+#: .\corpus\models.py:163
 msgid "Description"
 msgstr "Описание"
 
-#: .\corpus\models.py:243
+#: .\corpus\models.py:164
 msgid "Summary"
 msgstr "Изложение"
 
-#: .\corpus\models.py:251 .\templates\document_card.html:29
+#: .\corpus\models.py:172 .\templates\partials\document\document_card.html:32
 msgid "Genre"
 msgstr "Жанр"
 
-#: .\corpus\models.py:303 .\templates\document_card.html:32
-#: .\templates\partials\lexgram_subcorpus_form.html:10
+#: .\corpus\models.py:224 .\templates\partials\document\document_card.html:35
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:10
 msgid "Subcorpus"
 msgstr "Подкорпус"
 
-#: .\corpus\models.py:310
+#: .\corpus\models.py:231
 msgid "New"
 msgstr "Новый"
 
-#: .\corpus\models.py:311 .\templates\annotate.html:18
+#: .\corpus\models.py:232 .\templates\document\annotate.html:18
 msgid "Annotated"
 msgstr "Аннотирован"
 
-#: .\corpus\models.py:312 .\templates\annotate.html:19
+#: .\corpus\models.py:233 .\templates\document\annotate.html:19
 msgid "Checked"
 msgstr "Проверен"
 
-#: .\corpus\models.py:327
+#: .\corpus\models.py:248
 msgid "Time limit"
 msgstr "Ограничение по времени"
 
-#: .\corpus\models.py:329
+#: .\corpus\models.py:250
 msgid "Oral"
 msgstr "Устный текст"
 
-#: .\corpus\models.py:335
+#: .\corpus\models.py:256
 msgid "Annotators"
 msgstr "Разметчик"
 
-#: .\corpus\models.py:443 .\corpus\models.py:544
+#: .\corpus\models.py:435 .\corpus\models.py:537
 msgid "Document"
 msgstr "Документ"
 
-#: .\corpus\models.py:446
+#: .\corpus\models.py:438
 msgid "Markup"
 msgstr "Разметка"
 
-#: .\corpus\models.py:447
+#: .\corpus\models.py:439
 msgid "Position in text"
 msgstr "Номер в тексте"
 
-#: .\corpus\models.py:547
+#: .\corpus\models.py:540
 msgid "Sentence"
 msgstr "Предложение"
 
-#: .\corpus\models.py:555
+#: .\corpus\models.py:548
 msgid "GUID"
 msgstr "GUID"
 
-#: .\corpus\models.py:559
+#: .\corpus\models.py:552
 msgid "Original text"
 msgstr "Изначальный текст"
 
-#: .\corpus\models.py:560
+#: .\corpus\models.py:553
 msgid "Start"
 msgstr "Начало"
 
-#: .\corpus\models.py:561
+#: .\corpus\models.py:554
 msgid "End"
 msgstr "Конец"
 
-#: .\corpus\models.py:563
+#: .\corpus\models.py:556
 msgid "Tokens"
 msgstr "Токены"
 
-#: .\corpus\models.py:569
+#: .\corpus\models.py:562
 msgid "Error tags"
 msgstr "Тэги ошибок"
 
-#: .\corpus\models.py:594
+#: .\corpus\models.py:587
 msgid "ADJ"
 msgstr ""
 
-#: .\corpus\models.py:595
+#: .\corpus\models.py:588
 msgid "ADP"
 msgstr ""
 
-#: .\corpus\models.py:596
+#: .\corpus\models.py:589
 msgid "ADV"
 msgstr ""
 
-#: .\corpus\models.py:597
+#: .\corpus\models.py:590
 msgid "AUX"
 msgstr ""
 
-#: .\corpus\models.py:598
+#: .\corpus\models.py:591
 msgid "CCONJ"
 msgstr ""
 
-#: .\corpus\models.py:599
+#: .\corpus\models.py:592
 msgid "DET"
 msgstr ""
 
-#: .\corpus\models.py:600
+#: .\corpus\models.py:593
 msgid "INTJ"
 msgstr ""
 
-#: .\corpus\models.py:601
+#: .\corpus\models.py:594
 msgid "NOUN"
 msgstr ""
 
-#: .\corpus\models.py:602
+#: .\corpus\models.py:595
 msgid "NUM"
 msgstr ""
 
-#: .\corpus\models.py:603
+#: .\corpus\models.py:596
 msgid "PART"
 msgstr ""
 
-#: .\corpus\models.py:604
+#: .\corpus\models.py:597
 msgid "PRON"
 msgstr ""
 
-#: .\corpus\models.py:605
+#: .\corpus\models.py:598
 msgid "PROPN"
 msgstr ""
 
-#: .\corpus\models.py:606
+#: .\corpus\models.py:599
 msgid "PUNCT"
 msgstr ""
 
-#: .\corpus\models.py:607
+#: .\corpus\models.py:600
 msgid "SCONJ"
 msgstr ""
 
-#: .\corpus\models.py:608
+#: .\corpus\models.py:601
 msgid "SYM"
 msgstr ""
 
-#: .\corpus\models.py:609
+#: .\corpus\models.py:602
 msgid "VERB"
 msgstr ""
 
-#: .\corpus\models.py:610
+#: .\corpus\models.py:603
 msgid "X"
 msgstr ""
 
-#: .\corpus\models.py:613
+#: .\corpus\models.py:606
 msgid "Anim"
 msgstr ""
 
-#: .\corpus\models.py:614
+#: .\corpus\models.py:607
 msgid "Inan"
 msgstr ""
 
-#: .\corpus\models.py:617 .\corpus\models.py:648
+#: .\corpus\models.py:610 .\corpus\models.py:641
 msgid "Imp"
 msgstr ""
 
-#: .\corpus\models.py:618
+#: .\corpus\models.py:611
 msgid "Perf"
 msgstr ""
 
-#: .\corpus\models.py:621
+#: .\corpus\models.py:614
 msgid "Acc"
 msgstr ""
 
-#: .\corpus\models.py:622
+#: .\corpus\models.py:615
 msgid "Dat"
 msgstr ""
 
-#: .\corpus\models.py:623
+#: .\corpus\models.py:616
 msgid "Gen"
 msgstr ""
 
-#: .\corpus\models.py:624
+#: .\corpus\models.py:617
 msgid "Ins"
 msgstr ""
 
-#: .\corpus\models.py:625
+#: .\corpus\models.py:618
 msgid "Loc"
 msgstr ""
 
-#: .\corpus\models.py:626
+#: .\corpus\models.py:619
 msgid "Nom"
 msgstr ""
 
-#: .\corpus\models.py:627
+#: .\corpus\models.py:620
 msgid "Par"
 msgstr ""
 
-#: .\corpus\models.py:628
+#: .\corpus\models.py:621
 msgid "Voc"
 msgstr ""
 
-#: .\corpus\models.py:631
+#: .\corpus\models.py:624
 msgid "Cmp"
 msgstr ""
 
-#: .\corpus\models.py:632
+#: .\corpus\models.py:625
 msgid "Pos"
 msgstr ""
 
-#: .\corpus\models.py:633
+#: .\corpus\models.py:626
 msgid "Sup"
 msgstr ""
 
-#: .\corpus\models.py:636 .\corpus\models.py:644
-#: .\venv\Lib\site-packages\django\forms\widgets.py:795
+#: .\corpus\models.py:629 .\corpus\models.py:637
 msgid "Yes"
 msgstr ""
 
-#: .\corpus\models.py:639
+#: .\corpus\models.py:632
 msgid "Fem"
 msgstr ""
 
-#: .\corpus\models.py:640
+#: .\corpus\models.py:633
 msgid "Masc"
 msgstr ""
 
-#: .\corpus\models.py:641
+#: .\corpus\models.py:634
 msgid "Neut"
 msgstr ""
 
-#: .\corpus\models.py:647
+#: .\corpus\models.py:640
 msgid "Cnd"
 msgstr ""
 
-#: .\corpus\models.py:649
+#: .\corpus\models.py:642
 msgid "Ind"
 msgstr ""
 
-#: .\corpus\models.py:652
+#: .\corpus\models.py:645
 msgid "Plur"
 msgstr ""
 
-#: .\corpus\models.py:653
+#: .\corpus\models.py:646
 msgid "Sing"
 msgstr ""
 
-#: .\corpus\models.py:656
+#: .\corpus\models.py:649
 msgid "1"
 msgstr ""
 
-#: .\corpus\models.py:657
+#: .\corpus\models.py:650
 msgid "2"
 msgstr ""
 
-#: .\corpus\models.py:658
+#: .\corpus\models.py:651
 msgid "3"
 msgstr ""
 
-#: .\corpus\models.py:661
+#: .\corpus\models.py:654
 msgid "Neg"
 msgstr ""
 
-#: .\corpus\models.py:664
+#: .\corpus\models.py:657
 msgid "Fut"
 msgstr ""
 
-#: .\corpus\models.py:665
+#: .\corpus\models.py:658
 msgid "Past"
 msgstr ""
 
-#: .\corpus\models.py:666
+#: .\corpus\models.py:659
 msgid "Pres"
 msgstr ""
 
-#: .\corpus\models.py:669
+#: .\corpus\models.py:662
 msgid "Short"
 msgstr ""
 
-#: .\corpus\models.py:672
+#: .\corpus\models.py:665
 msgid "Conv"
 msgstr ""
 
-#: .\corpus\models.py:673
+#: .\corpus\models.py:666
 msgid "Fin"
 msgstr ""
 
-#: .\corpus\models.py:674
+#: .\corpus\models.py:667
 msgid "Inf"
 msgstr ""
 
-#: .\corpus\models.py:675
+#: .\corpus\models.py:668
 msgid "Part"
 msgstr ""
 
-#: .\corpus\models.py:678
+#: .\corpus\models.py:671
 msgid "Act"
 msgstr ""
 
-#: .\corpus\models.py:679
+#: .\corpus\models.py:672
 msgid "Mid"
 msgstr ""
 
-#: .\corpus\models.py:680
+#: .\corpus\models.py:673
 msgid "Pass"
 msgstr ""
 
-#: .\corpus\models.py:742
+#: .\corpus\models.py:737
 msgid "token"
 msgstr "Токен"
 
-#: .\corpus\models.py:743
+#: .\corpus\models.py:738
 msgid "tokens"
 msgstr "Токены"
 
-#: .\templates\add_document.html:13
-msgid "Add document"
-msgstr "Добавить документ"
+#: .\corpus\views.py:555 .\templates\statistics.html:106
+msgid "Total Documents"
+msgstr "Всего документов"
 
-#: .\templates\add_document.html:69
-msgid "New author"
-msgstr "Новый автор"
+#: .\corpus\views.py:556
+#, fuzzy
+#| msgid "Total sentences"
+msgid "Total Sentences"
+msgstr "Всего предложений"
 
-#: .\templates\add_document.html:73
-msgid "Saved author"
-msgstr "Сохраненный автор"
+#: .\corpus\views.py:557
+#, fuzzy
+#| msgid "Total Documents"
+msgid "Total Tokens"
+msgstr "Всего документов"
 
-#: .\templates\add_document.html:83
-msgid "Search for saved authors..."
-msgstr "Поиск по сохранённым авторам..."
+#: .\corpus\views.py:558
+#, fuzzy
+#| msgid "Total Documents"
+msgid "Subcorpus Documents"
+msgstr "Всего документов"
 
-#: .\templates\add_document.html:92
-msgid "Add"
-msgstr "Добавить"
+#: .\corpus\views.py:559
+#, fuzzy
+#| msgid "Subcorpus"
+msgid "Subcorpus Sentences"
+msgstr "Подкорпус"
 
-#: .\templates\annotate.html:15
-msgid "Document status"
-msgstr "Статус документа"
+#: .\corpus\views.py:560
+#, fuzzy
+#| msgid "Subcorpus"
+msgid "Subcorpus Tokens"
+msgstr "Подкорпус"
 
-#: .\templates\annotate.html:17
-msgid "Not annotated"
-msgstr "Не аннотирован"
+#: .\corpus\views.py:561
+#, fuzzy
+#| msgid "Export Found Documents"
+msgid "Found Documents"
+msgstr "Экспортировать"
 
-#: .\templates\annotate.html:22 .\templates\annotate.html:24
-#: .\templates\annotate.html:28 .\templates\annotate.html:30
-#: .\templates\annotate.html:63 .\templates\annotate.html:69
-#: .\templates\documents.html:88 .\templates\documents.html:95
-#: .\templates\documents.html:128 .\templates\documents.html:130
-msgid "Hide IDs"
-msgstr "Скрыть ID"
+#: .\corpus\views.py:562
+#, fuzzy
+#| msgid " \"Sentences\" "
+msgid "Found Sentences"
+msgstr " \"Предложения\" "
 
-#: .\templates\annotate.html:64 .\templates\annotate.html:79
-#: .\templates\documents.html:89 .\templates\documents.html:109
-msgid "Show IDs"
-msgstr "Показать ID"
+#: .\corpus\views.py:563
+#, fuzzy
+#| msgid "Tokens"
+msgid "Found Tokens"
+msgstr "Токены"
 
-#: .\templates\base.html:48
+#: .\templates\base.html:48 .\templates\sidebar_base.html:48
 msgid "Main"
 msgstr "Главная"
 
-#: .\templates\base.html:51
+#: .\templates\base.html:51 .\templates\lexgram\lexgram_search.html:18
+#: .\templates\lexgram\lexgram_search.html:19 .\templates\sidebar_base.html:51
 msgid "Search"
 msgstr "Поиск"
 
-#: .\templates\base.html:54
+#: .\templates\base.html:54 .\templates\sidebar_base.html:54
 msgid "News"
 msgstr "Новости"
 
-#: .\templates\base.html:57
+#: .\templates\base.html:57 .\templates\sidebar_base.html:57
 msgid "Help"
 msgstr "Помощь"
 
-#: .\templates\base.html:60
+#: .\templates\base.html:60 .\templates\sidebar_base.html:60
 msgid "Statics"
 msgstr "Статистика"
 
-#: .\templates\base.html:67
+#: .\templates\base.html:67 .\templates\sidebar_base.html:67
 msgid "Dark Mode"
 msgstr "Тёмный режим"
 
-#: .\templates\base.html:93
+#: .\templates\base.html:93 .\templates\sidebar_base.html:93
 msgid "New document"
 msgstr "Новый документ"
 
-#: .\templates\base.html:96
+#: .\templates\base.html:96 .\templates\sidebar_base.html:96
 msgid "All documents"
 msgstr "Все документы"
 
-#: .\templates\base.html:99
+#: .\templates\base.html:99 .\templates\sidebar_base.html:99
 msgid "Admin panel"
 msgstr "Администрирование"
 
-#: .\templates\base.html:109
+#: .\templates\base.html:109 .\templates\sidebar_base.html:109
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\base.html:110
+#: .\templates\base.html:110 .\templates\sidebar_base.html:110
 msgid "Log out"
 msgstr "Выйти"
 
-#: .\templates\base.html:115
+#: .\templates\base.html:115 .\templates\sidebar_base.html:115
 msgid "Log in"
 msgstr "Войти"
 
-#: .\templates\base.html:131
+#: .\templates\base.html:131 .\templates\sidebar_base.html:132
 msgid "HSE School of Linguistics. All rights reserved."
 msgstr "Школа лингвистики ВШЭ. Все права защищены"
 
@@ -859,44 +921,66 @@ msgstr "Текст на русском языке"
 msgid "Text in English:"
 msgstr "Текст на английском языке"
 
-#: .\templates\create_article.html:43 .\templates\lexgram_search.html:50
-#: .\templates\sentence_card.html:19
+#: .\templates\create_article.html:43
+#: .\templates\lexgram\lexgram_search.html:59
+#: .\templates\partials\document\sentence_card.html:19
 msgid "Submit"
 msgstr "Применить"
 
-#: .\templates\document_card.html:26
-msgid "Addead"
-msgstr "Добавление"
+#: .\templates\document\add_document.html:13
+msgid "Add document"
+msgstr "Добавить документ"
 
-#: .\templates\document_card.html:84
-msgid "Annotate"
-msgstr "Аннотировать"
+#: .\templates\document\add_document.html:69
+msgid "New author"
+msgstr "Новый автор"
 
-#: .\templates\document_card.html:89
-msgid "View"
-msgstr "Просмотреть"
+#: .\templates\document\add_document.html:73
+msgid "Saved author"
+msgstr "Сохраненный автор"
 
-#: .\templates\document_card.html:97
-msgid "Edit"
-msgstr "Изменить"
+#: .\templates\document\add_document.html:83
+msgid "Search for saved authors..."
+msgstr "Поиск по сохранённым авторам..."
 
-#: .\templates\document_card.html:103 .\templates\document_card.html:118
-#: .\templates\news.html:45
-#: .\venv\Lib\site-packages\django\forms\formsets.py:499
-msgid "Delete"
-msgstr "Удалить"
+#: .\templates\document\add_document.html:92
+msgid "Add"
+msgstr "Добавить"
 
-#: .\templates\document_card.html:110
-msgid "Confirm deletion"
-msgstr "Подтвердите удаление"
+#: .\templates\document\annotate.html:15
+msgid "Document status"
+msgstr "Статус документа"
 
-#: .\templates\document_card.html:114
-msgid "Are you sure you want to delete this document?"
-msgstr "Вы уверены, что хотите удалить документ?"
+#: .\templates\document\annotate.html:17
+msgid "Not annotated"
+msgstr "Не аннотирован"
 
-#: .\templates\document_card.html:117 .\templates\news.html:44
-msgid "Cancel"
-msgstr "Отмена"
+#: .\templates\document\annotate.html:22 .\templates\document\annotate.html:24
+#: .\templates\document\annotate.html:28 .\templates\document\annotate.html:30
+#: .\templates\document\annotate.html:63 .\templates\document\annotate.html:69
+#: .\templates\documents.html:88 .\templates\documents.html:95
+#: .\templates\documents.html:128 .\templates\documents.html:130
+msgid "Hide IDs"
+msgstr "Скрыть ID"
+
+#: .\templates\document\annotate.html:64 .\templates\document\annotate.html:79
+#: .\templates\documents.html:89 .\templates\documents.html:109
+msgid "Show IDs"
+msgstr "Показать ID"
+
+#: .\templates\document\edit_author.html:6
+#: .\templates\document\edit_document.html:82
+msgid "Edit author"
+msgstr "Редактировать автора"
+
+#: .\templates\document\edit_author.html:10
+#: .\templates\document\edit_document.html:84
+msgid "Save"
+msgstr "Сохранить"
+
+#: .\templates\document\edit_document.html:13
+msgid "Edit document"
+msgstr "Изменить документ"
 
 #: .\templates\documents.html:7
 msgid "Documents"
@@ -914,37 +998,37 @@ msgstr "Экспортировать"
 msgid "Filter"
 msgstr "Фильтровать"
 
-#: .\templates\edit_author.html:6 .\templates\edit_document.html:82
-msgid "Edit author"
-msgstr "Редактировать автора"
-
-#: .\templates\edit_author.html:10 .\templates\edit_document.html:84
-msgid "Save"
-msgstr "Сохранить"
-
-#: .\templates\edit_document.html:13
-msgid "Edit document"
-msgstr "Изменить документ"
-
 #: .\templates\homepage.html:41
 msgid "Back to Top"
 msgstr "Вернуться наверх"
 
-#: .\templates\lexgram_search.html:17
+#: .\templates\lexgram\lexgram_search.html:18
+#, fuzzy
+#| msgid "Author search"
+msgid "Exact search"
+msgstr "Поиск автора"
+
+#: .\templates\lexgram\lexgram_search.html:27
 msgid "Lexico-grammatical search"
 msgstr "Лексико-грамматический поиск"
 
-#: .\templates\lexgram_search.html:20
+#: .\templates\lexgram\lexgram_search.html:30
 msgid "Specify Subcorpus"
 msgstr "Поиск по подкорпусу"
 
-#: .\templates\lexgram_search.html:48
+#: .\templates\lexgram\lexgram_search.html:57
 msgid "Add Wordform"
 msgstr "Добавить словоформу"
 
-#: .\templates\lexgram_search.html:54
+#: .\templates\lexgram\lexgram_search.html:63
 msgid "Search results"
 msgstr "Результаты поиска"
+
+#: .\templates\lexgram\lexgram_search_results.html:8
+#, fuzzy
+#| msgid "Subcorpus"
+msgid "Subcorpus stats:"
+msgstr "Подкорпус"
 
 #: .\templates\news.html:9
 msgid "Add news"
@@ -958,114 +1042,159 @@ msgstr "Подтвердите удаление"
 msgid "Are you sure you want to delete this article?"
 msgstr "Вы уверены, что хотите удалить статью?"
 
-#: .\templates\partials\lexgram_form_content_based.html:4
-#: .\templates\partials\lexgram_form_content_based.html:8
+#: .\templates\news.html:44
+#: .\templates\partials\document\document_card.html:120
+msgid "Cancel"
+msgstr "Отмена"
+
+#: .\templates\news.html:45
+#: .\templates\partials\document\document_card.html:106
+#: .\templates\partials\document\document_card.html:121
+msgid "Delete"
+msgstr "Удалить"
+
+#: .\templates\partials\document\document_card.html:26
+#, fuzzy
+#| msgid "Addead"
+msgid "Added"
+msgstr "Добавление"
+
+#: .\templates\partials\document\document_card.html:87
+msgid "Annotate"
+msgstr "Аннотировать"
+
+#: .\templates\partials\document\document_card.html:92
+msgid "View"
+msgstr "Просмотреть"
+
+#: .\templates\partials\document\document_card.html:100
+msgid "Edit"
+msgstr "Изменить"
+
+#: .\templates\partials\document\document_card.html:113
+msgid "Confirm deletion"
+msgstr "Подтвердите удаление"
+
+#: .\templates\partials\document\document_card.html:117
+msgid "Are you sure you want to delete this document?"
+msgstr "Вы уверены, что хотите удалить документ?"
+
+#: .\templates\partials\document\sentence_card.html:16
+msgid "Enter the corrected sentence"
+msgstr "Введите исправленное предложение"
+
+#: .\templates\partials\document\sentence_card.html:34
+msgid "Alternative correction"
+msgstr "Альтернативное исправление"
+
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:4
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:8
 msgid "Wordform"
 msgstr "Словоформа"
 
-#: .\templates\partials\lexgram_form_content_based.html:15
-#: .\templates\partials\lexgram_form_content_based.html:20
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:15
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:20
 msgid "Part of speech"
 msgstr "Часть речи"
 
-#: .\templates\partials\lexgram_form_content_based.html:27
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:27
 msgid "Grammar"
 msgstr "Грамматика"
 
-#: .\templates\partials\lexgram_form_content_based.html:32
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:32
 msgid "Grammar characteristics"
 msgstr "Грамматические характеристики"
 
-#: .\templates\partials\lexgram_form_content_based.html:39
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:39
 msgid "Mistakes"
 msgstr "Ошибки"
 
-#: .\templates\partials\lexgram_form_content_based.html:44
+#: .\templates\partials\lexgram\lexgram_form_content_based.html:44
 msgid "Tags"
 msgstr "Тэги ошибок"
 
-#: .\templates\partials\lexgram_form_contents.html:5
-#: .\templates\partials\lexgram_form_contents.html:9
+#: .\templates\partials\lexgram\lexgram_form_contents.html:5
+#: .\templates\partials\lexgram\lexgram_form_contents.html:9
 msgid "From_"
 msgstr "От"
 
-#: .\templates\partials\lexgram_form_contents.html:6
-#: .\templates\partials\lexgram_form_contents.html:13
+#: .\templates\partials\lexgram\lexgram_form_contents.html:6
+#: .\templates\partials\lexgram\lexgram_form_contents.html:13
 msgid "to_"
 msgstr "До"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:17
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:17
 msgid "Period"
 msgstr "Промежуток"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:22
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:22
 msgid "from"
 msgstr "с"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:28
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:28
 msgid "to"
 msgstr "по"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:41
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:41
 msgid "Gender of author"
 msgstr "Пол автора"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:46
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:46
 msgid "m"
 msgstr "м"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:50
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:50
 msgid "f"
 msgstr "ж"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:54
-#: .\templates\partials\lexgram_subcorpus_form.html:78
-#: .\templates\partials\lexgram_subcorpus_form.html:99
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:54
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:78
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:99
 msgid "any"
 msgstr "неизв."
 
-#: .\templates\partials\lexgram_subcorpus_form.html:65
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:65
 msgid "Text mode"
 msgstr "Тип текста"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:70
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:70
 msgid "oral"
 msgstr "Устный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:74
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:74
 msgid "written"
 msgstr "Письменный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:91
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:91
 msgid "foreign"
 msgstr "Иностранный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:95
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:95
 msgid "heritage"
 msgstr "Эритажный"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:117
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:117
 msgid "Abkhaz"
 msgstr "Абхазский"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:143
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:143
 msgid "Dagestanian"
 msgstr "Дагестанский"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:193
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:193
 msgid "Slovene"
 msgstr "Словенский"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:224
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:224
 msgid "Select All"
 msgstr "Выбрать всё"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:236
-#: .\templates\partials\lexgram_subcorpus_form.html:245
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:236
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:245
 msgid "Level"
 msgstr "Уровень"
 
-#: .\templates\partials\lexgram_subcorpus_form.html:237
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:237
 msgid ""
 "Each text in the corpus is attributed to one of the general levels: "
 "Beginner, Intermediate, Advanced. At the same time, some of these texts have "
@@ -1075,83 +1204,83 @@ msgstr ""
 "Intermediate, Advanced. В то же время, у некоторых из этих текстов имеется  "
 "соответствующий уровень CEFR или ACTFL."
 
-#: .\templates\partials\lexgram_subcorpus_form.html:246
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:246
 msgid "CEFR"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:247
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:247
 msgid "ACTFL"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:252
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:252
 msgid "Novice"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:256
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:256
 msgid "A1"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:258
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:258
 msgid "A2"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:262
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:262
 msgid "Novice Low"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:264
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:264
 msgid "Novice Middle"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:266
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:266
 msgid "Novice High"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:272
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:272
 msgid "Intermediate"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:276
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:276
 msgid "B1"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:278
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:278
 msgid "B2"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:282
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:282
 msgid "Intermediate Low"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:284
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:284
 msgid "Intermediate Middle"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:286
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:286
 msgid "Intermediate High"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:292
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:292
 msgid "Advanced"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:296
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:296
 msgid "C1"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:298
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:298
 msgid "C2"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:302
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:302
 msgid "Advanced Low"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:304
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:304
 msgid "Advanced Middle"
 msgstr ""
 
-#: .\templates\partials\lexgram_subcorpus_form.html:306
+#: .\templates\partials\lexgram\lexgram_subcorpus_form.html:306
 msgid "Advanced High"
 msgstr ""
 
@@ -1167,14 +1296,6 @@ msgstr "Имя пользователя"
 #: .\templates\registration\login.html:36
 msgid "Password"
 msgstr "Пароль"
-
-#: .\templates\sentence_card.html:16
-msgid "Enter the corrected sentence"
-msgstr "Введите исправленное предложение"
-
-#: .\templates\sentence_card.html:34
-msgid "Alternative correction"
-msgstr "Альтернативное исправление"
 
 #: .\templates\statistics.html:72
 msgid "Dominant Language Statistics"
@@ -1195,10 +1316,6 @@ msgstr "Количество предложений"
 #: .\templates\statistics.html:100
 msgid "Document static"
 msgstr "Статистика по документам"
-
-#: .\templates\statistics.html:106
-msgid "Total Documents"
-msgstr "Всего документов"
 
 #: .\templates\statistics.html:128
 msgid "Documents written by authors with dominant languages"
@@ -1264,1524 +1381,277 @@ msgstr " \"Предложения\" "
 msgid " \"Authors\" "
 msgstr " \"Авторы\" "
 
-#: .\venv\Lib\site-packages\click\_termui_impl.py:518
 #, python-brace-format
-msgid "{editor}: Editing failed"
-msgstr "{editor}: Редактирование не удалось"
+#~ msgid "{editor}: Editing failed"
+#~ msgstr "{editor}: Редактирование не удалось"
 
-#: .\venv\Lib\site-packages\click\_termui_impl.py:522
 #, python-brace-format
-msgid "{editor}: Editing failed: {e}"
-msgstr "{editor}: Редактирование не удалось: {e}"
-
-#: .\venv\Lib\site-packages\click\core.py:1120
-msgid "Aborted!"
-msgstr "Прервано!"
-
-#: .\venv\Lib\site-packages\click\core.py:1309
-#: .\venv\Lib\site-packages\click\decorators.py:568
-msgid "Show this message and exit."
-msgstr "Показать это сообщение и выйти"
-
-#: .\venv\Lib\site-packages\click\core.py:1340
-#: .\venv\Lib\site-packages\click\core.py:1370
-#, python-brace-format
-msgid "(Deprecated) {text}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:1387
-msgid "Options"
-msgstr "Опции"
-
-#: .\venv\Lib\site-packages\click\core.py:1413
-#, python-brace-format
-msgid "Got unexpected extra argument ({args})"
-msgid_plural "Got unexpected extra arguments ({args})"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\core.py:1429
-msgid "DeprecationWarning: The command {name!r} is deprecated."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:1636
-msgid "Commands"
-msgstr "Команды"
-
-#: .\venv\Lib\site-packages\click\core.py:1668
-msgid "Missing command."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:1746
-msgid "No such command {name!r}."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:2310
-msgid "Value must be an iterable."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:2331
-#, python-brace-format
-msgid "Takes {nargs} values but 1 was given."
-msgid_plural "Takes {nargs} values but {len} were given."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\core.py:2778
-#, python-brace-format
-msgid "env var: {var}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:2808
-msgid "(dynamic)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:2821
-#, python-brace-format
-msgid "default: {default}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\core.py:2834
-msgid "required"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\decorators.py:474
-#, python-format
-msgid "%(prog)s, version %(version)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\decorators.py:537
-msgid "Show the version and exit."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:44
-#: .\venv\Lib\site-packages\click\exceptions.py:80
-#, python-brace-format
-msgid "Error: {message}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:72
-#, python-brace-format
-msgid "Try '{command} {option}' for help."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:121
-#, python-brace-format
-msgid "Invalid value: {message}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:123
-#, python-brace-format
-msgid "Invalid value for {param_hint}: {message}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:179
-msgid "Missing argument"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:181
-msgid "Missing option"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:183
-msgid "Missing parameter"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:185
-#, python-brace-format
-msgid "Missing {param_type}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:192
-#, python-brace-format
-msgid "Missing parameter: {param_name}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:212
-#, python-brace-format
-msgid "No such option: {name}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:224
-#, python-brace-format
-msgid "Did you mean {possibility}?"
-msgid_plural "(Possible options: {possibilities})"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:262
-msgid "unknown error"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\exceptions.py:269
-msgid "Could not open file {filename!r}: {message}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\parser.py:231
-msgid "Argument {name!r} takes {nargs} values."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\parser.py:413
-msgid "Option {name!r} does not take a value."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\parser.py:474
-msgid "Option {name!r} requires an argument."
-msgid_plural "Option {name!r} requires {nargs} arguments."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\shell_completion.py:318
-msgid "Shell completion is not supported for Bash versions older than 4.4."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\shell_completion.py:324
-msgid "Couldn't detect Bash version, shell completion is not supported."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:158
-msgid "Repeat for confirmation"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:174
-msgid "Error: The value you entered was invalid."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:176
-#, python-brace-format
-msgid "Error: {e.message}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:187
-msgid "Error: The two entered values do not match."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:243
-msgid "Error: invalid input"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\termui.py:773
-msgid "Press any key to continue..."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:266
-#, python-brace-format
-msgid ""
-"Choose from:\n"
-"\t{choices}"
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:298
-msgid "{value!r} is not {choice}."
-msgid_plural "{value!r} is not one of {choices}."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\types.py:392
-msgid "{value!r} does not match the format {format}."
-msgid_plural "{value!r} does not match the formats {formats}."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\click\types.py:414
-msgid "{value!r} is not a valid {number_type}."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:470
-#, python-brace-format
-msgid "{value} is not in the range {range}."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:611
-msgid "{value!r} is not a valid boolean."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:635
-msgid "{value!r} is not a valid UUID."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:822
-msgid "file"
-msgstr "файл"
-
-#: .\venv\Lib\site-packages\click\types.py:824
-msgid "directory"
-msgstr "директория"
-
-#: .\venv\Lib\site-packages\click\types.py:826
-msgid "path"
-msgstr "путь"
-
-#: .\venv\Lib\site-packages\click\types.py:877
-msgid "{name} {filename!r} does not exist."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:886
-msgid "{name} {filename!r} is a file."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:894
-#, python-brace-format
-msgid "{name} '{filename}' is a directory."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:903
-msgid "{name} {filename!r} is not readable."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:912
-msgid "{name} {filename!r} is not writable."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:921
-msgid "{name} {filename!r} is not executable."
-msgstr ""
-
-#: .\venv\Lib\site-packages\click\types.py:988
-#, python-brace-format
-msgid "{len_type} values are required, but {len_value} was given."
-msgid_plural "{len_type} values are required, but {len_value} were given."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
-msgid "Messages"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
-msgid "Site Maps"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
-msgid "Syndication"
-msgstr ""
-
-#. Translators: String used to replace omitted page numbers in elided page
-#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
-#: .\venv\Lib\site-packages\django\core\paginator.py:30
-msgid "…"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\paginator.py:50
-msgid "That page number is not an integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\paginator.py:52
-msgid "That page number is less than 1"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\paginator.py:54
-msgid "That page contains no results"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:22
-msgid "Enter a valid value."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:104
-#: .\venv\Lib\site-packages\django\forms\fields.py:752
-msgid "Enter a valid URL."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:165
-msgid "Enter a valid integer."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:176
-msgid "Enter a valid email address."
-msgstr ""
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: .\venv\Lib\site-packages\django\core\validators.py:259
-msgid ""
-"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:267
-msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:279
-#: .\venv\Lib\site-packages\django\core\validators.py:287
-#: .\venv\Lib\site-packages\django\core\validators.py:316
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:296
-#: .\venv\Lib\site-packages\django\core\validators.py:317
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:308
-#: .\venv\Lib\site-packages\django\core\validators.py:315
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:351
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:357
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:392
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:401
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:410
-#, python-format
-msgid "Ensure this value is a multiple of step size %(limit_value)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:420
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:438
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:461
-#: .\venv\Lib\site-packages\django\forms\fields.py:347
-#: .\venv\Lib\site-packages\django\forms\fields.py:386
-msgid "Enter a number."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:463
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:468
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:473
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:544
-#, python-format
-msgid ""
-"File extension “%(extension)s” is not allowed. Allowed extensions are: "
-"%(allowed_extensions)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\core\validators.py:605
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\base.py:1423
-#: .\venv\Lib\site-packages\django\forms\models.py:893
-msgid "and"
-msgstr "и"
-
-#: .\venv\Lib\site-packages\django\db\models\base.py:1425
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\constraints.py:17
-#, python-format
-msgid "Constraint “%(name)s” is violated."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:128
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:129
-msgid "This field cannot be null."
-msgstr "Поле не может быть null"
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:130
-msgid "This field cannot be blank."
-msgstr "Поле не может быть пустым"
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:131
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or
-#. 'month'. Eg: "Title must be unique for pub_date year"
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:173
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1094
-#, python-format
-msgid "“%(value)s” value must be either True or False."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1095
-#, python-format
-msgid "“%(value)s” value must be either True, False, or None."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1097
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1147
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1149
-msgid "String (unlimited)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1253
-msgid "Comma-separated integers"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1354
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1358
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1493
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1362
-msgid "Date (without time)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1489
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1497
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1502
-msgid "Date (with time)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1626
-#, python-format
-msgid "“%(value)s” value must be a decimal number."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1628
-msgid "Decimal number"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1789
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1793
-msgid "Duration"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1845
-msgid "Email address"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1870
-msgid "File path"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1948
-#, python-format
-msgid "“%(value)s” value must be a float."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1950
-msgid "Floating point number"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1990
-#, python-format
-msgid "“%(value)s” value must be an integer."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1992
-msgid "Integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2088
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2105
-msgid "Small integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2113
-msgid "IPv4 address"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2144
-msgid "IP address"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2237
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2238
-#, python-format
-msgid "“%(value)s” value must be either None, True or False."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2240
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2291
-msgid "Positive big integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2306
-msgid "Positive integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2321
-msgid "Positive small integer"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2337
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2448
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2452
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2456
-msgid "Time"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2564
-msgid "URL"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2588
-msgid "Raw binary data"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2653
-#, python-format
-msgid "“%(value)s” is not a valid UUID."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2655
-msgid "Universally unique identifier"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\files.py:232
-msgid "File"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\files.py:393
-msgid "Image"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
-msgid "A JSON object"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\json.py:28
-msgid "Value must be valid JSON."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:919
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:921
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1212
-msgid "One-to-one relationship"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1269
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1271
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1319
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: .\venv\Lib\site-packages\django\forms\boundfield.py:184
-msgid ":?.!"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:91
-msgid "This field is required."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:298
-msgid "Enter a whole number."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:467
-#: .\venv\Lib\site-packages\django\forms\fields.py:1241
-msgid "Enter a valid date."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:490
-#: .\venv\Lib\site-packages\django\forms\fields.py:1242
-msgid "Enter a valid time."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:517
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:551
-msgid "Enter a valid duration."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:552
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:621
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:622
-msgid "No file was submitted."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:623
-msgid "The submitted file is empty."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:625
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:630
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:694
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:857
-#: .\venv\Lib\site-packages\django\forms\fields.py:949
-#: .\venv\Lib\site-packages\django\forms\models.py:1566
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:951
-#: .\venv\Lib\site-packages\django\forms\fields.py:1070
-#: .\venv\Lib\site-packages\django\forms\models.py:1564
-msgid "Enter a list of values."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:1071
-msgid "Enter a complete value."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:1310
-msgid "Enter a valid UUID."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\fields.py:1340
-msgid "Enter a valid JSON."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: .\venv\Lib\site-packages\django\forms\forms.py:98
-msgid ":"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\forms.py:244
-#: .\venv\Lib\site-packages\django\forms\forms.py:328
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\formsets.py:63
-#, python-format
-msgid ""
-"ManagementForm data is missing or has been tampered with. Missing fields: "
-"%(field_names)s. You may need to file a bug report if the issue persists."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\formsets.py:67
-#, python-format
-msgid "Please submit at most %(num)d form."
-msgid_plural "Please submit at most %(num)d forms."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\forms\formsets.py:72
-#, python-format
-msgid "Please submit at least %(num)d form."
-msgid_plural "Please submit at least %(num)d forms."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\forms\formsets.py:484
-#: .\venv\Lib\site-packages\django\forms\formsets.py:491
-msgid "Order"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:886
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:891
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:898
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:907
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:1338
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:1429
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\models.py:1568
-#, python-format
-msgid "“%(pk)s” is not a valid value."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\utils.py:226
-#, python-format
-msgid ""
-"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\widgets.py:463
-msgid "Clear"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\widgets.py:464
-msgid "Currently"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\widgets.py:465
-msgid "Change"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\widgets.py:794
-msgid "Unknown"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\forms\widgets.py:796
-msgid "No"
-msgstr ""
-
-#. Translators: Please do not add spaces around commas.
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:861
-msgid "yes,no,maybe"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:891
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:908
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:910
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:912
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:914
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:916
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\template\defaultfilters.py:918
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:73
-msgid "p.m."
-msgstr "вечера"
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
-msgid "a.m."
-msgstr "утра"
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:79
-msgid "PM"
-msgstr "вечера"
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
-msgid "AM"
-msgstr "утра"
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:152
-msgid "midnight"
-msgstr "полночь"
-
-#: .\venv\Lib\site-packages\django\utils\dateformat.py:154
-msgid "noon"
-msgstr "полдень"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:7
-msgid "Monday"
-msgstr "Понедельник"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:8
-msgid "Tuesday"
-msgstr "Вторник"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:9
-msgid "Wednesday"
-msgstr "Среда"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:10
-msgid "Thursday"
-msgstr "Четверг"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:11
-msgid "Friday"
-msgstr "Пятница"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:12
-msgid "Saturday"
-msgstr "Суббота"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:13
-msgid "Sunday"
-msgstr "Воскресенье"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:16
-msgid "Mon"
-msgstr "Пн"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:17
-msgid "Tue"
-msgstr "Вт"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:18
-msgid "Wed"
-msgstr "Ср"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:19
-msgid "Thu"
-msgstr "Чт"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:20
-msgid "Fri"
-msgstr "Пт"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:21
-msgid "Sat"
-msgstr "Сб"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:22
-msgid "Sun"
-msgstr "Вс"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:25
-msgid "January"
-msgstr "Январь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:26
-msgid "February"
-msgstr "Февраль"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:27
-msgid "March"
-msgstr "Март"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:28
-msgid "April"
-msgstr "Апрель"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:29
-msgid "May"
-msgstr "Май"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:30
-msgid "June"
-msgstr "Июнь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:31
-msgid "July"
-msgstr "Июль"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:32
-msgid "August"
-msgstr "Август"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:33
-msgid "September"
-msgstr "Сентябрь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:34
-msgid "October"
-msgstr "Октябрь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:35
-msgid "November"
-msgstr "Ноябрь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:36
-msgid "December"
-msgstr "Декабрь"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:39
-msgid "jan"
-msgstr "янв"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:40
-msgid "feb"
-msgstr "фев"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:41
-msgid "mar"
-msgstr "мар"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:42
-msgid "apr"
-msgstr "апр"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:43
-msgid "may"
-msgstr "май"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:44
-msgid "jun"
-msgstr "июн"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:45
-msgid "jul"
-msgstr "июл"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:46
-msgid "aug"
-msgstr "аве"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:47
-msgid "sep"
-msgstr "сен"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:48
-msgid "oct"
-msgstr "окт"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:49
-msgid "nov"
-msgstr "ноя"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:50
-msgid "dec"
-msgstr "дек"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:53
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr "Янв."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:54
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr "Фев."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:55
-msgctxt "abbrev. month"
-msgid "March"
-msgstr "Мар."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:56
-msgctxt "abbrev. month"
-msgid "April"
-msgstr "Апр."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:57
-msgctxt "abbrev. month"
-msgid "May"
-msgstr "Мая"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:58
-msgctxt "abbrev. month"
-msgid "June"
-msgstr "Июн."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:59
-msgctxt "abbrev. month"
-msgid "July"
-msgstr "Июл."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:60
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr "Авг."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:61
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr "Сен."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:62
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr "Окт."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:63
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr "Ноя."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:64
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr "Дек."
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:67
-msgctxt "alt. month"
-msgid "January"
-msgstr "Января"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:68
-msgctxt "alt. month"
-msgid "February"
-msgstr "Февраля"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:69
-msgctxt "alt. month"
-msgid "March"
-msgstr "Марта"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:70
-msgctxt "alt. month"
-msgid "April"
-msgstr "Апреля"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:71
-msgctxt "alt. month"
-msgid "May"
-msgstr "Мая"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:72
-msgctxt "alt. month"
-msgid "June"
-msgstr "Июня"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:73
-msgctxt "alt. month"
-msgid "July"
-msgstr "Июля"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:74
-msgctxt "alt. month"
-msgid "August"
-msgstr "Августа"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:75
-msgctxt "alt. month"
-msgid "September"
-msgstr "Сентября"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:76
-msgctxt "alt. month"
-msgid "October"
-msgstr "Октября"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:77
-msgctxt "alt. month"
-msgid "November"
-msgstr "Ноября"
-
-#: .\venv\Lib\site-packages\django\utils\dates.py:78
-msgctxt "alt. month"
-msgid "December"
-msgstr "Декабря"
-
-#: .\venv\Lib\site-packages\django\utils\ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\utils\text.py:78
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\utils\text.py:254
-msgid "or"
-msgstr "или"
-
-#. Translators: This string is used as a separator between list elements
-#: .\venv\Lib\site-packages\django\utils\text.py:273
-#: .\venv\Lib\site-packages\django\utils\timesince.py:135
-msgid ", "
-msgstr ", "
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:8
-#, python-format
-msgid "%(num)d year"
-msgid_plural "%(num)d years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:9
-#, python-format
-msgid "%(num)d month"
-msgid_plural "%(num)d months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:10
-#, python-format
-msgid "%(num)d week"
-msgid_plural "%(num)d weeks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:11
-#, python-format
-msgid "%(num)d day"
-msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:12
-#, python-format
-msgid "%(num)d hour"
-msgid_plural "%(num)d hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\utils\timesince.py:13
-#, python-format
-msgid "%(num)d minute"
-msgid_plural "%(num)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:111
-msgid "Forbidden"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:112
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:116
-msgid ""
-"You are seeing this message because this HTTPS site requires a “Referer "
-"header” to be sent by your web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:122
-msgid ""
-"If you have configured your browser to disable “Referer” headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for “same-"
-"origin” requests."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:127
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" …> for links to third-party sites."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:136
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:142
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for “same-origin” requests."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\csrf.py:148
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
-msgid "No year specified"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
-msgid "Date out of range"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
-msgid "No month specified"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
-msgid "No day specified"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
-msgid "No week specified"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:349
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:380
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:652
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\dates.py:692
-#, python-format
-msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\list.py:70
-msgid "Page is not “last”, nor can it be converted to an int."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\list.py:77
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\generic\list.py:169
-#, python-format
-msgid "Empty list and “%(class_name)s.allow_empty” is False."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\static.py:38
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\static.py:40
-#, python-format
-msgid "“%(path)s” does not exist"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\static.py:79
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:220
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:221
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:229
-msgid "Django Documentation"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
-msgid "Topics, references, &amp; how-to’s"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:238
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:239
-msgid "Get started with Django"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:247
-msgid "Django Community"
-msgstr ""
-
-#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
-msgid "Connect, get help, or contribute"
-msgstr ""
+#~ msgid "{editor}: Editing failed: {e}"
+#~ msgstr "{editor}: Редактирование не удалось: {e}"
+
+#~ msgid "Aborted!"
+#~ msgstr "Прервано!"
+
+#~ msgid "Show this message and exit."
+#~ msgstr "Показать это сообщение и выйти"
+
+#~ msgid "Options"
+#~ msgstr "Опции"
+
+#~ msgid "Commands"
+#~ msgstr "Команды"
+
+#~ msgid "file"
+#~ msgstr "файл"
+
+#~ msgid "directory"
+#~ msgstr "директория"
+
+#~ msgid "path"
+#~ msgstr "путь"
+
+#~ msgid "and"
+#~ msgstr "и"
+
+#~ msgid "This field cannot be null."
+#~ msgstr "Поле не может быть null"
+
+#~ msgid "This field cannot be blank."
+#~ msgstr "Поле не может быть пустым"
+
+#~ msgid "p.m."
+#~ msgstr "вечера"
+
+#~ msgid "a.m."
+#~ msgstr "утра"
+
+#~ msgid "PM"
+#~ msgstr "вечера"
+
+#~ msgid "AM"
+#~ msgstr "утра"
+
+#~ msgid "midnight"
+#~ msgstr "полночь"
+
+#~ msgid "noon"
+#~ msgstr "полдень"
+
+#~ msgid "Monday"
+#~ msgstr "Понедельник"
+
+#~ msgid "Tuesday"
+#~ msgstr "Вторник"
+
+#~ msgid "Wednesday"
+#~ msgstr "Среда"
+
+#~ msgid "Thursday"
+#~ msgstr "Четверг"
+
+#~ msgid "Friday"
+#~ msgstr "Пятница"
+
+#~ msgid "Saturday"
+#~ msgstr "Суббота"
+
+#~ msgid "Sunday"
+#~ msgstr "Воскресенье"
+
+#~ msgid "Mon"
+#~ msgstr "Пн"
+
+#~ msgid "Tue"
+#~ msgstr "Вт"
+
+#~ msgid "Wed"
+#~ msgstr "Ср"
+
+#~ msgid "Thu"
+#~ msgstr "Чт"
+
+#~ msgid "Fri"
+#~ msgstr "Пт"
+
+#~ msgid "Sat"
+#~ msgstr "Сб"
+
+#~ msgid "Sun"
+#~ msgstr "Вс"
+
+#~ msgid "January"
+#~ msgstr "Январь"
+
+#~ msgid "February"
+#~ msgstr "Февраль"
+
+#~ msgid "March"
+#~ msgstr "Март"
+
+#~ msgid "April"
+#~ msgstr "Апрель"
+
+#~ msgid "May"
+#~ msgstr "Май"
+
+#~ msgid "June"
+#~ msgstr "Июнь"
+
+#~ msgid "July"
+#~ msgstr "Июль"
+
+#~ msgid "August"
+#~ msgstr "Август"
+
+#~ msgid "September"
+#~ msgstr "Сентябрь"
+
+#~ msgid "October"
+#~ msgstr "Октябрь"
+
+#~ msgid "November"
+#~ msgstr "Ноябрь"
+
+#~ msgid "December"
+#~ msgstr "Декабрь"
+
+#~ msgid "jan"
+#~ msgstr "янв"
+
+#~ msgid "feb"
+#~ msgstr "фев"
+
+#~ msgid "mar"
+#~ msgstr "мар"
+
+#~ msgid "apr"
+#~ msgstr "апр"
+
+#~ msgid "may"
+#~ msgstr "май"
+
+#~ msgid "jun"
+#~ msgstr "июн"
+
+#~ msgid "jul"
+#~ msgstr "июл"
+
+#~ msgid "aug"
+#~ msgstr "аве"
+
+#~ msgid "sep"
+#~ msgstr "сен"
+
+#~ msgid "oct"
+#~ msgstr "окт"
+
+#~ msgid "nov"
+#~ msgstr "ноя"
+
+#~ msgid "dec"
+#~ msgstr "дек"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Jan."
+#~ msgstr "Янв."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Feb."
+#~ msgstr "Фев."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "Мар."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "April"
+#~ msgstr "Апр."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "May"
+#~ msgstr "Мая"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "June"
+#~ msgstr "Июн."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "July"
+#~ msgstr "Июл."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Aug."
+#~ msgstr "Авг."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Sept."
+#~ msgstr "Сен."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Oct."
+#~ msgstr "Окт."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Nov."
+#~ msgstr "Ноя."
+
+#~ msgctxt "abbrev. month"
+#~ msgid "Dec."
+#~ msgstr "Дек."
+
+#~ msgctxt "alt. month"
+#~ msgid "January"
+#~ msgstr "Января"
+
+#~ msgctxt "alt. month"
+#~ msgid "February"
+#~ msgstr "Февраля"
+
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "Марта"
+
+#~ msgctxt "alt. month"
+#~ msgid "April"
+#~ msgstr "Апреля"
+
+#~ msgctxt "alt. month"
+#~ msgid "May"
+#~ msgstr "Мая"
+
+#~ msgctxt "alt. month"
+#~ msgid "June"
+#~ msgstr "Июня"
+
+#~ msgctxt "alt. month"
+#~ msgid "July"
+#~ msgstr "Июля"
+
+#~ msgctxt "alt. month"
+#~ msgid "August"
+#~ msgstr "Августа"
+
+#~ msgctxt "alt. month"
+#~ msgid "September"
+#~ msgstr "Сентября"
+
+#~ msgctxt "alt. month"
+#~ msgid "October"
+#~ msgstr "Октября"
+
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "Ноября"
+
+#~ msgctxt "alt. month"
+#~ msgid "December"
+#~ msgstr "Декабря"
+
+#~ msgid "or"
+#~ msgstr "или"
+
+#~ msgid ", "
+#~ msgstr ", "
 
 #~ msgid "Add article"
 #~ msgstr "Создать статью"
