@@ -46,40 +46,46 @@
           <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
 
             <li class="nav-item">
-              <a href="#" class="nav-link align-middle px-0">
+              <a href="#whats-RLC" class="nav-link align-middle px-0">
                 <i class="fs-4 bi-house"></i> <span
                   class="ms-1 d-none d-sm-inline">Что такое русский учебный корпус?</span>
               </a>
             </li>
             <li>
-              <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Как искать?</span> <span
-                  class="arrow" style="font-size: smaller;">&#9660;</span></a>
+              <button data-bs-toggle="collapse" class="nav-link px-0 align-middle" data-bs-target="#submenu1">
+                <i class="fs-4 bi-speedometer2"></i>
+                <span class="ms-1 d-none d-sm-inline">Как искать?</span>
+                <span class="arrow" style="font-size: smaller;">&#9660;</span>
+              </button>
               <ul class="collapse nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
 
                 <li class="w-100">
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Как найти словоформу?</span> </a>
+                  <a href="#find-wordform" class="nav-link px-0"> <span
+                      class="d-none d-sm-inline">Как найти словоформу?</span> </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Что такое лексико-грамматический поиск?</span>
+                  <a href="#whats-lexigram" class="nav-link px-0"> <span class="d-none d-sm-inline">Что такое лексико-грамматический поиск?</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Расстояние между словами</span>
+                  <a href="#word-distance" class="nav-link px-0"> <span class="d-none d-sm-inline">Расстояние между словами</span>
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Классификация ошибок</span>
-                <span class="arrow" style="font-size: smaller;">&#9660;</span></a>
+              <button data-bs-toggle="collapse" class="nav-link px-0 align-middle text-start"
+                      data-bs-target="#submenu2">
+                <i class="fs-4 bi-bootstrap"></i>
+                <span class="ms-1 d-none d-sm-inline">Классификация ошибок</span>
+                <span class="arrow" style="font-size: smaller;">&#9660;</span>
+              </button>
               <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
                 <li class="w-100">
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Орфография</span></a>
+                  <a href="#orph" class="nav-link px-0"> <span class="d-none d-sm-inline">Орфография</span></a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Морфологические ошибки</span></a>
+                  <a href="#morph" class="nav-link px-0"> <span class="d-none d-sm-inline">Морфологические ошибки</span></a>
                 </li>
                 <li>
                   <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Синтаксические ошибки</span></a>
@@ -96,18 +102,18 @@
               </ul>
             </li>
             <li>
-              <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+              <button data-bs-toggle="collapse" class="nav-link px-0 align-middle text-start" data-bs-target="#submenu3">
                 <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Как размечать?</span> <span
-                  class="arrow" style="font-size: smaller;">&#9660;</span></a>
+                  class="arrow" style="font-size: smaller;">&#9660;</span></button>
               <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                 <li class="w-100">
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Начало работы</span></a>
+                  <a href="#begin-work" class="nav-link px-0"> <span class="d-none d-sm-inline">Начало работы</span></a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Окно разметки</span></a>
+                  <a href="#markup-window" class="nav-link px-0"> <span class="d-none d-sm-inline">Окно разметки</span></a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Разметка</span></a>
+                  <a href="#markup" class="nav-link px-0"> <span class="d-none d-sm-inline">Разметка</span></a>
                 </li>
               </ul>
             </li>
@@ -120,7 +126,7 @@
     >
     <main class="col py-4" style="margin-left: 300px; margin-right: 150px;">
       <div class="border rounded p-3 mb-4">
-        <h1>Что такое русский учебный корпус?</h1>
+        <h1 id="whats-RLC">Что такое русский учебный корпус?</h1>
         В Русском учебном корпусе содержатся образцы устной и письменной речи двух категорий нестандартных говорящих на
         русском языке: изучающих русский язык как иностранный и так называемых эритажных говорящих. Для первой категории
         русский язык не является родным, представители же второй категории начали усваивать его в детстве как первый
@@ -133,12 +139,12 @@
       </div>
       <div class="border rounded p-3 mb-4">
         <h1>Как искать?</h1>
-        <h3>Как найти словоформу в корпусе?</h3>
+        <h3 id="find-wordform">Как найти словоформу в корпусе?</h3>
         В окне поиска в строке «Поиск точных форм» наберите нужную словоформу и щелкните на кнопке «Поиск»:
         <img src="{% static 'img/help_photos/exactSearch.jpg' %}" alt="Exact Search Example" width="1000" height="400"
              style="border: 2px solid black; border-radius: 8px; margin-bottom: 20px; margin-top: 10px;">
         <br>
-        <h3>Что такое лексико-грамматический поиск?</h3>
+        <h3 id="whats-lexigram">Что такое лексико-грамматический поиск?</h3>
 
 
         Лексико-грамматический поиск позволяет искать все вхождения лексемы, вхождения лексемы в нужной грамматической
@@ -151,7 +157,7 @@
              style="border: 2px solid black; border-radius: 8px; margin-bottom: 20px; margin-top: 10px;">
         <br>
         В ответ на этот запрос Вы получите все словоформы, относящиеся к лексеме и входящие в Корпус.
-        <h3>Расстояние между словами</h3>
+        <h3 id="word-distance">Расстояние между словами</h3>
         В графе «Расстояние» устанавливается нужное расстояние от первого слова до всех следующих (например, расстояние
         1–1 означает, что слово будет непосредственно справа от первого слова поиска, расстояние 1–2 – слово будет
         справа рядом или справа через одно слово, 2–2 – слово будет справа через одно слово от первого. Расстояние может
@@ -162,10 +168,478 @@
         <br>
       </div>
       <h1>Классификация ошибок</h1>
-      {% include 'help_table.html' %}
+      <div class="col-md-9">
+                    <table class="table table-bordered table-sm" style="font-size: smaller">
+                        <thead id="orph">
+                        <tr>
+                            <th>Категория ошибок</th>
+                            <th>Тэг</th>
+                            <th>Описание</th>
+                            <th>Пример</th>
+                            <th>Разметка примера</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td rowspan="9">Орфография</td>
+                            <td rowspan="2">Graph</td>
+                            <td rowspan="2">смешение алфавитов</td>
+                            <td>Dруг [‘=друг’] человек, которому вы можно доверять.</td>
+                            <td>Graph+Subst</td>
+                        </tr>
+                        <tr>
+                            <td>Но маме его не так думала… После этого она мне вообще не геагировала
+                                [‘=реагировала’]–через год!
+                            </td>
+                            <td>Graph+Subst</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Hyphen</td>
+                            <td rowspan="2">ошибки в дефисном написании</td>
+                            <td>Кудато</td>
+                            <td>Hyphen+Del
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>потому-что</td>
+                            <td>Hyphen+Insert</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Space</td>
+                            <td rowspan="2">ошибка в слитно-раздельном написании</td>
+                            <td>не достаточный</td>
+                            <td>Space+Insert</td>
+                        </tr>
+                        <tr>
+                            <td>Немогу</td>
+                            <td>Space+Del
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ortho</td>
+                            <td>прочие орфографические ошибки</td>
+                            <td>карова, прожыть</td>
+                            <td>Ortho+Subst</td>
+                        </tr>
+                        <tr>
+                            <td>Translit</td>
+                            <td>неверная транлитерация имени собственного</td>
+                            <td>Гиминьгвэй [вм. Хемингуэй]</td>
+                            <td>Translit</td>
+                        </tr>
+                        <tr>
+                            <td>Misspell</td>
+                            <td>комплексная ошибка, затрагивающая несколько букв (трансформировано написание слова в
+                                целом)
+                            </td>
+                            <td>деяк (вм. денег)</td>
+                            <td>Misspell</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="9">
+                              <div id="morph">
+                              Морфологические ошибки
+                              </div>>
+                            </td>
+                            <td rowspan="3">Deriv</td>
+                            <td rowspan="3">случаи словотворчества, когда студент,
+                                используя приставки и/или суффиксы,
+                                создаёт несуществующее слово
+                            </td>
+                            <td>Их шармантный акцент делает их обаятельными
+                            </td>
+                            <td>Deriv
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Но это не действителная дружбость [‘=дружба’], а виртуальная подделка
+                            </td>
+                            <td>Deriv+Insert;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Не только люди, но собаки и котошки [‘=коты/кошки’] может быт другя.
+                            </td>
+                            <td>Deriv+Insert;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Infl</td>
+                            <td rowspan="2">использование окончания,
+                                которое отсутствует в парадигме данного слова
+                            </td>
+                            <td>Я с Кодием [‘=Коди’] будем развиться.
+                            </td>
+                            <td>Infl+Insert
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>В статье не говорять о побочним действиях нелегальных наркотиках
+                            </td>
+                            <td>Infl+Subst
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Num
+                            </td>
+                            <td>употребление слова в неверной числовой форме (несоответствующей контексту или аномальной
+                                для этого слова)
+                            </td>
+                            <td>мы занимались физкультурами</td>
+                            <td>Num</td>
+                        </tr>
+                        <tr>
+                            <td>Gender
+                            </td>
+                            <td>изменение родовой принадлежности слова</td>
+                            <td> Автор даёт серьезныю комментарию об американcком обществе</td>
+                            <td>Gender</td>
+                        </tr>
+                        <tr>
+                            <td>Altern
+                            </td>
+                            <td>ошибка в чередовании основы</td>
+                            <td>любю (вместо люблю)</td>
+                            <td>Altern</td>
+                        </tr>
+                        <tr>
+                            <td>Morph
+                            </td>
+                            <td>прочие морфологические ошибки</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td rowspan="24" id="sec43">Синтаксические ошибки</td>
+                            <td>Asp
+                            </td>
+                            <td>неверная видовая форма или неверный выбор глаголов ненаправленного или повторяющегося
+                                движения (ср. ехать - ездить)
+                            </td>
+                            <td>Аня была русская женшина, которая не знала английский язык, я просто помню, как мне
+                                сразу она нравилась [‘=понравилась’].<br>
+                                я не разу на пляж не ехала
+                            </td>
+                            <td>Asp</td>
+                        </tr>
+                        <tr>
+                            <td>ArgStr
+                            </td>
+                            <td>ошибки в аргументной структуре глагола, существительного или прилагательного</td>
+                            <td>Исскусство учит человека о эмоциональной глубине</td>
+                            <td>ArgStr+Insert</td>
+                        </tr>
+                        <tr>
+                            <td>Passive
+                            </td>
+                            <td>неверное использование пассива</td>
+                            <td>лесть часто злоупотребляется… [вм. лестью часто злоупотребляют ]
+                                Когда Николас проснулся они были обокрадены
+                            </td>
+                            <td>Passive</td>
+                        </tr>
+                        <tr>
+                            <td>Tense
+                            </td>
+                            <td>ошибка во временной форме глагола (например, когда по контексту ясно, что требуется
+                                прошедшее время, а студент употребил настоящее). NB! Тег описывает только ошибки во
+                                времени глагола, не в виде - видовые ошибки маркируются тегом Asp
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td>Mode
+                            </td>
+                            <td>ошибка в использовании условного наклонения или образовании формы условного наклонения
+                                (пропуск частицы бы, не - в вопросах типа "Не могли бы вы прислать мне инструкцию?" )
+                            </td>
+                            <td>Экономическая составляющая важно в том,
+                                что нужны такие фирмы и организации чтобы помогать этому экологическую региону [вм.
+                                которые бы помогали этому региону] <br>Это возможно, если участники согласились [вм.
+                                Если бы все участники согласились]
+                            </td>
+                            <td>Mode</td>
+                        </tr>
+
+                        <tr>
+                            <td>Refl
+
+                            </td>
+                            <td>неверное употребление возвратных глаголов</td>
+                            <td>стречала [= встречалась] с мою подрушку</td>
+                            <td>Refl</td>
+                        </tr>
+                        <tr>
+                            <td>AgrNum
+                            </td>
+                            <td>ошибка в согласовании по числу</td>
+                            <td>Друг слышал и нравится что вы сказал [‘=сказали’].<br>
+                                Сема взял черепаху в руки, взял все своё принадлежности
+                            </td>
+                            <td>AgrNum</td>
+                        </tr>
+                        <tr>
+                            <td>AgrCase
+                            </td>
+                            <td>ошибка в согласовании по падежу
+                                (NB Тег AgrCase не используется в случаях нарушения падежного управления: ср. с этом
+                                значением vs стречала с мою подрушку. Ошибка в управлении описывается тегом Gov)
+                            </td>
+                            <td>с этом значением</td>
+                            <td>AgrCase</td>
+                        </tr>
+                        <tr>
+                            <td>AgrGender
+                            </td>
+                            <td>ошибка в согласовании по роду (прилагательных, причастий, местоимений или глаголов
+                                прошедшего времени)
+                            </td>
+                            <td>Наша дружба самая важная асппект моей жизни.</td>
+                            <td>AgrGender</td>
+                        </tr>
+                        <tr>
+                            <td>AgrPers
+                            </td>
+                            <td>неверное согласование сказуемого по лицу</td>
+                            <td>Она никогда не буду стать [‘=станет’] врачом</td>
+                            <td>AgrPers</td>
+                        </tr>
+                        <tr>
+                            <td>AgrGerund
+                            </td>
+                            <td>ошибка в согласовании деепричастия</td>
+                            <td>Ходя по этому городу мой рот не закрывался от удевления</td>
+                            <td>AgrGerund</td>
+                        </tr>
+                        <tr>
+                            <td>Gov
+                            </td>
+                            <td>ошибка в управлении
+                                (NB Тег Gov не используется в случаях нарушения согласования по падежу: ср. стречала с
+                                мою подрушку vs с этом значением. Ошибка в падежном согласовании описывается тегом
+                                AgrCase)
+                            </td>
+                            <td>Он … полон красотой [вм. полон красоты]чистых и нежных эмоций<br>
+                                Люди думают, что легко найти хороших друзья [вм. найти хороших друзей]
+                            </td>
+                            <td>Gov</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Ref</td>
+                            <td rowspan="2">ошибки в употреблении местоимений (пропуск или неверный выбор местоимения)
+                            </td>
+                            <td>Я люблю русский язык и никогда не забуду. [вм. никогда его не забуду]
+                            </td>
+                            <td>Ref+Del
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Почему Тарковский назвал его фильм [вм. свой фильм]
+                                именно «Иваново детство»?»
+                            </td>
+                            <td>Ref+Subst
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Conj</td>
+                            <td rowspan="2">ошибка в употреблении союза</td>
+                            <td>Главное, можно понимать причины зачем это случается [вм. почему это случается]
+                            </td>
+                            <td>Conj
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Нам всем интересно, если у меня будет сын или дочь; [вм. ли: будет ли у меня…]
+                            </td>
+                            <td>Conj+Transfer
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>WO
+                            </td>
+                            <td>ошибка в порядке слов</td>
+                            <td>С большими трудностями приходится сталкиваться директору приюта ежедневно.</td>
+                            <td>WO</td>
+                        </tr>
+                        <tr>
+                            <td>Neg
+                            </td>
+                            <td>неверная постановка отрицания</td>
+                            <td>Если человек понимает как язык работает тогдо не будет сложно понимать юмор или поэзю
+                                [вм. будет несложно понимать…]
+                            </td>
+                            <td> Neg</td>
+                        </tr>
+                        <tr>
+                            <td>Aux
+                            </td>
+                            <td>Неверное употребление глагола «есть», глаголов-связок</td>
+                            <td>Когда мне грустно, друг всегда есть со мной [вм. друг всегда со мной]</td>
+                            <td>Aux+Insert</td>
+                        </tr>
+                        <tr>
+                            <td>Brev
+                            </td>
+                            <td>Употребление кратких/полных прилагательных</td>
+                            <td>Чай был такой вкусен! [вм. такой вкусный]</td>
+                            <td>Brev</td>
+                        </tr>
+                        <tr>
+                            <td>Com</td>
+                            <td>ошибки в сравнительных формах</td>
+                            <td></td>
+                            <td>Com</td>
+                        </tr>
+                        <tr>
+                            <td>GenNeg</td>
+                            <td>ошибка в отрицании при инфинитиве</td>
+                            <td>В самом деле, у них нет ответы всех вопрос, потому что они не знают все в мире</td>
+                            <td>GenNeg</td>
+                        </tr>
+                        <tr>
+                            <td>Impers</td>
+                            <td>ошибки в безличных и неопределенно личных конструкциях</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Syntax</td>
+                            <td>прочие синтаксические ошибки, не описанные в классификации</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+
+                            <td id="sec44">Ошибки в конструкциях
+                            </td>
+                            <td>Constr
+                            </td>
+                            <td>неверный выбор конструкции или ошибка внутри конструкции (ошибка затрагивает выбор или
+                                форму более одной единицы или связана с пропуском/добавлением единицы)
+                            </td>
+                            <td>Я имею две собаки [вм. у меня есть]<br>
+                                На большей части моей жизни я не знала, что такое друг
+                            </td>
+                            <td>Constr+Subst</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="6" id="sec45">Лексические ошибки</td>
+                            <td>Lex</td>
+                            <td>неверное словоупотребление</td>
+                            <td>Наша учительница принципиально проводила урок на русском языке [вм. специально]<br>
+                                У ног башни [вм. у подножия башни] расположен великолепный парк в котором можно
+                                прекрасно отдохнуть и насладиться духом этого города
+                            </td>
+                            <td>Lex
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Prep</td>
+                            <td>ошибка в употреблении предлога</td>
+                            <td>Нам ['=Для нас'] мнения других слишком важны</td>
+                            <td>prep + miss</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">CS</td>
+                            <td rowspan="2">code-switching (использование иноязычного слова, написанного латиницей или
+                                кириллицей)
+                            </td>
+                            <td>У берега бегала dog
+                            </td>
+                            <td>CS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>небо было хелл блау
+                            </td>
+                            <td>CS</td>
+                        </tr>
+                        <tr>
+                            <td>Par
+                            </td>
+                            <td>паронимия</td>
+                            <td>Этот завлекательный [вм. увлекательный] язык <br>
+                                Ближние каникулы [вм. ближайшие]
+                            </td>
+                            <td>Par</td>
+                        </tr>
+                        <tr>
+                            <td>Idiom
+                            </td>
+                            <td>ошибка в употреблении устойчивого словосочетания</td>
+                            <td>От дубов простыл и свет [вм. след]<br>
+                                Эти мысли застряли в голове [вм. засели в голове]
+                            </td>
+                            <td>Idiom</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="7" id="sec46">Дополнительные теги
+                                (используются только
+                                в сочетании с тегами
+                                ошибок, приведёнными выше)
+                            </td>
+                            <td>Transfer
+                            </td>
+                            <td>интерференция с L1</td>
+                            <td>Я не могу дождадса до кониколов [калька ‘wait till’]
+                                но я совсем забыла что мне нужно здават 2 бумаги через неделю [калька “paper”]
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Not-clear
+                            </td>
+                            <td>по контексту невозможно восстановить смысл фразы и исправить ошибку</td>
+                            <td>Он не приходит груст тебе, но шоколат и ГУЕННЫ.</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Miss
+
+                            </td>
+                            <td>пропуск буквы, морфемы или слова</td>
+                            <td>Мы наблюдаем разные процессы с явлениями природы [пропуск причастия связанные]</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Extra
+                            </td>
+                            <td>вставка ненужной элемента (буквы, морфемы или слова)</td>
+                            <td>У него ещё одна причина, чтобы увидеть, если ли она достойна услышать его теорию [лишний
+                                союз если]
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Transp
+                            </td>
+                            <td>перестановка двух соседних элементов (буквы, морфемы или слова)</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Subst
+                            </td>
+                            <td>замена буквы, морфемы или слова</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Disc
+                            </td>
+                            <td>Ошибка в дискурсе(?) (ставится совместно с Lex, WO или Constr)</td>
+                            <td>В свою очередь как ['=В то время как'] другие участники…</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
       <div class="border rounded p-3 mb-4">
         <h1>Как размечать?</h1>
-        <h3>Начало работы</h3>
+        <h3 id="begin-work">Начало работы</h3>
         <p>Чтобы приступить к разметке в корпусе RLC необходимо:</p>
         <ol>
           <li>Зайти на сайт под своим логином, кликнув на портрет в верхнем правом углу и
@@ -179,20 +653,24 @@
               и менять порядок, для указания текста используется его уникальный номер.</i>
           </li>
         </ol>
-        <h3>Окно разметки</h3>
+        <h3 id="markup-window">Окно разметки</h3>
         <img src="{% static 'img/help_photos/markup.jpg' %}" alt="Exact Search Example" width="800" height="400"
              style="border: 2px solid black; border-radius: 8px; margin-bottom: 20px; margin-top: 10px;">
         <br>
-        <h3>Разметка</h3>
+        <h3 id="markup">Разметка</h3>
         На странице текста, чтобы разметить фрагмент, необходимо его выделить, зажав левую кнопку мыши.
         <img src="{% static 'img/help_photos/annotator.jpg' %}" alt="Exact Search Example" width="1000" height="400"
              style="border: 2px solid black; border-radius: 8px; margin-bottom: 20px; margin-top: 10px;">
         <br>
-        Список используемых тэгов расположен справа от текста. Кроме того, в поле ввода тегов при вводе хотя бы одного символа появляется список-подсказка.
-        В случаях подобных “Он открыл дверь красивый ключ” тег ставится только у слова “ключ”, так как “красивый” было согласовано правильно, хоть и с неправильной формой существительного.
+        Список используемых тэгов расположен справа от текста. Кроме того, в поле ввода тегов при вводе хотя бы одного
+        символа появляется список-подсказка.
+        В случаях подобных “Он открыл дверь красивый ключ” тег ставится только у слова “ключ”, так как “красивый” было
+        согласовано правильно, хоть и с неправильной формой существительного.
         <img src="{% static 'img/help_photos/tags.jpg' %}" alt="Exact Search Example" width="1000" height="400"
              style="border: 2px solid black; border-radius: 8px; margin-bottom: 20px; margin-top: 10px;">
         <br>
+        После того, как разметка текста полностью закончена необходимо сменить статус документа на "Аннотировано" в
+        селекторе над названием текста.
       </div>
       <div class="border rounded p-3 mb-4">
         <h1>Регистрация</h1>

@@ -195,5 +195,22 @@
     inputContainer.toggle();
   });
 </script>
+<script>document.addEventListener('DOMContentLoaded', () => {
+  // Loop through all anchor tags
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      // Prevent the default action
+      e.preventDefault();
+      const hashVal = this.getAttribute('href');
+      const target = document.querySelector(hashVal);
+
+      // Adjust scroll position by the height of the navbar (change 100 to your navbar's height)
+      const scrollto = target.offsetTop - 100;
+      window.scrollTo(0, scrollto);
+    });
+  });
+});
+
+</script>
 </body>
 </html>
