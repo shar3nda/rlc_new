@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
-from .models import Document, Sentence, Author, Filter, Token_list, Token
+from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
 
 
 def export_documents(request):
@@ -226,8 +226,8 @@ def add_document(request):
 
         if form.is_valid():
             if (
-                request.POST["author_selection_method"] == "manual"
-                and author_form.is_valid()
+                    request.POST["author_selection_method"] == "manual"
+                    and author_form.is_valid()
             ):
                 author = author_form.save()
                 document = form.save(commit=False)
@@ -235,8 +235,8 @@ def add_document(request):
                 document.author = author
                 document.save()
             elif (
-                request.POST["author_selection_method"] == "dropdown"
-                and favorite_author_form.is_valid()
+                    request.POST["author_selection_method"] == "dropdown"
+                    and favorite_author_form.is_valid()
             ):
                 document = form.save(commit=False)
                 document.user = request.user
@@ -285,8 +285,8 @@ def edit_document(request, document_id):
         if form.is_valid():
             form.save(commit=False)
             if (
-                favorite_author_form.is_valid()
-                and favorite_author_form.cleaned_data["selected_author"] is not None
+                    favorite_author_form.is_valid()
+                    and favorite_author_form.cleaned_data["selected_author"] is not None
             ):
                 document.author = favorite_author_form.cleaned_data["selected_author"]
             document.save()
@@ -380,7 +380,7 @@ def search(request):
 always_true = ~Q(pk__in=[])
 
 
-def search_subcorpus(filters):
+def search_subcorpus(filters, search_sentences=True):
     date_from_specified = filters.date_from != 0
     date_to_specified = filters.date_to != 9999
 
@@ -422,9 +422,12 @@ def search_subcorpus(filters):
     }
 
     # get all sentences in subcorpus
-    sentences = Sentence.objects.filter(document__in=subcorpus)
-
-    return sentences, subcorpus_stats
+    if search_sentences:
+        sentences = Sentence.objects.filter(document__in=subcorpus)
+        return sentences, subcorpus_stats
+    else:
+        annotations = Annotation.objects.filter(document__in=subcorpus)
+        return annotations, subcorpus_stats
 
 
 def exact_search_sentences(exact_forms, filters):
@@ -432,17 +435,64 @@ def exact_search_sentences(exact_forms, filters):
     matching_sentences = []
     for sentence in sentences:
         for i in range(len(sentence.words)):
-            if sentence.words[i] == exact_forms[0]:
+            if sentence.words[i].token == exact_forms[0]:
                 ii = i
                 flag = True
                 for j in range(1, len(exact_forms)):
                     ii += 1
-                    if exact_forms[j] != sentence.words[ii]:
+                    if exact_forms[j] != sentence.words[ii].token:
                         flag = False
                         break
                 if flag:
                     matching_sentences.append(sentence)
     return matching_sentences
+
+
+def check_lex(word, lexes):
+    if lexes[0] == "":
+        return True
+    for lex in lexes:
+        if word.pos == lex:
+            return True
+    return False
+
+
+def check_gram(word, grammar):
+    """
+    Нужно дописать gramms и убрать все не уникальные ключи
+    """
+    """gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
+              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
+    gramms[word.animacy] = 1
+    gramms[word.aspect] = 1
+    gramms[word.case] = 1
+    gramms[word.degree] = 1
+    gramms[word.foreign] = 1
+    gramms[word.gender] = 1
+    gramms[word.hyph] = 1
+    gramms[word.mood] = 1
+    gramms[word.gram_number] = 1
+    gramms[word.person] = 1
+    gramms[word.polarity] = 1
+    gramms[word.tense] = 1
+    gramms[word.variant] = 1
+    gramms[word.verb_form] = 1
+    gramms[word.voice] = 1
+    for gramm in grammar:
+        if gramms[gramm] == 0:
+            return False"""
+    return True
+
+
+def check_errors(annotation, errors):
+    for error in errors:
+        flag = False
+        for tag in annotation.error_tags:
+            if error == tag:
+                flag = True
+        if not flag:
+            return False
+    return True
 
 
 def search_sentences(tokens_list, filters):
@@ -452,18 +502,29 @@ def search_sentences(tokens_list, filters):
 
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
 
+    """
+    Нужно дописать gramms и убрать все неуникальные ключи
+    """
+    gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
+              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
+
+    """for gramm in tokens_list.grammar:
+        gramms[gramm] = 1"""
+
     matching_sentence_pks = []
     matching_words = set()
     for sentence in sentences:
-        tokens = sentence.lemmas
-        words = sentence.words
+        tokens = list(sentence.tokens.all())
         for i in range(len(tokens)):
-            if tokens[i] == tokens_list.wordform[0]:
+            if tokens[i].lemma == tokens_list.wordform[0] and check_lex(tokens[i], tokens_list.lex[0]) and check_gram(
+                    tokens[i], 0):
                 flag = True
                 for j in range(1, len(tokens_list.wordform)):
                     if flag:
                         flag = any(
-                            tokens[i + k] == tokens_list.wordform[j]
+                            tokens[i + k].lemma == tokens_list.wordform[j] and check_lex(tokens[i + k],
+                                                                                         tokens_list.lex[j]) and check_gram(
+                                tokens[i], 0)
                             for k in range(
                                 int(tokens_list.begin[j - 1]),
                                 int(tokens_list.end[j - 1]) + 1,
@@ -482,6 +543,52 @@ def search_sentences(tokens_list, filters):
     return matching_sentences, matching_words, subcorpus_stats
 
 
+def search_annotations(tokens_list, filters):
+    annotations, subcorpus_stats = search_subcorpus(filters, False)
+
+    tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
+
+    annotations = annotations.filter(tokens__contains=tokens_list.wordform)
+
+    """
+    Нужно дописать gramms и убрать все неуникальные ключи
+    """
+    gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
+              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
+
+    for gramm in tokens_list.grammar:
+        gramms[gramm] = 1
+
+    matching_sentence_pks = []
+    matching_words = set()
+    for annotation in annotations:
+        tokens = annotation.tokens
+        for i in range(len(tokens)):
+            if tokens[i].lemma == tokens_list.wordform[0] and check_lex(tokens[i], tokens_list.lex) and check_gram(
+                    tokens[i], gramms):
+                flag = True
+                for j in range(1, len(tokens_list.wordform)):
+                    if flag:
+                        flag = any(
+                            tokens[i + k].lemma == tokens_list.wordform[j] and check_lex(tokens[i + k],
+                                                                                         tokens_list.lex) and check_gram(
+                                tokens[i], gramms)
+                            for k in range(
+                                int(tokens_list.begin[j - 1]),
+                                int(tokens_list.end[j - 1]) + 1,
+                            )
+                        )
+                    else:
+                        break
+                if flag:
+                    matching_sentence_pks.append(annotation.sentence.pk)
+                    # Adding only the matching sequence words to the matching_words list
+    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
+    for sentence in matching_sentences:
+        for i in range(len(sentence.lemmas)):
+            if sentence.lemmas[i] in tokens_list.wordform:
+                matching_words.add(sentence.words[i].token)
+    return matching_sentences, matching_words, subcorpus_stats
 
 
 def get_search_stats(sentences, subcorpus_stats):
@@ -532,12 +639,16 @@ def search_results(request):
     grammar = request.GET.get("grammar[]").split(",")
     for j in range(len(grammar)):
         grammar[j] = grammar[j].strip("()").split("|")
+    errors = request.GET.get("errors[]").split(",")
+    for j in range(len(errors)):
+        errors[j] = errors[j].strip("()").split("|")
     tokens_list = Token_list(
         request.GET.get("wordform[]").split(","),
         begin,
         end,
         lex,
         grammar,
+        errors
     )
     filters = Filter(
         request.GET.get("date1"),
