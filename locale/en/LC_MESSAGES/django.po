@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 14:50+0300\n"
+"POT-Creation-Date: 2023-08-28 15:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -816,10 +816,8 @@ msgid "Total Documents"
 msgstr ""
 
 #: .\corpus\views.py:667
-#, fuzzy
-#| msgid "Sentence static"
 msgid "Total Sentences"
-msgstr "Sentence statistics"
+msgstr ""
 
 #: .\corpus\views.py:668
 msgid "Total Tokens"
@@ -838,16 +836,12 @@ msgid "Subcorpus Tokens"
 msgstr ""
 
 #: .\corpus\views.py:672
-#, fuzzy
-#| msgid "Document static"
 msgid "Found Documents"
-msgstr "Document statistics"
+msgstr ""
 
 #: .\corpus\views.py:673
-#, fuzzy
-#| msgid "Sentence static"
 msgid "Found Sentences"
-msgstr "Sentence statistics"
+msgstr ""
 
 #: .\corpus\views.py:674
 msgid "Found Tokens"
@@ -890,8 +884,8 @@ msgstr ""
 msgid "Admin panel"
 msgstr ""
 
-#: .\templates\base.html:109 .\templates\sidebar_base.html:109
-msgid "Profile"
+#: .\templates\base.html:109
+msgid "Change password"
 msgstr ""
 
 #: .\templates\base.html:110 .\templates\sidebar_base.html:110
@@ -1284,6 +1278,10 @@ msgstr ""
 
 #: .\templates\registration\login.html:36
 msgid "Password"
+msgstr ""
+
+#: .\templates\sidebar_base.html:109
+msgid "Profile"
 msgstr ""
 
 #: .\templates\statistics.html:72
