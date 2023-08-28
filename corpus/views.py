@@ -9,6 +9,8 @@ from django.utils.translation import gettext_lazy as _
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
+
+
 def export_documents(request):
     document_list = Document.objects.select_related("user", "author").prefetch_related(
         "annotators", "sentence_set__annotation_set__user"
@@ -18,6 +20,8 @@ def export_documents(request):
     response = JsonResponse(data, safe=False)
     response["Content-Disposition"] = 'attachment; filename="documents.json"'
     return response
+
+
 def documents(request):
     document_filter = DocumentFilter(request.GET, queryset=Document.objects.all())
     paginator = Paginator(document_filter.qs, 10)  # Show 10 documents per page.
@@ -35,11 +39,17 @@ def documents(request):
         "title_query": request.GET.get("title", ""),
     }
     return render(request, "documents.html", context)
+
+
 def get_verbose_name(model, field_name, choice_code):
     return dict(model._meta.get_field(field_name).flatchoices).get(choice_code)
+
+
 def clean_for_js(data):
     """Transforms None into a value appropriate for JavaScript"""
     return [item if item is not None else "Unknown" for item in data]
+
+
 def statistics(request):
     # Aggregate the data
     status_counts = Document.objects.values("status").annotate(count=Count("status"))
@@ -170,8 +180,12 @@ def statistics(request):
         "table_data": table_data,
     }
     return render(request, "statistics.html", context)
+
+
 def help(request):
     return render(request, "help.html")
+
+
 # Представление для аннотирования документа
 def annotate(request, document_id):
     doc = Document.objects.get(id=document_id)
@@ -180,6 +194,8 @@ def annotate(request, document_id):
         "sentences": Sentence.objects.filter(document=doc).order_by("number"),
     }
     return render(request, "document/annotate.html", context)
+
+
 @permission_required("annotator.change_document")
 def add_document(request):
     if request.method == "POST":
@@ -233,6 +249,8 @@ def add_document(request):
             "favorite_author_form": favorite_author_form,
         },
     )
+
+
 @permission_required("corpus.change_document")
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
@@ -273,6 +291,8 @@ def edit_document(request, document_id):
             "favorite_author_form": favorite_author_form,
         },
     )
+
+
 @permission_required("corpus.change_document")
 def edit_author(request, author_id, document_id):
     author = get_object_or_404(Author, id=author_id)
@@ -299,12 +319,16 @@ def edit_author(request, author_id, document_id):
             "document": get_object_or_404(Document, id=document_id),
         },
     )
+
+
 @permission_required("corpus.delete_document")
 def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     document.delete()
     messages.success(request, "Документ успешно удален!")
     return redirect("documents")
+
+
 @permission_required("corpus.change_document")
 def update_document_status(request, document_id):
     if request.method == "POST":
@@ -316,12 +340,20 @@ def update_document_status(request, document_id):
         return JsonResponse({"status": "success"})
     else:
         return JsonResponse({"status": "error"})
+
+
 @login_required
 def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
+
+
 def search(request):
     return render(request, "lexgram/lexgram_search.html")
+
+
 always_true = ~Q(pk__in=[])
+
+
 def search_subcorpus(filters, search_sentences=True):
     date_from_specified = filters.date_from != 0
     date_to_specified = filters.date_to != 9999
@@ -402,6 +434,8 @@ def exact_search_results(request):
         "lexgram/lexgram_search_results.html",
         {"sentences": sentences, "stats": stats, "tokens_list": words},
     )
+
+
 def exact_search_sentences(exact_forms, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
     matching_sentence_pks = []
@@ -424,6 +458,8 @@ def exact_search_sentences(exact_forms, filters):
             if sentence.lemmas[i] in exact_forms:
                 matching_words.add(sentence.words[i])
     return matching_sentences, matching_words, subcorpus_stats
+
+
 def check_lex(word, lexes):
     if lexes[0] == "":
         return True
@@ -431,6 +467,8 @@ def check_lex(word, lexes):
         if word.pos == lex:
             return True
     return False
+
+
 def check_gram(word, grammar):
     """
     Нужно дописать gramms и убрать все не уникальные ключи
@@ -456,6 +494,8 @@ def check_gram(word, grammar):
         if gramms[gramm] == 0:
             return False"""
     return True
+
+
 def check_errors(annotation, errors):
     for error in errors:
         flag = False
@@ -465,6 +505,8 @@ def check_errors(annotation, errors):
         if not flag:
             return False
     return True
+
+
 def search_sentences(tokens_list, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
     tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
@@ -507,6 +549,8 @@ def search_sentences(tokens_list, filters):
             if sentence.lemmas[i] in tokens_list.wordform:
                 matching_words.add(sentence.words[i])
     return matching_sentences, matching_words, subcorpus_stats
+
+
 def get_search_stats(sentences, subcorpus_stats):
     """
     A function that returns statistics for the search results.
@@ -537,6 +581,8 @@ def get_search_stats(sentences, subcorpus_stats):
         "found_sentences": found_sentences,
         "found_tokens": found_tokens,
     }
+
+
 def search_results(request):
     begin = request.GET.get("from[]")
     end = request.GET.get("to[]")
@@ -590,6 +636,8 @@ def search_results(request):
         "lexgram/lexgram_search_results.html",
         {"sentences": sentences, "stats": stats, "tokens_list": words},
     )
+
+
 def get_search(request):
     return render(
         request,
