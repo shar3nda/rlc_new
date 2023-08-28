@@ -496,15 +496,23 @@ def check_gram(word, grammar):
     return True
 
 
-def check_errors(annotation, errors):
-    for error in errors:
-        flag = False
-        for tag in annotation.error_tags:
-            if error == tag:
-                flag = True
-        if not flag:
-            return False
-    return True
+def check_errors(word, errors):
+    if errors[0] == "":
+        return True
+    annotations = list(word.annotations.all())
+    for annotation in annotations:
+        result = True
+        for error in errors:
+            flag = False
+            for tag in annotation.error_tags:
+                if error == tag:
+                    flag = True
+                    break
+            if not flag:
+                result = False
+        if result:
+            return True
+    return False
 
 
 def search_sentences(tokens_list, filters):
@@ -542,6 +550,7 @@ def search_sentences(tokens_list, filters):
                 tokens[i].lemma == tokens_list.wordform[0]
                 and check_lex(tokens[i], tokens_list.lex[0])
                 and check_gram(tokens[i], 0)
+                and check_errors(tokens[i], tokens_list.errors[0])
             ):
                 flag = True
                 for j in range(1, len(tokens_list.wordform)):
@@ -550,6 +559,7 @@ def search_sentences(tokens_list, filters):
                             tokens[i + k].lemma == tokens_list.wordform[j]
                             and check_lex(tokens[i + k], tokens_list.lex[j])
                             and check_gram(tokens[i], 0)
+                            and check_errors(tokens[i], tokens_list.errors[0])
                             for k in range(
                                 int(tokens_list.begin[j - 1]),
                                 int(tokens_list.end[j - 1]) + 1,

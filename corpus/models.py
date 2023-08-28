@@ -555,7 +555,10 @@ class Annotation(models.Model):
     start = models.IntegerField(verbose_name=_("Start"))
     end = models.IntegerField(verbose_name=_("End"))
     tokens = models.ManyToManyField(
-        to="corpus.Token", verbose_name=_("Tokens"), blank=True
+        to="corpus.Token",
+        related_name="annotations",
+        verbose_name=_("Tokens"),
+        blank=True,
     )
     error_tags = ArrayField(
         models.CharField(max_length=64, blank=True),
