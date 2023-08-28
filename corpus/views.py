@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -7,27 +6,18 @@ from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext_lazy as _
-
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
-
-
 def export_documents(request):
     document_list = Document.objects.select_related("user", "author").prefetch_related(
         "annotators", "sentence_set__annotation_set__user"
     )
-
     filter = DocumentFilter(request.GET, queryset=document_list)
-
     data = [document.serialize() for document in filter.qs]
-
     response = JsonResponse(data, safe=False)
     response["Content-Disposition"] = 'attachment; filename="documents.json"'
-
     return response
-
-
 def documents(request):
     document_filter = DocumentFilter(request.GET, queryset=Document.objects.all())
     paginator = Paginator(document_filter.qs, 10)  # Show 10 documents per page.
@@ -45,21 +35,14 @@ def documents(request):
         "title_query": request.GET.get("title", ""),
     }
     return render(request, "documents.html", context)
-
-
 def get_verbose_name(model, field_name, choice_code):
     return dict(model._meta.get_field(field_name).flatchoices).get(choice_code)
-
-
 def clean_for_js(data):
     """Transforms None into a value appropriate for JavaScript"""
     return [item if item is not None else "Unknown" for item in data]
-
-
 def statistics(request):
     # Aggregate the data
     status_counts = Document.objects.values("status").annotate(count=Count("status"))
-
     # Prepare the data for the chart
     labels = [status[1] for status in Document.StatusChoices.choices]
     text_types = []
@@ -68,7 +51,6 @@ def statistics(request):
         text_types.append(count)
     texts_count = int(Document.objects.count())
     colors = ["#8c61ff", "#44c2fd", "#6592fd"]
-
     # Статистика по документам
     languages_counts = (
         Document.objects.values("author__dominant_language")
@@ -81,7 +63,6 @@ def statistics(request):
         ): doc["count"]
         for doc in languages_counts
     }
-
     gender_counts = (
         Document.objects.values("author__gender").annotate(count=Count("id")).order_by()
     )
@@ -89,7 +70,6 @@ def statistics(request):
         get_verbose_name(Author, "gender", doc["author__gender"]): doc["count"]
         for doc in gender_counts
     }
-
     lang_background_counts = (
         Document.objects.values("author__language_background")
         .annotate(count=Count("id"))
@@ -101,7 +81,6 @@ def statistics(request):
         ): doc["count"]
         for doc in lang_background_counts
     }
-
     genre_counts = (
         Document.objects.values("genre").annotate(count=Count("id")).order_by()
     )
@@ -109,7 +88,6 @@ def statistics(request):
         get_verbose_name(Document, "genre", doc["genre"]): doc["count"]
         for doc in genre_counts
     }
-
     # статистика по предложениям
     lang_sent_counts = (
         Sentence.objects.values("document__author__dominant_language")
@@ -122,14 +100,12 @@ def statistics(request):
         ): sent["count"]
         for sent in lang_sent_counts
     }
-
     # Статистика по авторам
     auth_gender = Author.objects.values("gender").annotate(count=Count("id")).order_by()
     auth_gender = {
         get_verbose_name(Author, "gender", auth["gender"]): auth["count"]
         for auth in auth_gender
     }
-
     auth_lang_bg_counts = (
         Author.objects.values("language_background")
         .annotate(count=Count("id"))
@@ -141,7 +117,6 @@ def statistics(request):
         ): auth["count"]
         for auth in auth_lang_bg_counts
     }
-
     auth_lang_counts = (
         Author.objects.values("dominant_language")
         .annotate(count=Count("id"))
@@ -153,7 +128,6 @@ def statistics(request):
         ]
         for auth in auth_lang_counts
     }
-
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
     # Render the chart
@@ -164,14 +138,11 @@ def statistics(request):
             lang_sent_counts.values(),
         )
     )
-
     # статистика по предложениям
     total_sentences = Sentence.objects.count()
-
     # Статистика по авторам
     total_authors = Author.objects.count()
     total_fav_authors = Author.objects.filter(favorite=True).count()
-
     context = {
         "labels": labels,
         "text_types": text_types,
@@ -199,12 +170,8 @@ def statistics(request):
         "table_data": table_data,
     }
     return render(request, "statistics.html", context)
-
-
 def help(request):
     return render(request, "help.html")
-
-
 # Представление для аннотирования документа
 def annotate(request, document_id):
     doc = Document.objects.get(id=document_id)
@@ -213,8 +180,6 @@ def annotate(request, document_id):
         "sentences": Sentence.objects.filter(document=doc).order_by("number"),
     }
     return render(request, "document/annotate.html", context)
-
-
 @permission_required("annotator.change_document")
 def add_document(request):
     if request.method == "POST":
@@ -223,7 +188,6 @@ def add_document(request):
         favorite_author_form = FavoriteAuthorForm(
             request.POST, prefix="favorite_author"
         )
-
         if form.is_valid():
             if (
                     request.POST["author_selection_method"] == "manual"
@@ -248,7 +212,6 @@ def add_document(request):
                     "Invalid author information. Please check the form and try again.",
                 )
                 return redirect("add_document")
-
             messages.success(request, "Document saved successfully.")
             return redirect("annotate", document_id=document.id)
         else:
@@ -261,7 +224,6 @@ def add_document(request):
         form = DocumentForm(initial={"user": request.user.id})
         author_form = NewAuthorForm(prefix="author")
         favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
-
     return render(
         request,
         "document/add_document.html",
@@ -271,8 +233,6 @@ def add_document(request):
             "favorite_author_form": favorite_author_form,
         },
     )
-
-
 @permission_required("corpus.change_document")
 def edit_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
@@ -281,7 +241,6 @@ def edit_document(request, document_id):
         favorite_author_form = FavoriteAuthorForm(
             request.POST, prefix="favorite_author"
         )
-
         if form.is_valid():
             form.save(commit=False)
             if (
@@ -305,7 +264,6 @@ def edit_document(request, document_id):
             )
         else:
             favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
-
     return render(
         request,
         "document/edit_document.html",
@@ -315,14 +273,11 @@ def edit_document(request, document_id):
             "favorite_author_form": favorite_author_form,
         },
     )
-
-
 @permission_required("corpus.change_document")
 def edit_author(request, author_id, document_id):
     author = get_object_or_404(Author, id=author_id)
     if request.method == "POST":
         form = NewAuthorForm(request.POST, instance=author, prefix="author")
-
         if form.is_valid():
             form.save()
             messages.success(request, "Author saved successfully.")
@@ -335,7 +290,6 @@ def edit_author(request, author_id, document_id):
             return redirect("edit_author", author_id=author_id, document_id=document_id)
     else:
         form = NewAuthorForm(instance=author, prefix="author")
-
     return render(
         request,
         "document/edit_author.html",
@@ -345,16 +299,12 @@ def edit_author(request, author_id, document_id):
             "document": get_object_or_404(Document, id=document_id),
         },
     )
-
-
 @permission_required("corpus.delete_document")
 def delete_document(request, document_id):
     document = get_object_or_404(Document, id=document_id)
     document.delete()
     messages.success(request, "Документ успешно удален!")
     return redirect("documents")
-
-
 @permission_required("corpus.change_document")
 def update_document_status(request, document_id):
     if request.method == "POST":
@@ -366,24 +316,15 @@ def update_document_status(request, document_id):
         return JsonResponse({"status": "success"})
     else:
         return JsonResponse({"status": "error"})
-
-
 @login_required
 def user_profile(request):
     return render(request, "user_profile.html", {"user": request.user})
-
-
 def search(request):
     return render(request, "lexgram/lexgram_search.html")
-
-
 always_true = ~Q(pk__in=[])
-
-
 def search_subcorpus(filters, search_sentences=True):
     date_from_specified = filters.date_from != 0
     date_to_specified = filters.date_to != 9999
-
     if date_from_specified or date_to_specified:
         # Exclude documents with unspecified dates if at least one date filter is specified
         subcorpus = Document.objects.filter(
@@ -393,7 +334,6 @@ def search_subcorpus(filters, search_sentences=True):
     else:
         # Include all documents if both date filters are not specified
         subcorpus = Document.objects.all()
-
     # Apply other filters
     subcorpus = subcorpus.filter(
         Q(always_true if filters.gender == "any" else Q(author__gender=filters.gender))
@@ -414,13 +354,11 @@ def search_subcorpus(filters, search_sentences=True):
             else Q(language_level__in=filters.language_level)
         )
     )
-
     subcorpus_stats = {
         "documents": subcorpus.count(),
         "sentences": Sentence.objects.filter(document__in=subcorpus).count(),
         "tokens": Token.objects.filter(document__in=subcorpus).count(),
     }
-
     # get all sentences in subcorpus
     if search_sentences:
         sentences = Sentence.objects.filter(document__in=subcorpus)
@@ -441,8 +379,8 @@ def exact_search_results(request):
         request.GET.get("gender"),
         request.GET.get("mode"),
         request.GET.get("background"),
-        request.GET.get("language[]", "").split(","),
-        request.GET.get("level[]", "").split(","),
+        request.GET.get("language[]", ""),
+        request.GET.get("level[]", ""),
     )
 
     sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
@@ -458,16 +396,12 @@ def exact_search_results(request):
         "found_sentences": _("Found Sentences"),
         "found_tokens": _("Found Tokens"),
     }
-
     stats = {stat_names[key]: value for key, value in stats.items()}
-
     return render(
         request,
         "lexgram/lexgram_search_results.html",
         {"sentences": sentences, "stats": stats, "tokens_list": words},
     )
-
-
 def exact_search_sentences(exact_forms, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
     matching_sentence_pks = []
@@ -490,8 +424,6 @@ def exact_search_sentences(exact_forms, filters):
             if sentence.lemmas[i] in exact_forms:
                 matching_words.add(sentence.words[i])
     return matching_sentences, matching_words, subcorpus_stats
-
-
 def check_lex(word, lexes):
     if lexes[0] == "":
         return True
@@ -499,8 +431,6 @@ def check_lex(word, lexes):
         if word.pos == lex:
             return True
     return False
-
-
 def check_gram(word, grammar):
     """
     Нужно дописать gramms и убрать все не уникальные ключи
@@ -526,8 +456,6 @@ def check_gram(word, grammar):
         if gramms[gramm] == 0:
             return False"""
     return True
-
-
 def check_errors(annotation, errors):
     for error in errors:
         flag = False
@@ -537,24 +465,17 @@ def check_errors(annotation, errors):
         if not flag:
             return False
     return True
-
-
 def search_sentences(tokens_list, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
-
     tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
-
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
-
     """
     Нужно дописать gramms и убрать все неуникальные ключи
     """
     gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
               "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
-
     """for gramm in tokens_list.grammar:
         gramms[gramm] = 1"""
-
     matching_sentence_pks = []
     matching_words = set()
     for sentence in sentences:
@@ -586,8 +507,6 @@ def search_sentences(tokens_list, filters):
             if sentence.lemmas[i] in tokens_list.wordform:
                 matching_words.add(sentence.words[i])
     return matching_sentences, matching_words, subcorpus_stats
-
-
 def get_search_stats(sentences, subcorpus_stats):
     """
     A function that returns statistics for the search results.
@@ -599,17 +518,14 @@ def get_search_stats(sentences, subcorpus_stats):
     :param subcorpus_stats: stats for the subcorpus
     :return: dict with stats
     """
-
     total_documents = Document.objects.count()
     total_sentences = Sentence.objects.count()
     total_tokens = Token.objects.count()
-
     found_documents = Document.objects.filter(
         id__in=sentences.values_list("document_id", flat=True).distinct()
     ).count()
     found_sentences = sentences.count()
     found_tokens = Token.objects.filter(sentence__in=sentences).count()
-
     return {
         "total_documents": total_documents,
         "total_sentences": total_sentences,
@@ -621,8 +537,6 @@ def get_search_stats(sentences, subcorpus_stats):
         "found_sentences": found_sentences,
         "found_tokens": found_tokens,
     }
-
-
 def search_results(request):
     begin = request.GET.get("from[]")
     end = request.GET.get("to[]")
@@ -656,7 +570,6 @@ def search_results(request):
         request.GET.get("language[]", "").split(","),
         request.GET.get("level[]", "").split(","),
     )
-
     sentences, words, subcorpus_stats = search_sentences(tokens_list, filters)
     stats = get_search_stats(sentences, subcorpus_stats)
     stat_names = {
@@ -670,17 +583,13 @@ def search_results(request):
         "found_sentences": _("Found Sentences"),
         "found_tokens": _("Found Tokens"),
     }
-
     # replace keys in the stats variable with translated values
     stats = {stat_names[key]: value for key, value in stats.items()}
-
     return render(
         request,
         "lexgram/lexgram_search_results.html",
         {"sentences": sentences, "stats": stats, "tokens_list": words},
     )
-
-
 def get_search(request):
     return render(
         request,
