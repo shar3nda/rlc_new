@@ -607,7 +607,7 @@ class Token(models.Model):
         INAN = "Inan", _("Inan")
 
     class Aspect(models.TextChoices):
-        IMP = "AspectImp", _("AspectImp")
+        IMP = "Imp", _("Imp")
         PERF = "Perf", _("Perf")
 
     class Case(models.TextChoices):
@@ -626,7 +626,7 @@ class Token(models.Model):
         SUP = "Sup", _("Sup")
 
     class Foreign(models.TextChoices):
-        YES = "ForeignYes", _("ForeignYes")
+        YES = "Yes", _("Yes")
 
     class Gender(models.TextChoices):
         FEM = "Fem", _("Fem")
@@ -634,11 +634,11 @@ class Token(models.Model):
         NEUT = "Neut", _("Neut")
 
     class Hyph(models.TextChoices):
-        YES = "HyphYes", _("HyphYes")
+        YES = "Yes", _("Yes")
 
     class Mood(models.TextChoices):
         CND = "Cnd", _("Cnd")
-        IMP = "MoodImp", _("MoodImp")
+        IMP = "Imp", _("Imp")
         IND = "Ind", _("Ind")
 
     class Number(models.TextChoices):
@@ -674,7 +674,9 @@ class Token(models.Model):
 
     token = models.CharField(max_length=200, db_index=True)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
-    sentence = models.ForeignKey(Sentence, related_name="tokens", on_delete=models.CASCADE)
+    sentence = models.ForeignKey(
+        Sentence, related_name="tokens", on_delete=models.CASCADE
+    )
     start = models.IntegerField(null=True, blank=True)
     end = models.IntegerField(null=True, blank=True)
     number = models.IntegerField(null=True, blank=True)
@@ -686,7 +688,7 @@ class Token(models.Model):
         max_length=4, choices=Animacy.choices, null=True, blank=True, db_index=True
     )
     aspect = models.CharField(
-        max_length=9, choices=Aspect.choices, null=True, blank=True, db_index=True
+        max_length=4, choices=Aspect.choices, null=True, blank=True, db_index=True
     )
     case = models.CharField(
         max_length=3, choices=Case.choices, null=True, blank=True, db_index=True
@@ -695,16 +697,16 @@ class Token(models.Model):
         max_length=3, choices=Degree.choices, null=True, blank=True, db_index=True
     )
     foreign = models.CharField(
-        max_length=10, choices=Foreign.choices, null=True, blank=True, db_index=True
+        max_length=3, choices=Foreign.choices, null=True, blank=True, db_index=True
     )
     gender = models.CharField(
         max_length=4, choices=Gender.choices, null=True, blank=True, db_index=True
     )
     hyph = models.CharField(
-        max_length=7, choices=Hyph.choices, null=True, blank=True, db_index=True
+        max_length=3, choices=Hyph.choices, null=True, blank=True, db_index=True
     )
     mood = models.CharField(
-        max_length=7, choices=Mood.choices, null=True, blank=True, db_index=True
+        max_length=3, choices=Mood.choices, null=True, blank=True, db_index=True
     )
     gram_number = models.CharField(
         max_length=4, choices=Number.choices, null=True, blank=True, db_index=True
