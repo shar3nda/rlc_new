@@ -431,8 +431,9 @@ def search_subcorpus(filters, search_sentences=True):
 
 
 def exact_search_sentences(exact_forms, filters):
-    sentences = search_subcorpus(filters)
-    matching_sentences = []
+    sentences, subcorpus_stats = search_subcorpus(filters)
+    matching_sentence_pks = []
+    matching_words = set()
     for sentence in sentences:
         for i in range(len(sentence.words)):
             if sentence.words[i].token == exact_forms[0]:
@@ -444,8 +445,13 @@ def exact_search_sentences(exact_forms, filters):
                         flag = False
                         break
                 if flag:
-                    matching_sentences.append(sentence)
-    return matching_sentences
+                    matching_sentence_pks.append(sentence.pk)
+    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
+    for sentence in matching_sentences:
+        for i in range(len(sentence.lemmas)):
+            if sentence.lemmas[i] in exact_forms:
+                matching_words.add(sentence.words[i])
+    return matching_sentences, matching_words, subcorpus_stats
 
 
 def check_lex(word, lexes):
@@ -540,54 +546,6 @@ def search_sentences(tokens_list, filters):
         for i in range(len(sentence.lemmas)):
             if sentence.lemmas[i] in tokens_list.wordform:
                 matching_words.add(sentence.words[i])
-    return matching_sentences, matching_words, subcorpus_stats
-
-
-def search_annotations(tokens_list, filters):
-    annotations, subcorpus_stats = search_subcorpus(filters, False)
-
-    tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
-
-    annotations = annotations.filter(tokens__contains=tokens_list.wordform)
-
-    """
-    Нужно дописать gramms и убрать все неуникальные ключи
-    """
-    gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
-              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
-
-    for gramm in tokens_list.grammar:
-        gramms[gramm] = 1
-
-    matching_sentence_pks = []
-    matching_words = set()
-    for annotation in annotations:
-        tokens = annotation.tokens
-        for i in range(len(tokens)):
-            if tokens[i].lemma == tokens_list.wordform[0] and check_lex(tokens[i], tokens_list.lex) and check_gram(
-                    tokens[i], gramms):
-                flag = True
-                for j in range(1, len(tokens_list.wordform)):
-                    if flag:
-                        flag = any(
-                            tokens[i + k].lemma == tokens_list.wordform[j] and check_lex(tokens[i + k],
-                                                                                         tokens_list.lex) and check_gram(
-                                tokens[i], gramms)
-                            for k in range(
-                                int(tokens_list.begin[j - 1]),
-                                int(tokens_list.end[j - 1]) + 1,
-                            )
-                        )
-                    else:
-                        break
-                if flag:
-                    matching_sentence_pks.append(annotation.sentence.pk)
-                    # Adding only the matching sequence words to the matching_words list
-    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
-    for sentence in matching_sentences:
-        for i in range(len(sentence.lemmas)):
-            if sentence.lemmas[i] in tokens_list.wordform:
-                matching_words.add(sentence.words[i].token)
     return matching_sentences, matching_words, subcorpus_stats
 
 
