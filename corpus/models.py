@@ -378,6 +378,8 @@ class Document(models.Model):
                             token=token.text if token.text else "",
                             lemma=token.lemma,
                             pos=token.pos,
+                            start=getattr(token, "start", 1),
+                            end=getattr(token, "end", token.start + len(token.text)),
                             animacy=feats.get("Animacy"),
                             aspect=feats.get("Aspect"),
                             case=feats.get("Case"),

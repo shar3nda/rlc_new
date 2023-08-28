@@ -206,8 +206,8 @@ def add_document(request):
         )
         if form.is_valid():
             if (
-                    request.POST["author_selection_method"] == "manual"
-                    and author_form.is_valid()
+                request.POST["author_selection_method"] == "manual"
+                and author_form.is_valid()
             ):
                 author = author_form.save()
                 document = form.save(commit=False)
@@ -215,8 +215,8 @@ def add_document(request):
                 document.author = author
                 document.save()
             elif (
-                    request.POST["author_selection_method"] == "dropdown"
-                    and favorite_author_form.is_valid()
+                request.POST["author_selection_method"] == "dropdown"
+                and favorite_author_form.is_valid()
             ):
                 document = form.save(commit=False)
                 document.user = request.user
@@ -262,8 +262,8 @@ def edit_document(request, document_id):
         if form.is_valid():
             form.save(commit=False)
             if (
-                    favorite_author_form.is_valid()
-                    and favorite_author_form.cleaned_data["selected_author"] is not None
+                favorite_author_form.is_valid()
+                and favorite_author_form.cleaned_data["selected_author"] is not None
             ):
                 document.author = favorite_author_form.cleaned_data["selected_author"]
             document.save()
@@ -514,8 +514,23 @@ def search_sentences(tokens_list, filters):
     """
     Нужно дописать gramms и убрать все неуникальные ключи
     """
-    gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
-              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
+    gramms = {
+        "ANIM": 0,
+        "INAN": 0,
+        "IMP": 0,
+        "PERF": 0,
+        "ACC": 0,
+        "DAT": 0,
+        "GEN": 0,
+        "INS": 0,
+        "LOC": 0,
+        "NOM": 0,
+        "PAR": 0,
+        "VOC": 0,
+        "CMP": 0,
+        "POS": 0,
+        "SUP": 0,
+    }
     """for gramm in tokens_list.grammar:
         gramms[gramm] = 1"""
     matching_sentence_pks = []
@@ -523,16 +538,18 @@ def search_sentences(tokens_list, filters):
     for sentence in sentences:
         tokens = list(sentence.tokens.all())
         for i in range(len(tokens)):
-            if tokens[i].lemma == tokens_list.wordform[0] and check_lex(tokens[i], tokens_list.lex[0]) and check_gram(
-                    tokens[i], 0):
+            if (
+                tokens[i].lemma == tokens_list.wordform[0]
+                and check_lex(tokens[i], tokens_list.lex[0])
+                and check_gram(tokens[i], 0)
+            ):
                 flag = True
                 for j in range(1, len(tokens_list.wordform)):
                     if flag:
                         flag = any(
-                            tokens[i + k].lemma == tokens_list.wordform[j] and check_lex(tokens[i + k],
-                                                                                         tokens_list.lex[
-                                                                                             j]) and check_gram(
-                                tokens[i], 0)
+                            tokens[i + k].lemma == tokens_list.wordform[j]
+                            and check_lex(tokens[i + k], tokens_list.lex[j])
+                            and check_gram(tokens[i], 0)
                             for k in range(
                                 int(tokens_list.begin[j - 1]),
                                 int(tokens_list.end[j - 1]) + 1,
@@ -600,12 +617,7 @@ def search_results(request):
     for j in range(len(errors)):
         errors[j] = errors[j].strip("()").split("|")
     tokens_list = Token_list(
-        request.GET.get("wordform[]").split(","),
-        begin,
-        end,
-        lex,
-        grammar,
-        errors
+        request.GET.get("wordform[]").split(","), begin, end, lex, grammar, errors
     )
     filters = Filter(
         request.GET.get("date1"),
