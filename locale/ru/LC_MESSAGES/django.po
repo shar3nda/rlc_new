@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-28 14:48+0300\n"
+"POT-Creation-Date: 2023-08-28 15:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -818,52 +818,36 @@ msgid "Total Documents"
 msgstr "Всего документов"
 
 #: .\corpus\views.py:667
-#, fuzzy
-#| msgid "Total sentences"
 msgid "Total Sentences"
 msgstr "Всего предложений"
 
 #: .\corpus\views.py:668
-#, fuzzy
-#| msgid "Total Documents"
 msgid "Total Tokens"
-msgstr "Всего документов"
+msgstr "Всего токенов"
 
 #: .\corpus\views.py:669
-#, fuzzy
-#| msgid "Total Documents"
 msgid "Subcorpus Documents"
-msgstr "Всего документов"
+msgstr "Документов в подкорпусе"
 
 #: .\corpus\views.py:670
-#, fuzzy
-#| msgid "Subcorpus"
 msgid "Subcorpus Sentences"
-msgstr "Подкорпус"
+msgstr "Предложений в подкорпусе"
 
 #: .\corpus\views.py:671
-#, fuzzy
-#| msgid "Subcorpus"
 msgid "Subcorpus Tokens"
-msgstr "Подкорпус"
+msgstr "Токенов в подкорпусе"
 
 #: .\corpus\views.py:672
-#, fuzzy
-#| msgid "Export Found Documents"
 msgid "Found Documents"
-msgstr "Экспортировать"
+msgstr "Документов найдено"
 
 #: .\corpus\views.py:673
-#, fuzzy
-#| msgid " \"Sentences\" "
 msgid "Found Sentences"
-msgstr " \"Предложения\" "
+msgstr "Предложений найдено"
 
 #: .\corpus\views.py:674
-#, fuzzy
-#| msgid "Tokens"
 msgid "Found Tokens"
-msgstr "Токены"
+msgstr "Токенов найдено"
 
 #: .\templates\base.html:48 .\templates\sidebar_base.html:48
 msgid "Main"
@@ -902,9 +886,9 @@ msgstr "Все документы"
 msgid "Admin panel"
 msgstr "Администрирование"
 
-#: .\templates\base.html:109 .\templates\sidebar_base.html:109
-msgid "Profile"
-msgstr "Профиль"
+#: .\templates\base.html:109
+msgid "Change password"
+msgstr "Изменить пароль"
 
 #: .\templates\base.html:110 .\templates\sidebar_base.html:110
 msgid "Log out"
@@ -1012,10 +996,8 @@ msgid "Back to Top"
 msgstr "Вернуться наверх"
 
 #: .\templates\lexgram\lexgram_search.html:18
-#, fuzzy
-#| msgid "Author search"
 msgid "Exact search"
-msgstr "Поиск автора"
+msgstr "Поиск точных форм"
 
 #: .\templates\lexgram\lexgram_search.html:27
 msgid "Lexico-grammatical search"
@@ -1034,10 +1016,8 @@ msgid "Search results"
 msgstr "Результаты поиска"
 
 #: .\templates\lexgram\lexgram_search_results.html:8
-#, fuzzy
-#| msgid "Subcorpus"
 msgid "Subcorpus stats:"
-msgstr "Подкорпус"
+msgstr "Статистика по подкорпусу:"
 
 #: .\templates\news.html:9
 msgid "Add news"
@@ -1064,10 +1044,8 @@ msgid "Delete"
 msgstr "Удалить"
 
 #: .\templates\partials\document\document_card.html:26
-#, fuzzy
-#| msgid "Addead"
 msgid "Added"
-msgstr "Добавление"
+msgstr "Добавлено"
 
 #: .\templates\partials\document\document_card.html:87
 msgid "Annotate"
@@ -1307,6 +1285,10 @@ msgstr "Имя пользователя"
 msgid "Password"
 msgstr "Пароль"
 
+#: .\templates\sidebar_base.html:109
+msgid "Profile"
+msgstr "Профиль"
+
 #: .\templates\statistics.html:72
 msgid "Dominant Language Statistics"
 msgstr "Статистика по родным языкам"
@@ -1482,17 +1464,13 @@ msgid "%(prog)s, version %(version)s"
 msgstr ""
 
 #: .\venv\Lib\site-packages\click\decorators.py:537
-#, fuzzy
-#| msgid "Show this message and exit."
 msgid "Show the version and exit."
-msgstr "Показать это сообщение и выйти"
+msgstr ""
 
 #: .\venv\Lib\site-packages\click\exceptions.py:44
 #: .\venv\Lib\site-packages\click\exceptions.py:80
-#, fuzzy, python-brace-format
-#| msgid "Error tags"
 msgid "Error: {message}"
-msgstr "Тэги ошибок"
+msgstr ""
 
 #: .\venv\Lib\site-packages\click\exceptions.py:72
 #, python-brace-format
@@ -1697,10 +1675,8 @@ msgid "Site Maps"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
-#, fuzzy
-#| msgid "Statics"
 msgid "Static Files"
-msgstr "Статистика"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
 msgid "Syndication"
@@ -1822,10 +1798,8 @@ msgstr[3] ""
 #: .\venv\Lib\site-packages\django\core\validators.py:461
 #: .\venv\Lib\site-packages\django\forms\fields.py:347
 #: .\venv\Lib\site-packages\django\forms\fields.py:386
-#, fuzzy
-#| msgid "entry number"
 msgid "Enter a number."
-msgstr "Номер записи"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\core\validators.py:463
 #, python-format
@@ -1983,10 +1957,8 @@ msgid "“%(value)s” value must be a decimal number."
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1628
-#, fuzzy
-#| msgid "December"
 msgid "Decimal number"
-msgstr "Декабрь"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1789
 #, python-format
@@ -1996,20 +1968,16 @@ msgid ""
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1793
-#, fuzzy
-#| msgid "Description"
 msgid "Duration"
-msgstr "Описание"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1845
 msgid "Email address"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1870
-#, fuzzy
-#| msgid "path"
 msgid "File path"
-msgstr "путь"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1948
 #, python-format
@@ -2056,16 +2024,12 @@ msgid "Boolean (Either True, False or None)"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2291
-#, fuzzy
-#| msgid "Position in text"
 msgid "Positive big integer"
-msgstr "Номер в тексте"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2306
-#, fuzzy
-#| msgid "Position in text"
 msgid "Positive integer"
-msgstr "Номер в тексте"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2321
 msgid "Positive small integer"
@@ -2161,16 +2125,12 @@ msgid ":?.!"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:91
-#, fuzzy
-#| msgid "This field cannot be null."
 msgid "This field is required."
-msgstr "Поле не может быть null"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:298
-#, fuzzy
-#| msgid "entry number"
 msgid "Enter a whole number."
-msgstr "Номер записи"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\fields.py:467
 #: .\venv\Lib\site-packages\django\forms\fields.py:1241
@@ -2355,11 +2315,8 @@ msgid "Yes"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\forms\widgets.py:796
-#, fuzzy
-#| msgctxt "abbrev. month"
-#| msgid "Nov."
 msgid "No"
-msgstr "Ноя."
+msgstr ""
 
 #. Translators: Please do not add spaces around commas.
 #: .\venv\Lib\site-packages\django\template\defaultfilters.py:861
@@ -2915,10 +2872,8 @@ msgid ""
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:229
-#, fuzzy
-#| msgid "Document static"
 msgid "Django Documentation"
-msgstr "Статистика по документам"
+msgstr ""
 
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:230
 msgid "Topics, references, &amp; how-to’s"
@@ -2939,43 +2894,3 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
-
-#~ msgid "Add article"
-#~ msgstr "Создать статью"
-
-#~ msgid "analysis"
-#~ msgstr "Анализ"
-
-#~ msgid "analyses"
-#~ msgstr "Анализы"
-
-#~ msgid "Create account"
-#~ msgstr "Создать аккаунт"
-
-#~ msgid "Morphological analysis"
-#~ msgstr "Морфологический разбор"
-
-#~ msgid "Programm"
-#~ msgstr "Программа"
-
-#~ msgid "'Texts'"
-#~ msgstr "Тексты"
-
-#~| msgid "Sentence"
-#~ msgid "'Sentences'"
-#~ msgstr "'Предложения'"
-
-#~ msgid "Languages"
-#~ msgstr "Языки"
-
-#~ msgid " \"Russian language:\" "
-#~ msgstr " \"Русский язык:\" "
-
-#~ msgid "Текст"
-#~ msgstr "Текст"
-
-#~ msgid "Russian"
-#~ msgstr "Русский"
-
-#~ msgid "Hello"
-#~ msgstr "Привет"
