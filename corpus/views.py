@@ -430,6 +430,44 @@ def search_subcorpus(filters, search_sentences=True):
         return annotations, subcorpus_stats
 
 
+def exact_search_results(request):
+    exact_forms = request.GET.get("exact_forms[]")
+    if exact_forms is not None:
+        exact_forms = exact_forms.split(",")
+
+    filters = Filter(
+        request.GET.get("date1"),
+        request.GET.get("date2"),
+        request.GET.get("gender"),
+        request.GET.get("mode"),
+        request.GET.get("background"),
+        request.GET.get("language[]", ""),
+        request.GET.get("level[]", "")
+    )
+
+    sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
+    stats = get_search_stats(sentences, subcorpus_stats)
+    stat_names = {
+        "total_documents": _("Total Documents"),
+        "total_sentences": _("Total Sentences"),
+        "total_tokens": _("Total Tokens"),
+        "subcorpus_documents": _("Subcorpus Documents"),
+        "subcorpus_sentences": _("Subcorpus Sentences"),
+        "subcorpus_tokens": _("Subcorpus Tokens"),
+        "found_documents": _("Found Documents"),
+        "found_sentences": _("Found Sentences"),
+        "found_tokens": _("Found Tokens"),
+    }
+
+    stats = {stat_names[key]: value for key, value in stats.items()}
+
+    return render(
+        request,
+        "lexgram/lexgram_search_results.html",
+        {"sentences": sentences, "stats": stats, "tokens_list": words},
+    )
+
+
 def exact_search_sentences(exact_forms, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
     matching_sentence_pks = []
