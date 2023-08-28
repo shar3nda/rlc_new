@@ -1,4 +1,4 @@
-#!/C/Users/Матвей/AppData/Local/Programs/Python/Python310/python.exe
+#!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
