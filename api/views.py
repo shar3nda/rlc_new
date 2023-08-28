@@ -153,7 +153,7 @@ def get_alt_sentence_annotations(request, sentence_id: int):
     return data
 
 
-@api.post("/annotations/create/", response={201: Dict, 403: None}, auth=django_auth)
+@api.post("/annotations/create/", response={200: Dict, 403: None}, auth=django_auth)
 def create_annotation(request, annotation_data: AnnotationSchema):
     perm = request.auth.has_perm("corpus.add_annotation")
 
@@ -231,20 +231,24 @@ def get_sentence_errors(request, sentence_id: int):
     return {"errors": errors}
 
 
-@api.get("/get_sentence_context", response= SentenceContextOut)
+@api.get("/get_sentence_context", response=SentenceContextOut)
 def get_sentence_context(request, sentence_id: int):
     sentence = Sentence.objects.get(pk=sentence_id)
 
-    prev_sentence = Sentence.objects.filter(document=sentence.document, number=sentence.number - 1).first()
-    next_sentence = Sentence.objects.filter(document=sentence.document, number=sentence.number + 1).first()
+    prev_sentence = Sentence.objects.filter(
+        document=sentence.document, number=sentence.number - 1
+    ).first()
+    next_sentence = Sentence.objects.filter(
+        document=sentence.document, number=sentence.number + 1
+    ).first()
 
     context = {
-        'current': sentence.text,
-        'document_title': sentence.document.title,
+        "current": sentence.text,
+        "document_title": sentence.document.title,
     }
     if prev_sentence:
-        context['previous'] = prev_sentence.text
+        context["previous"] = prev_sentence.text
     if next_sentence:
-        context['next'] = next_sentence.text
+        context["next"] = next_sentence.text
 
     return context

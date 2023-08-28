@@ -32,6 +32,8 @@ urlpatterns = [
     path("export_documents/", views.export_documents, name="export_documents"),
     path("search/", views.search, name="search"),
     path("search_results/", views.search_results, name="search_results"),
-    path("exact_search_results/", views.exact_search_results, name="exact_search_results"),
+    path(
+        "exact_search_results/", views.exact_search_results, name="exact_search_results"
+    ),
     path("get_search", views.get_search, name="get_search"),
 ]
