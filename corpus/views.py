@@ -1,5 +1,4 @@
 import uuid
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -7,7 +6,6 @@ from django.db.models import Count, Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext_lazy as _
-
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
@@ -17,14 +15,10 @@ def export_documents(request):
     document_list = Document.objects.select_related("user", "author").prefetch_related(
         "annotators", "sentence_set__annotation_set__user"
     )
-
     filter = DocumentFilter(request.GET, queryset=document_list)
-
     data = [document.serialize() for document in filter.qs]
-
     response = JsonResponse(data, safe=False)
     response["Content-Disposition"] = 'attachment; filename="documents.json"'
-
     return response
 
 
@@ -59,7 +53,6 @@ def clean_for_js(data):
 def statistics(request):
     # Aggregate the data
     status_counts = Document.objects.values("status").annotate(count=Count("status"))
-
     # Prepare the data for the chart
     labels = [status[1] for status in Document.StatusChoices.choices]
     text_types = []
@@ -68,7 +61,6 @@ def statistics(request):
         text_types.append(count)
     texts_count = int(Document.objects.count())
     colors = ["#8c61ff", "#44c2fd", "#6592fd"]
-
     # Статистика по документам
     languages_counts = (
         Document.objects.values("author__dominant_language")
@@ -81,7 +73,6 @@ def statistics(request):
         ): doc["count"]
         for doc in languages_counts
     }
-
     gender_counts = (
         Document.objects.values("author__gender").annotate(count=Count("id")).order_by()
     )
@@ -89,7 +80,6 @@ def statistics(request):
         get_verbose_name(Author, "gender", doc["author__gender"]): doc["count"]
         for doc in gender_counts
     }
-
     lang_background_counts = (
         Document.objects.values("author__language_background")
         .annotate(count=Count("id"))
@@ -101,7 +91,6 @@ def statistics(request):
         ): doc["count"]
         for doc in lang_background_counts
     }
-
     genre_counts = (
         Document.objects.values("genre").annotate(count=Count("id")).order_by()
     )
@@ -109,7 +98,6 @@ def statistics(request):
         get_verbose_name(Document, "genre", doc["genre"]): doc["count"]
         for doc in genre_counts
     }
-
     # статистика по предложениям
     lang_sent_counts = (
         Sentence.objects.values("document__author__dominant_language")
@@ -122,14 +110,12 @@ def statistics(request):
         ): sent["count"]
         for sent in lang_sent_counts
     }
-
     # Статистика по авторам
     auth_gender = Author.objects.values("gender").annotate(count=Count("id")).order_by()
     auth_gender = {
         get_verbose_name(Author, "gender", auth["gender"]): auth["count"]
         for auth in auth_gender
     }
-
     auth_lang_bg_counts = (
         Author.objects.values("language_background")
         .annotate(count=Count("id"))
@@ -141,7 +127,6 @@ def statistics(request):
         ): auth["count"]
         for auth in auth_lang_bg_counts
     }
-
     auth_lang_counts = (
         Author.objects.values("dominant_language")
         .annotate(count=Count("id"))
@@ -153,7 +138,6 @@ def statistics(request):
         ]
         for auth in auth_lang_counts
     }
-
     languages_counts = dict(sorted(languages_counts.items()))
     lang_sent_counts = dict(sorted(lang_sent_counts.items()))
     # Render the chart
@@ -164,14 +148,11 @@ def statistics(request):
             lang_sent_counts.values(),
         )
     )
-
     # статистика по предложениям
     total_sentences = Sentence.objects.count()
-
     # Статистика по авторам
     total_authors = Author.objects.count()
     total_fav_authors = Author.objects.filter(favorite=True).count()
-
     context = {
         "labels": labels,
         "text_types": text_types,
@@ -223,7 +204,6 @@ def add_document(request):
         favorite_author_form = FavoriteAuthorForm(
             request.POST, prefix="favorite_author"
         )
-
         if form.is_valid():
             if (
                     request.POST["author_selection_method"] == "manual"
@@ -248,7 +228,6 @@ def add_document(request):
                     "Invalid author information. Please check the form and try again.",
                 )
                 return redirect("add_document")
-
             messages.success(request, "Document saved successfully.")
             return redirect("annotate", document_id=document.id)
         else:
@@ -261,7 +240,6 @@ def add_document(request):
         form = DocumentForm(initial={"user": request.user.id})
         author_form = NewAuthorForm(prefix="author")
         favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
-
     return render(
         request,
         "document/add_document.html",
@@ -281,7 +259,6 @@ def edit_document(request, document_id):
         favorite_author_form = FavoriteAuthorForm(
             request.POST, prefix="favorite_author"
         )
-
         if form.is_valid():
             form.save(commit=False)
             if (
@@ -305,7 +282,6 @@ def edit_document(request, document_id):
             )
         else:
             favorite_author_form = FavoriteAuthorForm(prefix="favorite_author")
-
     return render(
         request,
         "document/edit_document.html",
@@ -322,7 +298,6 @@ def edit_author(request, author_id, document_id):
     author = get_object_or_404(Author, id=author_id)
     if request.method == "POST":
         form = NewAuthorForm(request.POST, instance=author, prefix="author")
-
         if form.is_valid():
             form.save()
             messages.success(request, "Author saved successfully.")
@@ -335,7 +310,6 @@ def edit_author(request, author_id, document_id):
             return redirect("edit_author", author_id=author_id, document_id=document_id)
     else:
         form = NewAuthorForm(instance=author, prefix="author")
-
     return render(
         request,
         "document/edit_author.html",
@@ -383,7 +357,6 @@ always_true = ~Q(pk__in=[])
 def search_subcorpus(filters, search_sentences=True):
     date_from_specified = filters.date_from != 0
     date_to_specified = filters.date_to != 9999
-
     if date_from_specified or date_to_specified:
         # Exclude documents with unspecified dates if at least one date filter is specified
         subcorpus = Document.objects.filter(
@@ -393,7 +366,6 @@ def search_subcorpus(filters, search_sentences=True):
     else:
         # Include all documents if both date filters are not specified
         subcorpus = Document.objects.all()
-
     # Apply other filters
     subcorpus = subcorpus.filter(
         Q(always_true if filters.gender == "any" else Q(author__gender=filters.gender))
@@ -414,13 +386,11 @@ def search_subcorpus(filters, search_sentences=True):
             else Q(language_level__in=filters.language_level)
         )
     )
-
     subcorpus_stats = {
         "documents": subcorpus.count(),
         "sentences": Sentence.objects.filter(document__in=subcorpus).count(),
         "tokens": Token.objects.filter(document__in=subcorpus).count(),
     }
-
     # get all sentences in subcorpus
     if search_sentences:
         sentences = Sentence.objects.filter(document__in=subcorpus)
@@ -441,8 +411,8 @@ def exact_search_results(request):
         request.GET.get("gender"),
         request.GET.get("mode"),
         request.GET.get("background"),
-        request.GET.get("language[]", "").split(","),
-        request.GET.get("level[]", "").split(","),
+        request.GET.get("language[]", ""),
+        request.GET.get("level[]", ""),
     )
 
     sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
@@ -458,9 +428,7 @@ def exact_search_results(request):
         "found_sentences": _("Found Sentences"),
         "found_tokens": _("Found Tokens"),
     }
-
     stats = {stat_names[key]: value for key, value in stats.items()}
-
     return render(
         request,
         "lexgram/lexgram_search_results.html",
@@ -541,20 +509,15 @@ def check_errors(annotation, errors):
 
 def search_sentences(tokens_list, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
-
     tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
-
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
-
     """
     Нужно дописать gramms и убрать все неуникальные ключи
     """
     gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
               "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
-
     """for gramm in tokens_list.grammar:
         gramms[gramm] = 1"""
-
     matching_sentence_pks = []
     matching_words = set()
     for sentence in sentences:
@@ -599,17 +562,14 @@ def get_search_stats(sentences, subcorpus_stats):
     :param subcorpus_stats: stats for the subcorpus
     :return: dict with stats
     """
-
     total_documents = Document.objects.count()
     total_sentences = Sentence.objects.count()
     total_tokens = Token.objects.count()
-
     found_documents = Document.objects.filter(
         id__in=sentences.values_list("document_id", flat=True).distinct()
     ).count()
     found_sentences = sentences.count()
     found_tokens = Token.objects.filter(sentence__in=sentences).count()
-
     return {
         "total_documents": total_documents,
         "total_sentences": total_sentences,
@@ -656,7 +616,6 @@ def search_results(request):
         request.GET.get("language[]", "").split(","),
         request.GET.get("level[]", "").split(","),
     )
-
     sentences, words, subcorpus_stats = search_sentences(tokens_list, filters)
     stats = get_search_stats(sentences, subcorpus_stats)
     stat_names = {
@@ -670,10 +629,8 @@ def search_results(request):
         "found_sentences": _("Found Sentences"),
         "found_tokens": _("Found Tokens"),
     }
-
     # replace keys in the stats variable with translated values
     stats = {stat_names[key]: value for key, value in stats.items()}
-
     return render(
         request,
         "lexgram/lexgram_search_results.html",
