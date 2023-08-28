@@ -431,9 +431,9 @@ def search_subcorpus(filters, search_sentences=True):
 
 
 def exact_search_results(request):
-    exact_forms = request.GET.get("exact_forms[]")
+    exact_forms = request.GET.get("exact_forms")
     if exact_forms is not None:
-        exact_forms = exact_forms.split(",")
+        exact_forms = exact_forms.split()
 
     filters = Filter(
         request.GET.get("date1"),
@@ -441,8 +441,8 @@ def exact_search_results(request):
         request.GET.get("gender"),
         request.GET.get("mode"),
         request.GET.get("background"),
-        request.GET.get("language[]", ""),
-        request.GET.get("level[]", "")
+        request.GET.get("language[]", "").split(","),
+        request.GET.get("level[]", "").split(","),
     )
 
     sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
