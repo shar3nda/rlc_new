@@ -361,7 +361,12 @@ class Document(models.Model):
 
                 sentences_bulk.append(
                     Sentence(
-                        document=self, text=text, markup=markup, number=sentence_num
+                        document=self,
+                        text=text,
+                        markup=markup,
+                        number=sentence_num,
+                        start=sentence.start,
+                        end=sentence.stop,
                     )
                 )
 
@@ -441,6 +446,8 @@ class Sentence(models.Model):
     number = models.IntegerField(verbose_name=_("Position in text"))
     words = ArrayField(models.CharField(max_length=200), default=list)
     lemmas = ArrayField(models.CharField(max_length=200), default=list)
+    start = models.IntegerField(null=True, blank=True)
+    end = models.IntegerField(null=True, blank=True)
 
     def get_correction(self, alt=False):
         """
@@ -572,7 +579,9 @@ class Annotation(models.Model):
         self.start, self.end, self.orig_text = get_selectors(self.json)
         self.error_tags = get_error_tags(self.json)
         toks = Token.objects.filter(
-            sentence=self.sentence, start__gte=self.start, end__lte=self.end
+            sentence=self.sentence,
+            start__gte=self.start + self.sentence.start,
+            end__lte=self.end + self.sentence.start,
         )
         super().save(*args, **kwargs)
         self.tokens.set(toks)
