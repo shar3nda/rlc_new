@@ -523,7 +523,8 @@ def search_sentences(tokens_list, filters):
                     if flag:
                         flag = any(
                             tokens[i + k].lemma == tokens_list.wordform[j] and check_lex(tokens[i + k],
-                                                                                         tokens_list.lex[j]) and check_gram(
+                                                                                         tokens_list.lex[
+                                                                                             j]) and check_gram(
                                 tokens[i], 0)
                             for k in range(
                                 int(tokens_list.begin[j - 1]),

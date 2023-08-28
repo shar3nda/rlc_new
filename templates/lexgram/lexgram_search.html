@@ -15,9 +15,10 @@
      <div class="row mb-3">
        <div class="col-md-8">
           <form class="d-flex">
-            <input class="form-control me-2 flex-grow-1" type="search" placeholder="{% trans 'Exact search' %}" aria-label="{% trans 'Search' %}">
-            <button class="btn btn-outline-success me-2 flex-shrink-0" type="submit">{% trans 'Search' %}</button>
-
+            <form id="exact-search-form" class="d-flex" method="get" action="{% url 'search_results' %}">
+              <input class="form-control me-2 flex-grow-1" type="search" placeholder="{% trans 'Exact search' %}" aria-label="{% trans 'Search' %}">
+              <button class="btn btn-outline-success me-2 flex-shrink-0" type="submit">{% trans 'Search' %}</button>
+            </form>
           </form>
         </div>
     </div>
