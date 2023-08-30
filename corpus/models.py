@@ -1,4 +1,6 @@
+import inspect
 import re
+from enum import Enum
 
 from django.apps import apps
 from django.contrib.auth.models import User
@@ -491,9 +493,9 @@ class Sentence(models.Model):
 
         for correction in corrections:
             corrected_text = (
-                corrected_text[: correction["start"]]
-                + correction["replacement"]
-                + corrected_text[correction["end"] :]
+                    corrected_text[: correction["start"]]
+                    + correction["replacement"]
+                    + corrected_text[correction["end"]:]
             )
 
         return corrected_text
@@ -755,6 +757,8 @@ class Token(models.Model):
 
 
 class Token_list:
+    enums = [[name, val] for name, val in inspect.getmembers(Token) if inspect.isclass(val) and issubclass(val, Enum)]
+
     def __init__(self, wordform, begin, end, lex, grammar, errors):
         self.wordform = wordform
         self.begin = begin
@@ -766,14 +770,14 @@ class Token_list:
 
 class Filter:
     def __init__(
-        self,
-        date_from,
-        date_to,
-        gender,
-        oral,
-        language_background,
-        dominant_languages,
-        language_level,
+            self,
+            date_from,
+            date_to,
+            gender,
+            oral,
+            language_background,
+            dominant_languages,
+            language_level,
     ):
         if not date_from:
             date_from = 0

@@ -1,3 +1,4 @@
+import inspect
 import uuid
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -9,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
+from enum import Enum
 
 
 def export_documents(request):
@@ -469,30 +471,23 @@ def check_lex(word, lexes):
     return False
 
 
-def check_gram(word, grammar):
-    """
-    Нужно дописать gramms и убрать все не уникальные ключи
-    """
-    """gramms = {"ANIM": 0, "INAN": 0, "IMP": 0, "PERF": 0, "ACC": 0, "DAT": 0, "GEN": 0, "INS": 0, "LOC": 0, "NOM": 0,
-              "PAR": 0, "VOC": 0, "CMP": 0, "POS": 0, "SUP": 0}
-    gramms[word.animacy] = 1
-    gramms[word.aspect] = 1
-    gramms[word.case] = 1
-    gramms[word.degree] = 1
-    gramms[word.foreign] = 1
-    gramms[word.gender] = 1
-    gramms[word.hyph] = 1
-    gramms[word.mood] = 1
-    gramms[word.gram_number] = 1
-    gramms[word.person] = 1
-    gramms[word.polarity] = 1
-    gramms[word.tense] = 1
-    gramms[word.variant] = 1
-    gramms[word.verb_form] = 1
-    gramms[word.voice] = 1
-    for gramm in grammar:
-        if gramms[gramm] == 0:
-            return False"""
+def check_gram(word, right_word):
+    enums = Token_list.enums
+    for enum in enums:
+        name, val = enum
+        if name == 'VerbForm':
+            name = 'verb_form'
+        gramms = getattr(right_word, name.lower())
+        flag = False
+        if gramms is not None:
+            for gram in gramms:
+                if gram == getattr(word, name.lower()):
+                    flag = True
+                    break
+        else:
+            flag = True
+        if not flag:
+            return False
     return True
 
 
@@ -514,42 +509,56 @@ def check_errors(word, errors):
             return True
     return False
 
+def create_right_word(grammar):
+    word = Token()
+    for gram in grammar:
+        if gram == "AspectImp":
+            if word.aspect is None:
+                word.aspect = []
+            word.aspect.append(Token.Aspect("Imp"))
+        else:
+            if gram == "ForeignYes":
+                if word.foreign is None:
+                    word.foreign = []
+                word.foreign.append(Token.Foreign("Yes"))
+            else:
+                if gram == "HyphYes":
+                    if word.hyph is None:
+                        word.hyph = []
+                    word.hyph.append(Token.Hyph("Yes"))
+                else:
+                    if gram == "MoodImp":
+                        if word.mood is None:
+                            word.mood = []
+                        word.mood.append(Token.Mood("Imp"))
+                    else:
+                        enums = Token_list.enums
+                        for enum in enums:
+                            name, val = enum
+                            if gram in [item.value for item in val]:
+                                if getattr(word, name.lower()) is None:
+                                    setattr(word, name.lower(), [val(gram)])
+                                else:
+                                    nothing = getattr(word, name.lower())
+                                    nothing.append(val(gram))
+                                    setattr(word, name.lower(), nothing)
+    return word
+
 
 def search_sentences(tokens_list, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
     tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
     sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
-    """
-    Нужно дописать gramms и убрать все неуникальные ключи
-    """
-    gramms = {
-        "ANIM": 0,
-        "INAN": 0,
-        "IMP": 0,
-        "PERF": 0,
-        "ACC": 0,
-        "DAT": 0,
-        "GEN": 0,
-        "INS": 0,
-        "LOC": 0,
-        "NOM": 0,
-        "PAR": 0,
-        "VOC": 0,
-        "CMP": 0,
-        "POS": 0,
-        "SUP": 0,
-    }
-    """for gramm in tokens_list.grammar:
-        gramms[gramm] = 1"""
     matching_sentence_pks = []
     matching_words = set()
+    right_words = [create_right_word(grammar) for grammar in tokens_list.grammar]
     for sentence in sentences:
         tokens = list(sentence.tokens.all())
         for i in range(len(tokens)):
             if (
                 tokens[i].lemma == tokens_list.wordform[0]
                 and check_lex(tokens[i], tokens_list.lex[0])
-                and check_gram(tokens[i], 0)
+                and check_gram(tokens[i], right_words[0])
                 and check_errors(tokens[i], tokens_list.errors[0])
             ):
                 flag = True
@@ -558,8 +567,8 @@ def search_sentences(tokens_list, filters):
                         flag = any(
                             tokens[i + k].lemma == tokens_list.wordform[j]
                             and check_lex(tokens[i + k], tokens_list.lex[j])
-                            and check_gram(tokens[i], 0)
-                            and check_errors(tokens[i], tokens_list.errors[0])
+                            and check_gram(tokens[i], right_words[j])
+                            and check_errors(tokens[i], tokens_list.errors[j])
                             for k in range(
                                 int(tokens_list.begin[j - 1]),
                                 int(tokens_list.end[j - 1]) + 1,
