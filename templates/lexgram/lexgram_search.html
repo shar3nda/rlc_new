@@ -46,9 +46,9 @@
             }
           </script>
           <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
-            {% include 'partials/lexgram/lexgram_subcorpus_form.html' %}
+            {% include 'partials/lexgram/lexgram_subcorpus_settings.html' %}
             <div class="row mb-3" data-block-id="{{ block_id }}">
-              {% include 'partials/lexgram/lexgram_form_content_based.html' %}
+              {% include 'partials/lexgram/lexgram_form_content_fixed.html' %}
             </div>
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"

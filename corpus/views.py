@@ -672,6 +672,6 @@ def search_results(request):
 def get_search(request):
     return render(
         request,
-        "partials/lexgram/lexgram_form_contents.html",
+        "partials/lexgram/lexgram_form_content_dynamic.html",
         {"block_id": uuid.uuid4()},
     )
