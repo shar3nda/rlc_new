@@ -374,6 +374,7 @@ class Document(models.Model):
 
                 words = []
                 lemmas = []
+                is_punct = []
                 for token_num, token in enumerate(sentence.tokens):
                     feats = token.feats or {}
                     tokens_bulk.append(
@@ -406,6 +407,7 @@ class Document(models.Model):
                     )
                     lemmas.append(token.lemma)
                     words.append(token.text if token.text else "")
+                    is_punct.append(token.pos == "PUNCT")
 
                 sentences_bulk[-1].lemmas = lemmas
                 sentences_bulk[-1].words = words
@@ -448,6 +450,7 @@ class Sentence(models.Model):
     number = models.IntegerField(verbose_name=_("Position in text"))
     words = ArrayField(models.CharField(max_length=200), default=list)
     lemmas = ArrayField(models.CharField(max_length=200), default=list)
+    is_punct = ArrayField(models.BooleanField(), default=list)
     start = models.IntegerField(null=True, blank=True)
     end = models.IntegerField(null=True, blank=True)
 
@@ -493,9 +496,9 @@ class Sentence(models.Model):
 
         for correction in corrections:
             corrected_text = (
-                    corrected_text[: correction["start"]]
-                    + correction["replacement"]
-                    + corrected_text[correction["end"]:]
+                corrected_text[: correction["start"]]
+                + correction["replacement"]
+                + corrected_text[correction["end"] :]
             )
 
         return corrected_text
@@ -695,7 +698,6 @@ class Token(models.Model):
     )
     start = models.IntegerField(null=True, blank=True)
     end = models.IntegerField(null=True, blank=True)
-    number = models.IntegerField(null=True, blank=True)
     pos = models.CharField(
         max_length=10, choices=POS.choices, null=True, blank=True, db_index=True
     )
@@ -757,7 +759,11 @@ class Token(models.Model):
 
 
 class Token_list:
-    enums = [[name, val] for name, val in inspect.getmembers(Token) if inspect.isclass(val) and issubclass(val, Enum)]
+    enums = [
+        [name, val]
+        for name, val in inspect.getmembers(Token)
+        if inspect.isclass(val) and issubclass(val, Enum)
+    ]
 
     def __init__(self, wordform, begin, end, lex, grammar, errors):
         self.wordform = wordform
@@ -770,14 +776,14 @@ class Token_list:
 
 class Filter:
     def __init__(
-            self,
-            date_from,
-            date_to,
-            gender,
-            oral,
-            language_background,
-            dominant_languages,
-            language_level,
+        self,
+        date_from,
+        date_to,
+        gender,
+        oral,
+        language_background,
+        dominant_languages,
+        language_level,
     ):
         if not date_from:
             date_from = 0

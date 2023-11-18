@@ -9,25 +9,25 @@
   <script src="{% static 'js/lex.js' %}"></script>
   <script src="{% static 'js/gram.js' %}"></script>
   <script src="{% static 'js/err.js' %}"></script>
-  <script src="{% static 'js/jquery_JSON.js' %}"></script>
+  <script src="{% static 'js/lexgram_search_url.js' %}"></script>
 
   <div class="container mt-5">
-     <div class="row mb-3">
-       <div class="col-md-8">
-           <form id="exact-search-form" class="d-flex" method="get" action="{% url 'exact_search_results' %}">
-              <input class="form-control me-2 flex-grow-1" type="search" name="exact_forms" placeholder="{% trans 'Exact search' %}" aria-label="{% trans 'Search' %}">
-              <button class="btn btn-outline-success me-2 flex-shrink-0" type="submit">{% trans 'Search' %}</button>
-            </form>
-        </div>
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <form id="exact-search-form" class="d-flex" method="get" action="{% url 'exact_search_results' %}">
+          <input class="form-control me-2 flex-grow-1" type="search" name="exact_forms" placeholder="{% trans 'Exact search' %}" aria-label="{% trans 'Search' %}">
+          <button class="btn btn-outline-success me-2 flex-shrink-0" type="submit">{% trans 'Search' %}</button>
+        </form>
+      </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
         <h1>{% trans "Lexico-grammatical search" %}</h1>
         <button type="button" class="btn btn-primary flex-shrink-0" data-bs-toggle="modal" data-bs-target="#subcorpus">
-              <i class="fa-solid fa-magnifying-glass"></i>
-              {% trans "Specify Subcorpus" %}
-            </button>
+          <i class="fa-solid fa-magnifying-glass"></i>
+          {% trans "Specify Subcorpus" %}
+        </button>
         {% if form.errors %}
           <div class="alert alert-danger">
             {% for error in form.errors %}{{ error }}{% endfor %}
@@ -45,15 +45,17 @@
               $(`#errModal-${id}`).modal('show');
             }
           </script>
-          <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
+          <form id="subcorpus-form">
             {% include 'partials/lexgram/lexgram_subcorpus_settings.html' %}
+          </form>
+          <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
             <div class="row mb-3" data-block-id="{{ block_id }}">
               {% include 'partials/lexgram/lexgram_form_content_fixed.html' %}
             </div>
             <div id="token-forms"></div>
             <button class="btn btn-success me-2 mt-2" id="add-token-form" hx-get="{% url 'get_search' %}"
                     hx-target="#token-forms" hx-swap="beforeend">
-              <i class="fa-solid fa-plus"></i> {%  trans "Add Wordform" %}
+              <i class="fa-solid fa-plus"></i> {% trans "Add Wordform" %}
             </button>
             <button type="submit" class="btn btn-secondary mt-2">{% trans "Submit" %}</button>
           </form>
@@ -72,45 +74,3 @@
   </div>
 
 {% endblock %}
-
-<script>
-  // Function to save the form state in the local storage
-  function saveFormState() {
-    const forms = document.querySelectorAll('.lexgram-form');
-    const formState = [];
-
-    forms.forEach((form) => {
-      const formData = new FormData(form);
-      const formDataObject = {};
-      for (const [key, value] of formData.entries()) {
-        formDataObject[key] = value;
-      }
-      formState.push(formDataObject);
-    });
-
-    localStorage.setItem('lexgram-form-state', JSON.stringify(formState));
-  }
-
-  function restoreFormState() {
-    const formState = localStorage.getItem('lexgr am-form-state');
-    if (formState) {
-      const formData = JSON.parse(formState);
-      const forms = document.querySelectorAll('.lexgram-form');
-
-      forms.forEach((form, index) => {
-        const formDataObject = formData[index];
-        for (const key in formDataObject) {
-          const input = form.querySelector(`[name="${key}"]`);
-          if (input) {
-            input.value = formDataObject[key];
-          }
-        }
-      });
-    }
-  }
-
-  window.addEventListener('load', restoreFormState);
-
-  document.addEventListener('submit', saveFormState);
-  document.getElementById('add-token-form').addEventListener('click', saveFormState);
-</script>

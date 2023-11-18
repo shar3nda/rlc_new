@@ -1,16 +1,16 @@
-import inspect
 import uuid
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count, Q, Sum
+from django.db.models import Count, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import gettext_lazy as _
+
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
 from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
-from enum import Enum
 
 
 def export_documents(request):
@@ -356,7 +356,7 @@ def search(request):
 always_true = ~Q(pk__in=[])
 
 
-def search_subcorpus(filters, search_sentences=True):
+def search_subcorpus(filters, by_sentences=True):
     date_from_specified = filters.date_from != 0
     date_to_specified = filters.date_to != 9999
     if date_from_specified or date_to_specified:
@@ -394,7 +394,7 @@ def search_subcorpus(filters, search_sentences=True):
         "tokens": Token.objects.filter(document__in=subcorpus).count(),
     }
     # get all sentences in subcorpus
-    if search_sentences:
+    if by_sentences:
         sentences = Sentence.objects.filter(document__in=subcorpus)
         return sentences, subcorpus_stats
     else:
@@ -413,8 +413,8 @@ def exact_search_results(request):
         request.GET.get("gender"),
         request.GET.get("mode"),
         request.GET.get("background"),
-        request.GET.get("language[]", ""),
-        request.GET.get("level[]", ""),
+        request.GET.get("language[]", "").split(","),
+        request.GET.get("level[]", "").split(","),
     )
 
     sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
@@ -440,25 +440,39 @@ def exact_search_results(request):
 
 def exact_search_sentences(exact_forms, filters):
     sentences, subcorpus_stats = search_subcorpus(filters)
+    exact_forms_lower = [form.lower() for form in exact_forms]
     matching_sentence_pks = []
     matching_words = set()
+
     for sentence in sentences:
-        for i in range(len(sentence.words)):
-            if sentence.words[i].token == exact_forms[0]:
-                ii = i
-                flag = True
-                for j in range(1, len(exact_forms)):
-                    ii += 1
-                    if exact_forms[j] != sentence.words[ii].token:
-                        flag = False
+        sentence_words_lower = [word.lower() for word in sentence.words]
+        for i, word_lower in enumerate(sentence_words_lower):
+            if word_lower == exact_forms_lower[0]:
+                all_match = True
+                current_matching_words = {sentence.words[i]}
+                j_offset = 0
+
+                for j, exact_form_lower in enumerate(exact_forms_lower[1:], start=1):
+                    while (
+                        i + j + j_offset < len(sentence_words_lower)
+                        and sentence.is_punct[i + j + j_offset]
+                    ):
+                        j_offset += 1
+
+                    if (
+                        i + j + j_offset < len(sentence_words_lower)
+                        and sentence_words_lower[i + j + j_offset] == exact_form_lower
+                    ):
+                        current_matching_words.add(sentence.words[i + j + j_offset])
+                    else:
+                        all_match = False
                         break
-                if flag:
+
+                if all_match:
                     matching_sentence_pks.append(sentence.pk)
+                    matching_words.update(current_matching_words)
+
     matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
-    for sentence in matching_sentences:
-        for i in range(len(sentence.lemmas)):
-            if sentence.lemmas[i] in exact_forms:
-                matching_words.add(sentence.words[i])
     return matching_sentences, matching_words, subcorpus_stats
 
 
@@ -475,8 +489,8 @@ def check_gram(word, right_word):
     enums = Token_list.enums
     for enum in enums:
         name, val = enum
-        if name == 'VerbForm':
-            name = 'verb_form'
+        if name == "VerbForm":
+            name = "verb_form"
         gramms = getattr(right_word, name.lower())
         flag = False
         if gramms is not None:
@@ -508,6 +522,7 @@ def check_errors(word, errors):
         if result:
             return True
     return False
+
 
 def create_right_word(grammar):
     word = Token()
