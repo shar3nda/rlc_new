@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load templatetags %}
+{% for sentence in sentences %}
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="d-inline-block mb-0">{{ sentence.document.title }}</h5>
+        <small class="text-muted fs-6"> (ID: {{ sentence.document.id }})</small>
+      </div>
+      <div class="btn-group" role="group">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#context-modal" data-sentence-id="{{ sentence.id }}">
+          Показать контекст
+        </button>
+
+        {% if user.is_authenticated %}
+          <a href="/corpus/annotate/{{ sentence.document.id }}/" class="btn btn-outline-secondary btn-sm">Перейти к
+            документу</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ sentence.text|highlight:tokens_list }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+<div class="chunk-stats chunk-documents-ids" data-ids="{{ stats.found_documents_ids }}" hidden></div>
+<div class="chunk-stats chunk-sentences-count" data-count="{{ stats.found_sentences_count }}" hidden></div>
+
+{% if not is_last_chunk %}
+  <div class="d-flex justify-content-center mt-4" id="load-more-container">
+    <button class="btn btn-primary" id="load-more-button" data-chunk-start="{{ chunk_start }}"
+            data-search-type="{{ search_type }}">{% trans "Load More" %}</button>
+  </div>
+{% endif %}

@@ -145,12 +145,12 @@ class TokenSearchForm(forms.ModelForm):
             "gender",
             "hyph",
             "mood",
-            "gram_number",
+            "number",
             "person",
             "polarity",
             "tense",
             "variant",
-            "verb_form",
+            "verbform",
             "voice",
         ]
         widgets = {
@@ -166,16 +166,14 @@ class TokenSearchForm(forms.ModelForm):
             "gender": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "hyph": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "mood": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
-            "gram_number": forms.Select(
-                attrs={"class": "form-select", "maxlength": "200"}
-            ),
+            "number": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "person": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "polarity": forms.Select(
                 attrs={"class": "form-select", "maxlength": "200"}
             ),
             "tense": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
             "variant": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),
-            "verb_form": forms.Select(
+            "verbform": forms.Select(
                 attrs={"class": "form-select", "maxlength": "200"}
             ),
             "voice": forms.Select(attrs={"class": "form-select", "maxlength": "200"}),

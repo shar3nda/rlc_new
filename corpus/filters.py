@@ -2,10 +2,11 @@ import django_filters
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from .models import Document, Author, Token
+from .models import Document, Author
 
 
 class DocumentFilter(django_filters.FilterSet):
+    # noinspection PyMethodMayBeStatic,PyUnusedLocal
     def body_search(self, queryset, name, value):
         return queryset.filter(body__search=value)
 

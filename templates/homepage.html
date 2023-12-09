@@ -8,7 +8,8 @@
       <div class="col-md-3">
         <div class="list-group position-sticky" style="top: 3rem;">
           {% for section in sections %}
-            <a href="#section{{ section.number }}" class="list-group-item list-group-item-action text-left" style="font-size: 18px;">{{ section.header_rus }}</a>
+            <a href="#section{{ section.number }}" class="list-group-item list-group-item-action text-left"
+               style="font-size: 18px;">{{ section.header_rus }}</a>
           {% endfor %}
         </div>
       </div>
@@ -37,7 +38,8 @@
             </div>
           </div>
         {% endfor %}
-        <button id="back-to-top" class="btn btn-primary my-4" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+        <button id="back-to-top" class="btn btn-primary my-4"
+                style="position: fixed; bottom: 20px; right: 20px; display: none;">
           {{ _("Back to Top") }}
         </button>
       </div>

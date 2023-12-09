@@ -8,20 +8,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}RLC{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
 
-  <link rel="stylesheet" href="{% static 'css/custom.css' %}">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-  <script src="{% static 'js/recogito.min.js' %}"></script>
-  <script src="{% static 'js/fontawesome-all.min.js' %}"></script>
-  <script src="{% static 'js/annotator-utils.js' %}"></script>
-  <script src="{% static 'dist/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
-  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'js/libs/recogito.min.js' %}"></script>
+  <script src="{% static 'js/libs/fontawesome-all.min.js' %}"></script>
+  <script src="{% static 'js/scripts/getCookie.js' %}"></script>
+  <script src="{% static 'js/scripts/annotator-utils.js' %}"></script>
+  <script src="{% static 'js/libs/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/libs/jquery-3.6.4.min.js' %}"></script>
+  <script src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
 
   {% block head %}{% endblock %}
 
@@ -32,7 +32,7 @@
   {% get_current_language as LANGUAGE_CODE %}
 
   <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top{% if sidebar %} sidebar-navbar{% endif %}">
       <a class="navbar-brand" href="{% url 'homepage' %}">
         <img src="{% static 'img/logo.svg' %}" alt="logo" class="d-inline-block align-text-top logo" height="28"
              width="80" style="margin-left: 25px;">
@@ -57,7 +57,7 @@
             <a class="nav-link" href="{% url 'help' %}">{% trans "Help" %}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'statistics' %}">{% trans "Statics" %}</a>
+            <a class="nav-link" href="{% url 'statistics' %}">{% trans "Statistics" %}</a>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -69,23 +69,23 @@
           </li>
           <li class="nav-item ms-2 d-flex align-items-center">
             <form action="{% url 'set_language' %}" method="post" class="d-inline-block">{% csrf_token %}
-            <input name="next" type="hidden" value="{{ redirect_to }}">
-            <div class="dropdown">
-              <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="languageDropdown"
-                      data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% get_current_language as LANGUAGE_CODE %}
-                {% if LANGUAGE_CODE == 'en' %}
-                  English (en)
-                {% elif LANGUAGE_CODE == 'ru' %}
-                  Русский (ru)
-                {% endif %}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="languageDropdown">
-                <button class="dropdown-item" type="submit" name="language" value="en">English (en)</button>
-                <button class="dropdown-item" type="submit" name="language" value="ru">Русский (ru)</button>
+              <input name="next" type="hidden" value="{{ redirect_to }}">
+              <div class="dropdown">
+                <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" id="languageDropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {% get_current_language as LANGUAGE_CODE %}
+                  {% if LANGUAGE_CODE == 'en' %}
+                    English (en)
+                  {% elif LANGUAGE_CODE == 'ru' %}
+                    Русский (ru)
+                  {% endif %}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                  <button class="dropdown-item" type="submit" name="language" value="en">English (en)</button>
+                  <button class="dropdown-item" type="submit" name="language" value="ru">Русский (ru)</button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
           </li>
 
           {% if user.is_authenticated %}
@@ -121,19 +121,19 @@
   </div>
 {% endblock %}
 
-<div class="container flex-grow-1">
+<div class="container{% if sidebar %}-fluid{% endif %} flex-grow-1{% if sidebar %} sidebar-container-fluid{% endif %}">
   {% block content %}{% endblock %}
 </div>
 
 {% block footer %}
-  <footer class="bg-dark text-light py-2 mt-4">
+  <footer class="bg-dark text-light py-2 mt-4{% if sidebar %} footer-over-content{% endif %}">
     <div class="container">
       <p class="mb-0">&copy; {% trans "HSE School of Linguistics. All rights reserved." %}</p>
     </div>
   </footer>
 {% endblock %}
 {% if messages %}
-  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;" id="toast-container">
     {% for message in messages %}
       <div class="toast" role="alert" aria-live="assertive" aria-atomic="true"
            data-bs-delay="{% if message.tags == 'error' %}0{% else %}3000{% endif %}">
@@ -187,11 +187,28 @@
   });
 
   // Add this code for toggling the input container
-  $(document).on('click', '[id^=auto-annotate-btn-]', function() {
+  $(document).on('click', '[id^=auto-annotate-btn-]', function () {
     const sentenceId = $(this).attr('id').split('-')[3];
     const inputContainer = $(`#corrected-sentence-container-${sentenceId}`);
     inputContainer.toggle();
   });
+  {% if sidebar %}
+    document.addEventListener('DOMContentLoaded', () => {
+      // Loop through all anchor tags
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // Prevent the default action
+          e.preventDefault();
+          const hashVal = this.getAttribute('href');
+          const target = document.querySelector(hashVal);
+
+          // Adjust scroll position by the height of the navbar (change 100 to your navbar's height)
+          const scrollto = target.offsetTop - 100;
+          window.scrollTo(0, scrollto);
+        });
+      });
+    });
+  {% endif %}
 </script>
 </body>
 </html>

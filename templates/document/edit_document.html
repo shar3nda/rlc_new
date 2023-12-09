@@ -79,7 +79,8 @@
           </dl>
 
           <p>
-            <a href="{% url 'edit_author' author_id=document.author.id document_id=document.id %}" class="btn btn-secondary">{% trans "Edit author" %}</a>
+            <a href="{% url 'edit_author' author_id=document.author.id document_id=document.id %}"
+               class="btn btn-secondary">{% trans "Edit author" %}</a>
           </p>
           <button type="submit" class="btn btn-lg btn-primary">{% trans "Save" %}</button>
         </form>

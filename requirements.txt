@@ -1,8 +1,8 @@
-django>=4.2.4
-black~=23.3.0
-natasha~=1.6.0
-psycopg>=3.1.9
-django-filter~=23.2
+django
+black
+natasha
+psycopg
+django-filter
 django-crispy-forms
 crispy-bootstrap5
 Faker
@@ -11,4 +11,4 @@ Levenshtein
 nltk
 gunicorn
 pyenchant
-django-ninja~=0.22.2
+django-ninja

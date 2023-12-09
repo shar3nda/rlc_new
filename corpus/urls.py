@@ -28,12 +28,20 @@ urlpatterns = [
     ),
     path("user_profile/", views.user_profile, name="user_profile"),
     path("statistics/", views.statistics, name="statistics"),
-    path("help/", views.help, name="help"),
+    path("help/", views.help_page, name="help"),
     path("export_documents/", views.export_documents, name="export_documents"),
     path("search/", views.search, name="search"),
-    path("search_results/", views.search_results, name="search_results"),
     path(
-        "exact_search_results/", views.exact_search_results, name="exact_search_results"
+        "dynamic_lexgram_form", views.dynamic_lexgram_form, name="dynamic_lexgram_form"
     ),
-    path("get_search", views.get_search, name="get_search"),
+    path(
+        "lexgram_search_results/",
+        views.lexgram_search_results,
+        name="lexgram_search_results",
+    ),
+    path(
+        "exact_search_results/",
+        views.exact_search_results,
+        name="exact_search_results",
+    ),
 ]

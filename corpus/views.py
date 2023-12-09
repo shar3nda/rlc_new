@@ -3,22 +3,24 @@ import uuid
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.translation import gettext_lazy as _
 
 from .filters import DocumentFilter
 from .forms import DocumentForm, NewAuthorForm, FavoriteAuthorForm
-from .models import Document, Sentence, Author, Filter, Token_list, Token, Annotation
+from .models import Document, Sentence, Author
+from .utils.search_utils import (
+    render_search_results,
+)
 
 
 def export_documents(request):
     document_list = Document.objects.select_related("user", "author").prefetch_related(
         "annotators", "sentence_set__annotation_set__user"
     )
-    filter = DocumentFilter(request.GET, queryset=document_list)
-    data = [document.serialize() for document in filter.qs]
+    document_filter = DocumentFilter(request.GET, queryset=document_list)
+    data = [document.serialize() for document in document_filter.qs]
     response = JsonResponse(data, safe=False)
     response["Content-Disposition"] = 'attachment; filename="documents.json"'
     return response
@@ -44,6 +46,7 @@ def documents(request):
 
 
 def get_verbose_name(model, field_name, choice_code):
+    # noinspection PyProtectedMember
     return dict(model._meta.get_field(field_name).flatchoices).get(choice_code)
 
 
@@ -184,8 +187,8 @@ def statistics(request):
     return render(request, "statistics.html", context)
 
 
-def help(request):
-    return render(request, "help.html")
+def help_page(request):
+    return render(request, "help.html", {"sidebar": True})
 
 
 # Представление для аннотирования документа
@@ -350,343 +353,23 @@ def user_profile(request):
 
 
 def search(request):
-    return render(request, "lexgram/lexgram_search.html")
+    return render(request, "search.html", {"block_id": uuid.uuid4()})
 
 
-always_true = ~Q(pk__in=[])
-
-
-def search_subcorpus(filters, by_sentences=True):
-    date_from_specified = filters.date_from != 0
-    date_to_specified = filters.date_to != 9999
-    if date_from_specified or date_to_specified:
-        # Exclude documents with unspecified dates if at least one date filter is specified
-        subcorpus = Document.objects.filter(
-            Q(date__gte=filters.date_from, date__lte=filters.date_to)
-            & ~Q(date=None)  # Exclude documents with date=None
-        )
-    else:
-        # Include all documents if both date filters are not specified
-        subcorpus = Document.objects.all()
-    # Apply other filters
-    subcorpus = subcorpus.filter(
-        Q(always_true if filters.gender == "any" else Q(author__gender=filters.gender))
-        & Q(always_true if filters.oral == "any" else Q(oral=(filters.oral == "true")))
-        & Q(
-            always_true
-            if filters.language_background == "any"
-            else Q(author__language_background=filters.language_background)
-        )
-        & Q(
-            always_true
-            if filters.dominant_languages == [""]
-            else Q(author__dominant_language__in=filters.dominant_languages)
-        )
-        & Q(
-            always_true
-            if filters.language_level == [""]
-            else Q(language_level__in=filters.language_level)
-        )
-    )
-    subcorpus_stats = {
-        "documents": subcorpus.count(),
-        "sentences": Sentence.objects.filter(document__in=subcorpus).count(),
-        "tokens": Token.objects.filter(document__in=subcorpus).count(),
-    }
-    # get all sentences in subcorpus
-    if by_sentences:
-        sentences = Sentence.objects.filter(document__in=subcorpus)
-        return sentences, subcorpus_stats
-    else:
-        annotations = Annotation.objects.filter(document__in=subcorpus)
-        return annotations, subcorpus_stats
+def lexgram_search_results(request):
+    return render_search_results(request, "lexgram")
 
 
 def exact_search_results(request):
-    exact_forms = request.GET.get("exact_forms")
-    if exact_forms is not None:
-        exact_forms = exact_forms.split()
+    return render_search_results(request, "exact")
 
-    filters = Filter(
-        request.GET.get("date1"),
-        request.GET.get("date2"),
-        request.GET.get("gender"),
-        request.GET.get("mode"),
-        request.GET.get("background"),
-        request.GET.get("language[]", "").split(","),
-        request.GET.get("level[]", "").split(","),
-    )
 
-    sentences, words, subcorpus_stats = exact_search_sentences(exact_forms, filters)
-    stats = get_search_stats(sentences, subcorpus_stats)
-    stat_names = {
-        "total_documents": _("Total Documents"),
-        "total_sentences": _("Total Sentences"),
-        "total_tokens": _("Total Tokens"),
-        "subcorpus_documents": _("Subcorpus Documents"),
-        "subcorpus_sentences": _("Subcorpus Sentences"),
-        "subcorpus_tokens": _("Subcorpus Tokens"),
-        "found_documents": _("Found Documents"),
-        "found_sentences": _("Found Sentences"),
-        "found_tokens": _("Found Tokens"),
-    }
-    stats = {stat_names[key]: value for key, value in stats.items()}
+# TODO add search export
+
+
+def dynamic_lexgram_form(request):
     return render(
         request,
-        "lexgram/lexgram_search_results.html",
-        {"sentences": sentences, "stats": stats, "tokens_list": words},
-    )
-
-
-def exact_search_sentences(exact_forms, filters):
-    sentences, subcorpus_stats = search_subcorpus(filters)
-    exact_forms_lower = [form.lower() for form in exact_forms]
-    matching_sentence_pks = []
-    matching_words = set()
-
-    for sentence in sentences:
-        sentence_words_lower = [word.lower() for word in sentence.words]
-        for i, word_lower in enumerate(sentence_words_lower):
-            if word_lower == exact_forms_lower[0]:
-                all_match = True
-                current_matching_words = {sentence.words[i]}
-                j_offset = 0
-
-                for j, exact_form_lower in enumerate(exact_forms_lower[1:], start=1):
-                    while (
-                        i + j + j_offset < len(sentence_words_lower)
-                        and sentence.is_punct[i + j + j_offset]
-                    ):
-                        j_offset += 1
-
-                    if (
-                        i + j + j_offset < len(sentence_words_lower)
-                        and sentence_words_lower[i + j + j_offset] == exact_form_lower
-                    ):
-                        current_matching_words.add(sentence.words[i + j + j_offset])
-                    else:
-                        all_match = False
-                        break
-
-                if all_match:
-                    matching_sentence_pks.append(sentence.pk)
-                    matching_words.update(current_matching_words)
-
-    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
-    return matching_sentences, matching_words, subcorpus_stats
-
-
-def check_lex(word, lexes):
-    if lexes[0] == "":
-        return True
-    for lex in lexes:
-        if word.pos == lex:
-            return True
-    return False
-
-
-def check_gram(word, right_word):
-    enums = Token_list.enums
-    for enum in enums:
-        name, val = enum
-        if name == "VerbForm":
-            name = "verb_form"
-        gramms = getattr(right_word, name.lower())
-        flag = False
-        if gramms is not None:
-            for gram in gramms:
-                if gram == getattr(word, name.lower()):
-                    flag = True
-                    break
-        else:
-            flag = True
-        if not flag:
-            return False
-    return True
-
-
-def check_errors(word, errors):
-    if errors[0] == "":
-        return True
-    annotations = list(word.annotations.all())
-    for annotation in annotations:
-        result = True
-        for error in errors:
-            flag = False
-            for tag in annotation.error_tags:
-                if error == tag:
-                    flag = True
-                    break
-            if not flag:
-                result = False
-        if result:
-            return True
-    return False
-
-
-def create_right_word(grammar):
-    word = Token()
-    for gram in grammar:
-        if gram == "AspectImp":
-            if word.aspect is None:
-                word.aspect = []
-            word.aspect.append(Token.Aspect("Imp"))
-        else:
-            if gram == "ForeignYes":
-                if word.foreign is None:
-                    word.foreign = []
-                word.foreign.append(Token.Foreign("Yes"))
-            else:
-                if gram == "HyphYes":
-                    if word.hyph is None:
-                        word.hyph = []
-                    word.hyph.append(Token.Hyph("Yes"))
-                else:
-                    if gram == "MoodImp":
-                        if word.mood is None:
-                            word.mood = []
-                        word.mood.append(Token.Mood("Imp"))
-                    else:
-                        enums = Token_list.enums
-                        for enum in enums:
-                            name, val = enum
-                            if gram in [item.value for item in val]:
-                                if getattr(word, name.lower()) is None:
-                                    setattr(word, name.lower(), [val(gram)])
-                                else:
-                                    nothing = getattr(word, name.lower())
-                                    nothing.append(val(gram))
-                                    setattr(word, name.lower(), nothing)
-    return word
-
-
-def search_sentences(tokens_list, filters):
-    sentences, subcorpus_stats = search_subcorpus(filters)
-    tokens_list.wordform = [word.lower() for word in tokens_list.wordform]
-    sentences = sentences.filter(lemmas__contains=tokens_list.wordform)
-    matching_sentence_pks = []
-    matching_words = set()
-    right_words = [create_right_word(grammar) for grammar in tokens_list.grammar]
-    for sentence in sentences:
-        tokens = list(sentence.tokens.all())
-        for i in range(len(tokens)):
-            if (
-                tokens[i].lemma == tokens_list.wordform[0]
-                and check_lex(tokens[i], tokens_list.lex[0])
-                and check_gram(tokens[i], right_words[0])
-                and check_errors(tokens[i], tokens_list.errors[0])
-            ):
-                flag = True
-                for j in range(1, len(tokens_list.wordform)):
-                    if flag:
-                        flag = any(
-                            tokens[i + k].lemma == tokens_list.wordform[j]
-                            and check_lex(tokens[i + k], tokens_list.lex[j])
-                            and check_gram(tokens[i], right_words[j])
-                            and check_errors(tokens[i], tokens_list.errors[j])
-                            for k in range(
-                                int(tokens_list.begin[j - 1]),
-                                int(tokens_list.end[j - 1]) + 1,
-                            )
-                        )
-                    else:
-                        break
-                if flag:
-                    matching_sentence_pks.append(sentence.pk)
-                    # Adding only the matching sequence words to the matching_words list
-    matching_sentences = Sentence.objects.filter(pk__in=matching_sentence_pks)
-    for sentence in matching_sentences:
-        for i in range(len(sentence.lemmas)):
-            if sentence.lemmas[i] in tokens_list.wordform:
-                matching_words.add(sentence.words[i])
-    return matching_sentences, matching_words, subcorpus_stats
-
-
-def get_search_stats(sentences, subcorpus_stats):
-    """
-    A function that returns statistics for the search results.
-    For example:
-    Corpus total: 11758 documents, 190394 sentences, 2284839 words.
-    Search executed in a user-defined subcorpus of 11758 documents, 190311 sentences, 2284975 words.
-    Found: 0 documents, 0 contexts.
-    :param sentences: found sentences
-    :param subcorpus_stats: stats for the subcorpus
-    :return: dict with stats
-    """
-    total_documents = Document.objects.count()
-    total_sentences = Sentence.objects.count()
-    total_tokens = Token.objects.count()
-    found_documents = Document.objects.filter(
-        id__in=sentences.values_list("document_id", flat=True).distinct()
-    ).count()
-    found_sentences = sentences.count()
-    found_tokens = Token.objects.filter(sentence__in=sentences).count()
-    return {
-        "total_documents": total_documents,
-        "total_sentences": total_sentences,
-        "total_tokens": total_tokens,
-        "subcorpus_documents": subcorpus_stats["documents"],
-        "subcorpus_sentences": subcorpus_stats["sentences"],
-        "subcorpus_tokens": subcorpus_stats["tokens"],
-        "found_documents": found_documents,
-        "found_sentences": found_sentences,
-        "found_tokens": found_tokens,
-    }
-
-
-def search_results(request):
-    begin = request.GET.get("from[]")
-    end = request.GET.get("to[]")
-    if begin is not None:
-        begin = begin.split(",")
-    if end is not None:
-        end = end.split(",")
-    lex = request.GET.get("lex[]").split(",")
-    for j in range(len(lex)):
-        lex[j] = lex[j].strip("()").split("|")
-    grammar = request.GET.get("grammar[]").split(",")
-    for j in range(len(grammar)):
-        grammar[j] = grammar[j].strip("()").split("|")
-    errors = request.GET.get("errors[]").split(",")
-    for j in range(len(errors)):
-        errors[j] = errors[j].strip("()").split("|")
-    tokens_list = Token_list(
-        request.GET.get("wordform[]").split(","), begin, end, lex, grammar, errors
-    )
-    filters = Filter(
-        request.GET.get("date1"),
-        request.GET.get("date2"),
-        request.GET.get("gender"),
-        request.GET.get("mode"),
-        request.GET.get("background"),
-        request.GET.get("language[]", "").split(","),
-        request.GET.get("level[]", "").split(","),
-    )
-    sentences, words, subcorpus_stats = search_sentences(tokens_list, filters)
-    stats = get_search_stats(sentences, subcorpus_stats)
-    stat_names = {
-        "total_documents": _("Total Documents"),
-        "total_sentences": _("Total Sentences"),
-        "total_tokens": _("Total Tokens"),
-        "subcorpus_documents": _("Subcorpus Documents"),
-        "subcorpus_sentences": _("Subcorpus Sentences"),
-        "subcorpus_tokens": _("Subcorpus Tokens"),
-        "found_documents": _("Found Documents"),
-        "found_sentences": _("Found Sentences"),
-        "found_tokens": _("Found Tokens"),
-    }
-    # replace keys in the stats variable with translated values
-    stats = {stat_names[key]: value for key, value in stats.items()}
-    return render(
-        request,
-        "lexgram/lexgram_search_results.html",
-        {"sentences": sentences, "stats": stats, "tokens_list": words},
-    )
-
-
-def get_search(request):
-    return render(
-        request,
-        "partials/lexgram/lexgram_form_content_dynamic.html",
+        "partials/lexgram/form_content_dynamic.html",
         {"block_id": uuid.uuid4()},
     )

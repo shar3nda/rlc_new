@@ -4,11 +4,9 @@
 
 
 {% block content %}
-  <script src="{% static "js/ckeditor5-build-classic/ckeditor.js" %}"></script>
+  <script src="{% static "js/libs/ckeditor5-build-classic/ckeditor.js" %}"></script>
   {% if LANGUAGE_CODE == 'ru' %}
-    <script src="{% static "js/ckeditor5-build-classic/translations/ru.js" %}"></script>
-  {% else %}
-    <script src="{% static "js/ckeditor5-build-classic/translations/en.js" %}"></script>
+    <script src="{% static "js/libs/ckeditor5-build-classic/translations/ru.js" %}"></script>
   {% endif %}
   <h1>{% trans "Create article" %}</h1>
   <!-- Check if form contains any errors -->

@@ -1,0 +1,61 @@
+{% load i18n %}
+
+<div class="row align-items-end">
+  <div class="col-11">
+    <div class="row">
+      <div class="col-3">
+        <label>
+          {% trans "Wordform" %}
+          <input class="form-control input-sm"
+                 type="text"
+                 name="wordform[]"
+                 id="wordform-{{ block_id }}"
+                 placeholder="{% trans "Wordform" %}">
+        </label>
+      </div>
+      {% include 'partials/lexgram/lex_select.html' %}
+      <div class="col-3">
+        <label>
+          <a onclick="getLex('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+          {% trans "Part of speech" %}
+          <input class="form-control input-sm"
+                 type="text"
+                 id="lex-{{ block_id }}"
+                 name="lex[]"
+                 placeholder="{% trans "Part of speech" %}">
+        </label>
+      </div>
+      {% include 'partials/lexgram/gram_select.html' %}
+      <div class="col-3">
+        <label>
+          <a onclick="getGram('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+          {% trans "Grammar" %}
+          <input class="form-control input-sm"
+                 type="text"
+                 id="gram-{{ block_id }}"
+                 name="grammar[]"
+                 placeholder="{% trans "Grammar characteristics" %}">
+        </label>
+      </div>
+      {% include 'partials/lexgram/err_select.html' %}
+      <div class="col-3">
+        <label>
+          <a onclick="getErr('{{ block_id }}')"><span class="fa fa-th-list"></span></a>
+          {% trans "Mistakes" %}
+          <input class="form-control input-sm"
+                 type="text"
+                 id="err-{{ block_id }}"
+                 name="errors[]"
+                 placeholder="{% trans "Tags" %}">
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="col-1">
+    {% if show_delete_button %}
+      <button class="btn btn-danger delete-btn" onclick="removeContainer('{{ block_id }}')" type="button">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+    {% endif %}
+  </div>
+</div>

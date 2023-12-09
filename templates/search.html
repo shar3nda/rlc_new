@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load templatetags %}
+{% block head %}
+  <script src="{% static 'js/libs/htmx.min.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <script src="{% static 'js/scripts/getCookie.js' %}"></script>
+  <script src="{% static 'js/scripts/err_features.js' %}"></script>
+  <script src="{% static 'js/scripts/lex.js' %}"></script>
+  <script src="{% static 'js/scripts/gram.js' %}"></script>
+  <script src="{% static 'js/scripts/err.js' %}"></script>
+  <script src="{% static 'js/scripts/search_page_manager.js' %}"></script>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-9">
+        <h1>{% trans "Exact search" %}</h1>
+        <form id="exact-search-form" class="d-flex mb-3" method="get">
+          <input class="form-control me-2 flex-grow-1" type="search" name="exact_forms"
+                 placeholder="{% trans 'Exact search' %}" aria-label="{% trans 'Search' %}" id="exact-search-input">
+          <button class="btn btn-success me-2 flex-shrink-0" type="submit">{% trans 'Search' %}</button>
+        </form>
+
+        <h1>{% trans "Lexico-grammatical search" %}</h1>
+        <form id="display-settings-form" class="d-flex justify-content-end">
+          {% include 'partials/search/display_settings.html' %}
+        </form>
+        <form id="subcorpus-form">
+          {% include 'partials/search/subcorpus_settings.html' %}
+        </form>
+        <form method="get" id="lexgram-form" class="mb-5 lexgram-form">
+          <div class="container" data-block-id="{{ block_id }}">
+            <div class="row mb-3" data-block-id="{{ block_id }}">
+              {% include 'partials/lexgram/form_content_fixed.html' %}
+            </div>
+          </div>
+          <div id="token-forms"></div>
+          <button class="btn btn-primary me-2 mt-2" id="add-token-form" hx-get="{% url 'dynamic_lexgram_form' %}"
+                  hx-target="#token-forms" hx-swap="beforeend">
+            <i class="fa-solid fa-plus"></i> {% trans "Add Wordform" %}
+          </button>
+          <button type="submit" class="btn btn-success mt-2">{% trans "Search" %}</button>
+        </form>
+      </div>
+      <div class="col-3">
+        <div class="btn-group-vertical" role="group" aria-label="Search settings">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subcorpus">
+            <i class="fa-solid fa-filter"></i>
+            {% trans "Specify Subcorpus" %}
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#display-settings">
+            <i class="fa-solid fa-search"></i>
+            {% trans "Display Options" %}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-results-container">
+      <!-- Search results will be displayed here -->
+    </div>
+  </div>
+  <script>
+    function removeContainer(blockId) {
+      const container = document.querySelector("[data-block-id=\"" + blockId + "\"]");
+      container.remove();
+    }
+
+    function getLex(id) {
+      $("#lexModal-" + id).modal("show");
+    }
+
+    function getGram(id) {
+      $("#gramModal-" + id).modal("show");
+    }
+
+    function getErr(id) {
+      $("#errModal-" + id).modal("show");
+    }
+  </script>
+{% endblock %}

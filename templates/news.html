@@ -4,7 +4,8 @@
 
 {% block content %}
   {% if user.is_authenticated %}
-    <a href="{% url 'create_article' %}" class="btn btn-secondary btn-lg active mt-2 mb-4" role="button" aria-pressed="true">
+    <a href="{% url 'create_article' %}" class="btn btn-secondary btn-lg active mt-2 mb-4" role="button"
+       aria-pressed="true">
       <i class="far fa-pen-to-square"></i>
       {% trans "Add news" %}
     </a>
@@ -21,7 +22,8 @@
             {{ article.text_eng|safe }}
           {% endif %}
           {% if perms.content.delete_article %}
-            <a href="#" class="btn btn-danger position-absolute bottom-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#deleteModal{{ forloop.counter }}" role="button" aria-pressed="true">
+            <a href="#" class="btn btn-danger position-absolute bottom-0 end-0 m-2" data-bs-toggle="modal"
+               data-bs-target="#deleteModal{{ forloop.counter }}" role="button" aria-pressed="true">
               <i class="fas fa-trash"></i>
             </a>
           {% endif %}
@@ -30,7 +32,8 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ forloop.counter }}" aria-hidden="true">
+    <div class="modal fade" id="deleteModal{{ forloop.counter }}" tabindex="-1"
+         aria-labelledby="deleteModalLabel{{ forloop.counter }}" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

@@ -1,0 +1,59 @@
+{% load static %}
+{% load i18n %}
+{% load templatetags %}
+
+<div class="container">
+  <!-- TODO: implement translation -->
+  <h3>{% trans 'Subcorpus stats:' %}</h3>
+  <div class="container mt-4" id="search-stats-container">
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-secondary" role="alert">
+          <strong>{% trans 'Corpus total' %}:</strong>
+          <span class="fw-bold text-primary">{{ stats.total_documents }}</span> {% trans 'documents' %},
+          <span class="fw-bold text-primary">{{ stats.total_sentences }}</span> {% trans 'sentences' %},
+          <span class="fw-bold text-primary">{{ stats.total_tokens }}</span> {% trans 'words' %}.
+        </div>
+        <div class="alert alert-secondary" role="alert">
+          <strong>{% trans 'Search executed in a user-defined subcorpus of' %}</strong>
+          <span class="fw-bold text-primary">{{ stats.subcorpus_documents }}</span> {% trans 'documents' %},
+          <span class="fw-bold text-primary">{{ stats.subcorpus_sentences }}</span> {% trans 'sentences' %},
+          <span class="fw-bold text-primary">{{ stats.subcorpus_tokens }}</span> {% trans 'words' %}.
+        </div>
+        <div class="alert alert-secondary" role="alert">
+          <strong>{% trans 'Found' %}:</strong>
+          <div data-found-documents-ids="{{ stats.found_documents_ids }}" id="found-documents-ids-initial" hidden></div>
+          <span class="fw-bold text-primary" id="found-documents-count">
+            <!-- to be filled by JS -->
+          </span> {% trans 'documents' %},
+          <span class="fw-bold text-primary" id="found-sentences-count">
+            {{ stats.found_sentences_count }}
+          </span> {% trans 'contexts' %}.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="container" id="sentences-container">
+  {% include 'partials/search/search_results_sentences.html' %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="context-modal" tabindex="-1" aria-labelledby="context-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="context-modal-label">Sentence Context</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="context-modal-body">
+        <!-- Context will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
