@@ -7,16 +7,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}RLC{% endblock %}</title>
+  <title>RLC - {% block title %}Русский учебный корпус{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-icons.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/recogito.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
   <script src="{% static 'js/libs/recogito.min.js' %}"></script>
-  <script src="{% static 'js/libs/fontawesome-all.min.js' %}"></script>
   <script src="{% static 'js/scripts/getCookie.js' %}"></script>
   <script src="{% static 'js/scripts/annotator-utils.js' %}"></script>
   <script src="{% static 'js/libs/bootstrap.bundle.min.js' %}"></script>
@@ -63,7 +62,7 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item d-flex align-items-center">
             <button id="darkModeSwitch" class="btn btn-sm btn-outline-light">
-              <i class="fas fa-moon" aria-hidden="true"></i>
+              <i class="bi bi-moon" aria-hidden="true"></i>
               <span class="ms-2">{% trans "Dark Mode" %}</span>
             </button>
           </li>
@@ -189,7 +188,7 @@
   // Add this code for toggling the input container
   $(document).on('click', '[id^=auto-annotate-btn-]', function () {
     const sentenceId = $(this).attr('id').split('-')[3];
-    const inputContainer = $(`#corrected-sentence-container-${sentenceId}`);
+    const inputContainer = $('#corrected-sentence-container-' + sentenceId);
     inputContainer.toggle();
   });
   {% if sidebar %}

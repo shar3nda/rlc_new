@@ -2,8 +2,9 @@
 
 {% load i18n %}
 {% load static %}
+{% load templatetags %}
+
 {% block content %}
-  {% load templatetags %}
   <style>
     .nav-link {
       color: white !important;
@@ -45,13 +46,13 @@
 
             <li class="nav-item">
               <a href="#whats-RLC" class="nav-link align-middle px-0">
-                <i class="fs-4 bi-house"></i> <span
+                <i class="fs-4 bi bi-house"></i> <span
                   class="ms-1 d-none d-sm-inline">Что такое русский учебный корпус?</span>
               </a>
             </li>
             <li>
               <button data-bs-toggle="collapse" class="nav-link px-0 align-middle" data-bs-target="#submenu1">
-                <i class="fs-4 bi-speedometer2"></i>
+                <i class="fs-4 bi bi-speedometer2"></i>
                 <span class="ms-1 d-none d-sm-inline">Как искать?</span>
                 <span class="arrow" style="font-size: smaller;">&#9660;</span>
               </button>
@@ -74,7 +75,7 @@
             <li>
               <button data-bs-toggle="collapse" class="nav-link px-0 align-middle text-start"
                       data-bs-target="#submenu2">
-                <i class="fs-4 bi-bootstrap"></i>
+                <i class="fs-4 bi bi-bootstrap"></i>
                 <span class="ms-1 d-none d-sm-inline">Классификация ошибок</span>
                 <span class="arrow" style="font-size: smaller;">&#9660;</span>
               </button>
@@ -103,7 +104,7 @@
             <li>
               <button data-bs-toggle="collapse" class="nav-link px-0 align-middle text-start"
                       data-bs-target="#submenu3">
-                <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Как размечать?</span> <span
+                <i class="fs-4 bi bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Как размечать?</span> <span
                   class="arrow" style="font-size: smaller;">&#9660;</span></button>
               <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                 <li class="w-100">

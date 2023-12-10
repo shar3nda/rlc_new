@@ -88,7 +88,7 @@ body[data-bs-theme="dark"] #darkModeSwitch {
   border-color: var(--bs-light);
 }
 
-body[data-bs-theme="dark"] #darkModeSwitch .fas.fa-moon {
+body[data-bs-theme="dark"] #darkModeSwitch .bi.bi-moon {
   transform: rotate(25deg);
 }
 

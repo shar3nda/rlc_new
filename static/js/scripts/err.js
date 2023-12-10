@@ -35,7 +35,7 @@ function generateErrCheckboxes(block_id) {
         class: "ms-1",
         "data-toggle": "tooltip",
         title: tooltipText,
-      }).html('<i class="fas fa-question"></i>');
+      }).html('<i class="bi bi-question"></i>');
 
       const subsectionItem = $("<li>").addClass("form-check");
       subsectionItem.append(checkbox, label, tooltipLink);

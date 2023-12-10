@@ -4,19 +4,23 @@
 {% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 {% load templatetags %}
-{% block title %}{% trans "Documents" %}{% endblock %}
+
+{% block title %}
+  {% trans "Documents" %}
+{% endblock %}
+
 {% block content %}
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8">
         {% if user.is_authenticated %}
           <a href="{% url 'add_document' %}" class="btn btn-primary mb-4">
-            <i class="fa fa-plus"></i>
+            <i class="bi bi-plus-lg"></i>
             {% trans "Create document" %}
           </a>
         {% endif %}
         <a href="{% url 'export_documents' %}?{{ request.GET.urlencode }}" class="btn btn-secondary mb-4">
-          <i class="fa fa-file-export"></i>
+          <i class="bi bi-download"></i>
           {% trans "Export Found Documents" %}
         </a>
         <form method="get" class="mb-4">
@@ -67,7 +71,7 @@
               {{ filter.form.id|as_crispy_field }}
             </div>
           </div>
-          <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i> {% trans "Filter" %}</button>
+          <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> {% trans "Filter" %}</button>
         </form>
         <script>
           $(document).ready(function () {
@@ -87,13 +91,13 @@
 
               if (currentText === '{% trans "Hide IDs" %}') {
                 $('#buttonText').text('{% trans "Show IDs" %}');
-                buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                buttonIcon.removeClass('bi-eye-slash').addClass('bi-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
                 // Save the state to localStorage when hiding IDs
                 localStorage.setItem('hideIdsStatus', 'hidden');
               } else {
                 $('#buttonText').text('{% trans "Hide IDs" %}');
-                buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                buttonIcon.removeClass('bi-eye').addClass('bi-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
                 // Save the state to localStorage when showing IDs
                 localStorage.setItem('hideIdsStatus', 'shown');
@@ -107,7 +111,7 @@
               if (status === 'hidden') {
                 toggleIdsVisibility();
                 $('#buttonText').text('{% trans "Show IDs" %}');
-                $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                $('#buttonIcon').removeClass('bi-eye-slash').addClass('bi-eye');
                 $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
               }
               // No need to handle the 'shown' state, as elements with class "id-style" are shown by default
@@ -117,16 +121,16 @@
             applySavedVisibilityState();
           });
         </script>
-        {#        <script>#}
-        {#          $(document).ready(function () {#}
-        {#            $('#hideIdsButton').click(function () {#}
-        {#              $('.id-style').toggleClass('hide');#}
-        {#            });#}
-        {#          });#}
-        {#        </script>#}
+        <script>
+          $(document).ready(function () {
+            $('#hideIdsButton').click(function () {
+              $('.id-style').toggleClass('hide');
+            });
+          });
+        </script>
 
         <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
-          <i id="buttonIcon" class="fa fa-eye-slash"></i>
+          <i id="buttonIcon" class="bi bi-eye-slash"></i>
           <span id="buttonText">{% trans 'Hide IDs' %}</span>
         </button>
 

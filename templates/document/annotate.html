@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}{{ document.title }}{% endblock %}
 {% load i18n %}
+
+{% block title %}
+  {{ document.title }}
+{% endblock %}
 
 {% block content %}
   <div class="container mt-5">
@@ -20,13 +23,13 @@
                   </select>
                 </div>
                 <button id="hideIdsButton" class="btn btn-primary mb-3" data-trans="{% trans 'Hide IDs' %}">
-                  <i id="buttonIcon" class="fa fa-eye-slash"></i>
+                  <i id="buttonIcon" class="bi bi-eye-slash"></i>
                   <span id="buttonText">{% trans 'Hide IDs' %}</span>
                 </button>
               </div>
             {% else %}
               <button id="hideIdsButton" class="btn mb-3" data-trans="{% trans 'Hide IDs' %}">
-                <i id="buttonIcon" class="fa fa-eye-slash"></i>
+                <i id="buttonIcon" class="bi bi-eye-slash"></i>
                 <span id="buttonText">{% trans 'Hide IDs' %}</span>
               </button>
             {% endif %}
@@ -62,12 +65,12 @@
               const buttonIcon = $('#buttonIcon');
               if (currentText === '{% trans "Hide IDs" %}') {
                 $('#buttonText').text('{% trans "Show IDs" %}');
-                buttonIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+                buttonIcon.removeClass('bi-eye-slash').addClass('bi-eye');
                 $(this).removeClass('btn-primary').addClass('btn-secondary');
                 localStorage.setItem('hideIdsStatus', 'hidden');
               } else {
                 $('#buttonText').text('{% trans "Hide IDs" %}');
-                buttonIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+                buttonIcon.removeClass('bi-eye').addClass('bi-eye-slash');
                 $(this).removeClass('btn-secondary').addClass('btn-primary');
                 localStorage.setItem('hideIdsStatus', 'shown');
               }
@@ -77,7 +80,7 @@
               if (status === 'hidden') {
                 toggleIdsVisibility();
                 $('#buttonText').text('{% trans "Show IDs" %}');
-                $('#buttonIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+                $('#buttonIcon').removeClass('bi-eye-slash').addClass('bi-eye');
                 $('#hideIdsButton').removeClass('btn-primary').addClass('btn-secondary');
               }
             }
@@ -115,7 +118,7 @@
             link.href = '#';
             link.dataset.toggle = 'tooltip';
             link.title = errFeatures[section][subsection];
-            link.innerHTML = `<i class="fas fa-question"></i>`;
+            link.innerHTML = `<i class="bi bi-question-lg"></i>`;
 
             subsectionItem.textContent = `${subsection} `;
             subsectionItem.appendChild(link);

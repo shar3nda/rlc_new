@@ -1,8 +1,12 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
-{% block navbar %}{% endblock %}
 
 {% load i18n %}
+
+{% block title %}
+  {% trans "Login" %}
+{% endblock %}
+
+{% block navbar %}{% endblock %}
 
 {% block content %}
   <div class="container mt-5">

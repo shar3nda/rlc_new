@@ -2,9 +2,15 @@
 {% load static %}
 {% load i18n %}
 {% load templatetags %}
+
+{% block title %}
+	{% trans "Search" %}
+{% endblock %}
+
 {% block head %}
   <script src="{% static 'js/libs/htmx.min.js' %}"></script>
 {% endblock %}
+
 {% block content %}
   <script src="{% static 'js/scripts/getCookie.js' %}"></script>
   <script src="{% static 'js/scripts/err_features.js' %}"></script>
@@ -39,7 +45,7 @@
           <div id="token-forms"></div>
           <button class="btn btn-primary me-2 mt-2" id="add-token-form" hx-get="{% url 'dynamic_lexgram_form' %}"
                   hx-target="#token-forms" hx-swap="beforeend">
-            <i class="fa-solid fa-plus"></i> {% trans "Add Wordform" %}
+            <i class="bi bi-plus-lg"></i> {% trans "Add Wordform" %}
           </button>
           <button type="submit" class="btn btn-success mt-2">{% trans "Search" %}</button>
         </form>
@@ -47,11 +53,11 @@
       <div class="col-3">
         <div class="btn-group-vertical" role="group" aria-label="Search settings">
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subcorpus">
-            <i class="fa-solid fa-filter"></i>
+            <i class="bi bi-filter"></i>
             {% trans "Specify Subcorpus" %}
           </button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#display-settings">
-            <i class="fa-solid fa-search"></i>
+            <i class="bi bi-search"></i>
             {% trans "Display Options" %}
           </button>
         </div>

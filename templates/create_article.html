@@ -2,6 +2,9 @@
 {% load static %}
 {% load i18n %}
 
+{% block title %}
+  {% trans "Create article" %}
+{% endblock %}
 
 {% block content %}
   <script src="{% static "js/libs/ckeditor5-build-classic/ckeditor.js" %}"></script>
