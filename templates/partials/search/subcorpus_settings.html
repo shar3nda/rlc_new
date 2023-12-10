@@ -1,336 +1,305 @@
 {% load i18n %}
-<div class="modal fade" id="subcorpus" tabindex="-1" role="dialog" aria-labelledby="subcorpusLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true">
-            <i class="bi bi-x-lg"></i>
-        </span></button>
-        <h4 class="modal-title" id="subcorpusLabel"> {% trans "Subcorpus" %}</h4>
+
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{% trans "Period" %}</h3>
       </div>
-      <div class="modal-body">
+      <div class="card-body">
         <div class="row">
-          <div class="col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{% trans "Period" %}</h3>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
-                    <label for="ex1">{% trans "from" %}</label>
-                  </div>
-                  <div class="col-4">
-                    <input class="form-control" name="date1" id="ex1" type="text" placeholder="2014">
-                  </div>
-                  <div class="col-2">
-                    <label for="ex2">{% trans "to" %}</label>
-                  </div>
-                  <div class="col-4">
-                    <input class="form-control" name="date2" id="ex2" type="text" placeholder="2015">
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="col-2">
+            <label for="ex1">{% trans "from" %}</label>
           </div>
-
-          <div class="col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{% trans "Gender of author" %}</h3>
-              </div>
-              <div class="card-body">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender1" value="m">
-                  <label class="form-check-label" for="gender1">{% trans "m" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender2" value="f">
-                  <label class="form-check-label" for="gender2">{% trans "f" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="gender" id="gender3" value="any" checked>
-                  <label class="form-check-label" for="gender3">{% trans "any" %}</label>
-                </div>
-              </div>
-            </div>
+          <div class="col-4">
+            <input class="form-control" name="date1" id="ex1" type="text" placeholder="2014">
           </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{% trans "Text mode" %}</h3>
-              </div>
-              <div class="card-body">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mode" id="mode1" value="oral">
-                  <label class="form-check-label" for="mode1">{% trans "oral" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mode" id="mode2" value="written">
-                  <label class="form-check-label" for="mode2">{% trans "written" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mode" id="mode3" value="any" checked>
-                  <label class="form-check-label" for="mode3">{% trans "any" %}</label>
-                </div>
-              </div>
-            </div>
+          <div class="col-2">
+            <label for="ex2">{% trans "to" %}</label>
           </div>
-          <div class="col-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{% trans "Language background" %}</h3>
-              </div>
-              <div class="card-body">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="background" id="background1" value="foreign">
-                  <label class="form-check-label" for="background1">{% trans "foreign" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="background" id="background2" value="heritage">
-                  <label class="form-check-label" for="background2">{% trans "heritage" %}</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="background" id="background3" value="any" checked>
-                  <label class="form-check-label" for="background3">{% trans "any" %}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title"> {% trans "Dominant language" %}</h3>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-6">
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="abk"
-                                                        class="check"> {% trans "Abkhaz" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="aze"
-                                                        class="check"> {% trans "Azerbaijani" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="alb"
-                                                        class="check"> {% trans "Albanian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="arm"
-                                                        class="check"> {% trans "Armenian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="amh"
-                                                        class="check"> {% trans "Amharic" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
-                                                        value="eng"> {% trans "English" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="ara"
-                                                        class="check"> {% trans "Arabic" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="ben"
-                                                        class="check"> {% trans "Bengali" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="bul"
-                                                        class="check"> {% trans "Bulgarian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="hun"
-                                                        class="check"> {% trans "Hungarian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="vie"
-                                                        class="check"> {% trans "Vietnamese" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="gre"
-                                                        class="check"> {% trans "Greek" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="geo"
-                                                        class="check"> {% trans "Georgian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="dag"
-                                                        class="check"> {% trans "Dagestanian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="dar"
-                                                        class="check"> {% trans "Dari" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="heb"
-                                                        class="check"> {% trans "Hebrew" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="ind"
-                                                        class="check"> {% trans "Indonesian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="spa"
-                                                        class="check"> {% trans "Spanish" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
-                                                        value="ita"> {% trans "Italian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="kaz"
-                                                        class="check"> {% trans "Kazakh" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="chi"
-                                                        class="check"> {% trans "Chinese" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
-                                                        value="kor"> {% trans "Korean" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="kur"
-                                                        class="check"> {% trans "Kurdish" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="khm"
-                                                        class="check"> {% trans "Khmer" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="lao"
-                                                        class="check"> {% trans "Lao" %}</label></div>
-                  </div>
-                  <div class="col-6">
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="mac"
-                                                        class="check"> {% trans "Macedonian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="mon"
-                                                        class="check"> {% trans "Mongolian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="ger"
-                                                        class="check"> {% trans "German" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="nep"
-                                                        class="check"> {% trans "Nepali" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="dut"
-                                                        class="check"> {% trans "Dutch" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
-                                                        value="nor"> {% trans "Norwegian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="far"
-                                                        class="check"> {% trans "Farsi" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="por"
-                                                        class="check"> {% trans "Portuguese" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="pas"
-                                                        class="check"> {% trans "Pashto" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="rom"
-                                                        class="check"> {% trans "Romanian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="ser"
-                                                        class="check"> {% trans "Serbian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="svk"
-                                                        class="check"> {% trans "Slovak" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="slo"
-                                                        class="check"> {% trans "Slovene" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="taj"
-                                                        class="check"> {% trans "Tajik" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="tha"
-                                                        class="check"> {% trans "Thai" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="tur"
-                                                        class="check"> {% trans "Turkish" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="turkmen"
-                                                        class="check"> {% trans "Turkmen" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="uzb"
-                                                        class="check"> {% trans "Uzbek" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="urd"
-                                                        class="check"> {% trans "Urdu" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="fin"
-                                                        class="check"> {% trans "Finnish" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="fr"
-                                                        class="check"> {% trans "French" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="hin"
-                                                        class="check"> {% trans "Hindi" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="cro"
-                                                        class="check"> {% trans "Croatian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="cze"
-                                                        class="check"> {% trans "Czech" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="swe"
-                                                        class="check"> {% trans "Swedish" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="est"
-                                                        class="check"> {% trans "Estonian" %}</label></div>
-                    <div class="checkbox"><label><input type="checkbox" name="language[]" value="jap"
-                                                        class="check"> {% trans "Japanese" %}</label></div>
-                  </div>
-                  <div class="checkbox">
-                    <label><input type="checkbox" class="check" id="checkAll"> {% trans "Select All" %}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">{% trans "Level" %} <a href="#" data-toggle="tooltip"
-                                                              title="{% trans "Each text in the corpus is attributed to one of the general levels: Beginner, Intermediate, Advanced. At the same time, some of these texts have a corresponding CEFR or ACTFL level." %}"
-                                                              style="color:lightgrey"><span
-                    class="bi bi-question-lg" aria-hidden="true"></span></a></h3>
-              </div>
-              <div class="card-body">
-                <div class="row">
-                  <table class="table">
-                    <tr>
-                      <th>{% trans "Level" %}</th>
-                      <th>{% trans "CEFR" %}</th>
-                      <th>{% trans "ACTFL" %}</th>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="NOV"> {% trans "Novice" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="A1"> {% trans "A1" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="A2"> {% trans "A2" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="NL"> {% trans "Novice Low" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="NM"> {% trans "Novice Middle" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="NH"> {% trans "Novice High" %}</label></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="INT"> {% trans "Intermediate" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="B1"> {% trans "B1" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="B2"> {% trans "B2" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="IL"> {% trans "Intermediate Low" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="IM"> {% trans "Intermediate Middle" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="IH"> {% trans "Intermediate High" %}</label></div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="ADV"> {% trans "Advanced" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="C1"> {% trans "C1" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="C2"> {% trans "C2" %}</label></div>
-                      </td>
-                      <td>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="AL"> {% trans "Advanced Low" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="AM"> {% trans "Advanced Middle" %}</label></div>
-                        <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
-                                                            value="AH"> {% trans "Advanced High" %}</label></div>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
+          <div class="col-4">
+            <input class="form-control" name="date2" id="ex2" type="text" placeholder="2015">
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-bs-dismiss="modal">OK</button>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{% trans "Gender of author" %}</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="gender1" value="m">
+          <label class="form-check-label" for="gender1">{% trans "m" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="gender2" value="f">
+          <label class="form-check-label" for="gender2">{% trans "f" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gender" id="gender3" value="any" checked>
+          <label class="form-check-label" for="gender3">{% trans "any" %}</label>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<br>
+<div class="row">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{% trans "Text mode" %}</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="mode" id="mode1" value="oral">
+          <label class="form-check-label" for="mode1">{% trans "oral" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="mode" id="mode2" value="written">
+          <label class="form-check-label" for="mode2">{% trans "written" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="mode" id="mode3" value="any" checked>
+          <label class="form-check-label" for="mode3">{% trans "any" %}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{% trans "Language background" %}</h3>
+      </div>
+      <div class="card-body">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="background" id="background1" value="foreign">
+          <label class="form-check-label" for="background1">{% trans "foreign" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="background" id="background2" value="heritage">
+          <label class="form-check-label" for="background2">{% trans "heritage" %}</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="background" id="background3" value="any" checked>
+          <label class="form-check-label" for="background3">{% trans "any" %}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
 
-<script>
-  $(document).ready(function () {
-    $("#checkAll").on("click", function () {
-      const selectAllChecked = $(this).prop("checked");
-
-      $(".check").prop("checked", selectAllChecked);
-    });
-
-    $(".check").on("click", function () {
-      const allLanguagesChecked = $(".check").length === $(".check:checked").length;
-      $("#checkAll").prop("checked", allLanguagesChecked);
-    });
-  });
-</script>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"> {% trans "Dominant language" %}</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="abk"
+                                                class="check"> {% trans "Abkhaz" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="aze"
+                                                class="check"> {% trans "Azerbaijani" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="alb"
+                                                class="check"> {% trans "Albanian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="arm"
+                                                class="check"> {% trans "Armenian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="amh"
+                                                class="check"> {% trans "Amharic" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
+                                                value="eng"> {% trans "English" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="ara"
+                                                class="check"> {% trans "Arabic" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="ben"
+                                                class="check"> {% trans "Bengali" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="bul"
+                                                class="check"> {% trans "Bulgarian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="hun"
+                                                class="check"> {% trans "Hungarian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="vie"
+                                                class="check"> {% trans "Vietnamese" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="gre"
+                                                class="check"> {% trans "Greek" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="geo"
+                                                class="check"> {% trans "Georgian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="dag"
+                                                class="check"> {% trans "Dagestanian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="dar"
+                                                class="check"> {% trans "Dari" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="heb"
+                                                class="check"> {% trans "Hebrew" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="ind"
+                                                class="check"> {% trans "Indonesian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="spa"
+                                                class="check"> {% trans "Spanish" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
+                                                value="ita"> {% trans "Italian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="kaz"
+                                                class="check"> {% trans "Kazakh" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="chi"
+                                                class="check"> {% trans "Chinese" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
+                                                value="kor"> {% trans "Korean" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="kur"
+                                                class="check"> {% trans "Kurdish" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="khm"
+                                                class="check"> {% trans "Khmer" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="lao"
+                                                class="check"> {% trans "Lao" %}</label></div>
+          </div>
+          <div class="col-6">
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="mac"
+                                                class="check"> {% trans "Macedonian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="mon"
+                                                class="check"> {% trans "Mongolian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="ger"
+                                                class="check"> {% trans "German" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="nep"
+                                                class="check"> {% trans "Nepali" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="dut"
+                                                class="check"> {% trans "Dutch" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" class="check"
+                                                value="nor"> {% trans "Norwegian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="far"
+                                                class="check"> {% trans "Farsi" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="por"
+                                                class="check"> {% trans "Portuguese" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="pas"
+                                                class="check"> {% trans "Pashto" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="rom"
+                                                class="check"> {% trans "Romanian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="ser"
+                                                class="check"> {% trans "Serbian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="svk"
+                                                class="check"> {% trans "Slovak" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="slo"
+                                                class="check"> {% trans "Slovene" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="taj"
+                                                class="check"> {% trans "Tajik" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="tha"
+                                                class="check"> {% trans "Thai" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="tur"
+                                                class="check"> {% trans "Turkish" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="turkmen"
+                                                class="check"> {% trans "Turkmen" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="uzb"
+                                                class="check"> {% trans "Uzbek" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="urd"
+                                                class="check"> {% trans "Urdu" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="fin"
+                                                class="check"> {% trans "Finnish" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="fr"
+                                                class="check"> {% trans "French" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="hin"
+                                                class="check"> {% trans "Hindi" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="cro"
+                                                class="check"> {% trans "Croatian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="cze"
+                                                class="check"> {% trans "Czech" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="swe"
+                                                class="check"> {% trans "Swedish" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="est"
+                                                class="check"> {% trans "Estonian" %}</label></div>
+            <div class="checkbox"><label><input type="checkbox" name="language[]" value="jap"
+                                                class="check"> {% trans "Japanese" %}</label></div>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" class="check" id="checkAll"> {% trans "Select All" %}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{% trans "Level" %} <a href="#" data-toggle="tooltip"
+                                                      title="{% trans "Each text in the corpus is attributed to one of the general levels: Beginner, Intermediate, Advanced. At the same time, some of these texts have a corresponding CEFR or ACTFL level." %}"
+                                                      style="color:lightgrey"><span
+            class="bi bi-question-lg" aria-hidden="true"></span></a></h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <table class="table">
+            <tr>
+              <th>{% trans "Level" %}</th>
+              <th>{% trans "CEFR" %}</th>
+              <th>{% trans "ACTFL" %}</th>
+            </tr>
+            <tr>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="NOV"> {% trans "Novice" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="A1"> {% trans "A1" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="A2"> {% trans "A2" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="NL"> {% trans "Novice Low" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="NM"> {% trans "Novice Middle" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="NH"> {% trans "Novice High" %}</label></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="INT"> {% trans "Intermediate" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="B1"> {% trans "B1" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="B2"> {% trans "B2" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="IL"> {% trans "Intermediate Low" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="IM"> {% trans "Intermediate Middle" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="IH"> {% trans "Intermediate High" %}</label></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="ADV"> {% trans "Advanced" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="C1"> {% trans "C1" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="C2"> {% trans "C2" %}</label></div>
+              </td>
+              <td>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="AL"> {% trans "Advanced Low" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="AM"> {% trans "Advanced Middle" %}</label></div>
+                <div class="checkbox"><label><input type="checkbox" name="level[]" class="check1"
+                                                    value="AH"> {% trans "Advanced High" %}</label></div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      

@@ -44,4 +44,5 @@ urlpatterns = [
         views.exact_search_results,
         name="exact_search_results",
     ),
+    path("subcorpus_form/", views.subcorpus_form, name="subcorpus_form"),
 ]

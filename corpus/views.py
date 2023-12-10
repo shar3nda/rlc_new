@@ -373,3 +373,10 @@ def dynamic_lexgram_form(request):
         "partials/lexgram/form_content_dynamic.html",
         {"block_id": uuid.uuid4()},
     )
+
+
+def subcorpus_form(request):
+    return render(
+        request,
+        "partials/search/subcorpus_settings.html",
+    )

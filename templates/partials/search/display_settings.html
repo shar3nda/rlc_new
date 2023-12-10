@@ -1,29 +1,12 @@
 {% load i18n %}
-<div class="modal fade" id="display-settings" tabindex="-1" role="dialog"
-     aria-labelledby="display-settings-label" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="display-settings-label">{% trans "Display Settings" %}</h5>
-        <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
-          <i class="bi bi-x-lg"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <label for="page-size-selector" class="form-label me-2">{% trans "Results per page:" %}</label>
-        <select id="page-size-selector" class="form-select w-auto">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-          <option value="200">100</option>
-          <option value="500">500</option>
-          <option value="1000">1000</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+<label for="page-size-selector" class="form-label me-2">{% trans "Results per page:" %}</label>
+<select id="page-size-selector" class="form-select w-auto">
+  <option value="10">10</option>
+  <option value="20">20</option>
+  <option value="50">50</option>
+  <option value="100">100</option>
+  <option value="200">100</option>
+  <option value="500">500</option>
+  <option value="1000">1000</option>
+</select>
