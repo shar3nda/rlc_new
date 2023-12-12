@@ -9,11 +9,11 @@
 
 {% block head %}
   <script src="{% static 'js/libs/htmx.min.js' %}"></script>
+  <script src="{% static 'js/scripts/err_features.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <script src="{% static 'js/scripts/getCookie.js' %}"></script>
-  <script src="{% static 'js/scripts/err_features.js' %}"></script>
+  <script src="{% static 'js/scripts/lexgram_utils.js' %}"></script>
   <script src="{% static 'js/scripts/lex.js' %}"></script>
   <script src="{% static 'js/scripts/gram.js' %}"></script>
   <script src="{% static 'js/scripts/err.js' %}"></script>
@@ -113,18 +113,19 @@
     </div>
   </div>
   <script>
-    $(document).ready(function () {
-      $("#checkAll").on("click", function () {
-        const selectAllChecked = $(this).prop("checked");
-
-        $(".check").prop("checked", selectAllChecked);
-      });
-
-      $(".check").on("click", function () {
-        const allLanguagesChecked = $(".check").length === $(".check:checked").length;
-        $("#checkAll").prop("checked", allLanguagesChecked);
-      });
-    });
+    const toggleAll = (checkbox) => {
+      const checkboxContainer = document.getElementById("dominant-language-checks");
+      const checkboxes = checkboxContainer.querySelectorAll("input[type=checkbox]");
+      if (checkbox.checked) {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = true;
+        });
+      } else {
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false;
+        });
+      }
+    };
 
     const resetSubcorpusForm = () => {
       const subcorpusModal = document.getElementById("subcorpus");

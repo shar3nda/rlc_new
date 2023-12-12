@@ -105,28 +105,28 @@
         const navContainer = document.getElementById('navContainer');
 
         // Loop through each section in errFeatures
-        for (const section in errFeatures) {
-          const sectionItem = document.createElement('li');
-          sectionItem.textContent = section;
+        for (const [category, errors] of errFeatures.entries()) {
+          const categoryItem = document.createElement('li');
+          categoryItem.textContent = category;
 
-          const subsectionList = document.createElement('ul');
+          const errorList = document.createElement('ul');
 
           // Loop through each subsection in the current section
-          for (const subsection in errFeatures[section]) {
+          for (const [error, description] of errors.entries()) {
             const subsectionItem = document.createElement('li');
-            const link = document.createElement('a');
-            link.href = '#';
-            link.dataset.toggle = 'tooltip';
-            link.title = errFeatures[section][subsection];
-            link.innerHTML = `<i class="bi bi-question-lg"></i>`;
 
-            subsectionItem.textContent = `${subsection} `;
-            subsectionItem.appendChild(link);
-            subsectionList.appendChild(subsectionItem);
+            const tooltip = document.createElement('i');
+            tooltip.classList.add('bi', 'bi-question-circle');
+            tooltip.setAttribute('data-bs-toggle', 'tooltip');
+            tooltip.setAttribute('title', description);
+
+            subsectionItem.textContent = `${error} `;
+            subsectionItem.appendChild(tooltip);
+            errorList.appendChild(subsectionItem);
           }
 
-          sectionItem.appendChild(subsectionList);
-          navContainer.appendChild(sectionItem);
+          categoryItem.appendChild(errorList);
+          navContainer.appendChild(categoryItem);
         }
       </script>
     </div>
@@ -159,8 +159,9 @@
       });
     });
 
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
+    document.addEventListener('DOMContentLoaded', function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     });
 
     function updateCorrections(sentenceId) {

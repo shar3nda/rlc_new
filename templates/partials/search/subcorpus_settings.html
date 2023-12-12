@@ -101,7 +101,7 @@
         <h3 class="card-title"> {% trans "Dominant language" %}</h3>
       </div>
       <div class="card-body">
-        <div class="row">
+        <div class="row" id="dominant-language-checks">
           <div class="col-6">
             <div class="checkbox"><label><input type="checkbox" name="language[]" value="abk"
                                                 class="check"> {% trans "Abkhaz" %}</label></div>
@@ -211,7 +211,9 @@
                                                 class="check"> {% trans "Japanese" %}</label></div>
           </div>
           <div class="checkbox">
-            <label><input type="checkbox" class="check" id="checkAll"> {% trans "Select All" %}</label>
+            <label>
+              <input type="checkbox" class="check" id="checkAll" onclick="toggleAll(this)"> {% trans "Select All" %}
+            </label>
           </div>
         </div>
       </div>

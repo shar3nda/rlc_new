@@ -100,7 +100,7 @@ def _make_sentence_and_token_objects(document, natasha_doc):
     """
     sentences_bulk, tokens_bulk = [], []
     for sentence_num, natasha_sent in enumerate(natasha_doc.sents):
-        markup, replacements = _prepare_sentence_markup(natasha_sent)
+        markup = _prepare_sentence_markup(natasha_sent)
         sentence_object = _create_sentence_object(
             document, natasha_sent, sentence_num, markup
         )

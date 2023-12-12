@@ -19,72 +19,54 @@ const lexFeatures = [
 ];
 
 function generateLexCheckboxes(block_id) {
-  const container = $(`#lexFeaturesContainer-${block_id}`);
-  container.empty();
+  const container = document.getElementById(`lexFeaturesContainer-${block_id}`);
+  container.innerHTML = "";
 
-  const header = $("<h6>").text("Part of speech").addClass("lex-link");
-  container.append(header);
+  const header = document.createElement("h6");
+  header.textContent = "Part of speech";
+  header.className = "lex-link";
+  container.appendChild(header);
 
-  header.click(function () {
-    // Iterate over all columns in the current container and check all the checkboxes
-    $(`#lexFeaturesContainer-${block_id} input[type="checkbox"]`).prop("checked", true);
+  header.addEventListener("click", () => {
+    container.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+      checkbox.checked = true;
+    });
   });
 
   const numColumns = 4;
   const columnSize = Math.ceil(lexFeatures.length / numColumns);
 
-  const row = $("<div>").addClass("row");
+  const row = document.createElement("div");
+  row.className = "row";
 
-  Array(numColumns)
-    .fill()
-    .forEach((_, i) => {
-      const col = $("<div>").addClass("col");
+  for (let i = 0; i < numColumns; i++) {
+    const col = document.createElement("div");
+    col.className = "col";
 
-      lexFeatures.slice(i * columnSize, (i + 1) * columnSize).forEach((feature) => {
-        const id = `lexFeature${feature}-${block_id}`;
+    lexFeatures.slice(i * columnSize, (i + 1) * columnSize).forEach((feature) => {
+      const id = `lexFeature${feature}-${block_id}`;
 
-        const input = $("<input>", {
-          class: "form-check-input",
-          type: "checkbox",
-          id,
-          value: feature,
-        });
+      const input = document.createElement("input");
+      input.className = "form-check-input";
+      input.type = "checkbox";
+      input.id = id;
+      input.value = feature;
 
-        const label = $("<label>", {
-          class: "form-check-label",
-          text: feature,
-          for: id,
-        });
+      const label = document.createElement("label");
+      label.className = "form-check-label";
+      label.setAttribute("for", id);
+      label.textContent = feature;
 
-        const formCheck = $("<div>").addClass("form-check");
-        formCheck.append(input, label);
+      const formCheck = document.createElement("div");
+      formCheck.className = "form-check";
+      formCheck.appendChild(input);
+      formCheck.appendChild(label);
 
-        col.append(formCheck);
-      });
-
-      row.append(col);
+      col.appendChild(formCheck);
     });
 
-  container.append(row);
-}
-
-function selectLexFeatures(block_id) {
-  const selectedFeatures = $(`#lexModal-${block_id} input[type="checkbox"]:checked`)
-    .map((_, input) => input.value)
-    .get();
-
-  let lexInput = "";
-  if (selectedFeatures.length === 1) {
-    lexInput = selectedFeatures[0];
-  } else if (selectedFeatures.length > 1) {
-    lexInput = `(${selectedFeatures.join("|")})`;
+    row.appendChild(col);
   }
 
-  $(`#lex-${block_id}`).val(lexInput);
-
-  $(`#lexModal-${block_id}`).modal("hide");
-}
-
-function clearLexFeatures(block_id) {
-  $(`#lexModal-${block_id} input[type="checkbox"]`).prop("checked", false);
+  container.appendChild(row);
 }

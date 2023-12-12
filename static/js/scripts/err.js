@@ -1,86 +1,102 @@
+function getCategoryErrCheckboxes(category, block_id) {
+  const container = document.getElementById(`errFeaturesContainer-${block_id}`);
+  const catErrors = Array.from(errFeatures.get(category).keys());
+  return Array.from(container.querySelectorAll("input[type='checkbox']")).filter((checkbox) =>
+    catErrors.some((feature) => checkbox.id === `errFeature${feature}-${block_id}`),
+  );
+}
+
 function generateErrCheckboxes(block_id) {
-  const container = $(`#errFeaturesContainer-${block_id}`);
-  container.empty();
+  const container = document.getElementById(`errFeaturesContainer-${block_id}`);
+  container.innerHTML = "";
 
-  const row = $("<div>").addClass("row");
-  const columns = [];
+  let firstCat = ["Syntax", "Additional tags"];
+  let secondCat = Array.from(errFeatures.keys()).filter(
+    (feature) => feature !== "Syntax" && feature !== "Additional tags",
+  );
 
-  for (const [section, subsections] of Object.entries(errFeatures)) {
-    const col = $("<div>").addClass("col");
-    const header = $("<h6>").text(section).addClass("err-link");
-    col.append(header);
+  [firstCat, secondCat].forEach((categories) => {
+    const groupDiv = document.createElement("div");
+    groupDiv.className = "err-group mb-2";
 
-    const checkboxes = [];
+    const row = document.createElement("div");
+    row.className = "row";
 
-    const subsectionList = $("<ul>");
+    categories.forEach((category) => {
+      const catErrors = errFeatures.get(category);
 
-    for (const [subsection, tooltipText] of Object.entries(subsections)) {
-      const id = `errFeature${subsection}-${block_id}`;
+      const features = Array.from(catErrors.keys());
+      const errors = Array.from(catErrors.entries());
 
-      const checkbox = $("<input>", {
-        class: "form-check-input",
-        type: "checkbox",
-        id,
-        value: subsection,
-      });
+      // If the category is 'Syntax', split into three columns
+      if (category === "Syntax") {
+        const colSize = Math.ceil(features.length / 3);
+        const col1 = createColumn(errors.slice(0, colSize), block_id, "Syntax");
+        row.appendChild(col1);
+        for (let i = 1; i < 3; i++) {
+          const col = createColumn(errors.slice(i * colSize, (i + 1) * colSize), block_id, "Syntax", true);
+          row.appendChild(col);
+        }
+      } else {
+        const col = createColumn(errors, block_id, category);
+        row.appendChild(col);
+      }
+    });
 
-      const label = $("<label>", {
-        class: "form-check-label",
-        text: subsection,
-        for: id,
-      });
+    groupDiv.appendChild(row);
+    container.appendChild(groupDiv);
+  });
 
-      const tooltipLink = $("<a>", {
-        href: "#",
-        class: "ms-1",
-        "data-toggle": "tooltip",
-        title: tooltipText,
-      }).html('<i class="bi bi-question"></i>');
+  function createColumn(errors, block_id, category, hideHeader = false) {
+    const col = document.createElement("div");
+    col.className = "col";
 
-      const subsectionItem = $("<li>").addClass("form-check");
-      subsectionItem.append(checkbox, label, tooltipLink);
-
-      subsectionList.append(subsectionItem);
-      checkboxes.push(checkbox);
+    const header = document.createElement("h6");
+    header.textContent = category;
+    if (hideHeader) {
+      header.style.visibility = "hidden";
     }
+    col.appendChild(header);
 
-    col.append(subsectionList);
-    row.append(col);
-    columns.push(checkboxes);
+    errors.forEach(([feature, description]) => {
+      const id = `errFeature${feature}-${block_id}`;
+      const checkboxDiv = document.createElement("div");
+      checkboxDiv.className = "form-check";
+
+      const input = document.createElement("input");
+      input.className = "form-check-input";
+      input.type = "checkbox";
+      input.id = id;
+      input.value = feature;
+
+      const label = document.createElement("label");
+      label.className = "form-check-label";
+      label.setAttribute("for", id);
+      label.textContent = feature;
+
+      const space = document.createTextNode(" ");
+
+      const tooltip = document.createElement("i");
+      tooltip.classList.add("bi", "bi-question-circle");
+      tooltip.setAttribute("data-bs-toggle", "tooltip");
+      tooltip.setAttribute("title", description);
+
+      checkboxDiv.appendChild(input);
+      checkboxDiv.appendChild(label);
+      checkboxDiv.appendChild(space);
+      checkboxDiv.appendChild(tooltip);
+      new bootstrap.Tooltip(tooltip);
+      col.appendChild(checkboxDiv);
+    });
+
+    return col;
   }
 
-  container.append(row);
-
-  // Initialize tooltips
-  container.find('[data-toggle="tooltip"]').each(function () {
-    new bootstrap.Tooltip(this);
+  container.querySelectorAll("h6").forEach((header) => {
+    header.addEventListener("click", () => {
+      const category = header.textContent;
+      const checkboxes = getCategoryErrCheckboxes(category, block_id);
+      checkboxes.forEach((checkbox) => (checkbox.checked = true));
+    });
   });
-
-  // Add click event listener to each header to check corresponding checkboxes
-  container.find("h6.err-link").click(function () {
-    const columnIndex = container.find("h6.err-link").index(this);
-    const columnCheckboxes = columns[columnIndex];
-    columnCheckboxes.forEach((checkbox) => checkbox.prop("checked", true));
-  });
-}
-
-function selectErrFeatures(block_id) {
-  const selectedFeatures = $(`#errModal-${block_id} input[type="checkbox"]:checked`)
-    .map((_, input) => input.value)
-    .get();
-
-  let errInput = "";
-  if (selectedFeatures.length === 1) {
-    errInput = selectedFeatures[0];
-  } else if (selectedFeatures.length > 1) {
-    errInput = `(${selectedFeatures.join("|")})`;
-  }
-
-  $(`#err-${block_id}`).val(errInput);
-
-  $(`#errModal-${block_id}`).modal("hide");
-}
-
-function clearErrFeatures(block_id) {
-  $(`#errModal-${block_id} input[type="checkbox"]`).prop("checked", false);
 }

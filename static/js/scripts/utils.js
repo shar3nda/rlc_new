@@ -1,4 +1,4 @@
-function getCookie(name) {
+const getCookie = (name) => {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -12,4 +12,14 @@ function getCookie(name) {
     }
   }
   return cookieValue;
-}
+};
+
+const showBSModal = (selector) => {
+  const bsModal = bootstrap.Modal.getInstance(document.querySelector(selector));
+  bsModal.show();
+};
+
+const hideBSModal = (selector) => {
+  const bsModal = bootstrap.Modal.getInstance(document.querySelector(selector));
+  bsModal.hide();
+};

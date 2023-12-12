@@ -3,15 +3,23 @@
   <div class="row mb-3">
     <div class="col-md-3">
       <div class="form-group">
-        <label class="sr-only" for="from-{{ block_id }}">{% trans "From" %}</label>
-        <label class="sr-only" for="to-{{ block_id }}">{% trans "to" %}</label>
+
+
         <div class="input-group input-group-sm">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-secondary text-white">{% trans "From" %}</span>
+            <label class="sr-only" for="from-{{ block_id }}">
+              <span class="input-group-text bg-secondary text-white">
+                {% trans "From" %}
+              </span>
+            </label>
           </div>
           <input type="text" class="form-control" id="from-{{ block_id }}" placeholder="1" name="from[]" value="1">
           <div class="input-group-prepend">
-            <span class="input-group-text bg-secondary text-white">{% trans "to" %}</span>
+            <label class="sr-only" for="to-{{ block_id }}">
+              <span class="input-group-text bg-secondary text-white">
+                {% trans "to" %}
+              </span>
+            </label>
           </div>
           <input type="text" class="form-control" id="to-{{ block_id }}" placeholder="1" name="to[]" value="1">
         </div>
