@@ -19,11 +19,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-vjt+=omxbv%z5cec^@s$3z5_qv+gva0p-c9i0jx8#i&45h2egu"
+
+DOCKER = os.environ.get("DOCKER", False)
+DEPLOY = os.environ.get("DEPLOY", False)
+
+
+if DOCKER:
+    SECRET_KEY = os.environ.get("SECRET_KEY")
+elif DEPLOY:
+    with open("/etc/rlc_new/rlc_new_secret_key") as f:
+        SECRET_KEY = f.read().strip()
+else:
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = "django-insecure-vjt+=omxbv%z5cec^@s$3z5_qv+gva0p-c9i0jx8#i&45h2egu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if DOCKER:
+    DEBUG = False
+elif DEPLOY:
+    with open("/etc/rlc_new/rlc_new_debug") as f:
+        DEBUG = f.read().strip() == "True"
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -83,7 +100,6 @@ WSGI_APPLICATION = "rlc_new.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DOCKER = os.environ.get("DOCKER", False)
 if DOCKER:
     DATABASES = {
         "default": {
@@ -93,6 +109,19 @@ if DOCKER:
             "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
             "HOST": "db",
             "PORT": "5432",
+        }
+    }
+elif DEPLOY:
+    with open("/etc/rlc_new/rlc_new_db_password") as f:
+        db_password = f.read().strip()
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "rlc_new",
+            "USER": "rlc_new",
+            "PASSWORD": db_password,
+            "HOST": "localhost",
+            "PORT": "",
         }
     }
 else:
