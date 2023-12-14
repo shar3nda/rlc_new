@@ -1,5 +1,5 @@
 # ===== Base Image =====
-FROM python:3.10.11-slim-bullseye as base
+FROM python:3.11-slim-bullseye as base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
