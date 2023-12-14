@@ -42,10 +42,7 @@ elif DEPLOY:
 else:
     DEBUG = True
 
-if DOCKER or DEPLOY:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
-else:
-    ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
