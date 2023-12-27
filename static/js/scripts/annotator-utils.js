@@ -32,6 +32,7 @@ async function updateAnnotation(documentId, sentenceId, userId, guid, alt, body)
     sentence: sentenceId,
     user: userId,
     guid: guid,
+    alt: alt,
     body,
   };
   const response = await fetch(url, {
