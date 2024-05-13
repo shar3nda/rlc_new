@@ -1,4 +1,10 @@
+import sys
 import os
+
+# add project root to path to make django.setup() work
+repo_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(repo_path)
+
 import random
 
 import django
